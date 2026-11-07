@@ -40,3 +40,21 @@ jobs:
           name: resultats-tests
           path: TestResults
           if-no-files-found: ignore
+
+      # Les pages de la vitrine en PNG, dans chaque thème (Mkm.Wpf.Showcase --captures) : le rendu
+      # se regarde sans poste Windows, dans l'artefact « captures ».
+      - name: Captures de la vitrine
+        shell: pwsh
+        run: |
+          $exe = "apps/Mkm.Wpf.Showcase/bin/Release/net48/Mkm.Wpf.Showcase.exe"
+          $p = Start-Process -FilePath $exe -ArgumentList '--captures', "$PWD/captures" -Wait -PassThru
+          Get-Content captures/journal.txt
+          if ($p.ExitCode -ne 0) { Write-Error "$($p.ExitCode) capture(s) en erreur"; exit 1 }
+
+      - name: Publication des captures
+        if: always()
+        uses: actions/upload-artifact@v6
+        with:
+          name: captures
+          path: captures
+          if-no-files-found: ignore

@@ -63,6 +63,9 @@ Les évolutions notables de mkm-wpf, version par version. Le format suit
   que nomme un gabarit existe dans chaque thème ; les contrastes des boutons,
   des onglets, des messages et des notifications, comme mkm les vérifie.
 
+- Les captures de la vitrine : `Mkm.Wpf.Showcase --captures <dossier>` rend chaque
+  page dans chaque thème en PNG ; la CI les publie (artefact `captures`).
+
 ### Corrigé
 
 - `color-mix(…)` mêle les couleurs comme CSS : pondérées de leur opacité, avec
