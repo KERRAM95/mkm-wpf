@@ -804,4 +804,7 @@
   <data name="showcase.structure.actionHint" xml:space="preserve">
     <value>Click an action's name</value>
   </data>
+  <data name="showcase.choices.registryHelp" xml:space="preserve">
+    <value>A menu and a toolbar built from the same commands, declared once: label, icon, shortcut, disabled and checked state follow from one to the other (Ctrl+L locks).</value>
+  </data>
 </root>

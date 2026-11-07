@@ -804,4 +804,7 @@
   <data name="showcase.structure.actionHint" xml:space="preserve">
     <value>Cliquez le nom d'une action</value>
   </data>
+  <data name="showcase.choices.registryHelp" xml:space="preserve">
+    <value>Un menu et une barre fabriqués des mêmes commandes, déclarées une fois : libellé, icône, raccourci, état grisé et coché se suivent de l'un à l'autre (Ctrl+L verrouille).</value>
+  </data>
 </root>

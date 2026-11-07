@@ -101,6 +101,17 @@
                     <mkm:ToolbarButton Content="{mkm:T showcase.actionbar.delete}" Icon="{x:Static mkm:Icons.Delete}" IsEnabled="False" />
                 </mkm:Toolbar>
             </Border>
+
+            <TextBlock Style="{StaticResource Titre}" Text="CommandRegistry" />
+            <TextBlock Margin="0,0,0,8" TextWrapping="Wrap" Foreground="{DynamicResource mkm.text.muted.color}"
+                       Text="{mkm:T showcase.choices.registryHelp}" />
+            <StackPanel Orientation="Horizontal">
+                <mkm:Menu x:Name="MenuDuRegistre" VerticalAlignment="Top" />
+                <StackPanel Margin="24,0,0,0" VerticalAlignment="Top">
+                    <mkm:Toolbar x:Name="BarreDuRegistre" HorizontalAlignment="Left" />
+                    <TextBlock x:Name="JournalDuRegistre" Margin="0,8,0,0" Foreground="{DynamicResource mkm.text.muted.color}" />
+                </StackPanel>
+            </StackPanel>
         </StackPanel>
     </ScrollViewer>
 </UserControl>
