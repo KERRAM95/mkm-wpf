@@ -14,7 +14,7 @@ Namespace Mkm.Wpf.Theming
     ''' </summary>
     ''' <remarks>
     ''' Le type d'une ressource vient du chemin et de la valeur du jeton : un segment « radius » donne
-    ''' un <see cref="CornerRadius"/>, « padding » ou « margin » une <see cref="Thickness"/>,
+    ''' un <see cref="CornerRadius"/>, « padding » ou « margin » une <see cref="Thickness"/> (comme « border.width » côté par côté),
     ''' « shadow » une ombre, « font.family » une police, « font.weight » une graisse, « duration »
     ''' une durée ; puis une couleur donne un pinceau figé, un nombre (en px ou sans unité) un
     ''' <see cref="Double"/>. Le reste (« solid »…) reste un texte. Un pixel CSS vaut une unité WPF.
@@ -56,6 +56,8 @@ Namespace Mkm.Wpf.Theming
             If segments.Contains("shadow") Then Return Ombre(value)
             If segments.Contains("radius") Then Return If(Coins(value), CObj(value))
             If segments.Contains("padding") OrElse segments.Contains("margin") Then Return If(Marges(value), CObj(value))
+            ' Une bordure côté par côté (« 0 1px 1px 0 ») est une épaisseur, comme une marge ; d'une seule valeur, une taille.
+            If avantDernier = "border" AndAlso dernier = "width" AndAlso value.Trim().Contains(" ") Then Return If(Marges(value), CObj(value))
             If avantDernier = "font" AndAlso dernier = "family" Then Return Police(value)
             If avantDernier = "font" AndAlso dernier = "weight" Then Return If(Graisse(value), CObj(value))
             If dernier = "duration" Then Return If(Duree(value), CObj(value))

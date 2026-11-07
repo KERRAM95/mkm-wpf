@@ -696,4 +696,61 @@
   <data name="showcase.choices.overflow" xml:space="preserve">
     <value>Overflow: in a narrow bar, the commands that do not fit go into the « … » menu</value>
   </data>
+  <data name="showcase.nav.layout" xml:space="preserve">
+    <value>Layout</value>
+  </data>
+  <data name="showcase.layout.title" xml:space="preserve">
+    <value>Layout: three panels, welcome panel, splitter, empty screen</value>
+  </data>
+  <data name="showcase.layout.help" xml:space="preserve">
+    <value>The layout of 3DEXPERIENCE applications: a welcome panel on the left (its tab folds it into a strip), the main panel, properties on the right, resized by an invisible handle; below 550 px, the side panels cover the main one. Panels split by a gutter; the empty screen of a panel with nothing to show.</value>
+  </data>
+  <data name="showcase.layout.description" xml:space="preserve">
+    <value>Drawings and title blocks</value>
+  </data>
+  <data name="showcase.layout.drawings" xml:space="preserve">
+    <value>Drawings</value>
+  </data>
+  <data name="showcase.layout.recent" xml:space="preserve">
+    <value>Recent</value>
+  </data>
+  <data name="showcase.layout.allDrawings" xml:space="preserve">
+    <value>All drawings</value>
+  </data>
+  <data name="showcase.layout.parts" xml:space="preserve">
+    <value>Parts</value>
+  </data>
+  <data name="showcase.layout.sync" xml:space="preserve">
+    <value>Synchronize with 3DEXPERIENCE</value>
+  </data>
+  <data name="showcase.layout.emptyTitle" xml:space="preserve">
+    <value>No drawing open</value>
+  </data>
+  <data name="showcase.layout.emptyMessage" xml:space="preserve">
+    <value>Open a drawing in CATIA to fill in its title block.</value>
+  </data>
+  <data name="showcase.layout.openOne" xml:space="preserve">
+    <value>Open an existing drawing</value>
+  </data>
+  <data name="showcase.layout.createOne" xml:space="preserve">
+    <value>Create a new one from a template</value>
+  </data>
+  <data name="showcase.layout.open" xml:space="preserve">
+    <value>Open</value>
+  </data>
+  <data name="showcase.layout.splitterText" xml:space="preserve">
+    <value>Drag the gutter to share the space; its handle appears on hover.</value>
+  </data>
+  <data name="showcase.layout.rightText" xml:space="preserve">
+    <value>The right panel is resized by its handle, an invisible 10 px band on its edge.</value>
+  </data>
+  <data name="showcase.layout.top" xml:space="preserve">
+    <value>Top</value>
+  </data>
+  <data name="showcase.layout.bottom" xml:space="preserve">
+    <value>Bottom</value>
+  </data>
+  <data name="showcase.layout.welcomeStates" xml:space="preserve">
+    <value>WelcomePanel: expanded, collapsed</value>
+  </data>
 </root>

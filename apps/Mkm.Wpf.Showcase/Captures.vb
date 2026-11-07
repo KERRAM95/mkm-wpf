@@ -70,7 +70,8 @@ Namespace Mkm.Wpf.Showcase
                 Page("9-arbre", Function() New ArbrePage()),
                 Page("10-identite", Function() New IdentitePage()),
                 Page("11-tableau", Function() New TableauPage()),
-                Page("12-choix", Function() New ChoixPage())
+                Page("12-choix", Function() New ChoixPage()),
+                Page("13-mise-en-page", Function() New MiseEnPagePage())
             }
 
             For Each theme In Themes.All
@@ -104,6 +105,12 @@ Namespace Mkm.Wpf.Showcase
             choix.ApplyTemplate()
             Dim calendrier As New System.Windows.Controls.Calendar With {.Style = choix.CalendarStyle, .DisplayDate = Date.Today, .SelectedDate = Date.Today.AddDays(2)}
             Enregistrer(Seule(calendrier, 0), $"{theme}/calendrier.png")
+
+            ' La mise en page étroite : sous 550 px, le panneau de gauche recouvre le principal, un voile dessous ; celui de
+            ' droite a cédé la place.
+            Dim etroite = Seule(New MiseEnPagePage(), 520)
+            etroite.UpdateLayout()
+            Enregistrer(etroite, $"{theme}/13-mise-en-page-etroite.png")
 
             Dialogue(theme, "confirmation", New ConfirmDialog With {
                 .Title = Localizer.Current.T("showcase.inputs.update"),
@@ -206,7 +213,7 @@ Namespace Mkm.Wpf.Showcase
                           New ToolTip With {.Content = Localizer.Current.T("showcase.waiting.tooltipText")})
                 Flottante(theme, "menu", fenetre.Composants, UnMenu(True))
                 Flottante(theme, "menu-sans-icones", fenetre.Composants, UnMenu(False))
-                ' La dernière page, celle des choix : le menu « … » de sa barre étroite, ouvert par son bouton.
+                ' La page des choix : le menu « … » de sa barre étroite, ouvert par son bouton.
                 MenuDeLaBarre(theme, fenetre)
 
                 Dim pied As New StackPanel With {.Orientation = Orientation.Horizontal}
@@ -227,6 +234,8 @@ Namespace Mkm.Wpf.Showcase
 
         ' Le menu « … » de la barre étroite de la page des choix, ouvert comme d'un clic sur son bouton.
         Private Sub MenuDeLaBarre(theme As String, fenetre As MainWindow)
+            fenetre.Composants.SelectedItem = fenetre.Composants.Items.OfType(Of ListBoxItem)().First(Function(i) Equals(i.Tag, "Choix"))
+            Attendre(300)
             Dim barre = DirectCast(fenetre.Page.Content, ChoixPage).BarreEtroite
             Dim bouton = DirectCast(barre.Template.FindName("PART_Overflow", barre), System.Windows.Controls.Button)
             Dim pair As New ButtonAutomationPeer(bouton)

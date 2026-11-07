@@ -36,6 +36,15 @@
   <data name="aria.moreCommands" xml:space="preserve">
     <value>Plus de commandes</value>
   </data>
+  <data name="aria.togglePanel" xml:space="preserve">
+    <value>Afficher ou masquer le panneau</value>
+  </data>
+  <data name="aria.resizePanel" xml:space="preserve">
+    <value>Redimensionner le panneau</value>
+  </data>
+  <data name="locale.or" xml:space="preserve">
+    <value>ou</value>
+  </data>
   <data name="aria.close" xml:space="preserve">
     <value>Fermer</value>
   </data>

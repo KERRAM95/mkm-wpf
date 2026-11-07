@@ -251,3 +251,31 @@ togglebutton.focus.ring.radius = 6px
 
 # toolbar (preset dashboard/toolbar, sa feuille) : le bouton « … », le bouton « lite » d'icône seule, fait 26 px de haut.
 toolbar.overflow.button.height = 26px
+
+# emptycontent (preset emptycontent, sa feuille) : « ou » à 10 px de chacun de ses deux traits.
+emptycontent.separator.margin = 0 {emptycontent.separator.gap}
+
+# splitter (styles/splitter) : l'anneau du focus de la pilule, 1 px tout autour.
+splitter.handle.focus.ring.border.width = {splitter.handle.focus.ring.width} {splitter.handle.focus.ring.width} {splitter.handle.focus.ring.width} {splitter.handle.focus.ring.width}
+
+# triptych (styles/triptych) : le bouton de fermeture à 3 px du haut et du bord ; le trait du panneau de gauche qui porte
+# une languette commence sous elle.
+triptych.close.button.margin = {triptych.close.button.offset} {triptych.close.button.offset} 0 0
+triptych.left.border.margin = {triptych.toggle.height} 0 0 0
+
+# triptych (feuille du preset dashboard) : le panneau de gauche n'a pas de bordure, sauf celui qui porte une languette,
+# dont le contenu s'arrête 2 px avant elle.
+triptych.left.plain.border.color = transparent
+triptych.left.toggleable.content.margin = 0 2px 0 0
+
+# welcomepanel (feuille du preset dashboard) : 5 px de plus de côté quand il est déplié ; des lignes de 1,42857 fois le
+# texte (13 px : 18,57 px), l'icône d'une entrée dans une ligne aussi haute qu'elle (18 et 24 px : 25,71 et 34,29 px) ;
+# le trait d'une entrée, à gauche ; 5 px au-dessus et au-dessous du trait entre deux rubriques (les 10 % de chaque bord
+# sont dans son gabarit).
+welcomepanel.expanded.padding = 10px 5px
+welcomepanel.item.line.height = 18.57px
+welcomepanel.section.label.line.height = 18.57px
+welcomepanel.item.icon.line.height = 25.71px
+welcomepanel.item.collapsed.icon.line.height = 34.29px
+welcomepanel.item.side.border.width = 0 0 0 {welcomepanel.item.border.width}
+welcomepanel.separator.vertical.margin = 5px 0

@@ -1,0 +1,175 @@
+<!--
+    Les styles de Triptych et de TriptychGutter, sur la mise en page à trois panneaux de mkm (preset dashboard/triptych et
+    sa feuille, relevés sur Product Structure Editor et Document Management ; preset ara) : le panneau de gauche sur
+    #f9f9f9, sans bordure, sauf celui qui porte une languette (un trait gris sous elle, son contenu 2 px avant) ; le
+    panneau de droite bordé de gris à gauche quand il est ouvert ; ils glissent en 0,4 s. La languette : 25 × 45 px en
+    haut à gauche du panneau principal, bordée à droite et en bas, une flèche grise de 18,2 × 26 px, plus foncée au
+    survol. La poignée : une bande invisible de 10 px à cheval sur le bord, une pilule grise de 4 × 40 px au survol,
+    pendant qu'on la tire ou au clavier. En superposition, un voile sous le panneau ouvert ; un panneau de droite modal
+    voile le reste.
+-->
+<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+                    xmlns:local="clr-namespace:Mkm.Wpf.Controls"
+                    xmlns:loc="clr-namespace:Mkm.Wpf.Localization">
+
+    <Style TargetType="{x:Type local:TriptychGutter}">
+        <Setter Property="Width" Value="{DynamicResource mkm.triptych.gutter.size}" />
+        <Setter Property="Background" Value="Transparent" />
+        <Setter Property="Cursor" Value="SizeWE" />
+        <Setter Property="FocusVisualStyle" Value="{x:Null}" />
+        <Setter Property="Panel.ZIndex" Value="25" />
+        <Setter Property="AutomationProperties.Name" Value="{loc:T aria.resizePanel}" />
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="{x:Type local:TriptychGutter}">
+                    <Grid Background="{TemplateBinding Background}">
+                        <local:Pill x:Name="Poignee" HorizontalAlignment="Center" VerticalAlignment="Center" IsHitTestVisible="False"
+                                    Width="{DynamicResource mkm.triptych.handle.width}" Height="{DynamicResource mkm.triptych.handle.height}"
+                                    Background="{DynamicResource mkm.triptych.handle.background}" />
+                        <Rectangle x:Name="Anneau" Margin="-2" Visibility="Collapsed" IsHitTestVisible="False"
+                                   Stroke="{DynamicResource mkm.triptych.handle.focus.ring.color}"
+                                   StrokeThickness="{DynamicResource mkm.triptych.handle.focus.ring.width}" />
+                    </Grid>
+                    <ControlTemplate.Triggers>
+                        <Trigger Property="IsMouseOver" Value="True">
+                            <Setter TargetName="Poignee" Property="Background" Value="{DynamicResource mkm.triptych.handle.hover.background}" />
+                        </Trigger>
+                        <Trigger Property="IsDragging" Value="True">
+                            <Setter TargetName="Poignee" Property="Background" Value="{DynamicResource mkm.triptych.handle.hover.background}" />
+                        </Trigger>
+                        <Trigger Property="IsFocusVisible" Value="True">
+                            <Setter TargetName="Poignee" Property="Background" Value="{DynamicResource mkm.triptych.handle.hover.background}" />
+                            <Setter TargetName="Anneau" Property="Visibility" Value="Visible" />
+                        </Trigger>
+                    </ControlTemplate.Triggers>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+
+    <!-- Le bouton de la languette : il la remplit, sans fond ni bordure, sa flèche grise plus foncée au survol. -->
+    <Style x:Key="mkm.Triptych.Languette" TargetType="{x:Type Button}">
+        <Setter Property="Foreground" Value="{DynamicResource mkm.triptych.toggle.color}" />
+        <Setter Property="Cursor" Value="Hand" />
+        <Setter Property="FocusVisualStyle" Value="{x:Null}" />
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="{x:Type Button}">
+                    <Border x:Name="Fond" Background="Transparent" Padding="{DynamicResource mkm.triptych.toggle.padding}">
+                        <ContentPresenter HorizontalAlignment="Left" VerticalAlignment="Top" />
+                    </Border>
+                    <ControlTemplate.Triggers>
+                        <Trigger Property="IsMouseOver" Value="True">
+                            <Setter Property="Foreground" Value="{DynamicResource mkm.triptych.toggle.hover.color}" />
+                        </Trigger>
+                        <Trigger Property="IsKeyboardFocused" Value="True">
+                            <Setter Property="Foreground" Value="{DynamicResource mkm.triptych.toggle.hover.color}" />
+                        </Trigger>
+                    </ControlTemplate.Triggers>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+
+    <Style TargetType="{x:Type local:Triptych}">
+        <Setter Property="Background" Value="{DynamicResource mkm.triptych.background}" />
+        <Setter Property="Foreground" Value="{DynamicResource mkm.triptych.color}" />
+        <Setter Property="FontFamily" Value="{DynamicResource mkm.font.family}" />
+        <Setter Property="FontSize" Value="{DynamicResource mkm.font.size}" />
+        <Setter Property="ClipToBounds" Value="True" />
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="{x:Type local:Triptych}">
+                    <Grid Background="{TemplateBinding Background}">
+                        <!-- Le panneau principal, et la languette en haut à gauche. -->
+                        <Border x:Name="PART_Main" Panel.ZIndex="10"
+                                Background="{DynamicResource mkm.triptych.main.background}"
+                                TextElement.Foreground="{DynamicResource mkm.triptych.main.color}">
+                            <Grid>
+                                <ContentPresenter />
+                                <Border x:Name="Languette" HorizontalAlignment="Left" VerticalAlignment="Top" Visibility="Collapsed"
+                                        Width="{DynamicResource mkm.triptych.toggle.width}" Height="{DynamicResource mkm.triptych.toggle.height}"
+                                        Background="{DynamicResource mkm.triptych.toggle.background}"
+                                        BorderBrush="{DynamicResource mkm.triptych.toggle.border.color}"
+                                        BorderThickness="{DynamicResource mkm.triptych.toggle.border.width}"
+                                        CornerRadius="{DynamicResource mkm.triptych.toggle.border.radius}">
+                                    <Button x:Name="PART_LeftToggle" Style="{StaticResource mkm.Triptych.Languette}"
+                                            AutomationProperties.Name="{loc:T aria.togglePanel}">
+                                        <local:Icon x:Name="Fleche" Source="{x:Static local:InternalIcons.ChevronRight}"
+                                                    Width="{DynamicResource mkm.triptych.toggle.icon.width}"
+                                                    Height="{DynamicResource mkm.triptych.toggle.icon.height}" />
+                                    </Button>
+                                </Border>
+                            </Grid>
+                        </Border>
+                        <Border x:Name="PART_Mask" Panel.ZIndex="15" Visibility="Collapsed" />
+                        <!-- Le panneau de gauche. -->
+                        <Border x:Name="PART_Left" Panel.ZIndex="20" HorizontalAlignment="Left" Width="0" ClipToBounds="True"
+                                Background="{DynamicResource mkm.triptych.left.background}"
+                                TextElement.Foreground="{DynamicResource mkm.triptych.left.color}">
+                            <Grid>
+                                <ContentPresenter x:Name="ContenuGauche" Content="{TemplateBinding Left}" />
+                                <Rectangle x:Name="BordGauche" HorizontalAlignment="Right" Width="1"
+                                           Fill="{DynamicResource mkm.triptych.left.plain.border.color}" />
+                                <local:Button x:Name="PART_LeftClose" Severity="Secondary" Variant="Text" Visibility="Collapsed"
+                                              HorizontalAlignment="Right" VerticalAlignment="Top"
+                                              Margin="{DynamicResource mkm.triptych.close.button.margin}"
+                                              Icon="{x:Static local:InternalIcons.Times}"
+                                              AutomationProperties.Name="{loc:T aria.close}" />
+                            </Grid>
+                        </Border>
+                        <!-- Le panneau de droite. -->
+                        <Border x:Name="PART_Right" Panel.ZIndex="20" HorizontalAlignment="Right" Width="0" ClipToBounds="True"
+                                Background="{DynamicResource mkm.triptych.right.background}"
+                                BorderBrush="{DynamicResource mkm.triptych.right.border.color}"
+                                TextElement.Foreground="{DynamicResource mkm.triptych.right.color}">
+                            <Grid>
+                                <ContentPresenter Content="{TemplateBinding Right}" />
+                                <local:Button x:Name="PART_RightClose" Severity="Secondary" Variant="Text" Visibility="Collapsed"
+                                              HorizontalAlignment="Right" VerticalAlignment="Top"
+                                              Margin="{DynamicResource mkm.triptych.close.button.margin}"
+                                              Icon="{x:Static local:InternalIcons.Times}"
+                                              AutomationProperties.Name="{loc:T aria.close}" />
+                            </Grid>
+                        </Border>
+                        <local:TriptychGutter x:Name="PART_LeftGutter" HorizontalAlignment="Left" Visibility="Collapsed" />
+                        <local:TriptychGutter x:Name="PART_RightGutter" HorizontalAlignment="Right" Visibility="Collapsed" />
+                    </Grid>
+                    <ControlTemplate.Triggers>
+                        <Trigger Property="ShowLeftToggle" Value="True">
+                            <Setter TargetName="Languette" Property="Visibility" Value="Visible" />
+                            <!-- Le panneau qui porte une languette garde une bordure, sous elle ; son contenu s'arrête avant (Dashboard). -->
+                            <Setter TargetName="BordGauche" Property="Fill" Value="{DynamicResource mkm.triptych.left.border.color}" />
+                            <Setter TargetName="BordGauche" Property="Margin" Value="{DynamicResource mkm.triptych.left.border.margin}" />
+                            <Setter TargetName="ContenuGauche" Property="Margin" Value="{DynamicResource mkm.triptych.left.toggleable.content.margin}" />
+                        </Trigger>
+                        <Trigger Property="IsLeftExpanded" Value="True">
+                            <Setter TargetName="Fleche" Property="Source" Value="{x:Static local:InternalIcons.ChevronLeft}" />
+                        </Trigger>
+                        <Trigger Property="ShowLeftCloseIcon" Value="True">
+                            <Setter TargetName="PART_LeftClose" Property="Visibility" Value="Visible" />
+                        </Trigger>
+                        <Trigger Property="ShowRightCloseIcon" Value="True">
+                            <Setter TargetName="PART_RightClose" Property="Visibility" Value="Visible" />
+                        </Trigger>
+                        <!-- Ouvert, le panneau de droite a sa bordure dans sa largeur. -->
+                        <Trigger Property="RightVisible" Value="True">
+                            <Setter TargetName="PART_Right" Property="BorderThickness" Value="1,0,0,0" />
+                        </Trigger>
+                        <!-- Le panneau de droite modal voile aussi celui de gauche. -->
+                        <MultiTrigger>
+                            <MultiTrigger.Conditions>
+                                <Condition Property="Modal" Value="True" />
+                                <Condition Property="RightVisible" Value="True" />
+                                <Condition Property="IsOverlay" Value="False" />
+                            </MultiTrigger.Conditions>
+                            <Setter TargetName="PART_Left" Property="Panel.ZIndex" Value="12" />
+                        </MultiTrigger>
+                    </ControlTemplate.Triggers>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+
+</ResourceDictionary>

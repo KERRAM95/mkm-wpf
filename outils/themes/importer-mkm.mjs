@@ -20,7 +20,7 @@ const THEMES = {
     Dashboard: { dossier: 'dashboard', etend: 'nora', rem: 12 },
     Ara: { dossier: 'ara' }
 };
-const COMPOSANTS = ['actionbar', 'blockui', 'button', 'checkbox', 'confirmdialog', 'contextmenu', 'datatable', 'datepicker', 'dialog', 'fieldset', 'idcard', 'inputnumber', 'inputtext', 'menu', 'message', 'panel', 'progressbar', 'progressspinner', 'propertypanel', 'radiobutton', 'select', 'selectbutton', 'tabs', 'tag', 'textarea', 'toast', 'togglebutton', 'toolbar', 'tooltip', 'tree'];
+const COMPOSANTS = ['actionbar', 'blockui', 'button', 'checkbox', 'confirmdialog', 'contextmenu', 'datatable', 'datepicker', 'dialog', 'emptycontent', 'fieldset', 'idcard', 'inputnumber', 'inputtext', 'menu', 'message', 'panel', 'progressbar', 'progressspinner', 'propertypanel', 'radiobutton', 'select', 'selectbutton', 'splitter', 'tabs', 'tag', 'textarea', 'toast', 'togglebutton', 'toolbar', 'tooltip', 'tree', 'triptych', 'welcomepanel'];
 
 const [racine, ...demandes] = process.argv.slice(2);
 if (!racine) {

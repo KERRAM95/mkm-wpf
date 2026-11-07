@@ -251,3 +251,30 @@ togglebutton.focus.ring.radius = 6px
 
 # toolbar (preset ara/toolbar, sa feuille) : le bouton « … », le bouton « lite » d'icône seule, fait 26 px de haut.
 toolbar.overflow.button.height = 26px
+
+# emptycontent (preset emptycontent, sa feuille) : « ou » à 10 px de chacun de ses deux traits.
+emptycontent.separator.margin = 0 {emptycontent.separator.gap}
+
+# splitter (styles/splitter) : l'anneau du focus de la pilule, 1 px tout autour.
+splitter.handle.focus.ring.border.width = {splitter.handle.focus.ring.width} {splitter.handle.focus.ring.width} {splitter.handle.focus.ring.width} {splitter.handle.focus.ring.width}
+
+# triptych (styles/triptych) : le bouton de fermeture à 3 px du haut et du bord ; le trait du panneau de gauche qui porte
+# une languette commence sous elle.
+triptych.close.button.margin = {triptych.close.button.offset} {triptych.close.button.offset} 0 0
+triptych.left.border.margin = {triptych.toggle.height} 0 0 0
+
+# triptych (styles/triptych, preset ara sans feuille) : le panneau de gauche est bordé à droite ; son contenu va jusqu'au
+# trait.
+triptych.left.plain.border.color = {triptych.left.border.color}
+triptych.left.toggleable.content.margin = 0
+
+# welcomepanel (styles/welcomepanel, preset ara sans feuille) : le même retrait déplié ou replié ; des lignes de hauteur
+# normale (1,15 fois le texte de 13 px : 15 px, mesure de mkm-wpf), l'icône dans une ligne de sa hauteur ; le trait
+# d'une entrée, à gauche ; 5 px au-dessus et au-dessous du trait entre deux rubriques.
+welcomepanel.expanded.padding = {welcomepanel.padding}
+welcomepanel.item.line.height = 15px
+welcomepanel.section.label.line.height = 15px
+welcomepanel.item.icon.line.height = {welcomepanel.item.icon.size}
+welcomepanel.item.collapsed.icon.line.height = {welcomepanel.item.collapsed.icon.size}
+welcomepanel.item.side.border.width = 0 0 0 {welcomepanel.item.border.width}
+welcomepanel.separator.vertical.margin = 5px 0

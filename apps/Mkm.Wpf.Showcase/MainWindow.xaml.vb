@@ -30,6 +30,7 @@ Namespace Mkm.Wpf.Showcase
                 Case "Identite" : Page.Content = New IdentitePage()
                 Case "Tableau" : Page.Content = New TableauPage()
                 Case "Choix" : Page.Content = New ChoixPage()
+                Case "MiseEnPage" : Page.Content = New MiseEnPagePage()
             End Select
         End Sub
 

@@ -55,6 +55,7 @@
                         <ListBoxItem Tag="Identite" Content="{mkm:T showcase.nav.identity}" />
                         <ListBoxItem Tag="Tableau" Content="{mkm:T showcase.nav.table}" />
                         <ListBoxItem Tag="Choix" Content="{mkm:T showcase.nav.choices}" />
+                        <ListBoxItem Tag="MiseEnPage" Content="{mkm:T showcase.nav.layout}" />
                     </ListBox>
                 </DockPanel>
             </Border>

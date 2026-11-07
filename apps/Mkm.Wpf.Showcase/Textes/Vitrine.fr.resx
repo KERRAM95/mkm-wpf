@@ -696,4 +696,61 @@
   <data name="showcase.choices.overflow" xml:space="preserve">
     <value>Overflow : dans une barre étroite, les commandes qui ne tiennent pas passent dans le menu « … »</value>
   </data>
+  <data name="showcase.nav.layout" xml:space="preserve">
+    <value>Mise en page</value>
+  </data>
+  <data name="showcase.layout.title" xml:space="preserve">
+    <value>Mise en page : trois panneaux, accueil, séparateur, écran vide</value>
+  </data>
+  <data name="showcase.layout.help" xml:space="preserve">
+    <value>La mise en page des applications 3DEXPERIENCE : le panneau d'accueil à gauche (sa languette le replie en une bande), le panneau principal, les propriétés à droite, élargies par une poignée invisible ; sous 550 px, les panneaux de côté recouvrent le principal. Des panneaux séparés d'une gouttière ; l'écran vide d'un panneau qui n'a rien à montrer.</value>
+  </data>
+  <data name="showcase.layout.description" xml:space="preserve">
+    <value>Plans et cartouches</value>
+  </data>
+  <data name="showcase.layout.drawings" xml:space="preserve">
+    <value>Plans</value>
+  </data>
+  <data name="showcase.layout.recent" xml:space="preserve">
+    <value>Récents</value>
+  </data>
+  <data name="showcase.layout.allDrawings" xml:space="preserve">
+    <value>Tous les plans</value>
+  </data>
+  <data name="showcase.layout.parts" xml:space="preserve">
+    <value>Articles</value>
+  </data>
+  <data name="showcase.layout.sync" xml:space="preserve">
+    <value>Synchroniser avec 3DEXPERIENCE</value>
+  </data>
+  <data name="showcase.layout.emptyTitle" xml:space="preserve">
+    <value>Aucun plan ouvert</value>
+  </data>
+  <data name="showcase.layout.emptyMessage" xml:space="preserve">
+    <value>Ouvrez un plan dans CATIA pour remplir son cartouche.</value>
+  </data>
+  <data name="showcase.layout.openOne" xml:space="preserve">
+    <value>Ouvrez un plan existant</value>
+  </data>
+  <data name="showcase.layout.createOne" xml:space="preserve">
+    <value>Créez-en un à partir d'un modèle</value>
+  </data>
+  <data name="showcase.layout.open" xml:space="preserve">
+    <value>Ouvrir</value>
+  </data>
+  <data name="showcase.layout.splitterText" xml:space="preserve">
+    <value>Tirez la gouttière pour partager la place ; sa poignée paraît au survol.</value>
+  </data>
+  <data name="showcase.layout.rightText" xml:space="preserve">
+    <value>Le panneau de droite s'élargit par sa poignée, une bande invisible de 10 px sur son bord.</value>
+  </data>
+  <data name="showcase.layout.top" xml:space="preserve">
+    <value>Haut</value>
+  </data>
+  <data name="showcase.layout.bottom" xml:space="preserve">
+    <value>Bas</value>
+  </data>
+  <data name="showcase.layout.welcomeStates" xml:space="preserve">
+    <value>WelcomePanel : déplié, replié</value>
+  </data>
 </root>
