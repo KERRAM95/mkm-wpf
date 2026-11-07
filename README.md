@@ -20,8 +20,10 @@ place ; aucun composant pour l'instant. La version 0.1.0 est en préparation.
     cd mkm-wpf
     git config core.hooksPath outils/hooks
 
-Ouvrir `Mkm.Wpf.sln`, choisir `Mkm.Wpf.Showcase` comme projet de démarrage,
-puis F5. En ligne de commande :
+Ouvrir `Mkm.Wpf.sln`, puis F5 : la vitrine `Mkm.Wpf.Showcase` est le projet
+de démarrage (le premier de la solution). Si Visual Studio en garde un autre,
+clic droit sur `Mkm.Wpf.Showcase`, « Définir en tant que projet de démarrage ».
+En ligne de commande :
 
     dotnet build
     dotnet test
