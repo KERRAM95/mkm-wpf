@@ -177,4 +177,7 @@
         </Setter>
     </Style>
 
+    <!-- La demande de confirmation : le dialogue, sa question et ses deux boutons posés par ConfirmDialog. -->
+    <Style TargetType="{x:Type local:ConfirmDialog}" BasedOn="{StaticResource {x:Type local:Dialog}}" />
+
 </ResourceDictionary>

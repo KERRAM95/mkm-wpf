@@ -1,0 +1,56 @@
+<!--
+    Le style de ProgressBar, sur la barre de progression de mkm (presets dashboard et ara, progressbar) : un trait
+    de 6 px aux bouts ronds (le fond pâle coupe la valeur à ses coins), rempli de la couleur principale ; la valeur
+    avance en une seconde (ProgressBar.OnValueChanged) ; indéterminée, deux traits la parcourent (ProgressBar.Animer).
+    Sans pourcentage écrit : à 6 px, mkm le laisse au texte qui l'accompagne.
+-->
+<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+                    xmlns:local="clr-namespace:Mkm.Wpf.Controls">
+
+    <Style TargetType="{x:Type local:ProgressBar}">
+        <Setter Property="Height" Value="{DynamicResource mkm.progressbar.height}" />
+        <Setter Property="Background" Value="{DynamicResource mkm.progressbar.background}" />
+        <Setter Property="Foreground" Value="{DynamicResource mkm.progressbar.value.background}" />
+        <Setter Property="BorderThickness" Value="0" />
+        <Setter Property="Focusable" Value="False" />
+        <Setter Property="SnapsToDevicePixels" Value="True" />
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="{x:Type local:ProgressBar}">
+                    <Grid x:Name="Racine">
+                        <!-- Les coins ronds coupent tout ce que la barre contient, comme overflow: hidden. -->
+                        <Grid.OpacityMask>
+                            <VisualBrush Stretch="None">
+                                <VisualBrush.Visual>
+                                    <Border Background="Black"
+                                            Width="{Binding ActualWidth, ElementName=Racine}"
+                                            Height="{Binding ActualHeight, ElementName=Racine}"
+                                            CornerRadius="{DynamicResource mkm.progressbar.border.radius}" />
+                                </VisualBrush.Visual>
+                            </VisualBrush>
+                        </Grid.OpacityMask>
+                        <Border x:Name="PART_Track" Background="{TemplateBinding Background}" />
+                        <Border x:Name="PART_Indicator" HorizontalAlignment="Left" Background="{TemplateBinding Foreground}" />
+                        <Canvas x:Name="PART_Indeterminate" Visibility="Collapsed">
+                            <Border x:Name="PART_Long" Background="{TemplateBinding Foreground}"
+                                    Height="{Binding ActualHeight, ElementName=Racine}" Width="0" />
+                            <Border x:Name="PART_Short" Background="{TemplateBinding Foreground}"
+                                    Height="{Binding ActualHeight, ElementName=Racine}" Width="0" />
+                        </Canvas>
+                    </Grid>
+                    <ControlTemplate.Triggers>
+                        <Trigger Property="IsIndeterminate" Value="True">
+                            <Setter TargetName="PART_Indicator" Property="Visibility" Value="Collapsed" />
+                            <Setter TargetName="PART_Indeterminate" Property="Visibility" Value="Visible" />
+                        </Trigger>
+                        <Trigger Property="IsEnabled" Value="False">
+                            <Setter Property="Opacity" Value="{DynamicResource mkm.disabled.opacity}" />
+                        </Trigger>
+                    </ControlTemplate.Triggers>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+
+</ResourceDictionary>

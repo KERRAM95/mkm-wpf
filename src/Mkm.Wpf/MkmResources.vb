@@ -1,5 +1,6 @@
 Imports System.Globalization
 Imports System.Linq
+Imports System.Runtime.CompilerServices
 Imports System.Windows
 Imports System.Windows.Markup
 Imports System.Windows.Media
@@ -38,7 +39,16 @@ Namespace Mkm.Wpf
             AppliquerReglages()
             Current = Me
             Appliquer(Themes.Dashboard)
+            MergedDictionaries.Add(Natifs())
         End Sub
+
+        ' Les styles que mkm-wpf pose sur des contrôles de WPF eux-mêmes (l'info-bulle…), pour toute l'application.
+        Private Shared Function Natifs() As ResourceDictionary
+            ' Le constructeur partagé d'Application enregistre le schéma pack://application ; App.xaml l'a déjà fait
+            ' tourner, un test ou un hôte sans Application non.
+            RuntimeHelpers.RunClassConstructor(GetType(Application).TypeHandle)
+            Return New ResourceDictionary With {.Source = New Uri("pack://application:,,,/Mkm.Wpf;component/Themes/Natifs.xaml", UriKind.Absolute)}
+        End Function
 
         ''' <summary>La dernière configuration créée : celle de l'application.</summary>
         Public Shared Property Current As MkmResources

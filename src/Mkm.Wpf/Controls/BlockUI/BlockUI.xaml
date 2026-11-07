@@ -1,0 +1,36 @@
+<!--
+    Le style de BlockUI, sur le voile de mkm (presets dashboard et ara, blockui et mask) : un voile noir à moitié
+    transparent, aux coins du contenu, qui paraît en fondu ; ce que montre Overlay au milieu, de la couleur du
+    texte sur le voile.
+-->
+<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+                    xmlns:local="clr-namespace:Mkm.Wpf.Controls">
+
+    <Style TargetType="{x:Type local:BlockUI}">
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="{x:Type local:BlockUI}">
+                    <Grid>
+                        <ContentPresenter x:Name="Contenu" />
+                        <Border x:Name="PART_Mask" Visibility="Collapsed" Focusable="True" FocusVisualStyle="{x:Null}"
+                                Background="{DynamicResource mkm.mask.background}"
+                                CornerRadius="{DynamicResource mkm.blockui.border.radius}"
+                                TextElement.Foreground="{DynamicResource mkm.mask.color}"
+                                Cursor="Wait">
+                            <ContentPresenter Content="{TemplateBinding Overlay}"
+                                              HorizontalAlignment="Center" VerticalAlignment="Center" />
+                        </Border>
+                    </Grid>
+                    <ControlTemplate.Triggers>
+                        <Trigger Property="Blocked" Value="True">
+                            <Setter TargetName="PART_Mask" Property="Visibility" Value="Visible" />
+                            <Setter TargetName="Contenu" Property="KeyboardNavigation.TabNavigation" Value="None" />
+                        </Trigger>
+                    </ControlTemplate.Triggers>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+
+</ResourceDictionary>

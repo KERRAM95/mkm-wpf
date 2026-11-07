@@ -95,6 +95,7 @@
         </Setter>
     </Style>
 
+    <!-- La couleur du titre se pose sur le titre, pas sur l'onglet : le contenu d'un onglet hérite de sa couleur. -->
     <!-- Un onglet du groupe : trois bordures empilées font ses filets, blanc en haut et aux bouts (une seule couleur
          chez mkm, « #ffffff #ffffff … »), gris en bas. -->
     <ControlTemplate x:Key="MkmTabGroupe" TargetType="{x:Type local:Tab}">
@@ -102,7 +103,8 @@
             <Border x:Name="Filets" Margin="0,0,0,1" Background="{DynamicResource mkm.tabs.tab.top.border.color}">
                 <Border x:Name="Fond" Margin="0,1,0,0" Background="{TemplateBinding Background}"
                         Padding="{TemplateBinding Padding}">
-                    <StackPanel HorizontalAlignment="Center" VerticalAlignment="Center" Orientation="Horizontal">
+                    <StackPanel x:Name="Titre" HorizontalAlignment="Center" VerticalAlignment="Center" Orientation="Horizontal"
+                                TextElement.Foreground="{DynamicResource mkm.tabs.tab.color}">
                         <local:Icon x:Name="Icone" Width="{DynamicResource mkm.tabs.tab.icon.size}"
                                     Height="{DynamicResource mkm.tabs.tab.icon.size}"
                                     Source="{TemplateBinding Icon}" />
@@ -119,7 +121,7 @@
             </Trigger>
             <Trigger Property="IsSelected" Value="True">
                 <Setter TargetName="Fond" Property="Background" Value="{DynamicResource mkm.tabs.tab.active.background}" />
-                <Setter Property="Foreground" Value="{DynamicResource mkm.tabs.tab.active.color}" />
+                <Setter TargetName="Titre" Property="TextElement.Foreground" Value="{DynamicResource mkm.tabs.tab.active.color}" />
             </Trigger>
             <Trigger Property="IsFirst" Value="True">
                 <Setter TargetName="Bas" Property="CornerRadius" Value="{DynamicResource mkm.tabs.tab.first.border.radius}" />
@@ -146,11 +148,12 @@
         </ControlTemplate.Triggers>
     </ControlTemplate>
 
-    <!-- Une facette : sans cadre, le libellé en haut, un trait de 3 px dessous. -->
+    <!-- Une facette : sans cadre, le libellé en haut, un trait de 3 px dessous. Sa marge (5 px de chaque côté) est
+         dans le gabarit : le TabPanel de WPF retranche la marge d'un onglet de la place qu'il lui donne. -->
     <ControlTemplate x:Key="MkmTabStrip" TargetType="{x:Type local:Tab}">
-        <Grid x:Name="Fond" Background="Transparent">
-            <StackPanel Margin="{TemplateBinding Padding}" HorizontalAlignment="Center" VerticalAlignment="Top"
-                        Orientation="Horizontal">
+        <Grid x:Name="Fond" Background="Transparent" Margin="{DynamicResource mkm.tabs.strip.tab.margin}">
+            <StackPanel x:Name="Titre" Margin="{TemplateBinding Padding}" HorizontalAlignment="Center" VerticalAlignment="Top"
+                        Orientation="Horizontal" TextElement.Foreground="{DynamicResource mkm.tabs.strip.tab.color}">
                 <local:Icon x:Name="Icone" Width="{DynamicResource mkm.tabs.tab.icon.size}"
                             Height="{DynamicResource mkm.tabs.tab.icon.size}"
                             Source="{TemplateBinding Icon}" />
@@ -173,7 +176,7 @@
             </Trigger>
             <Trigger Property="IsSelected" Value="True">
                 <Setter TargetName="Souligne" Property="Background" Value="{DynamicResource mkm.tabs.strip.tab.active.color}" />
-                <Setter Property="Foreground" Value="{DynamicResource mkm.tabs.strip.tab.active.color}" />
+                <Setter TargetName="Titre" Property="TextElement.Foreground" Value="{DynamicResource mkm.tabs.strip.tab.active.color}" />
             </Trigger>
             <Trigger Property="IsEnabled" Value="False">
                 <Setter TargetName="Fond" Property="Opacity" Value="{DynamicResource mkm.disabled.opacity}" />
@@ -187,7 +190,6 @@
         <Setter Property="Padding" Value="{DynamicResource mkm.tabs.tab.padding}" />
         <Setter Property="Margin" Value="{DynamicResource mkm.tabs.tab.margin}" />
         <Setter Property="Background" Value="{DynamicResource mkm.tabs.tab.background}" />
-        <Setter Property="Foreground" Value="{DynamicResource mkm.tabs.tab.color}" />
         <Setter Property="FontWeight" Value="{DynamicResource mkm.tabs.tab.font.weight}" />
         <Setter Property="FocusVisualStyle" Value="{StaticResource MkmTabsAnneau}" />
         <Setter Property="Cursor" Value="Hand" />
@@ -197,9 +199,7 @@
             <Trigger Property="Variant" Value="Strip">
                 <Setter Property="Height" Value="{DynamicResource mkm.tabs.strip.height}" />
                 <Setter Property="MinWidth" Value="0" />
-                <Setter Property="Margin" Value="{DynamicResource mkm.tabs.strip.tab.margin}" />
                 <Setter Property="Padding" Value="{DynamicResource mkm.tabs.strip.tab.padding}" />
-                <Setter Property="Foreground" Value="{DynamicResource mkm.tabs.strip.tab.color}" />
                 <Setter Property="FocusVisualStyle" Value="{x:Null}" />
                 <Setter Property="Template" Value="{StaticResource MkmTabStrip}" />
             </Trigger>

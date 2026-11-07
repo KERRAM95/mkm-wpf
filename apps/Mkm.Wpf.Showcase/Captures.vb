@@ -1,6 +1,7 @@
 Imports System.Collections.Generic
 Imports System.Globalization
 Imports System.IO
+Imports System.Linq
 Imports System.Windows
 Imports System.Windows.Controls
 Imports System.Windows.Documents
@@ -65,7 +66,34 @@ Namespace Mkm.Wpf.Showcase
                 Next
                 Essayer($"{theme.Name}/fenetre", Sub() Fenetre(theme.Name))
             Next
+            Essayer("diagnostic ActionBar", Sub() DiagnostiquerActionBar())
         End Sub
+
+        ' Ce que deviennent les commandes de l'ActionBar une fois dessinées : leur icône, sa taille, sa couleur.
+        Private Sub DiagnostiquerActionBar()
+            Dim page = Seule(New ActionBarPage())
+            For Each commande In Descendants(page).OfType(Of ActionBarButton)().Take(3)
+                Dim icone = Descendants(commande).OfType(Of Icon)().FirstOrDefault()
+                Noter($"ActionBarButton {commande.Label} : {commande.ActualWidth}×{commande.ActualHeight}, gabarit {commande.Template IsNot Nothing}, " &
+                      $"Icon {If(commande.Icon, "(aucune)")}, opacité {commande.Opacity}, visible {commande.IsVisible}")
+                If icone Is Nothing Then
+                    Noter("  pas d'élément Icon dans le gabarit")
+                Else
+                    Noter($"  élément Icon : {icone.ActualWidth}×{icone.ActualHeight}, Source {If(icone.Source, "(aucune)")}, " &
+                          $"Foreground {icone.Foreground}, opacité {icone.Opacity}, visible {icone.IsVisible}")
+                End If
+            Next
+        End Sub
+
+        Private Shared Iterator Function Descendants(racine As DependencyObject) As IEnumerable(Of DependencyObject)
+            For i = 0 To VisualTreeHelper.GetChildrenCount(racine) - 1
+                Dim enfant = VisualTreeHelper.GetChild(racine, i)
+                Yield enfant
+                For Each petit In Descendants(enfant)
+                    Yield petit
+                Next
+            Next
+        End Function
 
         Private Shared Function Page(nom As String, fabrique As Func(Of FrameworkElement)) As KeyValuePair(Of String, Func(Of FrameworkElement))
             Return New KeyValuePair(Of String, Func(Of FrameworkElement))(nom, fabrique)

@@ -40,7 +40,15 @@ Namespace Mkm.Wpf.Tests
 
             Assert.That(ressources.Theme, [Is].EqualTo("Ara"))
             Assert.That(DirectCast(ressources("mkm.primary.color"), SolidColorBrush).Color, [Is].EqualTo(Color.FromRgb(&H1, &H44, &H91)))
-            Assert.That(ressources.MergedDictionaries.Count, [Is].EqualTo(1))
+            ' Le thème est remplacé, pas ajouté : ses ressources et les styles natifs.
+            Assert.That(ressources.MergedDictionaries.Count, [Is].EqualTo(2))
+        End Sub
+
+        <Test>
+        Public Sub StylesNatifs_HabillentLesInfoBulles()
+            Dim ressources As New MkmResources()
+
+            Assert.That(ressources(GetType(ToolTip)), [Is].InstanceOf(Of Style)())
         End Sub
 
         <Test>

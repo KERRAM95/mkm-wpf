@@ -1,0 +1,68 @@
+<!--
+    Le style de Textarea, sur la zone de texte de mkm (textarea, dont les jetons renvoient à ceux des champs :
+    form.field.…) : bordée de gris, plus foncée au survol, la bordure au bleu du thème au focus, sans anneau ; le
+    retrait des champs (4 px sur 6) ; grisée, un fond gris clair et le texte gris ; invalide, bordée de la couleur
+    d'erreur. Une barre de défilement verticale paraît quand le texte dépasse ses lignes.
+-->
+<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+                    xmlns:local="clr-namespace:Mkm.Wpf.Controls">
+
+    <Style TargetType="{x:Type local:Textarea}">
+        <Setter Property="Padding" Value="{DynamicResource mkm.textarea.padding}" />
+        <Setter Property="Background" Value="{DynamicResource mkm.textarea.background}" />
+        <Setter Property="BorderBrush" Value="{DynamicResource mkm.textarea.border.color}" />
+        <Setter Property="BorderThickness" Value="1" />
+        <Setter Property="Foreground" Value="{DynamicResource mkm.textarea.color}" />
+        <Setter Property="CaretBrush" Value="{DynamicResource mkm.textarea.color}" />
+        <Setter Property="FontFamily" Value="{DynamicResource mkm.font.family}" />
+        <Setter Property="FontSize" Value="{DynamicResource mkm.textarea.font.size}" />
+        <Setter Property="VerticalScrollBarVisibility" Value="Auto" />
+        <Setter Property="HorizontalScrollBarVisibility" Value="Disabled" />
+        <Setter Property="FocusVisualStyle" Value="{x:Null}" />
+        <Setter Property="KeyboardNavigation.TabNavigation" Value="None" />
+        <Setter Property="AllowDrop" Value="True" />
+        <Setter Property="SnapsToDevicePixels" Value="True" />
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="{x:Type local:Textarea}">
+                    <Border x:Name="Bord"
+                            Background="{TemplateBinding Background}"
+                            BorderBrush="{TemplateBinding BorderBrush}"
+                            BorderThickness="{TemplateBinding BorderThickness}"
+                            CornerRadius="{DynamicResource mkm.textarea.border.radius}">
+                        <Grid>
+                            <!-- Le texte d'aide, sur la ligne du texte saisi : le même retrait (que le TextBox pose
+                                 lui-même dans la zone de texte), et les 2 px dont WPF retire le texte. -->
+                            <TextBlock x:Name="Aide" Margin="{TemplateBinding Padding}" Padding="2,0,0,0" VerticalAlignment="Top" TextWrapping="Wrap"
+                                       IsHitTestVisible="False" Visibility="Collapsed"
+                                       Foreground="{DynamicResource mkm.textarea.placeholder.color}"
+                                       Text="{TemplateBinding Placeholder}" />
+                            <ScrollViewer x:Name="PART_ContentHost" Focusable="False" />
+                        </Grid>
+                    </Border>
+                    <ControlTemplate.Triggers>
+                        <Trigger Property="Text" Value="">
+                            <Setter TargetName="Aide" Property="Visibility" Value="Visible" />
+                        </Trigger>
+                        <Trigger Property="IsMouseOver" Value="True">
+                            <Setter Property="BorderBrush" Value="{DynamicResource mkm.textarea.hover.border.color}" />
+                        </Trigger>
+                        <Trigger Property="IsKeyboardFocused" Value="True">
+                            <Setter Property="BorderBrush" Value="{DynamicResource mkm.textarea.focus.border.color}" />
+                        </Trigger>
+                        <Trigger Property="Invalid" Value="True">
+                            <Setter Property="BorderBrush" Value="{DynamicResource mkm.textarea.invalid.border.color}" />
+                            <Setter TargetName="Aide" Property="Foreground" Value="{DynamicResource mkm.textarea.invalid.placeholder.color}" />
+                        </Trigger>
+                        <Trigger Property="IsEnabled" Value="False">
+                            <Setter Property="Background" Value="{DynamicResource mkm.textarea.disabled.background}" />
+                            <Setter Property="Foreground" Value="{DynamicResource mkm.textarea.disabled.color}" />
+                        </Trigger>
+                    </ControlTemplate.Triggers>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+
+</ResourceDictionary>

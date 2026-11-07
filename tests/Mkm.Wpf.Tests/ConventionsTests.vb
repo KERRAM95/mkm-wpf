@@ -111,11 +111,12 @@ Namespace Mkm.Wpf.Tests
         ''' </summary>
         <Test>
         Public Sub ChaqueRessourceDesGabarits_ExisteDansChaqueTheme()
-            Dim controles = DossierDesControles()
-            If controles Is Nothing Then Assert.Ignore("les sources de Mkm.Wpf ne sont pas à côté des tests")
+            Dim bibliotheque = DossierDeLaBibliotheque()
+            If bibliotheque Is Nothing Then Assert.Ignore("les sources de Mkm.Wpf ne sont pas à côté des tests")
 
             Dim motif As New Regex("DynamicResource (" & Regex.Escape(ThemeResources.Prefix) & "[A-Za-z0-9.]+)")
-            Dim cles = Directory.GetFiles(controles, "*.xaml", SearchOption.AllDirectories).
+            Dim cles = Directory.GetFiles(bibliotheque, "*.xaml", SearchOption.AllDirectories).
+                Where(Function(f) Not f.Contains($"{Path.DirectorySeparatorChar}obj{Path.DirectorySeparatorChar}") AndAlso Not f.Contains($"{Path.DirectorySeparatorChar}bin{Path.DirectorySeparatorChar}")).
                 SelectMany(Function(f) motif.Matches(File.ReadAllText(f)).Cast(Of Match)().
                     Select(Function(m) $"{m.Groups(1).Value} ({Path.GetFileName(f)})")).
                 Distinct().
@@ -132,11 +133,11 @@ Namespace Mkm.Wpf.Tests
             Assert.That(absentes, [Is].Empty)
         End Sub
 
-        ' Le dossier des contrôles dans les sources, en remontant depuis les tests ; Nothing hors du dépôt.
-        Private Shared Function DossierDesControles() As String
+        ' Le dossier de la bibliothèque dans les sources, en remontant depuis les tests ; Nothing hors du dépôt.
+        Private Shared Function DossierDeLaBibliotheque() As String
             Dim dossier = New DirectoryInfo(TestContext.CurrentContext.TestDirectory)
             While dossier IsNot Nothing
-                Dim candidat = Path.Combine(dossier.FullName, "src", "Mkm.Wpf", "Controls")
+                Dim candidat = Path.Combine(dossier.FullName, "src", "Mkm.Wpf")
                 If Directory.Exists(candidat) Then Return candidat
                 dossier = dossier.Parent
             End While

@@ -28,6 +28,7 @@ jobs:
         run: dotnet restore Mkm.Wpf.sln
 
       - name: Compilation
+        id: compilation
         run: dotnet build Mkm.Wpf.sln --configuration Release --no-restore
 
       - name: Tests
@@ -43,7 +44,9 @@ jobs:
 
       # Les pages de la vitrine en PNG, dans chaque thème (Mkm.Wpf.Showcase --captures) : le rendu
       # se regarde sans poste Windows, dans l'artefact « captures ».
+      # Les captures se font même quand un test échoue : elles aident à le comprendre.
       - name: Captures de la vitrine
+        if: ${{ !cancelled() && steps.compilation.outcome == 'success' }}
         shell: pwsh
         run: |
           $exe = "apps/Mkm.Wpf.Showcase/bin/Release/net48/Mkm.Wpf.Showcase.exe"

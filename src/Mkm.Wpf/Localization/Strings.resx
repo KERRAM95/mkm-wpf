@@ -36,4 +36,13 @@
   <data name="aria.close" xml:space="preserve">
     <value>Close</value>
   </data>
+  <data name="aria.busy" xml:space="preserve">
+    <value>Loading</value>
+  </data>
+  <data name="locale.accept" xml:space="preserve">
+    <value>Yes</value>
+  </data>
+  <data name="locale.reject" xml:space="preserve">
+    <value>No</value>
+  </data>
 </root>

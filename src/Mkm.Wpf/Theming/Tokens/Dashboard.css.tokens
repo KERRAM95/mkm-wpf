@@ -141,3 +141,22 @@ dialog.resize.handle.box.size = 20px
 dialog.resize.handle.margin = 0 1px 1px 0
 dialog.resize.handle.mark.size = 6px
 dialog.resize.handle.mark.margin = 10px 0 0 10px
+
+# tooltip (styles/tooltip, preset dashboard/tooltip) : à droite de son élément, la flèche dans l'écart (gutter), de
+# 3 px sur 6 vers lui. tooltip.window.padding est une mesure de mkm-wpf : la place de l'ombre (0 1px 2px) autour.
+tooltip.arrow.width = {tooltip.gutter}
+tooltip.arrow.height = 6px
+tooltip.window.padding = 1px 2px 3px 0
+
+# progressspinner (styles/progressspinner) : 100 px de côté par défaut.
+progressspinner.size = 100px
+
+# textarea (styles/textarea) : le retrait des champs de mkm (padding-block, padding-inline) ; au focus, l'anneau de
+# 1 px à -1 px recouvre la bordure : seule la couleur de la bordure change.
+textarea.padding = {textarea.padding.y} {textarea.padding.x}
+
+# confirmdialog (styles/confirmdialog) : l'icône et la question à 12 px l'une de l'autre (gap du contenu).
+confirmdialog.icon.margin = 0 {confirmdialog.content.gap} 0 0
+
+# confirmdialog (styles/confirmdialog) : l'icône et la question à 12 px l'une de l'autre (gap du contenu).
+confirmdialog.icon.margin = 0 {confirmdialog.content.gap} 0 0

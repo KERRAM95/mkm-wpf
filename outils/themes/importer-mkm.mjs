@@ -20,7 +20,7 @@ const THEMES = {
     Dashboard: { dossier: 'dashboard', etend: 'nora', rem: 12 },
     Ara: { dossier: 'ara' }
 };
-const COMPOSANTS = ['actionbar', 'button', 'checkbox', 'contextmenu', 'dialog', 'fieldset', 'inputtext', 'menu', 'message', 'panel', 'progressbar', 'progressspinner', 'select', 'tabs', 'toast', 'tooltip'];
+const COMPOSANTS = ['actionbar', 'blockui', 'button', 'checkbox', 'confirmdialog', 'contextmenu', 'datepicker', 'dialog', 'fieldset', 'inputtext', 'menu', 'message', 'panel', 'progressbar', 'progressspinner', 'propertypanel', 'select', 'tabs', 'textarea', 'toast', 'tooltip', 'tree'];
 
 const [racine, ...demandes] = process.argv.slice(2);
 if (!racine) {

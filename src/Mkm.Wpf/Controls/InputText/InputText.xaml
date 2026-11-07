@@ -30,16 +30,16 @@
                             BorderBrush="{TemplateBinding BorderBrush}"
                             BorderThickness="{TemplateBinding BorderThickness}"
                             CornerRadius="{DynamicResource mkm.inputtext.border.radius}">
-                        <Grid Margin="{TemplateBinding Padding}">
-                            <!-- Le texte d'aide, aligné sur le texte saisi (WPF le retire de 2 px). -->
-                            <TextBlock x:Name="Aide" Margin="2,0,0,0" VerticalAlignment="Center"
+                        <Grid>
+                            <!-- Le texte d'aide, sur la ligne du texte saisi : le même retrait, et les 2 px dont
+                                 WPF retire le texte. -->
+                            <TextBlock x:Name="Aide" Margin="{TemplateBinding Padding}" Padding="2,0,0,0" VerticalAlignment="Top"
                                        IsHitTestVisible="False" Visibility="Collapsed" TextTrimming="CharacterEllipsis"
                                        Foreground="{DynamicResource mkm.inputtext.placeholder.color}"
                                        Text="{TemplateBinding Placeholder}" />
-                            <!-- La ligne de texte déborde du retrait plutôt que d'être rognée, comme la
-                                 hauteur de ligne « normal » de mkm. -->
-                            <ScrollViewer x:Name="PART_ContentHost" Margin="0,-2" VerticalAlignment="Center"
-                                          Focusable="False"
+                            <!-- Le TextBox pose lui-même son retrait (Padding) dans la zone de texte : la zone
+                                 prend toute la place, et la ligne n'est pas rognée par le retrait du bas. -->
+                            <ScrollViewer x:Name="PART_ContentHost" Focusable="False"
                                           HorizontalScrollBarVisibility="Hidden" VerticalScrollBarVisibility="Hidden" />
                         </Grid>
                     </Border>
