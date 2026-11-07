@@ -377,8 +377,10 @@
                                 <Grid x:Name="Rangee">
                                     <ScrollViewer x:Name="PART_Scroll" Focusable="False" CanContentScroll="False"
                                                   HorizontalScrollBarVisibility="Hidden" VerticalScrollBarVisibility="Disabled">
-                                        <!-- Une section plus étroite que la barre s'y centre. -->
-                                        <Grid MinWidth="{Binding ViewportWidth, RelativeSource={RelativeSource AncestorType={x:Type ScrollViewer}}}">
+                                        <!-- Une section plus étroite que la barre s'y centre : le ScrollViewer étire
+                                             déjà son contenu à sa largeur visible. Surtout pas de MinWidth lié à cette
+                                             largeur : la barre garderait celle de sa plus large section. -->
+                                        <Grid>
                                             <StackPanel HorizontalAlignment="Center" Orientation="Horizontal"
                                                         Margin="{DynamicResource mkm.actionbar.frame.padding}"
                                                         KeyboardNavigation.TabNavigation="Once"

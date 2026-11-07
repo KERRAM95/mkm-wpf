@@ -274,6 +274,11 @@ l'anglais en repli (voir « Thème et langue »).
 - **Les styles implicites des contrôles de WPF eux-mêmes** (info-bulle, menu)
   vont dans `Themes/Natifs.xaml`, que `MkmResources` fusionne ; ceux des
   contrôles de la bibliothèque, dans `Themes/Generic.xaml`.
+- **Pas de `MinWidth` lié au `ViewportWidth` d'un `ScrollViewer`** qui le
+  contient : c'est un cliquet, le contenu ne rétrécit plus jamais (l'ActionBar
+  gardait la largeur de sa plus large section). Le `ScrollViewer` étire déjà son
+  contenu à sa largeur visible ; un `HorizontalAlignment="Center"` suffit à
+  centrer.
 
 ## Vérifier
 

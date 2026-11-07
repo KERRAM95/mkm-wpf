@@ -224,6 +224,40 @@ Namespace Mkm.Wpf.Tests.Controls
         End Sub
 
         <Test>
+        Public Sub Largeur_SuitLaSectionMontree()
+            Dim large = Section("large")
+            For i = 1 To 12
+                large.Items.Add(Bouton("Commande " & i))
+            Next
+            Dim barre = ActionBarTests.Barre(Section("etroite", Bouton("Un")), large)
+            Dim etroite = barre.DesiredSize.Width
+
+            barre.ActiveSection = "large"
+            MettreEnPage(barre)
+            MettreEnPage(barre)
+            Assert.That(barre.DesiredSize.Width, [Is].GreaterThan(etroite + 50))
+
+            ' De retour sur la section étroite, la barre reprend sa largeur : elle ne garde pas celle de la large.
+            barre.ActiveSection = "etroite"
+            MettreEnPage(barre)
+            MettreEnPage(barre)
+            Assert.That(barre.DesiredSize.Width, [Is].EqualTo(etroite).Within(0.5))
+        End Sub
+
+        <Test>
+        Public Sub SectionEtroite_CentreeDansLaBarre()
+            Dim un = Bouton("Un")
+            Dim barre = ActionBarTests.Barre(Section("a", un))
+            barre.Width = 600
+            MettreEnPage(barre)
+            Dim rangee = Partie(Of ItemsControl)(barre, "PART_Commands")
+
+            Dim milieu = rangee.TranslatePoint(New System.Windows.Point(rangee.ActualWidth / 2, 0), barre)
+
+            Assert.That(milieu.X, [Is].EqualTo(barre.ActualWidth / 2).Within(1))
+        End Sub
+
+        <Test>
         Public Sub CommandesFixes_EnTeteDeLaRangee()
             Dim fixe = Bouton("Fixe")
             Dim un = Bouton("Un")

@@ -93,6 +93,10 @@ Les évolutions notables de mkm-wpf, version par version. Le format suit
 
 - ActionBar : les commandes n'avaient ni icône ni libellé (un chemin de liaison
   `(local:…)` dont WPF ne trouvait pas le préfixe à l'exécution).
+- ActionBar : revenue d'une section large à une section étroite, la barre gardait
+  la largeur de la large ; elle suit désormais la section montrée.
+- DataTable : la case d'une colonne de cases, en lecture, levait une exception (le
+  style visait la `Checkbox` de mkm et non la `CheckBox` de WPF).
 - InputText : le retrait était posé deux fois (le texte décalé et rogné).
 - Tabs : le contenu d'un onglet prenait la couleur de son titre ; les titres des
   onglets « strip » étaient rognés.
