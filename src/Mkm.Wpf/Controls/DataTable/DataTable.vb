@@ -93,7 +93,7 @@ Namespace Mkm.Wpf.Controls
             For Each colonne In Columns.OfType(Of DataGridCheckBoxColumn)()
                 If colonne.ElementStyle Is Nothing OrElse colonne.ElementStyle Is DataGridCheckBoxColumn.DefaultElementStyle Then
                     ' En lecture, comme le style de WPF : la case ne se clique pas, la cellule passe en modification.
-                    Dim lecture As New Style(GetType(CheckBox), style)
+                    Dim lecture As New Style(GetType(System.Windows.Controls.CheckBox), style)
                     lecture.Setters.Add(New Setter(IsHitTestVisibleProperty, False))
                     lecture.Setters.Add(New Setter(FocusableProperty, False))
                     colonne.ElementStyle = lecture
