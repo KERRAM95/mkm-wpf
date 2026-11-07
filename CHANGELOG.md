@@ -114,6 +114,20 @@ Les évolutions notables de mkm-wpf, version par version. Le format suit
 
 ### Corrigé
 
+- Le contrôle qualité des lots 5 à 9 :
+  - `Menu` et `TieredMenu` : le survol prenait le focus (un champ le perdait) et
+    le `Menu` capturait la souris en mode menu ;
+  - `TreeGrid` : Suppr retirait une ligne de la vue ; replier un parent faisait
+    oublier le dépliage de ses descendants ;
+  - `Triptych` : un panneau ouvert par liaison en superposition laissait l'autre
+    ouvert ; fermé, il gardait le focus au lieu de le rendre à qui l'avait ouvert ;
+  - `TreeGrid` et `StateGraph` : leurs abonnements aux collections du modèle sont
+    faibles (un modèle qui survit à sa vue ne la retient plus) ;
+  - `Splitter` : le pas du clavier est en pixels, comme mkm ;
+  - `StateGraph` : les noms d'action mesurés dans leur police, la flèche survolée
+    remise à zéro quand une action commence ou finit, le focus gardé au redessin ;
+  - `WelcomePanel` : un `Header` donné remplace bien le titre et la description.
+
 - ActionBar : la liste d'une commande ne trouvait plus sa flèche depuis l'arrivée
   du `ToggleButton` de mkm (le nom cachait celui de WPF) ; `ActionBarToggleButton`
   hérite de nouveau du `ToggleButton` de WPF.

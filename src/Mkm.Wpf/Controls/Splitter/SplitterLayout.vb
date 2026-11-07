@@ -124,6 +124,14 @@ Namespace Mkm.Wpf.Controls
             Return finalSize
         End Function
 
+        ''' <summary>La place des panneaux, dans la longueur du séparateur : sa taille, moins les gouttières.</summary>
+        Friend ReadOnly Property PlaceDesPanneaux As Double
+            Get
+                If _splitter Is Nothing Then Return 0.0
+                Return Place(If(_splitter.Orientation = Orientation.Horizontal, ActualWidth, ActualHeight))
+            End Get
+        End Property
+
         ' La place des panneaux : la longueur, moins les gouttières.
         Private Function Place(longueur As Double) As Double
             Return Math.Max(0.0, longueur - _splitter.GutterSize * _gouttieres.Count)

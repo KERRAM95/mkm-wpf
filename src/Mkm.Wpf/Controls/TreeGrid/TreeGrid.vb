@@ -133,6 +133,8 @@ Namespace Mkm.Wpf.Controls
 
         Shared Sub New()
             DefaultStyleKeyProperty.OverrideMetadata(GetType(TreeGrid), New FrameworkPropertyMetadata(GetType(TreeGrid)))
+            ' Ses lignes sont les nœuds dépliés, non des données : Suppr ne les retire pas.
+            CanUserDeleteRowsProperty.OverrideMetadata(GetType(TreeGrid), New FrameworkPropertyMetadata(False))
         End Sub
 
         ''' <summary>Une grille arborescente vide.</summary>
@@ -342,7 +344,7 @@ Namespace Mkm.Wpf.Controls
         ''' </summary>
         Friend Sub Reconstruire()
             For Each ecoutee In _ecoutees
-                RemoveHandler ecoutee.CollectionChanged, AddressOf OnEnfantsChanged
+                CollectionChangedEventManager.RemoveHandler(ecoutee, AddressOf OnEnfantsChanged)
             Next
             _ecoutees.Clear()
             Ecouter(TryCast(Nodes, INotifyCollectionChanged))
@@ -350,12 +352,18 @@ Namespace Mkm.Wpf.Controls
             Dim lignes As New List(Of Object)
             Parcourir(Racines(), Nothing, 1, New List(Of Boolean), lignes)
 
-            ' Les nœuds qui ne sont plus dans l'arbre perdent leur place et leur dépliage.
-            Dim presents = New HashSet(Of Object)(_infos.Keys.Where(AddressOf DansLArbre))
-            For Each oublie In _infos.Keys.Except(presents).ToList()
-                _infos.Remove(oublie)
-                _deplies.Remove(oublie)
+            ' Un nœud caché perd sa place (elle revient avec lui) ; seul un nœud sorti de l'arbre perd son dépliage : un
+            ' descendant d'un parent replié garde le sien, comme les expandedKeys de mkm.
+            For Each cache In _infos.Keys.Where(Function(n) Not DansLArbre(n)).ToList()
+                _infos.Remove(cache)
             Next
+            Dim horsDeVue = _deplies.Where(Function(n) Not DansLArbre(n)).ToList()
+            If horsDeVue.Count > 0 Then
+                Dim tous = TousLesNoeuds()
+                For Each sorti In horsDeVue.Where(Function(n) Not tous.Contains(n))
+                    _deplies.Remove(sorti)
+                Next
+            End If
 
             Dim nouveaux = New HashSet(Of Object)(lignes)
             For i = _rangees.Count - 1 To 0 Step -1
@@ -369,6 +377,20 @@ Namespace Mkm.Wpf.Controls
         End Sub
 
         Private _vus As HashSet(Of Object)
+
+        ' Tous les nœuds de l'arbre, dépliés ou non.
+        Private Function TousLesNoeuds() As HashSet(Of Object)
+            Dim tous As New HashSet(Of Object)
+            Dim pile As New Stack(Of Object)(Racines())
+            While pile.Count > 0
+                Dim noeud = pile.Pop()
+                If Not tous.Add(noeud) Then Continue While
+                For Each enfant In EnfantsDe(noeud)
+                    pile.Push(enfant)
+                Next
+            End While
+            Return tous
+        End Function
 
         Private Function DansLArbre(noeud As Object) As Boolean
             Return _vus IsNot Nothing AndAlso _vus.Contains(noeud)
@@ -405,7 +427,8 @@ Namespace Mkm.Wpf.Controls
 
         Private Sub Ecouter(collection As INotifyCollectionChanged)
             If collection Is Nothing OrElse Not _ecoutees.Add(collection) Then Return
-            AddHandler collection.CollectionChanged, AddressOf OnEnfantsChanged
+            ' Un abonnement faible : un modèle qui survit à sa vue ne retient pas la grille.
+            CollectionChangedEventManager.AddHandler(collection, AddressOf OnEnfantsChanged)
         End Sub
 
         Private Sub OnEnfantsChanged(sender As Object, e As NotifyCollectionChangedEventArgs)

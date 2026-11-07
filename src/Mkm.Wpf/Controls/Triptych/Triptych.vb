@@ -136,6 +136,7 @@ Namespace Mkm.Wpf.Controls
         Private _fermerGauche As ButtonBase
         Private _fermerDroite As ButtonBase
         Private _droiteFermeeParLaPlace As Boolean
+        Private ReadOnly _ouvreurs As New System.Collections.Generic.Dictionary(Of TriptychSide, IInputElement)
         Private _tire As Boolean
 
         ''' <summary>Quand la mise en page passe en superposition, ou en sort.</summary>
@@ -498,13 +499,27 @@ Namespace Mkm.Wpf.Controls
             ' efface ce souvenir.
             If side = TriptychSide.Right Then _droiteFermeeParLaPlace = parLaPlace AndAlso Not ouvert
             SetCurrentValue(If(side = TriptychSide.Left, LeftVisibleProperty, RightVisibleProperty), ouvert)
-            If IsOverlay AndAlso ouvert Then
+        End Sub
+
+        ' En superposition, qu'un panneau s'ouvre d'un geste, d'une méthode ou d'une liaison : un seul à la fois (l'autre
+        ' cède, et reviendra avec la place), le focus y entre ; fermé, il rend le focus à l'élément qui l'avait ouvert
+        ' (restoreFocus de mkm), si le focus était resté en lui.
+        Private Sub Superposer(side As TriptychSide, ouvert As Boolean)
+            If Not IsOverlay Then Return
+            Dim panneau = If(side = TriptychSide.Left, _gauche, _droite)
+            If ouvert Then
                 Dim autre = If(side = TriptychSide.Left, TriptychSide.Right, TriptychSide.Left)
                 If EstOuvert(autre) Then ChangerLaVisibilite(autre, False, parLaPlace:=True)
-                ' Le focus passe dans le panneau ouvert.
-                Dim panneau = If(side = TriptychSide.Left, _gauche, _droite)
+                _ouvreurs(side) = Keyboard.FocusedElement
                 If panneau IsNot Nothing AndAlso Not panneau.IsKeyboardFocusWithin Then
                     Dispatcher.BeginInvoke(New Action(Sub() panneau.MoveFocus(New TraversalRequest(FocusNavigationDirection.First))))
+                End If
+            Else
+                Dim ouvreur As IInputElement = Nothing
+                _ouvreurs.TryGetValue(side, ouvreur)
+                _ouvreurs.Remove(side)
+                If ouvreur IsNot Nothing AndAlso panneau IsNot Nothing AndAlso panneau.IsKeyboardFocusWithin Then
+                    Dispatcher.BeginInvoke(New Action(Sub() ouvreur.Focus()))
                 End If
             End If
         End Sub
@@ -700,6 +715,8 @@ Namespace Mkm.Wpf.Controls
             End If
             ' Un geste de l'application sur le panneau de droite efface le souvenir de sa fermeture par la place.
             If e.Property Is RightVisibleProperty AndAlso CBool(e.NewValue) Then mise._droiteFermeeParLaPlace = False
+            If e.Property Is LeftVisibleProperty Then mise.Superposer(TriptychSide.Left, CBool(e.NewValue))
+            If e.Property Is RightVisibleProperty Then mise.Superposer(TriptychSide.Right, CBool(e.NewValue))
             mise.Placer(Not mise._tire)
         End Sub
 

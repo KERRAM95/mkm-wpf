@@ -163,7 +163,7 @@
                                 <StackPanel>
                                     <Border x:Name="EnTete" Padding="{DynamicResource mkm.welcomepanel.header.padding}">
                                         <Grid>
-                                            <StackPanel x:Name="TitreEtDescription">
+                                            <StackPanel x:Name="TitreEtDescription" Visibility="Collapsed">
                                                 <TextBlock x:Name="Titre" Text="{TemplateBinding Title}" TextWrapping="Wrap"
                                                            Margin="{DynamicResource mkm.welcomepanel.title.padding}"
                                                            Foreground="{DynamicResource mkm.welcomepanel.title.color}"
@@ -198,8 +198,10 @@
                             </MultiTrigger.Conditions>
                             <Setter TargetName="EnTete" Property="Visibility" Value="Collapsed" />
                         </MultiTrigger>
+                        <!-- Un en-tête donné remplace le titre et la description. -->
                         <Trigger Property="Header" Value="{x:Null}">
                             <Setter TargetName="EnTetePropre" Property="Visibility" Value="Collapsed" />
+                            <Setter TargetName="TitreEtDescription" Property="Visibility" Value="Visible" />
                         </Trigger>
                         <Trigger Property="Footer" Value="{x:Null}">
                             <Setter TargetName="Pied" Property="Visibility" Value="Collapsed" />

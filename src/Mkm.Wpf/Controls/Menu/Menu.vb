@@ -73,6 +73,19 @@ Namespace Mkm.Wpf.Controls
             Return TypeOf item Is MenuItem OrElse TypeOf item Is Separator OrElse TypeOf item Is MenuGroup
         End Function
 
+        ''' <summary>Le survol d'un élément le montre sans prendre le focus (<see cref="Colonne.RefuserLeSurvol"/>).</summary>
+        Protected Overrides Sub OnPreviewGotKeyboardFocus(e As System.Windows.Input.KeyboardFocusChangedEventArgs)
+            If Colonne.RefuserLeSurvol(e) Then Return
+            MyBase.OnPreviewGotKeyboardFocus(e)
+        End Sub
+
+        ''' <summary>
+        ''' Posé dans la page, le menu ne passe pas en mode menu quand le focus y entre : il ne capture pas la souris (le
+        ''' mode menu de <see cref="MenuBase"/> est celui d'un menu qui s'ouvre).
+        ''' </summary>
+        Protected Overrides Sub OnIsKeyboardFocusWithinChanged(e As DependencyPropertyChangedEventArgs)
+        End Sub
+
         ''' <inheritdoc/>
         Protected Overrides Sub OnItemsChanged(e As NotifyCollectionChangedEventArgs)
             MyBase.OnItemsChanged(e)
@@ -148,6 +161,12 @@ Namespace Mkm.Wpf.Controls
             AddHandler Loaded, Sub(s, e) Colonne.Poser(Me)
         End Sub
 
+        ''' <summary>Le survol d'un élément le montre (et ouvre son étage) sans prendre le focus.</summary>
+        Protected Overrides Sub OnPreviewGotKeyboardFocus(e As System.Windows.Input.KeyboardFocusChangedEventArgs)
+            If Colonne.RefuserLeSurvol(e) Then Return
+            MyBase.OnPreviewGotKeyboardFocus(e)
+        End Sub
+
         ''' <inheritdoc/>
         Protected Overrides Sub OnItemsChanged(e As NotifyCollectionChangedEventArgs)
             MyBase.OnItemsChanged(e)
@@ -162,6 +181,20 @@ Namespace Mkm.Wpf.Controls
 
         Private Sub New()
         End Sub
+
+        ''' <summary>
+        ''' Vrai, et le focus refusé, quand il vient du survol d'un élément (la souris, bouton relâché) : WPF donne le focus
+        ''' à l'élément de menu survolé, et celui qui tapait dans un champ le perdrait. Le survol reste montré
+        ''' (<c>IsHighlighted</c>) ; un clic et le clavier, eux, donnent le focus.
+        ''' </summary>
+        Friend Shared Function RefuserLeSurvol(e As System.Windows.Input.KeyboardFocusChangedEventArgs) As Boolean
+            If Not TypeOf e.NewFocus Is MenuItem Then Return False
+            If Not (System.Windows.Input.InputManager.Current.MostRecentInputDevice Is System.Windows.Input.Mouse.PrimaryDevice) Then Return False
+            If System.Windows.Input.Mouse.LeftButton = System.Windows.Input.MouseButtonState.Pressed OrElse
+               System.Windows.Input.Mouse.RightButton = System.Windows.Input.MouseButtonState.Pressed Then Return False
+            e.Handled = True
+            Return True
+        End Function
 
         Friend Shared Sub Poser(liste As ItemsControl)
             Dim elements = liste.Items.OfType(Of MenuItem)().

@@ -39,6 +39,10 @@ en étages, chaque étage s'ouvrant à droite du précédent.
   éléments dans le menu même ; ses traits prennent le style des menus.
 - **La colonne d'icône** se décide comme pour un menu contextuel (`MenuIcons`) :
   gardée si un élément du menu ou d'un groupe a une icône.
+- **Le survol ne prend pas le focus** : WPF donne le focus à l'élément de menu
+  survolé, et celui qui tapait dans un champ le perdrait. Le survol reste
+  montré ; un clic et le clavier donnent le focus. Posé dans la page, le `Menu`
+  ne passe pas en mode menu (celui d'un menu qui s'ouvre, qui capture la souris).
 - **Le menu qui s'ouvre d'un bouton** (`popup`) est un `ContextMenu`, déjà de mkm.
 
 ## L'API

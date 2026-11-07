@@ -209,10 +209,11 @@ Namespace Mkm.Wpf.Controls
 
         Private Shared Sub OnListeChanged(d As DependencyObject, e As DependencyPropertyChangedEventArgs)
             Dim graphe = DirectCast(d, StateGraph)
+            ' Un abonnement faible : un modèle qui survit à sa vue ne retient pas le graphe.
             Dim ancienne = TryCast(e.OldValue, INotifyCollectionChanged)
-            If ancienne IsNot Nothing Then RemoveHandler ancienne.CollectionChanged, AddressOf graphe.OnCollectionChanged
+            If ancienne IsNot Nothing Then CollectionChangedEventManager.RemoveHandler(ancienne, AddressOf graphe.OnCollectionChanged)
             Dim nouvelle = TryCast(e.NewValue, INotifyCollectionChanged)
-            If nouvelle IsNot Nothing Then AddHandler nouvelle.CollectionChanged, AddressOf graphe.OnCollectionChanged
+            If nouvelle IsNot Nothing Then CollectionChangedEventManager.AddHandler(nouvelle, AddressOf graphe.OnCollectionChanged)
             graphe.Dessiner()
         End Sub
 
@@ -221,7 +222,10 @@ Namespace Mkm.Wpf.Controls
         End Sub
 
         Private Shared Sub OnDonneesChanged(d As DependencyObject, e As DependencyPropertyChangedEventArgs)
-            DirectCast(d, StateGraph).Dessiner()
+            Dim graphe = DirectCast(d, StateGraph)
+            ' Une action commence ou finit : la flèche survolée avant elle redevient simple.
+            If e.Property Is PendingProperty Then graphe._survolee = Nothing
+            graphe.Dessiner()
         End Sub
 
         Private Function Ressource(cle As String) As Object
@@ -246,8 +250,12 @@ Namespace Mkm.Wpf.Controls
         ''' <summary>Refait le dessin : les états, les transitions, les actions et leurs noms (la géométrie de mkm).</summary>
         Friend Sub Dessiner()
             If _toile Is Nothing Then Return
+            ' Le nom d'action qui a le focus le garde à travers le redessin (celui de son action, redessiné).
+            Dim focalise = TryCast(TryCast(Keyboard.FocusedElement, TextBlock)?.Tag, StateGraphAction)
+            If focalise IsNot Nothing AndAlso Not _toile.IsKeyboardFocusWithin Then focalise = Nothing
             _toile.Children.Clear()
             _traits.Clear()
+            If focalise IsNot Nothing Then Dispatcher.BeginInvoke(New Action(Sub() Refocaliser(focalise.To)))
             Dim lesEtats = If(States, Enumerable.Empty(Of Object)()).OfType(Of StateGraphState)().ToList()
             Dim lesTransitions = If(Transitions, Enumerable.Empty(Of Object)()).OfType(Of StateGraphTransition)().ToList()
             Dim index As New Dictionary(Of String, Integer)
@@ -320,6 +328,12 @@ Namespace Mkm.Wpf.Controls
             Next
         End Sub
 
+        Private Sub Refocaliser(cible As String)
+            If _toile Is Nothing Then Return
+            Dim nom = _toile.Children.OfType(Of TextBlock)().FirstOrDefault(Function(t) TryCast(t.Tag, StateGraphAction)?.To = cible)
+            If nom IsNot Nothing AndAlso nom.Focusable Then nom.Focus()
+        End Sub
+
         ' Une flèche : son trait, et sa pointe ouverte au bout (le marqueur de mkm, 7 × 6 px).
         Private Function Fleche(points As Point(), pinceau As Brush, epaisseur As Double, cible As String) As Path
             Dim figure As New PathFigure With {.StartPoint = points(0), .IsFilled = False}
@@ -371,6 +385,8 @@ Namespace Mkm.Wpf.Controls
                 nom.Inlines.Add(New Run(a.Label & " "))
                 nom.Inlines.Add(drapeau)
             End If
+            ' Mesuré dans la toile : dans la police qu'il en hérite, celle du thème.
+            _toile.Children.Add(nom)
             nom.Measure(New Size(Double.PositiveInfinity, Double.PositiveInfinity))
             ' Le point (x, y) est la ligne de base du nom, comme en SVG : le texte commence là, ou y finit.
             Dim ligneDeBase = nom.BaselineOffset
@@ -389,7 +405,6 @@ Namespace Mkm.Wpf.Controls
                                             InvokeAction(a)
                                         End If
                                     End Sub
-            _toile.Children.Add(nom)
         End Sub
 
         ' Survolé ou au clavier, le nom d'une action active sa flèche ; la précédente redevient simple (sauf celle de l'action

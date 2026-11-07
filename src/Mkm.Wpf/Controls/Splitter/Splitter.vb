@@ -15,7 +15,7 @@ Namespace Mkm.Wpf.Controls
     ''' Le séparateur de panneaux de mkm (<c>Splitter</c>) : des panneaux (<see cref="SplitterPanel"/>) côte à côte ou
     ''' l'un sous l'autre, séparés d'une gouttière grise de 4 px qu'on tire pour partager la place ; au survol, au
     ''' clavier ou pendant qu'on la tire, une pilule grise paraît au milieu. Les flèches la déplacent par pas
-    ''' (<see cref="[Step]"/>, en pourcentage).
+    ''' (<see cref="[Step]"/>, en pixels, comme mkm).
     ''' <code>
     ''' &lt;mkm:Splitter&gt;
     '''     &lt;mkm:SplitterPanel Size="30" MinSize="20"&gt;…&lt;/mkm:SplitterPanel&gt;
@@ -41,7 +41,7 @@ Namespace Mkm.Wpf.Controls
         Public Shared ReadOnly GutterSizeProperty As DependencyProperty = DependencyProperty.Register(
             NameOf(GutterSize), GetType(Double), GetType(Splitter), New FrameworkPropertyMetadata(4.0, FrameworkPropertyMetadataOptions.AffectsMeasure))
 
-        ''' <summary>Le pas d'une flèche du clavier sur une gouttière, en pourcentage (5 par défaut).</summary>
+        ''' <summary>Le pas d'une flèche du clavier sur une gouttière, en pixels (5 par défaut, comme mkm).</summary>
         Public Shared ReadOnly StepProperty As DependencyProperty = DependencyProperty.Register(
             NameOf([Step]), GetType(Double), GetType(Splitter), New FrameworkPropertyMetadata(5.0))
 
@@ -88,7 +88,7 @@ Namespace Mkm.Wpf.Controls
             End Set
         End Property
 
-        ''' <summary>Le pas d'une flèche du clavier sur une gouttière, en pourcentage.</summary>
+        ''' <summary>Le pas d'une flèche du clavier sur une gouttière, en pixels.</summary>
         Public Property [Step] As Double
             Get
                 Return CDbl(GetValue(StepProperty))
@@ -149,6 +149,12 @@ Namespace Mkm.Wpf.Controls
             avant.Size = nouvelle
             apres.Size = paire - nouvelle
         End Sub
+
+        ''' <summary>Le pas du clavier, rapporté à la place des panneaux : un pourcentage.</summary>
+        Friend Function PasEnPourcentage() As Double
+            Dim place = If(_disposition Is Nothing, 0.0, _disposition.PlaceDesPanneaux)
+            Return If(place > 0, [Step] * 100 / place, 0.0)
+        End Function
 
         Friend Sub FinirLeDeplacement()
             RaiseEvent ResizeEnd(Me, EventArgs.Empty)
@@ -276,9 +282,9 @@ Namespace Mkm.Wpf.Controls
             Dim recule = If(horizontal, Key.Left, Key.Up)
             Select Case e.Key
                 Case avance
-                    s.Deplacer(Index, s.Step)
+                    s.Deplacer(Index, s.PasEnPourcentage())
                 Case recule
-                    s.Deplacer(Index, -s.Step)
+                    s.Deplacer(Index, -s.PasEnPourcentage())
                 Case Key.Home
                     s.Deplacer(Index, -100)
                 Case Key.End

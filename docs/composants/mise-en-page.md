@@ -40,7 +40,7 @@ faire quand un panneau n'a rien à montrer.
 - **Splitter** (styles de PrimeVue, jetons de Nora et de mkm) :
   - **les panneaux :** en pourcentages, avec une taille minimale ;
   - **les gouttières :** gris clair, 4 px ; une pilule grise au survol, pendant qu'on tire ou au clavier ;
-    le clavier par pas de 5 %.
+    le clavier par pas de 5 px.
 - **EmptyContent** (preset `emptycontent`) : l'écran vide.
   - **le bloc :** centré, 420 px au plus ; une icône grise de 32 px, un titre de 16 px semi-gras, un message gris ;
   - **les possibilités :** chacune son icône dans une pastille ronde de 48 px de la couleur principale pâlie ;
