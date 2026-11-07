@@ -14,6 +14,7 @@
         <Setter Property="Background" Value="{DynamicResource mkm.inputtext.background}" />
         <Setter Property="BorderBrush" Value="{DynamicResource mkm.inputtext.border.color}" />
         <Setter Property="BorderThickness" Value="1" />
+        <Setter Property="CornerRadius" Value="{DynamicResource mkm.inputtext.border.radius}" />
         <Setter Property="Foreground" Value="{DynamicResource mkm.inputtext.color}" />
         <Setter Property="CaretBrush" Value="{DynamicResource mkm.inputtext.color}" />
         <Setter Property="FontFamily" Value="{DynamicResource mkm.font.family}" />
@@ -29,7 +30,7 @@
                             Background="{TemplateBinding Background}"
                             BorderBrush="{TemplateBinding BorderBrush}"
                             BorderThickness="{TemplateBinding BorderThickness}"
-                            CornerRadius="{DynamicResource mkm.inputtext.border.radius}">
+                            CornerRadius="{TemplateBinding CornerRadius}">
                         <Grid>
                             <!-- Le texte d'aide, sur la ligne du texte saisi : le même retrait, et les 2 px dont
                                  WPF retire le texte. -->

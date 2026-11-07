@@ -543,4 +543,79 @@
   <data name="showcase.tree.rightClick" xml:space="preserve">
     <value>Right click here</value>
   </data>
+  <data name="showcase.nav.identity" xml:space="preserve">
+    <value>Identity and choices</value>
+  </data>
+  <data name="showcase.identity.title" xml:space="preserve">
+    <value>Identity, tags, choices and numbers</value>
+  </data>
+  <data name="showcase.identity.help" xml:space="preserve">
+    <value>The identity card of a 3DEXPERIENCE object, the tags of the grid, the choice by buttons and the input of a number. The colour of a maturity comes from the application, not from the library.</value>
+  </data>
+  <data name="showcase.identity.card" xml:space="preserve">
+    <value>IdCard</value>
+  </data>
+  <data name="showcase.identity.drawing" xml:space="preserve">
+    <value>Gearbox housing</value>
+  </data>
+  <data name="showcase.identity.typeDrawing" xml:space="preserve">
+    <value>Drawing</value>
+  </data>
+  <data name="showcase.identity.typePart" xml:space="preserve">
+    <value>Physical product</value>
+  </data>
+  <data name="showcase.identity.inWork" xml:space="preserve">
+    <value>In Work</value>
+  </data>
+  <data name="showcase.identity.released" xml:space="preserve">
+    <value>Released</value>
+  </data>
+  <data name="showcase.identity.modified" xml:space="preserve">
+    <value>Modified 07/11/2026</value>
+  </data>
+  <data name="showcase.identity.part" xml:space="preserve">
+    <value>Gearbox housing — machined part</value>
+  </data>
+  <data name="showcase.identity.tags" xml:space="preserve">
+    <value>Tag</value>
+  </data>
+  <data name="showcase.identity.upToDate" xml:space="preserve">
+    <value>Up to date</value>
+  </data>
+  <data name="showcase.identity.policy" xml:space="preserve">
+    <value>Colour of the application</value>
+  </data>
+  <data name="showcase.identity.choices" xml:space="preserve">
+    <value>SelectButton</value>
+  </data>
+  <data name="showcase.identity.single" xml:space="preserve">
+    <value>One choice (a new click removes it)</value>
+  </data>
+  <data name="showcase.identity.multiple" xml:space="preserve">
+    <value>Several choices, with icons</value>
+  </data>
+  <data name="showcase.identity.drawingChoice" xml:space="preserve">
+    <value>Drawing</value>
+  </data>
+  <data name="showcase.identity.articleChoice" xml:space="preserve">
+    <value>Article</value>
+  </data>
+  <data name="showcase.identity.both" xml:space="preserve">
+    <value>Both</value>
+  </data>
+  <data name="showcase.identity.numbers" xml:space="preserve">
+    <value>InputNumber</value>
+  </data>
+  <data name="showcase.identity.mass" xml:space="preserve">
+    <value>Mass (2 decimals, kg)</value>
+  </data>
+  <data name="showcase.identity.sheets" xml:space="preserve">
+    <value>Sheets (1 to 10, stacked buttons)</value>
+  </data>
+  <data name="showcase.identity.quantity" xml:space="preserve">
+    <value>Quantity (horizontal buttons)</value>
+  </data>
+  <data name="showcase.identity.count" xml:space="preserve">
+    <value>Count</value>
+  </data>
 </root>

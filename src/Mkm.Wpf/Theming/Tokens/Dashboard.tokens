@@ -897,6 +897,62 @@ fieldset.toggle.icon.color = {text.muted.color}
 fieldset.toggle.icon.hover.color = {text.hover.muted.color}
 fieldset.content.padding = 0
 
+# idcard
+idcard.background = transparent
+idcard.color = {text.color}
+idcard.gap = 0
+idcard.header.gap = 12px
+idcard.header.padding = 12px
+idcard.thumbnail.width = 72px
+idcard.thumbnail.height = 72px
+idcard.thumbnail.border.radius = 8px
+idcard.thumbnail.background = {surface.100}
+idcard.thumbnail.padding = 8px
+idcard.body.gap = 4px
+idcard.title.color = {text.color}
+idcard.title.font.size = 16px
+idcard.title.line.height = 24px
+idcard.title.font.weight = 600
+idcard.small.title.font.size = 14px
+idcard.small.title.line.height = 24px
+idcard.revision.gap = 8px
+idcard.revision.font.weight = 500
+idcard.revision.color = {text.muted.color}
+idcard.revision.background = {surface.100}
+idcard.revision.padding = 0 6px
+idcard.revision.border.radius = 6px
+idcard.revision.font.size = 12px
+idcard.revision.line.height = 20px
+idcard.actions.gap = 8px
+idcard.actions.button.size = 24px
+idcard.actions.icon.size = 16px
+idcard.details.gap = 2px 12px
+idcard.details.color = {text.muted.color}
+idcard.details.font.size = 12px
+idcard.owner.color = {text.color}
+idcard.type.gap = 5px
+idcard.type.icon.size = 16px
+idcard.facets.margin = 0 5px
+idcard.facet.padding = 8px
+idcard.facet.icon.size = 16px
+idcard.facet.invalid.color = #ea4f37
+idcard.facet.content.padding = 0
+
+# inputnumber
+inputnumber.transition.duration = {transition.duration}
+inputnumber.button.background = transparent
+inputnumber.button.border.color = {form.field.border.color}
+inputnumber.button.hover.border.color = {form.field.border.color}
+inputnumber.button.active.border.color = {form.field.border.color}
+inputnumber.button.color = {form.field.icon.color}
+inputnumber.button.hover.color = {form.field.icon.color}
+inputnumber.button.active.color = {form.field.icon.color}
+inputnumber.button.width = 30px
+inputnumber.button.border.radius = {form.field.border.radius}
+inputnumber.button.vertical.padding = {form.field.padding.y}
+inputnumber.button.hover.background = {surface.200}
+inputnumber.button.active.background = {surface.300}
+
 # inputtext
 inputtext.background = {form.field.background}
 inputtext.disabled.background = {form.field.disabled.background}
@@ -1189,6 +1245,10 @@ select.checkmark.gutter.start = -4.5px
 select.checkmark.gutter.end = 4.5px
 select.empty.message.padding = {list.option.padding}
 
+# selectbutton
+selectbutton.border.radius = 4px
+selectbutton.invalid.border.color = {form.field.invalid.border.color}
+
 # tabs
 tabs.transition.duration = {transition.duration}
 tabs.tablist.border.width = 0
@@ -1234,6 +1294,29 @@ tabs.active.bar.height = 0
 tabs.active.bar.bottom = 0
 tabs.active.bar.background = transparent
 tabs.nav.button.shadow = 0px 0px 10px 50px rgba(255, 255, 255, 0.6)
+
+# tag
+tag.font.size = 12px
+tag.font.weight = 400
+tag.padding = 2px 3px
+tag.gap = 4px
+tag.border.radius = {border.radius.none}
+tag.rounded.border.radius = {border.radius.xl}
+tag.icon.size = 12px
+tag.primary.background = {primary.600}
+tag.primary.color = #ffffff
+tag.secondary.background = {surface.200}
+tag.secondary.color = {text.color}
+tag.success.background = color-mix(in srgb, {status.success} 70%, #000)
+tag.success.color = #ffffff
+tag.info.background = color-mix(in srgb, {status.info} 70%, #000)
+tag.info.color = #ffffff
+tag.warn.background = color-mix(in srgb, {status.warn} 70%, #000)
+tag.warn.color = #ffffff
+tag.danger.background = color-mix(in srgb, {status.danger} 70%, #000)
+tag.danger.color = #ffffff
+tag.contrast.background = {surface.700}
+tag.contrast.color = {surface.0}
 
 # textarea
 textarea.background = {form.field.background}
@@ -1337,6 +1420,45 @@ toast.contrast.shadow = 0px 4px 8px 0px color-mix(in srgb, {surface.950}, transp
 toast.contrast.close.button.hover.background = {surface.700}
 toast.contrast.close.button.focus.ring.color = {surface.50}
 toast.contrast.close.button.focus.ring.shadow = none
+
+# togglebutton
+togglebutton.padding = 4px 12px
+togglebutton.border.radius = 4px
+togglebutton.gap = 6px
+togglebutton.font.weight = 400
+togglebutton.background = {surface.0}
+togglebutton.border.color = {surface.400}
+togglebutton.color = {text.color}
+togglebutton.hover.color = {text.color}
+togglebutton.checked.background = {highlight.background}
+togglebutton.checked.color = {highlight.color}
+togglebutton.checked.border.color = {primary.color}
+togglebutton.disabled.background = {surface.0}
+togglebutton.disabled.border.color = {surface.400}
+togglebutton.disabled.color = {text.color}
+togglebutton.invalid.border.color = {form.field.invalid.border.color}
+togglebutton.focus.ring.width = {focus.ring.width}
+togglebutton.focus.ring.style = {focus.ring.style}
+togglebutton.focus.ring.color = {focus.ring.color}
+togglebutton.focus.ring.offset = {focus.ring.offset}
+togglebutton.focus.ring.shadow = {focus.ring.shadow}
+togglebutton.transition.duration = {transition.duration}
+togglebutton.font.size = 12px
+togglebutton.sm.font.size = 12px
+togglebutton.sm.padding = 2px 8px
+togglebutton.lg.font.size = 14px
+togglebutton.lg.padding = 6px 16px
+togglebutton.icon.color = {text.muted.color}
+togglebutton.icon.hover.color = {text.muted.color}
+togglebutton.icon.checked.color = {highlight.color}
+togglebutton.icon.disabled.color = {text.muted.color}
+togglebutton.content.checked.background = transparent
+togglebutton.content.checked.shadow = none
+togglebutton.content.padding = 0
+togglebutton.content.border.radius = 0
+togglebutton.content.sm.padding = 0
+togglebutton.content.lg.padding = 0
+togglebutton.hover.background = {surface.100}
 
 # tooltip
 tooltip.max.width = 150px

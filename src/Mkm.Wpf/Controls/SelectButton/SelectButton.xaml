@@ -1,0 +1,131 @@
+<!--
+    Les styles de SelectButton et de SelectButtonItem, sur le choix par boutons de 3DEXPERIENCE de mkm (presets
+    dashboard et ara, selectbutton et togglebutton) : des boutons collés, 24 px de haut, 4 px sur 12 de retrait, un
+    libellé de 12 px en graisse normale, une icône grise à 6 px de lui ; au repos blancs, bordés du gris du bouton
+    secondaire, une seule bordure entre deux voisins ; survolés, gris clair ; choisis, le fond bleu pâle de la
+    sélection, le texte foncé, la bordure de la couleur principale, qui recouvre aussi celle du voisin de gauche ; les
+    coins de 4 px aux bouts du groupe ; au clavier, l'anneau du focus ; grisés, à moitié transparents.
+-->
+<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+                    xmlns:local="clr-namespace:Mkm.Wpf.Controls">
+
+    <Style TargetType="{x:Type local:SelectButton}">
+        <Setter Property="SelectionMode" Value="Single" />
+        <Setter Property="FontFamily" Value="{DynamicResource mkm.font.family}" />
+        <Setter Property="FontSize" Value="{DynamicResource mkm.togglebutton.font.size}" />
+        <Setter Property="HorizontalAlignment" Value="Left" />
+        <Setter Property="ScrollViewer.HorizontalScrollBarVisibility" Value="Disabled" />
+        <Setter Property="ScrollViewer.VerticalScrollBarVisibility" Value="Disabled" />
+        <Setter Property="KeyboardNavigation.DirectionalNavigation" Value="Cycle" />
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="{x:Type local:SelectButton}">
+                    <Grid>
+                        <StackPanel IsItemsHost="True" Orientation="Horizontal" />
+                        <Border x:Name="Erreur" Visibility="Collapsed" BorderThickness="1"
+                                BorderBrush="{DynamicResource mkm.selectbutton.invalid.border.color}"
+                                CornerRadius="{DynamicResource mkm.selectbutton.border.radius}" IsHitTestVisible="False" />
+                    </Grid>
+                    <ControlTemplate.Triggers>
+                        <Trigger Property="Invalid" Value="True">
+                            <Setter TargetName="Erreur" Property="Visibility" Value="Visible" />
+                        </Trigger>
+                        <Trigger Property="IsEnabled" Value="False">
+                            <Setter Property="Opacity" Value="{DynamicResource mkm.disabled.opacity}" />
+                        </Trigger>
+                    </ControlTemplate.Triggers>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+
+    <Style TargetType="{x:Type local:SelectButtonItem}">
+        <Setter Property="Height" Value="{DynamicResource mkm.togglebutton.height}" />
+        <Setter Property="Padding" Value="{DynamicResource mkm.togglebutton.padding}" />
+        <Setter Property="Background" Value="{DynamicResource mkm.togglebutton.background}" />
+        <Setter Property="BorderBrush" Value="{DynamicResource mkm.togglebutton.border.color}" />
+        <Setter Property="Foreground" Value="{DynamicResource mkm.togglebutton.color}" />
+        <Setter Property="FontWeight" Value="{DynamicResource mkm.togglebutton.font.weight}" />
+        <Setter Property="FocusVisualStyle" Value="{x:Null}" />
+        <Setter Property="Cursor" Value="Hand" />
+        <Setter Property="SnapsToDevicePixels" Value="True" />
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="{x:Type local:SelectButtonItem}">
+                    <Grid>
+                        <Border x:Name="Fond" BorderThickness="0,1,1,1"
+                                Background="{TemplateBinding Background}" BorderBrush="{TemplateBinding BorderBrush}"
+                                Padding="{TemplateBinding Padding}">
+                            <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" VerticalAlignment="Center">
+                                <local:Icon x:Name="Icone" Source="{TemplateBinding Icon}" VerticalAlignment="Center"
+                                            Width="{DynamicResource mkm.icon.size}" Height="{DynamicResource mkm.icon.size}"
+                                            Foreground="{DynamicResource mkm.togglebutton.icon.color}" />
+                                <Rectangle x:Name="Ecart" Width="{DynamicResource mkm.togglebutton.gap}" />
+                                <ContentPresenter x:Name="Libelle" VerticalAlignment="Center" />
+                            </StackPanel>
+                        </Border>
+                        <!-- Choisi, il recouvre de la couleur principale la bordure qu'il partage avec son voisin. -->
+                        <Rectangle x:Name="Recouvre" Visibility="Collapsed" HorizontalAlignment="Left" Width="1" Margin="-1,0,0,0"
+                                   Fill="{DynamicResource mkm.togglebutton.checked.border.color}" />
+                        <Rectangle x:Name="Anneau" Margin="-2" Visibility="Collapsed"
+                                   Stroke="{DynamicResource mkm.togglebutton.focus.ring.color}"
+                                   StrokeThickness="{DynamicResource mkm.togglebutton.focus.ring.width}" />
+                    </Grid>
+                    <ControlTemplate.Triggers>
+                        <Trigger Property="Icon" Value="{x:Null}">
+                            <Setter TargetName="Icone" Property="Visibility" Value="Collapsed" />
+                            <Setter TargetName="Ecart" Property="Visibility" Value="Collapsed" />
+                        </Trigger>
+                        <Trigger Property="HasContent" Value="False">
+                            <Setter TargetName="Ecart" Property="Visibility" Value="Collapsed" />
+                        </Trigger>
+                        <Trigger Property="IsFirst" Value="True">
+                            <Setter TargetName="Fond" Property="BorderThickness" Value="1" />
+                            <Setter TargetName="Fond" Property="CornerRadius" Value="{DynamicResource mkm.togglebutton.first.border.radius}" />
+                        </Trigger>
+                        <Trigger Property="IsLast" Value="True">
+                            <Setter TargetName="Fond" Property="CornerRadius" Value="{DynamicResource mkm.togglebutton.last.border.radius}" />
+                        </Trigger>
+                        <MultiTrigger>
+                            <MultiTrigger.Conditions>
+                                <Condition Property="IsFirst" Value="True" />
+                                <Condition Property="IsLast" Value="True" />
+                            </MultiTrigger.Conditions>
+                            <Setter TargetName="Fond" Property="CornerRadius" Value="{DynamicResource mkm.selectbutton.border.radius}" />
+                        </MultiTrigger>
+                        <Trigger Property="IsMouseOver" Value="True">
+                            <Setter Property="Background" Value="{DynamicResource mkm.togglebutton.hover.background}" />
+                            <Setter Property="Foreground" Value="{DynamicResource mkm.togglebutton.hover.color}" />
+                            <Setter TargetName="Icone" Property="Foreground" Value="{DynamicResource mkm.togglebutton.icon.hover.color}" />
+                        </Trigger>
+                        <Trigger Property="IsSelected" Value="True">
+                            <Setter Property="Background" Value="{DynamicResource mkm.togglebutton.checked.background}" />
+                            <Setter Property="BorderBrush" Value="{DynamicResource mkm.togglebutton.checked.border.color}" />
+                            <Setter Property="Foreground" Value="{DynamicResource mkm.togglebutton.checked.color}" />
+                            <Setter TargetName="Icone" Property="Foreground" Value="{DynamicResource mkm.togglebutton.icon.checked.color}" />
+                        </Trigger>
+                        <MultiTrigger>
+                            <MultiTrigger.Conditions>
+                                <Condition Property="IsSelected" Value="True" />
+                                <Condition Property="IsFirst" Value="False" />
+                            </MultiTrigger.Conditions>
+                            <Setter TargetName="Recouvre" Property="Visibility" Value="Visible" />
+                            <Setter Property="Panel.ZIndex" Value="1" />
+                        </MultiTrigger>
+                        <!-- Au clavier (le focus sans le pointeur dessus), l'anneau du focus, devant ses voisins. -->
+                        <MultiTrigger>
+                            <MultiTrigger.Conditions>
+                                <Condition Property="IsKeyboardFocused" Value="True" />
+                                <Condition Property="IsMouseOver" Value="False" />
+                            </MultiTrigger.Conditions>
+                            <Setter TargetName="Anneau" Property="Visibility" Value="Visible" />
+                            <Setter Property="Panel.ZIndex" Value="2" />
+                        </MultiTrigger>
+                    </ControlTemplate.Triggers>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+
+</ResourceDictionary>

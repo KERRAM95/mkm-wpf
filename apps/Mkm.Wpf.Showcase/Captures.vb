@@ -65,7 +65,8 @@ Namespace Mkm.Wpf.Showcase
                 Page("6-attente", Function() New AttentePage()),
                 Page("7-saisie", Function() New SaisiePage()),
                 Page("8-fiche", Function() New FichePage()),
-                Page("9-arbre", Function() New ArbrePage())
+                Page("9-arbre", Function() New ArbrePage()),
+                Page("10-identite", Function() New IdentitePage())
             }
 
             For Each theme In Themes.All

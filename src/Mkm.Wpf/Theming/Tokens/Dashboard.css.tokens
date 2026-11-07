@@ -200,3 +200,33 @@ contextmenu.submenu.offset = -1px
 contextmenu.window.padding = 0 2px 3px 2px
 # l'info-bulle au-dessus d'une commande de l'ActionBar (position « top ») : sa flèche dessous ; la place de l'ombre.
 tooltip.top.window.padding = 1px 2px 0 2px
+
+# idcard (styles/idcard, preset dashboard/idcard) : les écarts de la feuille (gap, margin-inline-start) en marges ; les
+# détails à 12 px les uns des autres et 2 px entre leurs lignes (details.gap). idcard.thumbnail.icon.size est une
+# mesure de mkm-wpf : une géométrie donnée pour vignette, dessinée à 40 px dans la tuile de 72.
+idcard.thumbnail.margin = 0 {idcard.header.gap} 0 0
+idcard.thumbnail.icon.size = 40px
+idcard.revision.margin = 0 0 0 {idcard.revision.gap}
+idcard.actions.margin = 0 0 0 {idcard.actions.gap}
+idcard.actions.button.margin = 0 0 0 {idcard.actions.gap}
+idcard.details.margin = {idcard.body.gap} 0 0 0
+idcard.details.item.margin = 0 12px 2px 0
+idcard.type.icon.margin = 0 {idcard.type.gap} 0 0
+
+# togglebutton et selectbutton (presets dashboard/togglebutton, selectbutton) : 24 px de haut (4 + 14 + 4 et la bordure) ;
+# dans un groupe, le bouton enfoncé recouvre de la couleur principale la bordure qu'il partage avec son voisin de
+# gauche ; grisé, à moitié transparent.
+togglebutton.height = 24px
+togglebutton.first.border.radius = {selectbutton.border.radius} 0 0 {selectbutton.border.radius}
+togglebutton.last.border.radius = 0 {selectbutton.border.radius} {selectbutton.border.radius} 0
+
+# inputnumber (styles/inputnumber, jetons de Nora) : les boutons empilés dans le champ, à l'intérieur de sa bordure,
+# coins de 1 px de moins ; le texte s'arrête avant eux (la largeur des boutons et le retrait des champs : 30 + 7 px) ;
+# à l'horizontale, moins à gauche et plus à droite, bordés, le champ sans coins. inputnumber.button.icon.size est une
+# mesure de mkm-wpf : la flèche tient dans la moitié d'un champ de 24 px.
+inputnumber.stacked.input.padding = 4px 37px 5px 6px
+inputnumber.stacked.up.border.radius = 0 1px 0 0
+inputnumber.stacked.down.border.radius = 0 0 1px 0
+inputnumber.button.icon.size = 10px
+inputnumber.horizontal.decrement.border.radius = {inputnumber.button.border.radius} 0 0 {inputnumber.button.border.radius}
+inputnumber.horizontal.increment.border.radius = 0 {inputnumber.button.border.radius} {inputnumber.button.border.radius} 0

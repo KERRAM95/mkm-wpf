@@ -16,13 +16,17 @@
         <ResourceDictionary Source="/Mkm.Wpf;component/Controls/DatePicker/DatePicker.xaml" />
         <ResourceDictionary Source="/Mkm.Wpf;component/Controls/Dialog/Dialog.xaml" />
         <ResourceDictionary Source="/Mkm.Wpf;component/Controls/Fieldset/Fieldset.xaml" />
+        <ResourceDictionary Source="/Mkm.Wpf;component/Controls/IdCard/IdCard.xaml" />
+        <ResourceDictionary Source="/Mkm.Wpf;component/Controls/InputNumber/InputNumber.xaml" />
         <ResourceDictionary Source="/Mkm.Wpf;component/Controls/InputText/InputText.xaml" />
         <ResourceDictionary Source="/Mkm.Wpf;component/Controls/Message/Message.xaml" />
         <ResourceDictionary Source="/Mkm.Wpf;component/Controls/ProgressBar/ProgressBar.xaml" />
         <ResourceDictionary Source="/Mkm.Wpf;component/Controls/ProgressSpinner/ProgressSpinner.xaml" />
         <ResourceDictionary Source="/Mkm.Wpf;component/Controls/PropertyPanel/PropertyPanel.xaml" />
         <ResourceDictionary Source="/Mkm.Wpf;component/Controls/Select/Select.xaml" />
+        <ResourceDictionary Source="/Mkm.Wpf;component/Controls/SelectButton/SelectButton.xaml" />
         <ResourceDictionary Source="/Mkm.Wpf;component/Controls/Tabs/Tabs.xaml" />
+        <ResourceDictionary Source="/Mkm.Wpf;component/Controls/Tag/Tag.xaml" />
         <ResourceDictionary Source="/Mkm.Wpf;component/Controls/Textarea/Textarea.xaml" />
         <ResourceDictionary Source="/Mkm.Wpf;component/Controls/Toast/Toast.xaml" />
         <ResourceDictionary Source="/Mkm.Wpf;component/Controls/Tree/Tree.xaml" />

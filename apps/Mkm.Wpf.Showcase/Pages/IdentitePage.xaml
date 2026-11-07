@@ -1,0 +1,132 @@
+<!--
+    La page de l'identité et des choix : IdCard (une carte complète, avec la couleur de maturité que l'application
+    donne ; une petite, sa maturité sans couleur ; une repliée), Tag, SelectButton et InputNumber.
+-->
+<UserControl x:Class="Mkm.Wpf.Showcase.IdentitePage"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:sys="clr-namespace:System;assembly=mscorlib"
+             xmlns:mkm="urn:mkm-wpf">
+    <UserControl.Resources>
+        <Style x:Key="Titre" TargetType="TextBlock">
+            <Setter Property="Margin" Value="0,16,0,8" />
+            <Setter Property="FontWeight" Value="Bold" />
+        </Style>
+        <Style x:Key="Libelle" TargetType="TextBlock">
+            <Setter Property="Margin" Value="0,8,0,4" />
+            <Setter Property="Foreground" Value="{DynamicResource mkm.text.muted.color}" />
+        </Style>
+        <Style TargetType="mkm:Tag">
+            <Setter Property="Margin" Value="0,0,8,0" />
+        </Style>
+        <!-- La politique de l'application : les couleurs de ses maturités (ici, celles de 3DEXPERIENCE). -->
+        <SolidColorBrush x:Key="MaturiteEnCours" Color="#007DA3" />
+        <SolidColorBrush x:Key="MaturiteValidee" Color="#018308" />
+    </UserControl.Resources>
+    <ScrollViewer VerticalScrollBarVisibility="Auto">
+        <StackPanel Margin="24,20" MaxWidth="640" HorizontalAlignment="Left">
+            <TextBlock FontSize="16" FontWeight="Bold"
+                       Foreground="{DynamicResource mkm.primary.color}" Text="{mkm:T showcase.identity.title}" />
+            <TextBlock Margin="0,6,0,0" TextWrapping="Wrap"
+                       Foreground="{DynamicResource mkm.text.muted.color}" Text="{mkm:T showcase.identity.help}" />
+
+            <TextBlock Style="{StaticResource Titre}" Text="{mkm:T showcase.identity.card}" />
+            <Border BorderThickness="1" BorderBrush="{DynamicResource mkm.content.border.color}">
+                <StackPanel>
+                    <mkm:IdCard Title="{mkm:T showcase.identity.drawing}" Revision="A" Owner="M. Kerram"
+                                Type="{mkm:T showcase.identity.typeDrawing}" TypeIcon="{x:Static mkm:Icons.Drawings}"
+                                Thumbnail="{x:Static mkm:Icons.Drawings}"
+                                Maturity="{mkm:T showcase.identity.inWork}" MaturityColor="{StaticResource MaturiteEnCours}"
+                                Closable="True">
+                        <mkm:IdCard.Details>
+                            <sys:String>HS-00042</sys:String>
+                            <TextBlock Text="{mkm:T showcase.identity.modified}" />
+                        </mkm:IdCard.Details>
+                        <mkm:IdCard.Actions>
+                            <mkm:Button Variant="Text" Severity="Secondary" Icon="{x:Static mkm:Icons.Refresh}" Padding="4"
+                                        Width="24" Height="24" ToolTip="{mkm:T showcase.actionbar.refresh}" />
+                        </mkm:IdCard.Actions>
+                        <mkm:Tabs Variant="Strip" Height="90">
+                            <mkm:Tab Header="{mkm:T showcase.containers.properties}" Icon="{x:Static mkm:Icons.Properties}">
+                                <TextBlock Text="{mkm:T showcase.containers.titleBlockText}" />
+                            </mkm:Tab>
+                            <mkm:Tab Header="{mkm:T showcase.containers.relations}" Icon="{x:Static mkm:Icons.Structure}">
+                                <TextBlock Text="{mkm:T showcase.containers.notesText}" />
+                            </mkm:Tab>
+                        </mkm:Tabs>
+                    </mkm:IdCard>
+                </StackPanel>
+            </Border>
+            <Border Margin="0,8,0,0" BorderThickness="1" BorderBrush="{DynamicResource mkm.content.border.color}">
+                <mkm:IdCard Size="Small" Title="{mkm:T showcase.identity.part}" Revision="B" Owner="M. Kerram"
+                            Type="{mkm:T showcase.identity.typePart}" Maturity="{mkm:T showcase.identity.released}" />
+            </Border>
+            <Border Margin="0,8,0,0" BorderThickness="1" BorderBrush="{DynamicResource mkm.content.border.color}">
+                <mkm:IdCard IsCollapsed="True" Title="{mkm:T showcase.identity.drawing}" Revision="A"
+                            Thumbnail="{x:Static mkm:Icons.Drawings}" Owner="M. Kerram"
+                            Maturity="{mkm:T showcase.identity.released}" MaturityColor="{StaticResource MaturiteValidee}" />
+            </Border>
+
+            <TextBlock Style="{StaticResource Titre}" Text="{mkm:T showcase.identity.tags}" />
+            <WrapPanel>
+                <mkm:Tag Content="Primary" />
+                <mkm:Tag Content="Secondary" Severity="Secondary" />
+                <mkm:Tag Content="Success" Severity="Success" />
+                <mkm:Tag Content="Info" Severity="Info" />
+                <mkm:Tag Content="Warn" Severity="Warn" />
+                <mkm:Tag Content="Danger" Severity="Danger" />
+                <mkm:Tag Content="Contrast" Severity="Contrast" />
+            </WrapPanel>
+            <WrapPanel Margin="0,8,0,0">
+                <mkm:Tag Content="{mkm:T showcase.identity.upToDate}" Severity="Success" Icon="{x:Static mkm:Icons.Check}" />
+                <mkm:Tag Content="Rounded" Rounded="True" />
+                <mkm:Tag Content="{mkm:T showcase.identity.policy}" Color="{StaticResource MaturiteEnCours}" />
+                <mkm:Tag Content="Obsolete" Color="White" />
+            </WrapPanel>
+
+            <TextBlock Style="{StaticResource Titre}" Text="{mkm:T showcase.identity.choices}" />
+            <TextBlock Style="{StaticResource Libelle}" Text="{mkm:T showcase.identity.single}" />
+            <mkm:SelectButton SelectedIndex="0">
+                <mkm:SelectButtonItem Content="{mkm:T showcase.identity.drawingChoice}" />
+                <mkm:SelectButtonItem Content="{mkm:T showcase.identity.articleChoice}" />
+                <mkm:SelectButtonItem Content="{mkm:T showcase.identity.both}" />
+            </mkm:SelectButton>
+            <TextBlock Style="{StaticResource Libelle}" Text="{mkm:T showcase.identity.multiple}" />
+            <mkm:SelectButton x:Name="Plusieurs" SelectionMode="Multiple">
+                <mkm:SelectButtonItem Content="{mkm:T showcase.containers.properties}" Icon="{x:Static mkm:Icons.Properties}" IsSelected="True" />
+                <mkm:SelectButtonItem Content="{mkm:T showcase.containers.relations}" Icon="{x:Static mkm:Icons.Structure}" IsSelected="True" />
+                <mkm:SelectButtonItem Content="{mkm:T showcase.containers.history}" Icon="{x:Static mkm:Icons.History}" />
+            </mkm:SelectButton>
+            <TextBlock Style="{StaticResource Libelle}" Text="{mkm:T showcase.fields.invalid}" />
+            <mkm:SelectButton Invalid="True">
+                <mkm:SelectButtonItem Content="{mkm:T showcase.identity.drawingChoice}" />
+                <mkm:SelectButtonItem Content="{mkm:T showcase.identity.articleChoice}" />
+            </mkm:SelectButton>
+            <TextBlock Style="{StaticResource Libelle}" Text="{mkm:T showcase.fields.disabled}" />
+            <mkm:SelectButton IsEnabled="False" SelectedIndex="1">
+                <mkm:SelectButtonItem Content="{mkm:T showcase.identity.drawingChoice}" />
+                <mkm:SelectButtonItem Content="{mkm:T showcase.identity.articleChoice}" />
+            </mkm:SelectButton>
+
+            <TextBlock Style="{StaticResource Titre}" Text="{mkm:T showcase.identity.numbers}" />
+            <WrapPanel>
+                <StackPanel Width="200" Margin="0,0,24,0">
+                    <TextBlock Style="{StaticResource Libelle}" Text="{mkm:T showcase.identity.mass}" />
+                    <mkm:InputNumber Value="1234.5" MinFractionDigits="2" MaxFractionDigits="2" Suffix=" kg" />
+                    <TextBlock Style="{StaticResource Libelle}" Text="{mkm:T showcase.identity.sheets}" />
+                    <mkm:InputNumber Value="1" Minimum="1" Maximum="10" MaxFractionDigits="0" ShowButtons="True" />
+                    <TextBlock Style="{StaticResource Libelle}" Text="{mkm:T showcase.identity.quantity}" />
+                    <mkm:InputNumber Value="3" Minimum="0" MaxFractionDigits="0" ShowButtons="True" ButtonLayout="Horizontal" />
+                </StackPanel>
+                <StackPanel Width="200">
+                    <TextBlock Style="{StaticResource Libelle}" Text="{mkm:T showcase.identity.count}" />
+                    <mkm:InputNumber Placeholder="0" MaxFractionDigits="0" />
+                    <TextBlock Style="{StaticResource Libelle}" Text="{mkm:T showcase.fields.invalid}" />
+                    <mkm:InputNumber Value="-5" Invalid="True" />
+                    <TextBlock Style="{StaticResource Libelle}" Text="{mkm:T showcase.fields.disabled}" />
+                    <mkm:InputNumber Value="42" IsEnabled="False" ShowButtons="True" />
+                </StackPanel>
+            </WrapPanel>
+        </StackPanel>
+    </ScrollViewer>
+</UserControl>

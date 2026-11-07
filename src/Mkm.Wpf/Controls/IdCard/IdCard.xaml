@@ -1,0 +1,187 @@
+<!--
+    Le style d'IdCard, sur la carte d'identité de 3DEXPERIENCE de mkm (presets dashboard et ara, idcard) : 12 px de
+    retrait ; la vignette dans une tuile de 72 px aux coins de 8 px, sur un fond pâle, tenue sans être rognée ni
+    agrandie ; 12 px plus loin, le titre en 16 px semi-gras sur 24 px (14 px en petit), coupé de points de suspension,
+    et sa révision dans une pastille grise de 20 px, 8 px après, qui reste visible ; à droite les boutons de 24 px,
+    8 px entre eux : replier (au bord), fermer, puis ceux qu'on ajoute ; dessous, 4 px plus bas, les détails en 12 px
+    gris, 12 px entre eux et 2 px entre leurs lignes : le propriétaire à la couleur du texte, le type et son icône de
+    16 px, la maturité dans une étiquette, le reste. Repliée, la carte garde son titre et ses boutons.
+
+    Écarts avec mkm : pas de squelettes de chargement ; les facettes sont le contenu de la carte (un Tabs « strip »).
+-->
+<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+                    xmlns:local="clr-namespace:Mkm.Wpf.Controls"
+                    xmlns:loc="clr-namespace:Mkm.Wpf.Localization">
+
+    <Style TargetType="{x:Type local:IdCard}">
+        <Setter Property="Background" Value="{DynamicResource mkm.idcard.background}" />
+        <Setter Property="Foreground" Value="{DynamicResource mkm.idcard.color}" />
+        <Setter Property="FontFamily" Value="{DynamicResource mkm.font.family}" />
+        <Setter Property="FontSize" Value="{DynamicResource mkm.font.size}" />
+        <Setter Property="Padding" Value="{DynamicResource mkm.idcard.header.padding}" />
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="{x:Type local:IdCard}">
+                    <DockPanel Background="{TemplateBinding Background}">
+                        <Grid DockPanel.Dock="Top" Margin="{TemplateBinding Padding}">
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="Auto" />
+                                <ColumnDefinition Width="*" />
+                            </Grid.ColumnDefinitions>
+                            <Border x:Name="Vignette" Grid.Column="0" VerticalAlignment="Top"
+                                    Margin="{DynamicResource mkm.idcard.thumbnail.margin}"
+                                    Width="{DynamicResource mkm.idcard.thumbnail.width}"
+                                    Height="{DynamicResource mkm.idcard.thumbnail.height}"
+                                    Padding="{DynamicResource mkm.idcard.thumbnail.padding}"
+                                    Background="{DynamicResource mkm.idcard.thumbnail.background}"
+                                    CornerRadius="{DynamicResource mkm.idcard.thumbnail.border.radius}">
+                                <ContentPresenter Content="{TemplateBinding Thumbnail}" HorizontalAlignment="Center" VerticalAlignment="Center">
+                                    <ContentPresenter.Resources>
+                                        <DataTemplate DataType="{x:Type ImageSource}">
+                                            <Image Source="{Binding}" Stretch="Uniform" StretchDirection="DownOnly" />
+                                        </DataTemplate>
+                                        <DataTemplate DataType="{x:Type Geometry}">
+                                            <local:Icon Source="{Binding}" Width="{DynamicResource mkm.idcard.thumbnail.icon.size}"
+                                                        Height="{DynamicResource mkm.idcard.thumbnail.icon.size}"
+                                                        Foreground="{DynamicResource mkm.text.muted.color}" />
+                                        </DataTemplate>
+                                    </ContentPresenter.Resources>
+                                </ContentPresenter>
+                            </Border>
+                            <Grid Grid.Column="1">
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="*" />
+                                    <ColumnDefinition Width="Auto" />
+                                </Grid.ColumnDefinitions>
+                                <Grid.RowDefinitions>
+                                    <RowDefinition Height="Auto" />
+                                    <RowDefinition Height="Auto" />
+                                </Grid.RowDefinitions>
+                                <!-- Le titre, et la révision juste après lui : le titre se coupe, la révision reste. -->
+                                <DockPanel Grid.Row="0" Grid.Column="0" HorizontalAlignment="Left" LastChildFill="True">
+                                    <Border x:Name="Revision" DockPanel.Dock="Right" VerticalAlignment="Center"
+                                            Margin="{DynamicResource mkm.idcard.revision.margin}"
+                                            Padding="{DynamicResource mkm.idcard.revision.padding}"
+                                            Background="{DynamicResource mkm.idcard.revision.background}"
+                                            CornerRadius="{DynamicResource mkm.idcard.revision.border.radius}">
+                                        <TextBlock Text="{TemplateBinding Revision}"
+                                                   Foreground="{DynamicResource mkm.idcard.revision.color}"
+                                                   FontSize="{DynamicResource mkm.idcard.revision.font.size}"
+                                                   FontWeight="{DynamicResource mkm.idcard.revision.font.weight}"
+                                                   LineHeight="{DynamicResource mkm.idcard.revision.line.height}"
+                                                   LineStackingStrategy="BlockLineHeight" />
+                                    </Border>
+                                    <TextBlock x:Name="Titre" Text="{TemplateBinding Title}" TextTrimming="CharacterEllipsis" VerticalAlignment="Center"
+                                               ToolTip="{TemplateBinding Title}"
+                                               Foreground="{DynamicResource mkm.idcard.title.color}"
+                                               FontSize="{DynamicResource mkm.idcard.title.font.size}"
+                                               FontWeight="{DynamicResource mkm.idcard.title.font.weight}"
+                                               LineHeight="{DynamicResource mkm.idcard.title.line.height}"
+                                               LineStackingStrategy="BlockLineHeight" />
+                                </DockPanel>
+                                <!-- Les boutons depuis le bord droit : replier au bord, fermer à sa gauche, les ajoutés devant. -->
+                                <StackPanel Grid.Row="0" Grid.Column="1" Orientation="Horizontal" VerticalAlignment="Center"
+                                            Margin="{DynamicResource mkm.idcard.actions.margin}">
+                                    <ContentPresenter x:Name="Ajoutes" Content="{TemplateBinding Actions}" VerticalAlignment="Center" />
+                                    <local:Button x:Name="PART_CloseButton" Visibility="Collapsed" Variant="Text" Severity="Secondary"
+                                                  Icon="{x:Static local:InternalIcons.Times}" Padding="4"
+                                                  Margin="{DynamicResource mkm.idcard.actions.button.margin}"
+                                                  Width="{DynamicResource mkm.idcard.actions.button.size}"
+                                                  Height="{DynamicResource mkm.idcard.actions.button.size}"
+                                                  AutomationProperties.Name="{loc:T aria.close}" />
+                                    <local:Button x:Name="PART_CollapseButton" Variant="Text" Severity="Secondary"
+                                                  Icon="{x:Static local:InternalIcons.ChevronUp}" Padding="4"
+                                                  Margin="{DynamicResource mkm.idcard.actions.button.margin}"
+                                                  Width="{DynamicResource mkm.idcard.actions.button.size}"
+                                                  Height="{DynamicResource mkm.idcard.actions.button.size}"
+                                                  AutomationProperties.Name="{loc:T aria.collapse}" />
+                                </StackPanel>
+                                <WrapPanel x:Name="Details" Grid.Row="1" Grid.Column="0" Grid.ColumnSpan="2"
+                                           Margin="{DynamicResource mkm.idcard.details.margin}"
+                                           TextElement.Foreground="{DynamicResource mkm.idcard.details.color}"
+                                           TextElement.FontSize="{DynamicResource mkm.idcard.details.font.size}">
+                                    <TextBlock x:Name="Proprietaire" Text="{TemplateBinding Owner}" VerticalAlignment="Center"
+                                               Margin="{DynamicResource mkm.idcard.details.item.margin}"
+                                               Foreground="{DynamicResource mkm.idcard.owner.color}" />
+                                    <StackPanel x:Name="LeType" Orientation="Horizontal" VerticalAlignment="Center"
+                                                Margin="{DynamicResource mkm.idcard.details.item.margin}">
+                                        <ContentPresenter x:Name="IconeDuType" Content="{TemplateBinding TypeIcon}" VerticalAlignment="Center"
+                                                          Margin="{DynamicResource mkm.idcard.type.icon.margin}"
+                                                          MaxWidth="{DynamicResource mkm.idcard.type.icon.size}"
+                                                          MaxHeight="{DynamicResource mkm.idcard.type.icon.size}">
+                                            <ContentPresenter.Resources>
+                                                <DataTemplate DataType="{x:Type ImageSource}">
+                                                    <Image Source="{Binding}" Stretch="Uniform" />
+                                                </DataTemplate>
+                                                <DataTemplate DataType="{x:Type Geometry}">
+                                                    <local:Icon Source="{Binding}" Width="{DynamicResource mkm.idcard.type.icon.size}"
+                                                                Height="{DynamicResource mkm.idcard.type.icon.size}" />
+                                                </DataTemplate>
+                                            </ContentPresenter.Resources>
+                                        </ContentPresenter>
+                                        <TextBlock Text="{TemplateBinding Type}" VerticalAlignment="Center" />
+                                    </StackPanel>
+                                    <local:Tag x:Name="Maturite" Severity="Secondary" VerticalAlignment="Center"
+                                               Margin="{DynamicResource mkm.idcard.details.item.margin}"
+                                               Content="{TemplateBinding Maturity}" Color="{TemplateBinding MaturityColor}" />
+                                    <ItemsControl ItemsSource="{Binding Details, RelativeSource={RelativeSource TemplatedParent}}"
+                                                  Focusable="False" VerticalAlignment="Center">
+                                        <ItemsControl.ItemsPanel>
+                                            <ItemsPanelTemplate>
+                                                <WrapPanel />
+                                            </ItemsPanelTemplate>
+                                        </ItemsControl.ItemsPanel>
+                                        <ItemsControl.ItemContainerStyle>
+                                            <Style TargetType="{x:Type ContentPresenter}">
+                                                <Setter Property="Margin" Value="{DynamicResource mkm.idcard.details.item.margin}" />
+                                            </Style>
+                                        </ItemsControl.ItemContainerStyle>
+                                    </ItemsControl>
+                                </WrapPanel>
+                            </Grid>
+                        </Grid>
+                        <ContentPresenter Margin="{DynamicResource mkm.idcard.facets.margin}" />
+                    </DockPanel>
+                    <ControlTemplate.Triggers>
+                        <Trigger Property="Thumbnail" Value="{x:Null}">
+                            <Setter TargetName="Vignette" Property="Visibility" Value="Collapsed" />
+                        </Trigger>
+                        <Trigger Property="Revision" Value="{x:Null}">
+                            <Setter TargetName="Revision" Property="Visibility" Value="Collapsed" />
+                        </Trigger>
+                        <Trigger Property="Owner" Value="{x:Null}">
+                            <Setter TargetName="Proprietaire" Property="Visibility" Value="Collapsed" />
+                        </Trigger>
+                        <Trigger Property="Type" Value="{x:Null}">
+                            <Setter TargetName="LeType" Property="Visibility" Value="Collapsed" />
+                        </Trigger>
+                        <Trigger Property="TypeIcon" Value="{x:Null}">
+                            <Setter TargetName="IconeDuType" Property="Visibility" Value="Collapsed" />
+                        </Trigger>
+                        <Trigger Property="Maturity" Value="{x:Null}">
+                            <Setter TargetName="Maturite" Property="Visibility" Value="Collapsed" />
+                        </Trigger>
+                        <Trigger Property="Collapsible" Value="False">
+                            <Setter TargetName="PART_CollapseButton" Property="Visibility" Value="Collapsed" />
+                        </Trigger>
+                        <Trigger Property="Closable" Value="True">
+                            <Setter TargetName="PART_CloseButton" Property="Visibility" Value="Visible" />
+                        </Trigger>
+                        <Trigger Property="Size" Value="Small">
+                            <Setter TargetName="Titre" Property="FontSize" Value="{DynamicResource mkm.idcard.small.title.font.size}" />
+                            <Setter TargetName="Titre" Property="LineHeight" Value="{DynamicResource mkm.idcard.small.title.line.height}" />
+                        </Trigger>
+                        <Trigger Property="IsCollapsed" Value="True">
+                            <Setter TargetName="Vignette" Property="Visibility" Value="Collapsed" />
+                            <Setter TargetName="Details" Property="Visibility" Value="Collapsed" />
+                            <Setter TargetName="PART_CollapseButton" Property="Icon" Value="{x:Static local:InternalIcons.ChevronDown}" />
+                            <Setter TargetName="PART_CollapseButton" Property="AutomationProperties.Name" Value="{loc:T aria.expand}" />
+                        </Trigger>
+                    </ControlTemplate.Triggers>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+
+</ResourceDictionary>

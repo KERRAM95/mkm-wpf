@@ -57,4 +57,16 @@
   <data name="locale.cancel" xml:space="preserve">
     <value>Cancel</value>
   </data>
+  <data name="aria.increment" xml:space="preserve">
+    <value>Increment</value>
+  </data>
+  <data name="aria.decrement" xml:space="preserve">
+    <value>Decrement</value>
+  </data>
+  <data name="aria.collapse" xml:space="preserve">
+    <value>Collapse</value>
+  </data>
+  <data name="aria.expand" xml:space="preserve">
+    <value>Expand</value>
+  </data>
 </root>

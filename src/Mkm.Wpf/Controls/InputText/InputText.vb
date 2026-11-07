@@ -23,11 +23,24 @@ Namespace Mkm.Wpf.Controls
         Public Shared ReadOnly InvalidProperty As DependencyProperty = DependencyProperty.Register(
             NameOf(Invalid), GetType(Boolean), GetType(InputText), New FrameworkPropertyMetadata(False))
 
+        ''' <summary>Les coins du champ (ceux du thème par défaut) ; un champ accolé à des boutons les perd.</summary>
+        Public Shared ReadOnly CornerRadiusProperty As DependencyProperty = Border.CornerRadiusProperty.AddOwner(GetType(InputText))
+
         Shared Sub New()
             DefaultStyleKeyProperty.OverrideMetadata(GetType(InputText), New FrameworkPropertyMetadata(GetType(InputText)))
         End Sub
 
-        ''' <summary>Le texte d'aide.</summary>
+        ''' <summary>Les coins du champ (ceux du thème par défaut).</summary>
+        Public Property CornerRadius As CornerRadius
+            Get
+                Return DirectCast(GetValue(CornerRadiusProperty), CornerRadius)
+            End Get
+            Set(value As CornerRadius)
+                SetValue(CornerRadiusProperty, value)
+            End Set
+        End Property
+
+        ''' <summary>Le texte d'aide, montré tant que le champ est vide.</summary>
         Public Property Placeholder As String
             Get
                 Return CStr(GetValue(PlaceholderProperty))
