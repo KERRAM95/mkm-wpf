@@ -288,6 +288,13 @@ Namespace Mkm.Wpf.Controls
             Return rangee.Select(Function(c) If(TryCast(c, ActionBarDropDown)?.FocusTarget, c)).Where(Function(c) Not (TypeOf c Is ActionBarSeparator))
         End Function
 
+        ''' <summary>Montre une section : elle devient la section choisie.</summary>
+        Friend Sub Montrer(section As ActionBarSection)
+            If section IsNot Nothing AndAlso Items.Contains(section) AndAlso Not Equals(SelectedItem, section) Then
+                SetCurrentValue(SelectedItemProperty, section)
+            End If
+        End Sub
+
         ''' <summary>Ce qui dépend des sections et des commandes : les onglets, la zone fixe.</summary>
         Friend Sub MettreAJourEtat()
             Dim visibles = Items.OfType(Of ActionBarSection)().Count(Function(s) s.Visibility <> Visibility.Collapsed)

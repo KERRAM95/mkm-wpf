@@ -59,10 +59,13 @@ Namespace Mkm.Wpf.Controls
             End Get
         End Property
 
-        ' La barre apprend le choix par les événements de Selector, comme TabControl.
+        ' Choisie (un clic sur son onglet, Entrée, Espace, ou le code), la section se fait montrer par sa
+        ' barre ; les événements de Selector suivent, pour qui les écoute.
         Private Shared Sub OnIsSelectedChanged(d As DependencyObject, e As DependencyPropertyChangedEventArgs)
             Dim section = DirectCast(d, ActionBarSection)
-            section.RaiseEvent(New RoutedEventArgs(If(CBool(e.NewValue), Selector.SelectedEvent, Selector.UnselectedEvent), section))
+            Dim choisie = CBool(e.NewValue)
+            If choisie Then section.ParentBar?.Montrer(section)
+            section.RaiseEvent(New RoutedEventArgs(If(choisie, Selector.SelectedEvent, Selector.UnselectedEvent), section))
         End Sub
 
         ' Une section cachée n'a plus d'onglet : la barre revoit les siens.
