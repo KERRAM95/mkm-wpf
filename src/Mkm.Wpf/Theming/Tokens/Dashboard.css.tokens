@@ -160,3 +160,15 @@ confirmdialog.icon.margin = 0 {confirmdialog.content.gap} 0 0
 
 # confirmdialog (styles/confirmdialog) : l'icône et la question à 12 px l'une de l'autre (gap du contenu).
 confirmdialog.icon.margin = 0 {confirmdialog.content.gap} 0 0
+
+# datepicker (styles/datepicker) : le champ d'InputText, ses coins de droite carrés, accolé au bouton du calendrier
+# bordé sauf à gauche ; le panneau 2 px sous le champ (absolutePosition de PrimeVue) ; chaque jour un cercle (50 %
+# de 24 px) ; les flèches de l'en-tête, des boutons ronds d'icône seule. datepicker.panel.window.padding est une
+# mesure de mkm-wpf : la place de l'ombre (0 1px 2px) autour du panneau.
+datepicker.input.border.radius = {inputtext.border.radius} 0 0 {inputtext.border.radius}
+datepicker.dropdown.radius = 0 {datepicker.dropdown.border.radius} {datepicker.dropdown.border.radius} 0
+datepicker.overlay.gutter = 2px
+datepicker.date.border.radius = 12px
+datepicker.nav.button.size = {button.icon.only.width}
+datepicker.nav.button.radius = 12px
+datepicker.panel.window.padding = 0 2px 3px 2px

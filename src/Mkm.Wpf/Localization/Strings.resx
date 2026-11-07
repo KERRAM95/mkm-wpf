@@ -45,4 +45,7 @@
   <data name="locale.reject" xml:space="preserve">
     <value>No</value>
   </data>
+  <data name="aria.chooseDate" xml:space="preserve">
+    <value>Choose Date</value>
+  </data>
 </root>

@@ -1,6 +1,7 @@
 // Importe le jeu d'icônes de mkm dans mkm-wpf : les icônes Tabler que nomme le manifeste de ui-kit
 // (packages/icons/tabler/manifest.json), à sa version et à son empreinte, deviennent des géométries WPF dans
-// src/Mkm.Wpf/Controls/Icon/Icons.g.vb ; la licence de Tabler entre dans THIRD-PARTY-NOTICES.md.
+// src/Mkm.Wpf/Controls/Icon/Icons.g.vb, celles des composants (« internal ») dans InternalIcons.g.vb ; la licence
+// de Tabler entre dans THIRD-PARTY-NOTICES.md.
 //
 //   node outils/icones/importer-tabler.mjs <ui-kit>
 //
@@ -52,6 +53,39 @@ function importer(paquet) {
     lignes.push('    End Class', '', 'End Namespace', '');
     writeFileSync(join(depot, 'src/Mkm.Wpf/Controls/Icon/Icons.g.vb'), lignes.join('\n'));
 
+    // Les icônes des composants (la clé « internal » du manifeste) : celles que les composants de mkm dessinent
+    // eux-mêmes (le calendrier du DatePicker, les flèches d'un mois…), nommées comme leur composant Vue
+    // (« CalendarIcon » → InternalIcons.Calendar). Une icône pleine (« filled/… ») ou sans dessin n'est pas reprise :
+    // Icon trace des traits.
+    const internes = [];
+    for (const [dossier, fichier] of Object.entries(manifeste.internal ?? {})) {
+        if (!fichier || fichier.includes('/')) continue;
+        const vue = readdirSync(resolve(racine, 'packages/icons/src', dossier)).find((f) => f.endsWith('Icon.vue'));
+        if (!vue) fail(`packages/icons/src/${dossier} : pas de composant *Icon.vue.`);
+        const chemin = join(paquet, 'icons', manifeste.style, `${fichier}.svg`);
+        if (!existsSync(chemin)) fail(`${fichier}.svg n'existe pas (icône interne « ${dossier} »).`);
+        internes.push({ nom: vue.replace(/Icon\.vue$/, ''), dossier, fichier, donnees: geometrie(readFileSync(chemin, 'utf8'), fichier) });
+    }
+    const interne = [
+        "' Les icônes des composants de mkm (clé « internal » du manifeste), dessinées par Tabler Icons (MIT, voir",
+        `' THIRD-PARTY-NOTICES.md) : ${manifeste.package} ${manifeste.version}, style ${manifeste.style}, sur la grille de 24.`,
+        "' Fichier produit par outils/icones/importer-tabler.mjs : ne pas le modifier à la main.",
+        'Imports System.Windows.Media',
+        '',
+        'Namespace Mkm.Wpf.Controls',
+        '',
+        '    Partial Public NotInheritable Class InternalIcons',
+        ''
+    ];
+    for (const { nom, dossier, fichier, donnees } of internes) {
+        interne.push(`        ''' <summary>« ${dossier} » (${nom}Icon de mkm) : ${fichier} (Tabler).</summary>`);
+        interne.push(`        Public Shared ReadOnly Property ${identifiant(nom)} As Geometry = Icons.Dessin("${donnees}")`);
+        interne.push('');
+    }
+    interne.push('    End Class', '', 'End Namespace', '');
+    writeFileSync(join(depot, 'src/Mkm.Wpf/Controls/Icon/InternalIcons.g.vb'), interne.join('\n'));
+    console.log(`${internes.length} icônes internes`);
+
     const licence = readFileSync(join(paquet, 'LICENSE'), 'utf8').trim();
     const avis = [
         '# Avis de tiers',
@@ -60,7 +94,7 @@ function importer(paquet) {
         '',
         `## Tabler Icons (${manifeste.package} ${manifeste.version})`,
         '',
-        'Les géométries de `src/Mkm.Wpf/Controls/Icon/Icons.g.vb`.',
+        'Les géométries de `src/Mkm.Wpf/Controls/Icon/Icons.g.vb` et `InternalIcons.g.vb`.',
         '',
         '```text',
         licence,

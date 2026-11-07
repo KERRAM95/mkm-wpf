@@ -1,4 +1,5 @@
 Imports System.Collections.Generic
+Imports System.Diagnostics
 Imports System.Globalization
 Imports System.IO
 Imports System.Linq
@@ -34,6 +35,10 @@ Namespace Mkm.Wpf.Showcase
         Public Shared Function Executer(dossier As String) As Integer
             Dim c As New Captures(dossier)
             c.Noter("début")
+            ' Les erreurs de liaison de WPF (une propriété introuvable, un type qui ne va pas) vont au journal.
+            PresentationTraceSources.Refresh()
+            PresentationTraceSources.DataBindingSource.Switch.Level = SourceLevels.Warning
+            PresentationTraceSources.DataBindingSource.Listeners.Add(New Ecouteur(c))
             Try
                 c.Tout()
             Catch ex As Exception
@@ -84,6 +89,27 @@ Namespace Mkm.Wpf.Showcase
                 End If
             Next
         End Sub
+
+        ' Écrit au journal ce que WPF trace, une ligne par message.
+        Private NotInheritable Class Ecouteur
+            Inherits TraceListener
+
+            Private ReadOnly _captures As Captures
+            Private _ligne As String = ""
+
+            Public Sub New(captures As Captures)
+                _captures = captures
+            End Sub
+
+            Public Overrides Sub Write(message As String)
+                _ligne &= message
+            End Sub
+
+            Public Overrides Sub WriteLine(message As String)
+                _captures.Noter($"WPF : {_ligne}{message}")
+                _ligne = ""
+            End Sub
+        End Class
 
         Private Shared Iterator Function Descendants(racine As DependencyObject) As IEnumerable(Of DependencyObject)
             For i = 0 To VisualTreeHelper.GetChildrenCount(racine) - 1

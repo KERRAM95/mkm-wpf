@@ -1,0 +1,374 @@
+<!--
+    Le style de DatePicker, sur le DatePicker de mkm (styles/datepicker et ses jetons, ceux de Nora dans les deux
+    thèmes) :
+    - le champ : celui d'InputText (24 px, retrait de 4 px sur 6), ses coins de droite carrés, et accolé le bouton du
+      calendrier, 30 px, bordé sauf à gauche, l'icône du calendrier de mkm en gris ;
+    - le panneau : 2 px sous le champ, bordé, coins de 2 px, 8 px de retrait, une ombre courte ; l'en-tête, le mois et
+      l'année au milieu entre les flèches, souligné d'un trait, 6 px au-dessus ; les jours de la semaine en demi-gras ;
+      chaque jour dans un cercle de 24 px (3 px autour), gris clair au survol, aujourd'hui gris, le jour choisi de la
+      couleur principale ; les mois et les années, cases de 4,5 px de retrait.
+
+    Écarts avec mkm : un titre seul (« novembre 2026 ») plutôt que le mois et l'année cliquables à part, comme le
+    calendrier de WPF ; les jours des autres mois en gris pâle.
+-->
+<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+                    xmlns:local="clr-namespace:Mkm.Wpf.Controls"
+                    xmlns:loc="clr-namespace:Mkm.Wpf.Localization">
+
+    <!-- Un jour du mois : un cercle de 24 px, 3 px autour. -->
+    <Style x:Key="MkmCalendrierJour" TargetType="{x:Type CalendarDayButton}">
+        <Setter Property="Margin" Value="{DynamicResource mkm.datepicker.date.padding}" />
+        <Setter Property="Width" Value="{DynamicResource mkm.datepicker.date.width}" />
+        <Setter Property="Height" Value="{DynamicResource mkm.datepicker.date.height}" />
+        <Setter Property="Foreground" Value="{DynamicResource mkm.datepicker.date.color}" />
+        <Setter Property="FontSize" Value="{DynamicResource mkm.form.field.font.size}" />
+        <Setter Property="FocusVisualStyle" Value="{x:Null}" />
+        <Setter Property="Cursor" Value="Hand" />
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="{x:Type CalendarDayButton}">
+                    <Grid>
+                        <Border x:Name="Fond" Background="Transparent"
+                                CornerRadius="{DynamicResource mkm.datepicker.date.border.radius}" />
+                        <!-- L'anneau du clavier : 1 px, 1 px autour du cercle. -->
+                        <Ellipse x:Name="Anneau" Margin="-2" Visibility="Collapsed"
+                                 Stroke="{DynamicResource mkm.datepicker.date.focus.ring.color}"
+                                 StrokeThickness="{DynamicResource mkm.datepicker.date.focus.ring.width}" />
+                        <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center" />
+                    </Grid>
+                    <ControlTemplate.Triggers>
+                        <Trigger Property="IsInactive" Value="True">
+                            <Setter Property="Foreground" Value="{DynamicResource mkm.text.muted.color}" />
+                        </Trigger>
+                        <Trigger Property="IsMouseOver" Value="True">
+                            <Setter TargetName="Fond" Property="Background" Value="{DynamicResource mkm.datepicker.date.hover.background}" />
+                            <Setter Property="Foreground" Value="{DynamicResource mkm.datepicker.date.hover.color}" />
+                        </Trigger>
+                        <Trigger Property="IsToday" Value="True">
+                            <Setter TargetName="Fond" Property="Background" Value="{DynamicResource mkm.datepicker.today.background}" />
+                            <Setter Property="Foreground" Value="{DynamicResource mkm.datepicker.today.color}" />
+                        </Trigger>
+                        <Trigger Property="IsSelected" Value="True">
+                            <Setter TargetName="Fond" Property="Background" Value="{DynamicResource mkm.datepicker.date.selected.background}" />
+                            <Setter Property="Foreground" Value="{DynamicResource mkm.datepicker.date.selected.color}" />
+                        </Trigger>
+                        <Trigger Property="IsFocused" Value="True">
+                            <Setter TargetName="Anneau" Property="Visibility" Value="Visible" />
+                        </Trigger>
+                        <Trigger Property="IsBlackedOut" Value="True">
+                            <Setter Property="Opacity" Value="{DynamicResource mkm.disabled.opacity}" />
+                        </Trigger>
+                    </ControlTemplate.Triggers>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+
+    <!-- Un mois ou une année, dans les vues de l'année et de la décennie. -->
+    <Style x:Key="MkmCalendrierCase" TargetType="{x:Type CalendarButton}">
+        <Setter Property="Padding" Value="{DynamicResource mkm.datepicker.month.padding}" />
+        <Setter Property="Foreground" Value="{DynamicResource mkm.datepicker.date.color}" />
+        <Setter Property="FontSize" Value="{DynamicResource mkm.form.field.font.size}" />
+        <Setter Property="FocusVisualStyle" Value="{x:Null}" />
+        <Setter Property="Cursor" Value="Hand" />
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="{x:Type CalendarButton}">
+                    <Grid>
+                        <Border x:Name="Fond" Background="Transparent" Padding="{TemplateBinding Padding}"
+                                CornerRadius="{DynamicResource mkm.datepicker.month.border.radius}">
+                            <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center" />
+                        </Border>
+                        <Rectangle x:Name="Anneau" Margin="-2" Visibility="Collapsed"
+                                   Stroke="{DynamicResource mkm.datepicker.date.focus.ring.color}"
+                                   StrokeThickness="{DynamicResource mkm.datepicker.date.focus.ring.width}" />
+                    </Grid>
+                    <ControlTemplate.Triggers>
+                        <Trigger Property="IsInactive" Value="True">
+                            <Setter Property="Foreground" Value="{DynamicResource mkm.text.muted.color}" />
+                        </Trigger>
+                        <Trigger Property="IsMouseOver" Value="True">
+                            <Setter TargetName="Fond" Property="Background" Value="{DynamicResource mkm.datepicker.date.hover.background}" />
+                        </Trigger>
+                        <Trigger Property="HasSelectedDays" Value="True">
+                            <Setter TargetName="Fond" Property="Background" Value="{DynamicResource mkm.datepicker.date.selected.background}" />
+                            <Setter Property="Foreground" Value="{DynamicResource mkm.datepicker.date.selected.color}" />
+                        </Trigger>
+                        <Trigger Property="IsFocused" Value="True">
+                            <Setter TargetName="Anneau" Property="Visibility" Value="Visible" />
+                        </Trigger>
+                    </ControlTemplate.Triggers>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+
+    <!-- Une flèche de l'en-tête : le bouton en texte, rond, d'icône seule de mkm. -->
+    <Style x:Key="MkmCalendrierFleche" TargetType="{x:Type Button}">
+        <Setter Property="Width" Value="{DynamicResource mkm.datepicker.nav.button.size}" />
+        <Setter Property="Height" Value="{DynamicResource mkm.datepicker.nav.button.size}" />
+        <Setter Property="Foreground" Value="{DynamicResource mkm.button.text.secondary.color}" />
+        <Setter Property="Focusable" Value="False" />
+        <Setter Property="Cursor" Value="Hand" />
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="{x:Type Button}">
+                    <Border x:Name="Fond" Background="Transparent" CornerRadius="{DynamicResource mkm.datepicker.nav.button.radius}">
+                        <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center" />
+                    </Border>
+                    <ControlTemplate.Triggers>
+                        <Trigger Property="IsMouseOver" Value="True">
+                            <Setter TargetName="Fond" Property="Background" Value="{DynamicResource mkm.button.text.secondary.hover.background}" />
+                        </Trigger>
+                        <Trigger Property="IsPressed" Value="True">
+                            <Setter TargetName="Fond" Property="Background" Value="{DynamicResource mkm.button.text.secondary.active.background}" />
+                        </Trigger>
+                        <Trigger Property="IsEnabled" Value="False">
+                            <Setter Property="Opacity" Value="{DynamicResource mkm.disabled.opacity}" />
+                        </Trigger>
+                    </ControlTemplate.Triggers>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+
+    <!-- Le mois : l'en-tête, les jours de la semaine et six semaines ; l'année, douze mois ; la décennie, ses années. -->
+    <Style x:Key="MkmCalendrierMois" TargetType="{x:Type CalendarItem}">
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="{x:Type CalendarItem}">
+                    <ControlTemplate.Resources>
+                        <DataTemplate x:Key="{x:Static CalendarItem.DayTitleTemplateResourceKey}">
+                            <TextBlock HorizontalAlignment="Center" VerticalAlignment="Center"
+                                       Margin="{DynamicResource mkm.datepicker.week.day.padding}"
+                                       FontWeight="{DynamicResource mkm.datepicker.week.day.font.weight}"
+                                       Foreground="{DynamicResource mkm.datepicker.week.day.color}"
+                                       Text="{Binding}" />
+                        </DataTemplate>
+                    </ControlTemplate.Resources>
+                    <Grid x:Name="PART_Root">
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="Auto" />
+                            <RowDefinition Height="*" />
+                        </Grid.RowDefinitions>
+                        <Border Grid.Row="0" BorderThickness="0,0,0,1"
+                                BorderBrush="{DynamicResource mkm.datepicker.header.border.color}"
+                                Background="{DynamicResource mkm.datepicker.header.background}"
+                                Padding="{DynamicResource mkm.datepicker.header.padding}">
+                            <DockPanel>
+                                <Button x:Name="PART_PreviousButton" DockPanel.Dock="Left" Style="{StaticResource MkmCalendrierFleche}">
+                                    <local:Icon Width="{DynamicResource mkm.icon.size}" Height="{DynamicResource mkm.icon.size}"
+                                                Source="{x:Static local:InternalIcons.ChevronLeft}" />
+                                </Button>
+                                <Button x:Name="PART_NextButton" DockPanel.Dock="Right" Style="{StaticResource MkmCalendrierFleche}">
+                                    <local:Icon Width="{DynamicResource mkm.icon.size}" Height="{DynamicResource mkm.icon.size}"
+                                                Source="{x:Static local:InternalIcons.ChevronRight}" />
+                                </Button>
+                                <Button x:Name="PART_HeaderButton" HorizontalAlignment="Center" Focusable="False" Cursor="Hand"
+                                        FontWeight="{DynamicResource mkm.datepicker.title.font.weight}"
+                                        Foreground="{DynamicResource mkm.datepicker.select.month.color}">
+                                    <Button.Template>
+                                        <ControlTemplate TargetType="{x:Type Button}">
+                                            <Border x:Name="Fond" Background="Transparent"
+                                                    Padding="{DynamicResource mkm.datepicker.select.month.padding}"
+                                                    CornerRadius="{DynamicResource mkm.datepicker.select.month.border.radius}">
+                                                <ContentPresenter />
+                                            </Border>
+                                            <ControlTemplate.Triggers>
+                                                <Trigger Property="IsMouseOver" Value="True">
+                                                    <Setter TargetName="Fond" Property="Background" Value="{DynamicResource mkm.datepicker.select.month.hover.background}" />
+                                                </Trigger>
+                                            </ControlTemplate.Triggers>
+                                        </ControlTemplate>
+                                    </Button.Template>
+                                </Button>
+                            </DockPanel>
+                        </Border>
+                        <Grid x:Name="PART_MonthView" Grid.Row="1" Margin="{DynamicResource mkm.datepicker.day.view.margin}"
+                              HorizontalAlignment="Center" Visibility="Visible">
+                            <Grid.RowDefinitions>
+                                <RowDefinition Height="Auto" />
+                                <RowDefinition Height="Auto" />
+                                <RowDefinition Height="Auto" />
+                                <RowDefinition Height="Auto" />
+                                <RowDefinition Height="Auto" />
+                                <RowDefinition Height="Auto" />
+                                <RowDefinition Height="Auto" />
+                            </Grid.RowDefinitions>
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="Auto" />
+                                <ColumnDefinition Width="Auto" />
+                                <ColumnDefinition Width="Auto" />
+                                <ColumnDefinition Width="Auto" />
+                                <ColumnDefinition Width="Auto" />
+                                <ColumnDefinition Width="Auto" />
+                                <ColumnDefinition Width="Auto" />
+                            </Grid.ColumnDefinitions>
+                        </Grid>
+                        <Grid x:Name="PART_YearView" Grid.Row="1" Margin="{DynamicResource mkm.datepicker.month.view.margin}"
+                              Visibility="Hidden">
+                            <Grid.RowDefinitions>
+                                <RowDefinition Height="*" />
+                                <RowDefinition Height="*" />
+                                <RowDefinition Height="*" />
+                            </Grid.RowDefinitions>
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="*" />
+                                <ColumnDefinition Width="*" />
+                                <ColumnDefinition Width="*" />
+                                <ColumnDefinition Width="*" />
+                            </Grid.ColumnDefinitions>
+                        </Grid>
+                    </Grid>
+                    <ControlTemplate.Triggers>
+                        <DataTrigger Value="Year" Binding="{Binding DisplayMode, RelativeSource={RelativeSource AncestorType={x:Type Calendar}}}">
+                            <Setter TargetName="PART_MonthView" Property="Visibility" Value="Hidden" />
+                            <Setter TargetName="PART_YearView" Property="Visibility" Value="Visible" />
+                        </DataTrigger>
+                        <DataTrigger Value="Decade" Binding="{Binding DisplayMode, RelativeSource={RelativeSource AncestorType={x:Type Calendar}}}">
+                            <Setter TargetName="PART_MonthView" Property="Visibility" Value="Hidden" />
+                            <Setter TargetName="PART_YearView" Property="Visibility" Value="Visible" />
+                        </DataTrigger>
+                    </ControlTemplate.Triggers>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+
+    <!-- Le panneau du calendrier : bordé, coins de 2 px, 8 px de retrait, une ombre courte. -->
+    <Style x:Key="MkmCalendrier" TargetType="{x:Type Calendar}">
+        <Setter Property="Foreground" Value="{DynamicResource mkm.datepicker.panel.color}" />
+        <Setter Property="FontFamily" Value="{DynamicResource mkm.font.family}" />
+        <Setter Property="FontSize" Value="{DynamicResource mkm.font.size}" />
+        <Setter Property="CalendarItemStyle" Value="{StaticResource MkmCalendrierMois}" />
+        <Setter Property="CalendarDayButtonStyle" Value="{StaticResource MkmCalendrierJour}" />
+        <Setter Property="CalendarButtonStyle" Value="{StaticResource MkmCalendrierCase}" />
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="{x:Type Calendar}">
+                    <Grid x:Name="PART_Root" Margin="{DynamicResource mkm.datepicker.panel.window.padding}">
+                        <Border Background="{DynamicResource mkm.datepicker.panel.background}"
+                                CornerRadius="{DynamicResource mkm.datepicker.panel.border.radius}"
+                                Effect="{DynamicResource mkm.datepicker.panel.shadow}" />
+                        <Border BorderThickness="1"
+                                BorderBrush="{DynamicResource mkm.datepicker.panel.border.color}"
+                                CornerRadius="{DynamicResource mkm.datepicker.panel.border.radius}"
+                                Padding="{DynamicResource mkm.datepicker.panel.padding}">
+                            <CalendarItem x:Name="PART_CalendarItem" Style="{TemplateBinding CalendarItemStyle}" />
+                        </Border>
+                    </Grid>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+
+    <!-- Le champ du DatePicker : celui d'InputText, sans bordure (le DatePicker la porte). -->
+    <Style x:Key="MkmDatePickerChamp" TargetType="{x:Type DatePickerTextBox}">
+        <Setter Property="Padding" Value="{DynamicResource mkm.inputtext.padding}" />
+        <Setter Property="Foreground" Value="{Binding Foreground, RelativeSource={RelativeSource AncestorType={x:Type DatePicker}}}" />
+        <Setter Property="CaretBrush" Value="{DynamicResource mkm.inputtext.color}" />
+        <Setter Property="FocusVisualStyle" Value="{x:Null}" />
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="{x:Type DatePickerTextBox}">
+                    <Grid Background="Transparent">
+                        <TextBlock x:Name="Aide" Margin="{TemplateBinding Padding}" Padding="2,0,0,0" VerticalAlignment="Top"
+                                   IsHitTestVisible="False" Visibility="Collapsed" TextTrimming="CharacterEllipsis"
+                                   Foreground="{DynamicResource mkm.inputtext.placeholder.color}"
+                                   Text="{Binding Placeholder, RelativeSource={RelativeSource AncestorType={x:Type local:DatePicker}}}" />
+                        <ScrollViewer x:Name="PART_ContentHost" Focusable="False"
+                                      HorizontalScrollBarVisibility="Hidden" VerticalScrollBarVisibility="Hidden" />
+                    </Grid>
+                    <ControlTemplate.Triggers>
+                        <Trigger Property="Text" Value="">
+                            <Setter TargetName="Aide" Property="Visibility" Value="Visible" />
+                        </Trigger>
+                    </ControlTemplate.Triggers>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+
+    <Style TargetType="{x:Type local:DatePicker}">
+        <Setter Property="Height" Value="{DynamicResource mkm.inputtext.height}" />
+        <Setter Property="Background" Value="{DynamicResource mkm.inputtext.background}" />
+        <Setter Property="BorderBrush" Value="{DynamicResource mkm.inputtext.border.color}" />
+        <Setter Property="BorderThickness" Value="1" />
+        <Setter Property="Foreground" Value="{DynamicResource mkm.inputtext.color}" />
+        <Setter Property="FontFamily" Value="{DynamicResource mkm.font.family}" />
+        <Setter Property="FontSize" Value="{DynamicResource mkm.inputtext.font.size}" />
+        <Setter Property="IsTodayHighlighted" Value="True" />
+        <Setter Property="CalendarStyle" Value="{StaticResource MkmCalendrier}" />
+        <Setter Property="SnapsToDevicePixels" Value="True" />
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="{x:Type local:DatePicker}">
+                    <Grid x:Name="PART_Root">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="*" />
+                            <ColumnDefinition Width="Auto" />
+                        </Grid.ColumnDefinitions>
+                        <Border x:Name="Bord" Grid.Column="0"
+                                Background="{TemplateBinding Background}"
+                                BorderBrush="{TemplateBinding BorderBrush}"
+                                BorderThickness="{TemplateBinding BorderThickness}"
+                                CornerRadius="{DynamicResource mkm.datepicker.input.border.radius}">
+                            <DatePickerTextBox x:Name="PART_TextBox" Style="{StaticResource MkmDatePickerChamp}" />
+                        </Border>
+                        <Button x:Name="PART_Button" Grid.Column="1" Focusable="False" Cursor="Hand"
+                                Width="{DynamicResource mkm.datepicker.dropdown.width}"
+                                AutomationProperties.Name="{loc:T aria.chooseDate}">
+                            <Button.Template>
+                                <ControlTemplate TargetType="{x:Type Button}">
+                                    <Border x:Name="Fond" BorderThickness="0,1,1,1"
+                                            Background="{DynamicResource mkm.datepicker.dropdown.background}"
+                                            BorderBrush="{DynamicResource mkm.datepicker.dropdown.border.color}"
+                                            CornerRadius="{DynamicResource mkm.datepicker.dropdown.radius}">
+                                        <local:Icon x:Name="Calendrier" Source="{x:Static local:InternalIcons.Calendar}"
+                                                    Width="{DynamicResource mkm.icon.size}" Height="{DynamicResource mkm.icon.size}"
+                                                    Foreground="{DynamicResource mkm.datepicker.dropdown.color}" />
+                                    </Border>
+                                    <ControlTemplate.Triggers>
+                                        <Trigger Property="IsMouseOver" Value="True">
+                                            <Setter TargetName="Fond" Property="Background" Value="{DynamicResource mkm.datepicker.dropdown.hover.background}" />
+                                            <Setter TargetName="Fond" Property="BorderBrush" Value="{DynamicResource mkm.datepicker.dropdown.hover.border.color}" />
+                                            <Setter TargetName="Calendrier" Property="Foreground" Value="{DynamicResource mkm.datepicker.dropdown.hover.color}" />
+                                        </Trigger>
+                                        <Trigger Property="IsPressed" Value="True">
+                                            <Setter TargetName="Fond" Property="Background" Value="{DynamicResource mkm.datepicker.dropdown.active.background}" />
+                                            <Setter TargetName="Fond" Property="BorderBrush" Value="{DynamicResource mkm.datepicker.dropdown.active.border.color}" />
+                                            <Setter TargetName="Calendrier" Property="Foreground" Value="{DynamicResource mkm.datepicker.dropdown.active.color}" />
+                                        </Trigger>
+                                    </ControlTemplate.Triggers>
+                                </ControlTemplate>
+                            </Button.Template>
+                        </Button>
+                        <Popup x:Name="PART_Popup" Grid.Column="0" Grid.ColumnSpan="2" AllowsTransparency="True"
+                               Placement="Bottom" StaysOpen="False" PopupAnimation="None"
+                               VerticalOffset="{DynamicResource mkm.datepicker.overlay.gutter}"
+                               PlacementTarget="{Binding ElementName=PART_Root}" />
+                    </Grid>
+                    <ControlTemplate.Triggers>
+                        <Trigger Property="IsMouseOver" Value="True">
+                            <Setter Property="BorderBrush" Value="{DynamicResource mkm.inputtext.hover.border.color}" />
+                        </Trigger>
+                        <Trigger Property="IsKeyboardFocusWithin" Value="True">
+                            <Setter Property="BorderBrush" Value="{DynamicResource mkm.inputtext.focus.border.color}" />
+                        </Trigger>
+                        <Trigger Property="Invalid" Value="True">
+                            <Setter Property="BorderBrush" Value="{DynamicResource mkm.inputtext.invalid.border.color}" />
+                        </Trigger>
+                        <Trigger Property="IsEnabled" Value="False">
+                            <Setter Property="Background" Value="{DynamicResource mkm.inputtext.disabled.background}" />
+                            <Setter Property="Foreground" Value="{DynamicResource mkm.inputtext.disabled.color}" />
+                            <Setter Property="BorderBrush" Value="{DynamicResource mkm.inputtext.disabled.border.color}" />
+                            <Setter TargetName="PART_Button" Property="Opacity" Value="{DynamicResource mkm.disabled.opacity}" />
+                        </Trigger>
+                    </ControlTemplate.Triggers>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+
+</ResourceDictionary>

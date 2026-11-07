@@ -4,7 +4,7 @@ mkm-wpf embarque des œuvres de tiers, chacune sous sa licence, reproduite ici.
 
 ## Tabler Icons (@tabler/icons 3.48.0)
 
-Les géométries de `src/Mkm.Wpf/Controls/Icon/Icons.g.vb`.
+Les géométries de `src/Mkm.Wpf/Controls/Icon/Icons.g.vb` et `InternalIcons.g.vb`.
 
 ```text
 MIT License

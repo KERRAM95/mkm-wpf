@@ -13,7 +13,7 @@ Namespace Mkm.Wpf.Controls
         Private Sub New()
         End Sub
 
-        Private Shared Function Dessin(donnees As String) As Geometry
+        Friend Shared Function Dessin(donnees As String) As Geometry
             Dim geometrie = Geometry.Parse(donnees)
             geometrie.Freeze()
             Return geometrie
