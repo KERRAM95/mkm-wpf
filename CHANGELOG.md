@@ -80,6 +80,10 @@ Les évolutions notables de mkm-wpf, version par version. Le format suit
 - Le lot 3 (`docs/composants/identite-et-choix.md`) : `IdCard` (la couleur de
   maturité donnée par l'application), `Tag`, `SelectButton`, `InputNumber` ; la
   page Identité et choix de la vitrine ; `InputText.CornerRadius`.
+- `DataTable` (`docs/composants/tableau.md`) : la grille de 3DEXPERIENCE sur le
+  `DataGrid` de WPF, zébrée, quadrillée, trois tailles, message vide, voile de
+  chargement, en-tête et pied, la case de mkm dans les colonnes de cases ; la page
+  Tableau de données de la vitrine.
 - `InternalIcons` : les 45 icônes que les composants de mkm dessinent eux-mêmes
   (clé `internal` du manifeste).
 - La vitrine : les pages Attente et aide, Texte date et confirmation, Fiche de

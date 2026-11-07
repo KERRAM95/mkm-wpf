@@ -1,3 +1,4 @@
+Imports System.Linq
 Imports System.Windows
 Imports System.Windows.Controls
 
@@ -70,9 +71,37 @@ Namespace Mkm.Wpf.Controls
         Public Shared ReadOnly HeaderPaddingProperty As DependencyProperty = DependencyProperty.Register(
             NameOf(HeaderPadding), GetType(Thickness), GetType(DataTable), New FrameworkPropertyMetadata(New Thickness()))
 
+        ''' <summary>La clé du style de la case d'une colonne de cases : celle de mkm.</summary>
+        Public Shared ReadOnly Property CheckBoxStyleKey As New ComponentResourceKey(GetType(DataTable), "CheckBoxStyle")
+
         Shared Sub New()
             DefaultStyleKeyProperty.OverrideMetadata(GetType(DataTable), New FrameworkPropertyMetadata(GetType(DataTable)))
             CanUserAddRowsProperty.OverrideMetadata(GetType(DataTable), New FrameworkPropertyMetadata(False))
+        End Sub
+
+        ''' <summary>Un tableau vide ; ses colonnes de cases prennent la case de mkm.</summary>
+        Public Sub New()
+            AddHandler Columns.CollectionChanged, Sub(s, e) HabillerLesCases()
+            AddHandler Loaded, Sub() HabillerLesCases()
+        End Sub
+
+        ' La case d'une colonne de cases que l'application n'a pas habillée elle-même : celle de mkm, en lecture comme
+        ' en modification.
+        Private Sub HabillerLesCases()
+            Dim style = TryCast(TryFindResource(CheckBoxStyleKey), Style)
+            If style Is Nothing Then Return
+            For Each colonne In Columns.OfType(Of DataGridCheckBoxColumn)()
+                If colonne.ElementStyle Is Nothing OrElse colonne.ElementStyle Is DataGridCheckBoxColumn.DefaultElementStyle Then
+                    ' En lecture, comme le style de WPF : la case ne se clique pas, la cellule passe en modification.
+                    Dim lecture As New Style(GetType(CheckBox), style)
+                    lecture.Setters.Add(New Setter(IsHitTestVisibleProperty, False))
+                    lecture.Setters.Add(New Setter(FocusableProperty, False))
+                    colonne.ElementStyle = lecture
+                End If
+                If colonne.EditingElementStyle Is Nothing OrElse colonne.EditingElementStyle Is DataGridCheckBoxColumn.DefaultEditingElementStyle Then
+                    colonne.EditingElementStyle = style
+                End If
+            Next
         End Sub
 
         ''' <summary>Vrai si une ligne sur deux a un fond pâle.</summary>
