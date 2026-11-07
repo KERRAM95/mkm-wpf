@@ -62,9 +62,11 @@ Dans le XAML :
 
 ## Feuille de route
 
-1. Les thèmes : les jetons de conception, un thème par défaut et ARA.
-2. L'ActionBar, une barre de commandes en onglets.
-3. Le registre des commandes, puis les icônes.
+1. Les fondations : le thème et la langue, une variable chacun, changeables
+   pendant l'exécution (`docs/fondations/theme-et-langue.md`).
+2. Les thèmes : les jetons de conception, un thème par défaut et ARA.
+3. L'ActionBar, une barre de commandes en onglets.
+4. Le registre des commandes, puis les icônes.
 
 ## Règles
 

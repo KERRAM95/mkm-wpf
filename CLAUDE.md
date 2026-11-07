@@ -35,6 +35,7 @@ ou reste dans l'application.
 | `src/Mkm.Wpf`           | `Mkm.Wpf`          | les contrôles et leurs styles par défaut (`Themes/Generic.xaml`)         |
 | `apps/Mkm.Wpf.Showcase` | `Mkm.Wpf.Showcase` | la vitrine : une page par composant                                      |
 | `tests/Mkm.Wpf.Tests`   | `Mkm.Wpf.Tests`    | les tests (NUnit), dont les règles communes à tous les contrôles         |
+| `docs/fondations`       | aucun              | ce dont tous les composants dépendent : thème et langue                  |
 | `docs/composants`       | aucun              | une fiche par composant : l'état de l'art et le choix, avant le code     |
 | `outils`                | aucun              | le hook Git, la compilation sous Linux                                   |
 
@@ -54,6 +55,14 @@ premier d'entre eux, après l'étude de l'open source (plus bas).
 - `Option Strict On`, `Explicit On`, `Infer On` ; les avertissements sont des
   erreurs.
 - L'outil de référence est Visual Studio 2022 sous Windows.
+
+## Thème et langue
+
+**Une application choisit son thème et sa langue par une variable chacun, et
+les change pendant qu'elle tourne**, comme avec mkm. La langue est une exigence
+au même titre que le thème (Mourad, le 07/11/2026) : tout composant est
+traduisible. Le mécanisme est dans `docs/fondations/theme-et-langue.md`, à
+valider avant le premier composant ; ses règles entrent ici une fois validé.
 
 ## L'open source d'abord
 
@@ -130,7 +139,8 @@ dont le gabarit vit dans un style par défaut.
 Les noms de l'API (classes, propriétés, événements) sont en anglais, comme
 WPF et comme mkm. Les commentaires, la documentation et la vitrine sont en
 français. Un texte affiché par un contrôle (« Fermer »…) est une propriété,
-avec une valeur par défaut en anglais.
+dont la valeur par défaut vient des textes traduits de la bibliothèque,
+l'anglais en repli (voir « Thème et langue »).
 
 ## Conventions VB
 

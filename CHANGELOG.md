@@ -15,3 +15,5 @@ Les évolutions notables de mkm-wpf, version par version. Le format suit
   fiche d'un composant et le registre des origines (`ORIGINES.md`).
 - La CI sous Windows (compilation et tests) et la compilation sous Linux
   (`outils/linux/verifier.sh`).
+- La fiche des fondations, thème et langue (`docs/fondations/theme-et-langue.md`),
+  à valider : une variable chacun, changeables pendant l'exécution, comme mkm.
