@@ -113,6 +113,14 @@ Le thème, tel qu'il est fait (`src/Mkm.Wpf/Theming`) :
   de Dashboard que par ses couleurs, chaque texte lisible sur son fond
   (4,5:1) ; un composant ajoute ses paires texte/fond à la liste du test.
 
+Les icônes (`src/Mkm.Wpf/Controls/Icon`) : celles de mkm, nommées par leur
+sens (`{x:Static mkm:Icons.Add}`), dessinées par Tabler. `<mkm:Icon
+Source="…" />` trace une géométrie à la couleur du texte, au trait fin de mkm
+(1,5 sur la grille de 24, 1 px à 16 px), ou dessine une image de
+l'application. Une icône de plus : l'ajouter au manifeste de mkm, puis
+`node outils/icones/importer-tabler.mjs <ui-kit>` ; on ne retouche jamais
+`Icons.g.vb` à la main.
+
 Les règles pour chaque composant :
 
 - aucun texte en dur : une clé dans `src/Mkm.Wpf/Localization/Strings.resx`

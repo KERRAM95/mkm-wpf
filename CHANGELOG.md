@@ -31,4 +31,6 @@ Les évolutions notables de mkm-wpf, version par version. Le format suit
   graisse, durée) ; les jetons importés de mkm (`outils/themes/importer-mkm.mjs`).
   Les textes se dessinent nets (mode `Display`).
 - La vitrine habillée par le thème, avec le choix du thème dans sa barre.
+- Les icônes : les 95 de mkm (`Icons`, dessinées par Tabler Icons 3.48.0, MIT) et
+  l'élément `Icon`, qui les trace à la couleur du texte ; `THIRD-PARTY-NOTICES.md`.
 - La fiche de l'ActionBar (`docs/composants/actionbar.md`) : comme celle de mkm.

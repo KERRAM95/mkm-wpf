@@ -26,6 +26,15 @@ La bibliothèque `Mkm.Wpf` elle-même n'a encore aucune dépendance.
 Importés par `outils/themes/importer-mkm.mjs` ; les couleurs de maturité et le
 mode sombre ne le sont pas.
 
+## Icônes
+
+| Élément de mkm-wpf | Source | Version | Licence | Ce qui est repris |
+| ------------------ | ------ | ------- | ------- | ----------------- |
+| `src/Mkm.Wpf/Controls/Icon/Icons.g.vb` | Tabler Icons (`@tabler/icons`), les noms du manifeste de mkm (`ui-kit`, `packages/icons/tabler/manifest.json`) | 3.48.0 | MIT (licence dans `THIRD-PARTY-NOTICES.md`) | les formes des 95 icônes du manifeste, style outline, en géométries WPF |
+
+Importées par `outils/icones/importer-tabler.mjs`, qui contrôle l'empreinte du
+paquet donnée par le manifeste.
+
 ## Code repris
 
 Aucun pour l'instant.

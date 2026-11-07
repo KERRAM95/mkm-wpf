@@ -85,7 +85,7 @@ vitrine en est l'exemple (`apps/Mkm.Wpf.Showcase`).
    (`docs/fondations/theme-et-langue.md`).
 2. ~~Les thèmes~~ : faits — Dashboard et ARA, les jetons de mkm, par la même
    configuration (`docs/fondations/theme.md`).
-3. Les icônes (le jeu Tabler, comme mkm).
+3. ~~Les icônes~~ : faites — les 95 de mkm, dessinées par Tabler.
 4. L'ActionBar, une barre de commandes en onglets : le composant prioritaire
    (`docs/composants/actionbar.md`).
 5. Le registre des commandes.

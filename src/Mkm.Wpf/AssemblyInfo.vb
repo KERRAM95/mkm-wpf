@@ -8,10 +8,10 @@ Imports System.Windows.Markup
 
 ' Un seul espace de noms XAML pour toute la bibliothèque : xmlns:mkm="urn:mkm-wpf".
 ' Chaque espace de noms public de l'assembly y est associé par sa propre ligne, dès qu'il a un
-' type : le compilateur XAML d'une application refuse un espace de noms vide (Mkm.Wpf.Controls
-' entrera ici avec le premier contrôle).
+' type : le compilateur XAML d'une application refuse un espace de noms vide.
 <Assembly: XmlnsPrefix("urn:mkm-wpf", "mkm")>
 <Assembly: XmlnsDefinition("urn:mkm-wpf", "Mkm.Wpf")>
+<Assembly: XmlnsDefinition("urn:mkm-wpf", "Mkm.Wpf.Controls")>
 <Assembly: XmlnsDefinition("urn:mkm-wpf", "Mkm.Wpf.Localization")>
 <Assembly: XmlnsDefinition("urn:mkm-wpf", "Mkm.Wpf.Theming")>
 
