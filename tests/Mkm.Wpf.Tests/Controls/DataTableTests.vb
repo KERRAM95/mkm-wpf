@@ -69,9 +69,10 @@ Namespace Mkm.Wpf.Tests.Controls
 
             t.Columns.Add(colonne)
 
-            Assert.That(colonne.ElementStyle, [Is].Not.SameAs(DataGridCheckBoxColumn.DefaultElementStyle))
-            Assert.That(colonne.ElementStyle.BasedOn, [Is].SameAs(t.TryFindResource(DataTable.CheckBoxStyleKey)))
-            Assert.That(colonne.EditingElementStyle, [Is].SameAs(t.TryFindResource(DataTable.CheckBoxStyleKey)))
+            Dim caseDeMkm = t.TryFindResource(Mkm.Wpf.Controls.DataTable.CheckBoxStyleKey)
+            Assert.That(caseDeMkm, [Is].InstanceOf(Of Style)())
+            Assert.That(colonne.ElementStyle.BasedOn Is caseDeMkm, [Is].True)
+            Assert.That(colonne.EditingElementStyle Is caseDeMkm, [Is].True)
         End Sub
 
         <Test>
