@@ -280,6 +280,10 @@ l'anglais en repli (voir « Thème et langue »).
   de gabarit rend alors `Nothing`, sans bruit). Écrire le nom complet
   (`System.Windows.Controls.Primitives.ToggleButton`) ; `ConventionsTests`
   vérifie le type de chaque partie annoncée d'un gabarit.
+- **Un `MenuItem` survolé prend le focus**, et un `MenuBase` où le focus entre
+  passe en mode menu et capture la souris : bon pour un menu qui s'ouvre, mauvais
+  pour un menu posé dans la page (un champ perdrait le focus au survol). `Menu` et
+  `TieredMenu` refusent le focus venu du survol ; `Menu` ne passe pas en mode menu.
 - **Une ligne recyclée du `DataGrid` garde ses cellules** : `GenerateElement`
   n'est pas rappelé pour le nouvel objet, seul le `DataContext` change. Ce que
   la cellule tient de son objet suit `DataContextChanged`.
