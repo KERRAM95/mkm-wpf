@@ -82,7 +82,7 @@ Namespace Mkm.Wpf.Tests.Controls
             Dim liste = Pret(New [Select] With {.IsEditable = True})
 
             Assert.That(Partie(Of TextBox)(liste, "PART_EditableTextBox").Visibility, [Is].EqualTo(Visibility.Visible))
-            Assert.That(Partie(Of ToggleButton)(liste, "Zone").Visibility, [Is].EqualTo(Visibility.Collapsed))
+            Assert.That(Partie(Of Primitives.ToggleButton)(liste, "Zone").Visibility, [Is].EqualTo(Visibility.Collapsed))
         End Sub
 
         <Test>

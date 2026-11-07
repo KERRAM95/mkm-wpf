@@ -54,6 +54,7 @@
                         <ListBoxItem Tag="Arbre" Content="{mkm:T showcase.nav.tree}" />
                         <ListBoxItem Tag="Identite" Content="{mkm:T showcase.nav.identity}" />
                         <ListBoxItem Tag="Tableau" Content="{mkm:T showcase.nav.table}" />
+                        <ListBoxItem Tag="Choix" Content="{mkm:T showcase.nav.choices}" />
                     </ListBox>
                 </DockPanel>
             </Border>

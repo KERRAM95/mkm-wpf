@@ -4,6 +4,8 @@ Imports System.Globalization
 Imports System.IO
 Imports System.Linq
 Imports System.Windows
+Imports System.Windows.Automation.Peers
+Imports System.Windows.Automation.Provider
 Imports System.Windows.Controls
 Imports System.Windows.Documents
 Imports System.Windows.Media
@@ -67,7 +69,8 @@ Namespace Mkm.Wpf.Showcase
                 Page("8-fiche", Function() New FichePage()),
                 Page("9-arbre", Function() New ArbrePage()),
                 Page("10-identite", Function() New IdentitePage()),
-                Page("11-tableau", Function() New TableauPage())
+                Page("11-tableau", Function() New TableauPage()),
+                Page("12-choix", Function() New ChoixPage())
             }
 
             For Each theme In Themes.All
@@ -203,6 +206,8 @@ Namespace Mkm.Wpf.Showcase
                           New ToolTip With {.Content = Localizer.Current.T("showcase.waiting.tooltipText")})
                 Flottante(theme, "menu", fenetre.Composants, UnMenu(True))
                 Flottante(theme, "menu-sans-icones", fenetre.Composants, UnMenu(False))
+                ' La dernière page, celle des choix : le menu « … » de sa barre étroite, ouvert par son bouton.
+                MenuDeLaBarre(theme, fenetre)
 
                 Dim pied As New StackPanel With {.Orientation = Orientation.Horizontal}
                 pied.Children.Add(New Mkm.Wpf.Controls.Button With {.Content = Localizer.Current.T("showcase.feedback.cancel"), .Severity = ButtonSeverity.Secondary})
@@ -217,6 +222,20 @@ Namespace Mkm.Wpf.Showcase
                     .Content = New TextBlock With {.Text = Localizer.Current.T("showcase.containers.titleBlockText"), .TextWrapping = TextWrapping.Wrap}})
             Finally
                 fenetre.Close()
+            End Try
+        End Sub
+
+        ' Le menu « … » de la barre étroite de la page des choix, ouvert comme d'un clic sur son bouton.
+        Private Sub MenuDeLaBarre(theme As String, fenetre As MainWindow)
+            Dim barre = DirectCast(fenetre.Page.Content, ChoixPage).BarreEtroite
+            Dim bouton = DirectCast(barre.Template.FindName("PART_Overflow", barre), System.Windows.Controls.Button)
+            Dim pair As New ButtonAutomationPeer(bouton)
+            DirectCast(pair.GetPattern(PatternInterface.Invoke), IInvokeProvider).Invoke()
+            Try
+                Attendre(300)
+                Enregistrer(barre.OverflowMenu, $"{theme}/barre-menu.png")
+            Finally
+                If barre.OverflowMenu IsNot Nothing Then barre.OverflowMenu.IsOpen = False
             End Try
         End Sub
 

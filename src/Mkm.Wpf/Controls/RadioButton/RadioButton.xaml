@@ -1,0 +1,101 @@
+<!--
+    Le style de RadioButton, sur le bouton radio de mkm (styles/radiobutton ; jetons de Nora en pixels pour Dashboard,
+    preset ara) : un rond de 15 px, blanc, bordé du gris des champs ; choisi, un point de 9 px de la couleur principale ;
+    survolé, la bordure du survol ; au clavier, la bordure du focus et l'anneau, 1 px autour ; refusé, la bordure
+    d'erreur ; grisé, le fond et le point des champs grisés. Petit (12 et 6 px) ou grand (18 et 12 px).
+
+    Écart avec mkm : le bouton radio de mkm n'a pas de libellé à lui ; ici, Content l'est (6 px d'écart, comme la case).
+-->
+<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+                    xmlns:local="clr-namespace:Mkm.Wpf.Controls">
+
+    <Style TargetType="{x:Type local:RadioButton}">
+        <Setter Property="FontFamily" Value="{DynamicResource mkm.font.family}" />
+        <Setter Property="FontSize" Value="{DynamicResource mkm.font.size}" />
+        <Setter Property="Foreground" Value="{DynamicResource mkm.text.color}" />
+        <Setter Property="Cursor" Value="Hand" />
+        <Setter Property="FocusVisualStyle" Value="{x:Null}" />
+        <Setter Property="SnapsToDevicePixels" Value="True" />
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="{x:Type local:RadioButton}">
+                    <StackPanel x:Name="Racine" Background="Transparent" Orientation="Horizontal">
+                        <Grid x:Name="Cadre" VerticalAlignment="Center"
+                              Width="{DynamicResource mkm.radiobutton.width}" Height="{DynamicResource mkm.radiobutton.height}">
+                            <!-- L'anneau du focus : 1 px, à 1 px du rond (outline et outline-offset de mkm). -->
+                            <Ellipse x:Name="Anneau" Margin="-2" Visibility="Collapsed"
+                                     Stroke="{DynamicResource mkm.radiobutton.focus.ring.color}"
+                                     StrokeThickness="{DynamicResource mkm.radiobutton.focus.ring.width}" />
+                            <Ellipse x:Name="Boite" StrokeThickness="1"
+                                     Fill="{DynamicResource mkm.radiobutton.background}"
+                                     Stroke="{DynamicResource mkm.radiobutton.border.color}" />
+                            <Ellipse x:Name="Point" Visibility="Collapsed" HorizontalAlignment="Center" VerticalAlignment="Center"
+                                     Width="{DynamicResource mkm.radiobutton.icon.size}" Height="{DynamicResource mkm.radiobutton.icon.size}"
+                                     Fill="{DynamicResource mkm.radiobutton.icon.checked.color}" />
+                        </Grid>
+                        <Rectangle x:Name="Ecart" Width="{DynamicResource mkm.radiobutton.label.gap}" />
+                        <ContentPresenter x:Name="Libelle" VerticalAlignment="Center" RecognizesAccessKey="True" />
+                    </StackPanel>
+                    <ControlTemplate.Triggers>
+                        <Trigger Property="HasContent" Value="False">
+                            <Setter TargetName="Ecart" Property="Visibility" Value="Collapsed" />
+                        </Trigger>
+                        <Trigger Property="Size" Value="Small">
+                            <Setter TargetName="Cadre" Property="Width" Value="{DynamicResource mkm.radiobutton.sm.width}" />
+                            <Setter TargetName="Cadre" Property="Height" Value="{DynamicResource mkm.radiobutton.sm.height}" />
+                            <Setter TargetName="Point" Property="Width" Value="{DynamicResource mkm.radiobutton.icon.sm.size}" />
+                            <Setter TargetName="Point" Property="Height" Value="{DynamicResource mkm.radiobutton.icon.sm.size}" />
+                        </Trigger>
+                        <Trigger Property="Size" Value="Large">
+                            <Setter TargetName="Cadre" Property="Width" Value="{DynamicResource mkm.radiobutton.lg.width}" />
+                            <Setter TargetName="Cadre" Property="Height" Value="{DynamicResource mkm.radiobutton.lg.height}" />
+                            <Setter TargetName="Point" Property="Width" Value="{DynamicResource mkm.radiobutton.icon.lg.size}" />
+                            <Setter TargetName="Point" Property="Height" Value="{DynamicResource mkm.radiobutton.icon.lg.size}" />
+                        </Trigger>
+                        <Trigger Property="IsMouseOver" Value="True">
+                            <Setter TargetName="Boite" Property="Stroke" Value="{DynamicResource mkm.radiobutton.hover.border.color}" />
+                        </Trigger>
+                        <Trigger Property="IsFocusVisible" Value="True">
+                            <Setter TargetName="Boite" Property="Stroke" Value="{DynamicResource mkm.radiobutton.focus.border.color}" />
+                            <Setter TargetName="Anneau" Property="Visibility" Value="Visible" />
+                        </Trigger>
+                        <Trigger Property="IsChecked" Value="True">
+                            <Setter TargetName="Boite" Property="Stroke" Value="{DynamicResource mkm.radiobutton.checked.border.color}" />
+                            <Setter TargetName="Boite" Property="Fill" Value="{DynamicResource mkm.radiobutton.checked.background}" />
+                            <Setter TargetName="Point" Property="Visibility" Value="Visible" />
+                        </Trigger>
+                        <MultiTrigger>
+                            <MultiTrigger.Conditions>
+                                <Condition Property="IsChecked" Value="True" />
+                                <Condition Property="IsMouseOver" Value="True" />
+                            </MultiTrigger.Conditions>
+                            <Setter TargetName="Boite" Property="Stroke" Value="{DynamicResource mkm.radiobutton.checked.hover.border.color}" />
+                            <Setter TargetName="Boite" Property="Fill" Value="{DynamicResource mkm.radiobutton.checked.hover.background}" />
+                            <Setter TargetName="Point" Property="Fill" Value="{DynamicResource mkm.radiobutton.icon.checked.hover.color}" />
+                        </MultiTrigger>
+                        <MultiTrigger>
+                            <MultiTrigger.Conditions>
+                                <Condition Property="IsChecked" Value="True" />
+                                <Condition Property="IsFocusVisible" Value="True" />
+                            </MultiTrigger.Conditions>
+                            <Setter TargetName="Boite" Property="Stroke" Value="{DynamicResource mkm.radiobutton.checked.focus.border.color}" />
+                        </MultiTrigger>
+                        <Trigger Property="Invalid" Value="True">
+                            <Setter TargetName="Boite" Property="Stroke" Value="{DynamicResource mkm.radiobutton.invalid.border.color}" />
+                        </Trigger>
+                        <!-- Grisé : le fond et le point des champs grisés ; le libellé, la couleur d'un champ grisé. -->
+                        <Trigger Property="IsEnabled" Value="False">
+                            <Setter Property="Cursor" Value="Arrow" />
+                            <Setter TargetName="Boite" Property="Fill" Value="{DynamicResource mkm.radiobutton.disabled.background}" />
+                            <Setter TargetName="Boite" Property="Stroke" Value="{DynamicResource mkm.radiobutton.checked.disabled.border.color}" />
+                            <Setter TargetName="Point" Property="Fill" Value="{DynamicResource mkm.radiobutton.icon.disabled.color}" />
+                            <Setter TargetName="Libelle" Property="TextElement.Foreground" Value="{DynamicResource mkm.form.field.disabled.color}" />
+                        </Trigger>
+                    </ControlTemplate.Triggers>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+
+</ResourceDictionary>

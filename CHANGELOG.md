@@ -84,6 +84,10 @@ Les évolutions notables de mkm-wpf, version par version. Le format suit
   `DataGrid` de WPF, zébrée, quadrillée, trois tailles, message vide, voile de
   chargement, en-tête et pied, la case de mkm dans les colonnes de cases ; la page
   Tableau de données de la vitrine.
+- Le lot 5 (`docs/composants/choix-et-barre.md`) : `RadioButton`, `ToggleButton`
+  (libellés et icônes de son état), `Toolbar` (ses zones, ses commandes
+  `ToolbarButton` et `ToolbarSeparator`, le débordement dans le menu « … ») ; la
+  page Radios, bascules, barre de la vitrine.
 - `InternalIcons` : les 45 icônes que les composants de mkm dessinent eux-mêmes
   (clé `internal` du manifeste).
 - La vitrine : les pages Attente et aide, Texte date et confirmation, Fiche de

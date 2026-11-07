@@ -33,6 +33,9 @@
   <data name="actionBar.moreCommands" xml:space="preserve">
     <value>More Commands</value>
   </data>
+  <data name="aria.moreCommands" xml:space="preserve">
+    <value>More Commands</value>
+  </data>
   <data name="aria.close" xml:space="preserve">
     <value>Close</value>
   </data>

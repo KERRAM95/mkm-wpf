@@ -238,3 +238,16 @@ inputnumber.horizontal.increment.border.radius = 0 {inputnumber.button.border.ra
 # l'icône de tri 6 px après le titre (gap des cellules de l'en-tête).
 datatable.row.height = {datatable.extend.row.height}
 datatable.sort.icon.margin = 0 0 0 {datatable.header.cell.gap}
+
+# radiobutton (styles/radiobutton ; jetons de preset ara) : le libellé à 6 px du rond, comme celui de la case
+# (mesure de mkm-wpf : le bouton radio de mkm n'a pas de libellé à lui).
+radiobutton.label.gap = 6px
+
+# togglebutton seul (preset ara/togglebutton) : petit, 2 + 14 + 2 et la bordure ; grand, 6 + 16 (le texte de 14 px) + 6
+# et la bordure. L'anneau du focus (1 px à 1 px du bord) arrondi de 4 + 1 + 1 px.
+togglebutton.sm.height = 20px
+togglebutton.lg.height = 30px
+togglebutton.focus.ring.radius = 6px
+
+# toolbar (preset ara/toolbar, sa feuille) : le bouton « … », le bouton « lite » d'icône seule, fait 26 px de haut.
+toolbar.overflow.button.height = 26px

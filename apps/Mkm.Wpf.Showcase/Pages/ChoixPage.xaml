@@ -1,0 +1,106 @@
+<!--
+    La page des choix et de la barre de commandes : RadioButton (un groupe, grisé, refusé, trois tailles), ToggleButton
+    (avec ses libellés et ses icônes d'état, d'icône seule, grisé, refusé, trois tailles) et Toolbar (une barre complète,
+    puis une barre étroite dont les commandes débordent dans le menu « … »).
+-->
+<UserControl x:Class="Mkm.Wpf.Showcase.ChoixPage"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mkm="urn:mkm-wpf">
+    <UserControl.Resources>
+        <Style x:Key="Titre" TargetType="TextBlock">
+            <Setter Property="Margin" Value="0,16,0,8" />
+            <Setter Property="FontWeight" Value="Bold" />
+        </Style>
+        <Style x:Key="Libelle" TargetType="TextBlock">
+            <Setter Property="Margin" Value="0,8,0,4" />
+            <Setter Property="Foreground" Value="{DynamicResource mkm.text.muted.color}" />
+        </Style>
+        <Style TargetType="mkm:RadioButton">
+            <Setter Property="Margin" Value="0,0,16,0" />
+        </Style>
+        <Style TargetType="mkm:ToggleButton">
+            <Setter Property="Margin" Value="0,0,8,0" />
+        </Style>
+    </UserControl.Resources>
+    <ScrollViewer VerticalScrollBarVisibility="Auto">
+        <StackPanel Margin="24,20" MaxWidth="640" HorizontalAlignment="Left">
+            <TextBlock FontSize="16" FontWeight="Bold"
+                       Foreground="{DynamicResource mkm.primary.color}" Text="{mkm:T showcase.choices.title}" />
+            <TextBlock Margin="0,6,0,0" TextWrapping="Wrap"
+                       Foreground="{DynamicResource mkm.text.muted.color}" Text="{mkm:T showcase.choices.help}" />
+
+            <TextBlock Style="{StaticResource Titre}" Text="RadioButton" />
+            <StackPanel Orientation="Horizontal">
+                <mkm:RadioButton GroupName="vue" Content="{mkm:T showcase.identity.drawingChoice}" IsChecked="True" />
+                <mkm:RadioButton GroupName="vue" Content="{mkm:T showcase.identity.articleChoice}" />
+                <mkm:RadioButton GroupName="vue" Content="{mkm:T showcase.identity.both}" />
+            </StackPanel>
+            <TextBlock Style="{StaticResource Libelle}" Text="{mkm:T showcase.choices.states}" />
+            <StackPanel Orientation="Horizontal">
+                <mkm:RadioButton GroupName="grise" Content="{mkm:T showcase.buttons.disabledChecked}" IsChecked="True" IsEnabled="False" />
+                <mkm:RadioButton GroupName="grise" Content="{mkm:T showcase.buttons.disabled}" IsEnabled="False" />
+                <mkm:RadioButton GroupName="refuse" Content="{mkm:T showcase.buttons.invalid}" Invalid="True" />
+            </StackPanel>
+            <TextBlock Style="{StaticResource Libelle}" Text="{mkm:T showcase.choices.sizes}" />
+            <StackPanel Orientation="Horizontal">
+                <mkm:RadioButton GroupName="taille" Size="Small" Content="Small" />
+                <mkm:RadioButton GroupName="taille" Content="Normal" IsChecked="True" />
+                <mkm:RadioButton GroupName="taille" Size="Large" Content="Large" />
+            </StackPanel>
+
+            <TextBlock Style="{StaticResource Titre}" Text="ToggleButton" />
+            <WrapPanel>
+                <mkm:ToggleButton OnLabel="{mkm:T showcase.choices.locked}" OffLabel="{mkm:T showcase.choices.unlocked}"
+                                  OnIcon="{x:Static mkm:Icons.Locked}" OffIcon="{x:Static mkm:Icons.Unlocked}" IsChecked="True" />
+                <mkm:ToggleButton OnLabel="{mkm:T showcase.choices.locked}" OffLabel="{mkm:T showcase.choices.unlocked}"
+                                  OnIcon="{x:Static mkm:Icons.Locked}" OffIcon="{x:Static mkm:Icons.Unlocked}" />
+                <mkm:ToggleButton Content="{mkm:T showcase.choices.labels}" />
+                <mkm:ToggleButton OnIcon="{x:Static mkm:Icons.Pin}" IsChecked="True" ToolTip="{mkm:T showcase.choices.pin}" />
+                <mkm:ToggleButton OnIcon="{x:Static mkm:Icons.Pin}" ToolTip="{mkm:T showcase.choices.pin}" />
+            </WrapPanel>
+            <TextBlock Style="{StaticResource Libelle}" Text="{mkm:T showcase.choices.states}" />
+            <WrapPanel>
+                <mkm:ToggleButton Content="{mkm:T showcase.buttons.disabledChecked}" IsChecked="True" IsEnabled="False" />
+                <mkm:ToggleButton Content="{mkm:T showcase.buttons.disabled}" IsEnabled="False" />
+                <mkm:ToggleButton Content="{mkm:T showcase.buttons.invalid}" Invalid="True" />
+            </WrapPanel>
+            <TextBlock Style="{StaticResource Libelle}" Text="{mkm:T showcase.choices.sizes}" />
+            <WrapPanel>
+                <mkm:ToggleButton Size="Small" Content="Small" OnIcon="{x:Static mkm:Icons.Check}" IsChecked="True" />
+                <mkm:ToggleButton Content="Normal" OnIcon="{x:Static mkm:Icons.Check}" IsChecked="True" />
+                <mkm:ToggleButton Size="Large" Content="Large" OnIcon="{x:Static mkm:Icons.Check}" IsChecked="True" />
+            </WrapPanel>
+
+            <TextBlock Style="{StaticResource Titre}" Text="Toolbar" />
+            <Border BorderThickness="0,0,0,1" BorderBrush="{DynamicResource mkm.content.border.color}" Padding="0,0,0,8">
+                <mkm:Toolbar>
+                    <mkm:Toolbar.Start>
+                        <TextBlock FontWeight="Bold" Text="{mkm:T showcase.choices.variables}" />
+                    </mkm:Toolbar.Start>
+                    <mkm:ToolbarButton Content="{mkm:T showcase.actionbar.add}" Icon="{x:Static mkm:Icons.Add}" />
+                    <mkm:ToolbarButton Content="{mkm:T showcase.actionbar.copy}" Icon="{x:Static mkm:Icons.Copy}" />
+                    <mkm:ToolbarButton Content="{mkm:T showcase.actionbar.delete}" Icon="{x:Static mkm:Icons.Delete}" IsEnabled="False" />
+                    <mkm:ToolbarSeparator />
+                    <mkm:ToolbarButton Icon="{x:Static mkm:Icons.Refresh}" ToolTip="{mkm:T showcase.actionbar.refresh}"
+                                       AutomationProperties.Name="{mkm:T showcase.actionbar.refresh}" />
+                </mkm:Toolbar>
+            </Border>
+            <TextBlock Style="{StaticResource Libelle}" Text="{mkm:T showcase.choices.overflow}" />
+            <Border Width="360" HorizontalAlignment="Left" BorderThickness="1" Padding="8,4"
+                    BorderBrush="{DynamicResource mkm.content.border.color}">
+                <mkm:Toolbar x:Name="BarreEtroite" Overflow="True">
+                    <mkm:Toolbar.Start>
+                        <mkm:InputText Width="120" Placeholder="{mkm:T showcase.actionbar.search}" Margin="0,0,8,0" />
+                    </mkm:Toolbar.Start>
+                    <mkm:ToolbarButton Content="{mkm:T showcase.actionbar.add}" Icon="{x:Static mkm:Icons.Add}" />
+                    <mkm:ToolbarButton Content="{mkm:T showcase.actionbar.copy}" Icon="{x:Static mkm:Icons.Copy}" />
+                    <mkm:ToolbarSeparator />
+                    <mkm:ToolbarButton Content="{mkm:T showcase.actionbar.import}" Icon="{x:Static mkm:Icons.Import}" />
+                    <mkm:ToolbarButton Content="{mkm:T showcase.actionbar.export}" Icon="{x:Static mkm:Icons.Export}" />
+                    <mkm:ToolbarButton Content="{mkm:T showcase.actionbar.delete}" Icon="{x:Static mkm:Icons.Delete}" IsEnabled="False" />
+                </mkm:Toolbar>
+            </Border>
+        </StackPanel>
+    </ScrollViewer>
+</UserControl>

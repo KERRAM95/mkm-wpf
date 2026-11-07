@@ -1168,6 +1168,40 @@ propertypanel.error.color = {red.600}
 propertypanel.warn.color = {orange.600}
 propertypanel.info.color = {sky.600}
 
+# radiobutton
+radiobutton.width = 15px
+radiobutton.height = 15px
+radiobutton.background = {form.field.background}
+radiobutton.checked.background = {form.field.background}
+radiobutton.checked.hover.background = {form.field.background}
+radiobutton.disabled.background = {form.field.disabled.background}
+radiobutton.filled.background = {form.field.filled.background}
+radiobutton.border.color = {form.field.border.color}
+radiobutton.hover.border.color = {form.field.hover.border.color}
+radiobutton.focus.border.color = {form.field.focus.border.color}
+radiobutton.checked.border.color = {form.field.border.color}
+radiobutton.checked.hover.border.color = {form.field.hover.border.color}
+radiobutton.checked.focus.border.color = {form.field.focus.border.color}
+radiobutton.checked.disabled.border.color = {form.field.border.color}
+radiobutton.invalid.border.color = {form.field.invalid.border.color}
+radiobutton.shadow = {form.field.shadow}
+radiobutton.focus.ring.width = {focus.ring.width}
+radiobutton.focus.ring.style = {focus.ring.style}
+radiobutton.focus.ring.color = {focus.ring.color}
+radiobutton.focus.ring.offset = {focus.ring.offset}
+radiobutton.focus.ring.shadow = {focus.ring.shadow}
+radiobutton.transition.duration = {form.field.transition.duration}
+radiobutton.sm.width = 12px
+radiobutton.sm.height = 12px
+radiobutton.lg.width = 18px
+radiobutton.lg.height = 18px
+radiobutton.icon.size = 9px
+radiobutton.icon.checked.color = {primary.color}
+radiobutton.icon.checked.hover.color = {primary.color}
+radiobutton.icon.disabled.color = {form.field.disabled.color}
+radiobutton.icon.sm.size = 6px
+radiobutton.icon.lg.size = 12px
+
 # select
 select.background = {form.field.background}
 select.disabled.background = {form.field.background}
@@ -1442,6 +1476,17 @@ togglebutton.content.border.radius = 0
 togglebutton.content.sm.padding = 0
 togglebutton.content.lg.padding = 0
 togglebutton.hover.background = {surface.100}
+
+# toolbar
+toolbar.background = transparent
+toolbar.border.color = transparent
+toolbar.border.radius = {border.radius.none}
+toolbar.color = {content.color}
+toolbar.gap = 0
+toolbar.padding = 0
+toolbar.separator.height = 24px
+toolbar.separator.color = {surface.300}
+toolbar.separator.margin = 0 4px
 
 # tooltip
 tooltip.max.width = 150px

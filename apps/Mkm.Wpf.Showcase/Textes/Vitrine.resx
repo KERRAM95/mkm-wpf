@@ -663,4 +663,37 @@
   <data name="showcase.table.search" xml:space="preserve">
     <value>Search</value>
   </data>
+  <data name="showcase.nav.choices" xml:space="preserve">
+    <value>Radios, toggles, toolbar</value>
+  </data>
+  <data name="showcase.choices.title" xml:space="preserve">
+    <value>Radio buttons, toggle buttons, toolbar</value>
+  </data>
+  <data name="showcase.choices.help" xml:space="preserve">
+    <value>The radio button and the toggle button of mkm; the toolbar of 3DEXPERIENCE: its commands on the right, close together; with Overflow, those that do not fit go into the menu of a « … » button.</value>
+  </data>
+  <data name="showcase.choices.states" xml:space="preserve">
+    <value>Disabled and invalid</value>
+  </data>
+  <data name="showcase.choices.sizes" xml:space="preserve">
+    <value>Sizes</value>
+  </data>
+  <data name="showcase.choices.locked" xml:space="preserve">
+    <value>Locked</value>
+  </data>
+  <data name="showcase.choices.unlocked" xml:space="preserve">
+    <value>Unlocked</value>
+  </data>
+  <data name="showcase.choices.labels" xml:space="preserve">
+    <value>Labels</value>
+  </data>
+  <data name="showcase.choices.pin" xml:space="preserve">
+    <value>Pin</value>
+  </data>
+  <data name="showcase.choices.variables" xml:space="preserve">
+    <value>Environment variables</value>
+  </data>
+  <data name="showcase.choices.overflow" xml:space="preserve">
+    <value>Overflow: in a narrow bar, the commands that do not fit go into the « … » menu</value>
+  </data>
 </root>

@@ -99,9 +99,12 @@ vitrine en est l'exemple (`apps/Mkm.Wpf.Showcase`).
 8. ~~Le lot 3~~ : fait — `IdCard`, `Tag`, `SelectButton`, `InputNumber`
    (`docs/composants/identite-et-choix.md`).
 9. ~~Le tableau de données~~ : fait — `DataTable` (`docs/composants/tableau.md`).
-10. `RadioButton`, `ToggleButton` ; la mise
-   en page d'une application (`Toolbar`, `Splitter`, `Triptych`) ; le registre
-   des commandes.
+10. ~~Le lot 5~~ : fait — `RadioButton`, `ToggleButton`, `Toolbar`
+   (`docs/composants/choix-et-barre.md`).
+11. La mise en page d'une application (`Splitter`, `Triptych`, `WelcomePanel`,
+   `EmptyContent`) ; les menus (`Menu`, `TieredMenu`) ; la grille arborescente
+   (`TreeGrid`) et le graphe des états (`StateGraph`) ; le registre des
+   commandes.
 
 ## Règles
 

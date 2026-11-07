@@ -1,0 +1,84 @@
+<!--
+    Les styles de Toolbar et de ToolbarSeparator, sur la barre de commandes de 3DEXPERIENCE de mkm (presets dashboard et
+    ara, toolbar, et leur feuille) : sans fond ni bordure, sans retrait, de la hauteur de ses boutons ; le début, le
+    milieu, puis les commandes, à droite, collées les unes aux autres, coupées aux bords de leur cadre ; la fin. Un trait
+    de 24 px en gris clair, à 4 px de chaque côté, sépare deux groupes. Le bouton « … » est le bouton « lite » d'icône
+    seule, de 26 px de haut, précédé d'un trait ; il ne paraît que si des commandes ne tiennent pas.
+    La commande (ToolbarButton) a son style dans Button.xaml : celui du bouton, dont elle hérite.
+-->
+<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+                    xmlns:local="clr-namespace:Mkm.Wpf.Controls"
+                    xmlns:loc="clr-namespace:Mkm.Wpf.Localization">
+
+    <Style TargetType="{x:Type local:ToolbarSeparator}">
+        <Setter Property="Focusable" Value="False" />
+        <Setter Property="VerticalAlignment" Value="Center" />
+        <Setter Property="SnapsToDevicePixels" Value="True" />
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="{x:Type local:ToolbarSeparator}">
+                    <Rectangle Width="1" Height="{DynamicResource mkm.toolbar.separator.height}"
+                               Margin="{DynamicResource mkm.toolbar.separator.margin}"
+                               Fill="{DynamicResource mkm.toolbar.separator.color}" />
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+
+    <Style TargetType="{x:Type local:Toolbar}">
+        <Setter Property="Background" Value="{DynamicResource mkm.toolbar.background}" />
+        <Setter Property="BorderBrush" Value="{DynamicResource mkm.toolbar.border.color}" />
+        <Setter Property="BorderThickness" Value="0" />
+        <Setter Property="Padding" Value="{DynamicResource mkm.toolbar.padding}" />
+        <Setter Property="Foreground" Value="{DynamicResource mkm.toolbar.color}" />
+        <Setter Property="FontFamily" Value="{DynamicResource mkm.font.family}" />
+        <Setter Property="FontSize" Value="{DynamicResource mkm.font.size}" />
+        <Setter Property="SnapsToDevicePixels" Value="True" />
+        <Setter Property="ItemsPanel">
+            <Setter.Value>
+                <ItemsPanelTemplate>
+                    <local:ToolbarPanel Gap="{DynamicResource mkm.toolbar.gap}" />
+                </ItemsPanelTemplate>
+            </Setter.Value>
+        </Setter>
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="{x:Type local:Toolbar}">
+                    <Border Background="{TemplateBinding Background}" BorderBrush="{TemplateBinding BorderBrush}"
+                            BorderThickness="{TemplateBinding BorderThickness}" Padding="{TemplateBinding Padding}"
+                            CornerRadius="{DynamicResource mkm.toolbar.border.radius}">
+                        <DockPanel>
+                            <ContentPresenter DockPanel.Dock="Left" VerticalAlignment="Center" Content="{TemplateBinding Start}" />
+                            <ContentPresenter DockPanel.Dock="Left" VerticalAlignment="Center" Content="{TemplateBinding Center}" />
+                            <ContentPresenter DockPanel.Dock="Right" VerticalAlignment="Center" Content="{TemplateBinding End}" />
+                            <!-- Les commandes, coupées aux bords de leur cadre ; le bouton « … » mesuré avant elles, qui
+                                 lui réservent sa place quand elles débordent. -->
+                            <Grid ClipToBounds="True">
+                                <local:ToolbarOverflow x:Name="PART_OverflowHost" HorizontalAlignment="Right">
+                                    <StackPanel Orientation="Horizontal">
+                                        <Rectangle Width="1" VerticalAlignment="Center"
+                                                   Height="{DynamicResource mkm.toolbar.separator.height}"
+                                                   Margin="{DynamicResource mkm.toolbar.separator.margin}"
+                                                   Fill="{DynamicResource mkm.toolbar.separator.color}" />
+                                        <local:Button x:Name="PART_Overflow" Severity="Secondary" Variant="Text"
+                                                      Icon="{x:Static local:InternalIcons.EllipsisH}"
+                                                      Height="{DynamicResource mkm.toolbar.overflow.button.height}"
+                                                      AutomationProperties.Name="{loc:T aria.moreCommands}" />
+                                    </StackPanel>
+                                </local:ToolbarOverflow>
+                                <ItemsPresenter />
+                            </Grid>
+                        </DockPanel>
+                    </Border>
+                    <ControlTemplate.Triggers>
+                        <Trigger Property="IsOverflowing" Value="False">
+                            <Setter TargetName="PART_OverflowHost" Property="Visibility" Value="Hidden" />
+                        </Trigger>
+                    </ControlTemplate.Triggers>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+
+</ResourceDictionary>

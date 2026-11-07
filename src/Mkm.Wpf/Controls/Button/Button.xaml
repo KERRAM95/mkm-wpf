@@ -135,4 +135,7 @@
         </Style.Triggers>
     </Style>
 
+    <!-- La commande d'une Toolbar (Controls/Toolbar) : le bouton, secondaire par défaut. -->
+    <Style TargetType="{x:Type local:ToolbarButton}" BasedOn="{StaticResource {x:Type local:Button}}" />
+
 </ResourceDictionary>

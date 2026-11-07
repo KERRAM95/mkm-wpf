@@ -663,4 +663,37 @@
   <data name="showcase.table.search" xml:space="preserve">
     <value>Rechercher</value>
   </data>
+  <data name="showcase.nav.choices" xml:space="preserve">
+    <value>Radios, bascules, barre</value>
+  </data>
+  <data name="showcase.choices.title" xml:space="preserve">
+    <value>Boutons radio, bascules, barre de commandes</value>
+  </data>
+  <data name="showcase.choices.help" xml:space="preserve">
+    <value>Le bouton radio et le bouton à bascule de mkm ; la barre de commandes de 3DEXPERIENCE : ses commandes à droite, collées ; avec Overflow, celles qui ne tiennent pas passent dans le menu d'un bouton « … ».</value>
+  </data>
+  <data name="showcase.choices.states" xml:space="preserve">
+    <value>Grisé et refusé</value>
+  </data>
+  <data name="showcase.choices.sizes" xml:space="preserve">
+    <value>Tailles</value>
+  </data>
+  <data name="showcase.choices.locked" xml:space="preserve">
+    <value>Verrouillé</value>
+  </data>
+  <data name="showcase.choices.unlocked" xml:space="preserve">
+    <value>Déverrouillé</value>
+  </data>
+  <data name="showcase.choices.labels" xml:space="preserve">
+    <value>Libellés</value>
+  </data>
+  <data name="showcase.choices.pin" xml:space="preserve">
+    <value>Épingler</value>
+  </data>
+  <data name="showcase.choices.variables" xml:space="preserve">
+    <value>Variables d'environnement</value>
+  </data>
+  <data name="showcase.choices.overflow" xml:space="preserve">
+    <value>Overflow : dans une barre étroite, les commandes qui ne tiennent pas passent dans le menu « … »</value>
+  </data>
 </root>

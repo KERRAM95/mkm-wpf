@@ -115,7 +115,7 @@ Namespace Mkm.Wpf.Tests.Controls
         <Test>
         Public Sub Fieldset_SeReplieParSaLegende()
             Dim groupe = Pret(New Fieldset With {.Header = "Notes", .Toggleable = True, .Content = New TextBlock()})
-            Dim bascule = Partie(Of ToggleButton)(groupe, "Bascule")
+            Dim bascule = Partie(Of Primitives.ToggleButton)(groupe, "Bascule")
             Dim contenu = Partie(Of ContentPresenter)(groupe, "Contenu")
             Assert.That(bascule.Visibility, [Is].EqualTo(Visibility.Visible))
 
