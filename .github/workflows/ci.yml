@@ -3,10 +3,13 @@
 # minutes GitHub Actions qu'un runner Linux sur un dépôt privé.
 name: CI
 
+# La documentation seule ne relance pas la CI : rien n'y compile.
 on:
   push:
     branches: [main]
+    paths-ignore: ['**.md', 'docs/**']
   pull_request:
+    paths-ignore: ['**.md', 'docs/**']
   workflow_dispatch:
 
 # Une poussée annule la vérification encore en cours de la précédente.
@@ -19,7 +22,7 @@ jobs:
     runs-on: windows-latest
     timeout-minutes: 20
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v6
 
       - name: Restauration
         run: dotnet restore Mkm.Wpf.sln
@@ -32,7 +35,7 @@ jobs:
 
       - name: Résultats des tests
         if: always()
-        uses: actions/upload-artifact@v4
+        uses: actions/upload-artifact@v6
         with:
           name: resultats-tests
           path: TestResults
