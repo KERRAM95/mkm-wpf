@@ -1546,6 +1546,35 @@ textarea.lg.font.size = {form.field.lg.font.size}
 textarea.lg.padding.x = {form.field.lg.padding.x}
 textarea.lg.padding.y = {form.field.lg.padding.y}
 
+# tieredmenu
+tieredmenu.background = {content.background}
+tieredmenu.border.color = {content.border.color}
+tieredmenu.color = {content.color}
+tieredmenu.border.radius = {border.radius.none}
+tieredmenu.shadow = {overlay.navigation.shadow}
+tieredmenu.transition.duration = {transition.duration}
+tieredmenu.min.width = 150px
+tieredmenu.list.padding = {navigation.list.padding}
+tieredmenu.list.gap = {navigation.list.gap}
+tieredmenu.item.focus.background = {navigation.item.focus.background}
+tieredmenu.item.active.background = {navigation.item.active.background}
+tieredmenu.item.color = {navigation.item.color}
+tieredmenu.item.focus.color = {navigation.item.focus.color}
+tieredmenu.item.active.color = {navigation.item.active.color}
+tieredmenu.item.padding = 4px 8px 4px 14px
+tieredmenu.item.border.radius = {navigation.item.border.radius}
+tieredmenu.item.gap = 14px
+tieredmenu.item.icon.color = {navigation.item.icon.color}
+tieredmenu.item.icon.focus.color = {navigation.item.icon.focus.color}
+tieredmenu.item.icon.active.color = {navigation.item.icon.active.color}
+tieredmenu.item.shortcut.color = {text.muted.color}
+tieredmenu.submenu.mobile.indent = 12px
+tieredmenu.submenu.icon.size = {navigation.submenu.icon.size}
+tieredmenu.submenu.icon.color = {navigation.submenu.icon.color}
+tieredmenu.submenu.icon.focus.color = {navigation.submenu.icon.focus.color}
+tieredmenu.submenu.icon.active.color = {navigation.submenu.icon.active.color}
+tieredmenu.separator.border.color = {surface.200}
+
 # toast
 toast.width = auto
 toast.border.radius = {border.radius.none}

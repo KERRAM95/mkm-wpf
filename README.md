@@ -101,10 +101,10 @@ vitrine en est l'exemple (`apps/Mkm.Wpf.Showcase`).
 9. ~~Le tableau de données~~ : fait — `DataTable` (`docs/composants/tableau.md`).
 10. ~~Le lot 5~~ : fait — `RadioButton`, `ToggleButton`, `Toolbar`
    (`docs/composants/choix-et-barre.md`).
-11. La mise en page d'une application (`Splitter`, `Triptych`, `WelcomePanel`,
-   `EmptyContent`) ; les menus (`Menu`, `TieredMenu`) ; la grille arborescente
-   (`TreeGrid`) et le graphe des états (`StateGraph`) ; le registre des
-   commandes.
+11. ~~Le lot 6~~ : fait — la mise en page d'une application : `Triptych`,
+   `WelcomePanel`, `Splitter`, `EmptyContent` (`docs/composants/mise-en-page.md`).
+12. Les menus (`Menu`, `TieredMenu`) ; la grille arborescente (`TreeGrid`) et le
+   graphe des états (`StateGraph`) ; le registre des commandes.
 
 ## Règles
 

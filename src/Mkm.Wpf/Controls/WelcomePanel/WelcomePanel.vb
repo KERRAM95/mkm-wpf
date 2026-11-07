@@ -2,9 +2,13 @@ Imports System.Collections.Generic
 Imports System.Collections.Specialized
 Imports System.Linq
 Imports System.Windows
+Imports System.Windows.Automation
+Imports System.Windows.Automation.Peers
+Imports System.Windows.Automation.Provider
 Imports System.Windows.Controls
 Imports System.Windows.Controls.Primitives
 Imports System.Windows.Input
+Imports System.Windows.Threading
 
 Namespace Mkm.Wpf.Controls
 
@@ -381,6 +385,16 @@ Namespace Mkm.Wpf.Controls
             SetValue(IsSelectedPropertyKey, choisie)
         End Sub
 
+        ''' <summary>Choisit l'entrée comme un clic : son évènement <c>Click</c> et sa <c>Command</c>.</summary>
+        Friend Sub Lancer()
+            OnClick()
+        End Sub
+
+        ''' <inheritdoc/>
+        Protected Overrides Function OnCreateAutomationPeer() As AutomationPeer
+            Return New WelcomePanelItemAutomationPeer(Me)
+        End Function
+
         ''' <inheritdoc/>
         Protected Overrides Sub OnGotKeyboardFocus(e As KeyboardFocusChangedEventArgs)
             MyBase.OnGotKeyboardFocus(e)
@@ -402,6 +416,44 @@ Namespace Mkm.Wpf.Controls
                 Return
             End If
             MyBase.OnKeyDown(e)
+        End Sub
+
+    End Class
+
+    ''' <summary>
+    ''' Ce que les lecteurs d'écran et l'automatisation voient d'une entrée d'un <see cref="WelcomePanel"/> : un bouton
+    ''' qu'on invoque (un clic).
+    ''' </summary>
+    Public Class WelcomePanelItemAutomationPeer
+        Inherits ButtonBaseAutomationPeer
+        Implements IInvokeProvider
+
+        ''' <summary>Le pair d'une entrée.</summary>
+        Public Sub New(owner As WelcomePanelItem)
+            MyBase.New(owner)
+        End Sub
+
+        ''' <inheritdoc/>
+        Protected Overrides Function GetClassNameCore() As String
+            Return NameOf(WelcomePanelItem)
+        End Function
+
+        ''' <inheritdoc/>
+        Protected Overrides Function GetAutomationControlTypeCore() As AutomationControlType
+            Return AutomationControlType.Button
+        End Function
+
+        ''' <inheritdoc/>
+        Public Overrides Function GetPattern(patternInterface As PatternInterface) As Object
+            If patternInterface = PatternInterface.Invoke Then Return Me
+            Return MyBase.GetPattern(patternInterface)
+        End Function
+
+        ' Comme le bouton de WPF : le clic passe par la file du répartiteur, pour ne pas bloquer l'appelant.
+        Private Sub Invoke() Implements IInvokeProvider.Invoke
+            If Not IsEnabled() Then Throw New ElementNotEnabledException()
+            Dim entree = DirectCast(Owner, WelcomePanelItem)
+            entree.Dispatcher.BeginInvoke(DispatcherPriority.Input, New Action(AddressOf entree.Lancer))
         End Sub
 
     End Class
