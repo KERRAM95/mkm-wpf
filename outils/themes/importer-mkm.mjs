@@ -8,8 +8,8 @@
 //
 // Les chemins sont ceux de dt() dans mkm : les clés en camelCase deviennent des mots séparés par des points
 // (paddingX → padding.x), la section « root » d'un composant et le schéma « colorScheme.light » disparaissent, la
-// section « extend.mkm » perd son préfixe. Le mode sombre (colorScheme.dark) et les couleurs de maturité (des
-// policies de l'application, pas des jetons de thème) ne sont pas repris.
+// section « extend.mkm » perd son préfixe. Ne sont pas repris : le mode sombre (colorScheme.dark), les couleurs de
+// maturité (des policies de l'application, pas des jetons de thème) et la feuille CSS d'un composant (« css »).
 import { existsSync, mkdirSync, writeFileSync } from 'node:fs';
 import { join, resolve } from 'node:path';
 import { pathToFileURL } from 'node:url';
@@ -35,11 +35,14 @@ const mots = (cle) => cle.replace(/([a-z0-9])([A-Z])/g, '$1.$2').toLowerCase();
 
 function aplatir(noeud, chemin, lignes) {
     if (typeof noeud === 'string' || typeof noeud === 'number') {
-        lignes.push([chemin.join('.'), String(noeud)]);
+        const valeur = String(noeud);
+        if (/[\r\n]/.test(valeur)) throw new Error(`${chemin.join('.')} : une valeur sur plusieurs lignes n'est pas un jeton`);
+        lignes.push([chemin.join('.'), valeur]);
         return;
     }
     for (const [cle, enfant] of Object.entries(noeud)) {
-        if (cle === 'dark' || cle === 'maturity') continue;
+        // « css » : la feuille propre à mkm, pas un jeton.
+        if (cle === 'dark' || cle === 'maturity' || cle === 'css') continue;
         if (cle === 'colorScheme') {
             if (enfant.light) aplatir(enfant.light, chemin, lignes);
             continue;
