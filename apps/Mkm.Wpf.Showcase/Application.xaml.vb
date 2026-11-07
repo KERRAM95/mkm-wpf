@@ -1,3 +1,4 @@
+Imports System
 Imports System.Globalization
 Imports System.Resources
 Imports System.Windows
@@ -26,7 +27,16 @@ Namespace Mkm.Wpf.Showcase
                 StartupUri = Nothing
                 ShutdownMode = ShutdownMode.OnExplicitShutdown
                 Dim dossier = e.Args(i + 1)
-                Dispatcher.BeginInvoke(Sub() Shutdown(Captures.Executer(dossier)), DispatcherPriority.ApplicationIdle)
+                Captures.Journal(dossier, "démarrage")
+                ' Une erreur non gérée s'écrit au journal et arrête les captures, au lieu d'un arrêt muet.
+                AddHandler DispatcherUnhandledException, Sub(s, ev)
+                                                            Captures.Journal(dossier, $"ERREUR non gérée : {ev.Exception}")
+                                                            ev.Handled = True
+                                                            Shutdown(99)
+                                                        End Sub
+                AddHandler AppDomain.CurrentDomain.UnhandledException,
+                    Sub(s, ev) Captures.Journal(dossier, $"ERREUR fatale : {ev.ExceptionObject}")
+                Dispatcher.BeginInvoke(New Action(Sub() Shutdown(Captures.Executer(dossier))), DispatcherPriority.ApplicationIdle)
             End If
 
             MyBase.OnStartup(e)

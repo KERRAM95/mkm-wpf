@@ -23,7 +23,6 @@ Namespace Mkm.Wpf.Showcase
         Private Const Largeur As Double = 880
 
         Private ReadOnly _dossier As String
-        Private ReadOnly _journal As New List(Of String)
         Private _erreurs As Integer
 
         Private Sub New(dossier As String)
@@ -33,15 +32,21 @@ Namespace Mkm.Wpf.Showcase
         ''' <summary>Fait toutes les captures dans <paramref name="dossier"/> ; rend le nombre d'erreurs.</summary>
         Public Shared Function Executer(dossier As String) As Integer
             Dim c As New Captures(dossier)
-            Directory.CreateDirectory(dossier)
+            c.Noter("début")
             Try
                 c.Tout()
             Catch ex As Exception
                 c.Noter($"ERREUR {ex}")
             End Try
-            File.WriteAllLines(Path.Combine(dossier, "journal.txt"), c._journal)
+            c.Noter($"fin : {c._erreurs} erreur(s)")
             Return c._erreurs
         End Function
+
+        ''' <summary>Une ligne du journal (<c>journal.txt</c>), écrite aussitôt : un arrêt brutal la garde.</summary>
+        Public Shared Sub Journal(dossier As String, ligne As String)
+            Directory.CreateDirectory(dossier)
+            File.AppendAllText(Path.Combine(dossier, "journal.txt"), ligne & Environment.NewLine)
+        End Sub
 
         Private Sub Tout()
             Localizer.Current.Language = CultureInfo.GetCultureInfo("fr")
@@ -139,7 +144,7 @@ Namespace Mkm.Wpf.Showcase
         End Sub
 
         Private Sub Noter(ligne As String)
-            _journal.Add(ligne)
+            Journal(_dossier, ligne)
             If ligne.StartsWith("ERREUR", StringComparison.Ordinal) Then _erreurs += 1
         End Sub
 
