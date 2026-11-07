@@ -279,3 +279,7 @@ welcomepanel.item.icon.line.height = 25.71px
 welcomepanel.item.collapsed.icon.line.height = 34.29px
 welcomepanel.item.side.border.width = 0 0 0 {welcomepanel.item.border.width}
 welcomepanel.separator.vertical.margin = 5px 0
+
+# treegrid (styles/treegrid) : l'icône d'un nœud à 7 px de sa case, son libellé à 7 px d'elle et du bord droit.
+treegrid.node.icon.margin = 0 0 0 {treegrid.body.cell.gap}
+treegrid.node.label.margin = 0 {treegrid.body.cell.gap} 0 {treegrid.body.cell.gap}

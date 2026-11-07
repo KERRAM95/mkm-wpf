@@ -762,4 +762,46 @@
   <data name="showcase.tree.from3dx" xml:space="preserve">
     <value>From 3DEXPERIENCE</value>
   </data>
+  <data name="showcase.nav.structure" xml:space="preserve">
+    <value>Structure and lifecycle</value>
+  </data>
+  <data name="showcase.structure.title" xml:space="preserve">
+    <value>Tree grid and lifecycle graph</value>
+  </data>
+  <data name="showcase.structure.help" xml:space="preserve">
+    <value>The DataGridView of 3DEXPERIENCE: the expanded nodes of a tree in columns, its light grey lines, its expand box (+ and −) on the parent's line; a sort keeps the tree. Right and Left expand and collapse. The lifecycle graph: the current state outlined, its actions named in blue; the maturity colours come from the application.</value>
+  </data>
+  <data name="showcase.structure.name" xml:space="preserve">
+    <value>Name</value>
+  </data>
+  <data name="showcase.structure.revision" xml:space="preserve">
+    <value>Revision</value>
+  </data>
+  <data name="showcase.structure.maturity" xml:space="preserve">
+    <value>Maturity</value>
+  </data>
+  <data name="showcase.structure.owner" xml:space="preserve">
+    <value>Owner</value>
+  </data>
+  <data name="showcase.structure.private" xml:space="preserve">
+    <value>Private</value>
+  </data>
+  <data name="showcase.structure.frozen" xml:space="preserve">
+    <value>Frozen</value>
+  </data>
+  <data name="showcase.structure.obsolete" xml:space="preserve">
+    <value>Obsolete</value>
+  </data>
+  <data name="showcase.structure.freeze" xml:space="preserve">
+    <value>Freeze</value>
+  </data>
+  <data name="showcase.structure.release" xml:space="preserve">
+    <value>Release</value>
+  </data>
+  <data name="showcase.structure.demote" xml:space="preserve">
+    <value>Demote</value>
+  </data>
+  <data name="showcase.structure.actionHint" xml:space="preserve">
+    <value>Click an action's name</value>
+  </data>
 </root>

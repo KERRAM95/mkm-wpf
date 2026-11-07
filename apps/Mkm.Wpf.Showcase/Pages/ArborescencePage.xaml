@@ -1,0 +1,45 @@
+<!--
+    La page de l'arborescence et du cycle de vie : une TreeGrid (la structure d'un produit, triable, ses nœuds dépliés
+    au départ) et le StateGraph d'un plan en cours, ses couleurs de maturité données par l'application.
+-->
+<UserControl x:Class="Mkm.Wpf.Showcase.ArborescencePage"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mkm="urn:mkm-wpf">
+    <UserControl.Resources>
+        <Style x:Key="Titre" TargetType="TextBlock">
+            <Setter Property="Margin" Value="0,16,0,8" />
+            <Setter Property="FontWeight" Value="Bold" />
+        </Style>
+    </UserControl.Resources>
+    <ScrollViewer VerticalScrollBarVisibility="Auto">
+        <StackPanel Margin="24,20">
+            <TextBlock FontSize="16" FontWeight="Bold"
+                       Foreground="{DynamicResource mkm.primary.color}" Text="{mkm:T showcase.structure.title}" />
+            <TextBlock Margin="0,6,0,0" TextWrapping="Wrap" MaxWidth="640" HorizontalAlignment="Left"
+                       Foreground="{DynamicResource mkm.text.muted.color}" Text="{mkm:T showcase.structure.help}" />
+
+            <TextBlock Style="{StaticResource Titre}" Text="TreeGrid" />
+            <Border BorderThickness="1" BorderBrush="{DynamicResource mkm.content.border.color}" Height="300">
+                <mkm:TreeGrid x:Name="Produit" ChildrenPath="Enfants" SelectionMode="Extended">
+                    <mkm:TreeGrid.Columns>
+                        <mkm:TreeGridColumn Header="{mkm:T showcase.structure.name}" Binding="{Binding Nom}"
+                                            IconBinding="{Binding Icone}" SortMemberPath="Nom" Width="2*" />
+                        <DataGridTextColumn Header="{mkm:T showcase.structure.revision}" Binding="{Binding Revision}" Width="80" />
+                        <DataGridTextColumn Header="{mkm:T showcase.structure.maturity}" Binding="{Binding Maturite}" Width="*" />
+                        <DataGridTextColumn Header="{mkm:T showcase.structure.owner}" Binding="{Binding Proprietaire}" Width="*" />
+                    </mkm:TreeGrid.Columns>
+                </mkm:TreeGrid>
+            </Border>
+
+            <TextBlock Style="{StaticResource Titre}" Text="StateGraph" />
+            <Border BorderThickness="1" BorderBrush="{DynamicResource mkm.content.border.color}" Padding="8">
+                <StackPanel>
+                    <mkm:StateGraph x:Name="Cycle" Current="inwork" />
+                    <TextBlock x:Name="Journal" Margin="0,8,0,0" HorizontalAlignment="Center"
+                               Foreground="{DynamicResource mkm.text.muted.color}" Text="{mkm:T showcase.structure.actionHint}" />
+                </StackPanel>
+            </Border>
+        </StackPanel>
+    </ScrollViewer>
+</UserControl>

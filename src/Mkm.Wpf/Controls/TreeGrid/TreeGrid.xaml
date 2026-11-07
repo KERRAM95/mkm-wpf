@@ -1,0 +1,102 @@
+<!--
+    Les styles de la colonne de l'arbre d'une TreeGrid, sur la grille arborescente de mkm (preset treegrid et
+    styles/treegrid, la DataGridView de 3DEXPERIENCE) : les colonnes de l'arbre à 19 px + 25 px par niveau ; la case de
+    dépliage de 15 px, gris clair bordée de gris, coins de 2 px, son + ou − de 7 px, posée sur le trait du parent ; l'icône
+    du nœud de 22 px, puis le libellé, 7 px entre eux ; les traits gris clair (dessinés par TreeGridCell). La grille même a
+    son style dans DataTable.xaml : celui du tableau, dont elle hérite, ses lignes alternées.
+-->
+<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+                    xmlns:local="clr-namespace:Mkm.Wpf.Controls"
+                    xmlns:loc="clr-namespace:Mkm.Wpf.Localization">
+
+    <!-- La cellule de l'arbre : sans retrait à gauche, sur toute la hauteur de la ligne, pour que les traits s'y joignent. -->
+    <Style x:Key="{x:Static local:TreeGrid.TreeCellStyleKey}" TargetType="{x:Type DataGridCell}">
+        <Setter Property="Background" Value="Transparent" />
+        <Setter Property="BorderThickness" Value="0" />
+        <Setter Property="FocusVisualStyle" Value="{x:Null}" />
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="{x:Type DataGridCell}">
+                    <Border Background="{TemplateBinding Background}" SnapsToDevicePixels="True">
+                        <ContentPresenter SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}" />
+                    </Border>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+        <Style.Triggers>
+            <Trigger Property="IsSelected" Value="True">
+                <Setter Property="Foreground" Value="{DynamicResource mkm.datatable.row.selected.color}" />
+            </Trigger>
+        </Style.Triggers>
+    </Style>
+
+    <!-- La case de dépliage : elle ne prend pas le focus (la ligne l'a) ; survolée, son signe fonce. -->
+    <Style x:Key="mkm.TreeGrid.Bascule" TargetType="{x:Type Button}">
+        <Setter Property="Focusable" Value="False" />
+        <Setter Property="Cursor" Value="Hand" />
+        <Setter Property="Foreground" Value="{DynamicResource mkm.treegrid.node.toggle.button.color}" />
+        <Setter Property="Background" Value="{DynamicResource mkm.treegrid.node.toggle.button.background}" />
+        <Setter Property="Width" Value="{DynamicResource mkm.treegrid.node.toggle.button.size}" />
+        <Setter Property="Height" Value="{DynamicResource mkm.treegrid.node.toggle.button.size}" />
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="{x:Type Button}">
+                    <Border Background="{TemplateBinding Background}" BorderThickness="1"
+                            BorderBrush="{DynamicResource mkm.treegrid.node.toggle.button.border.color}"
+                            CornerRadius="{DynamicResource mkm.treegrid.node.toggle.button.border.radius}">
+                        <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center" />
+                    </Border>
+                    <ControlTemplate.Triggers>
+                        <Trigger Property="IsMouseOver" Value="True">
+                            <Setter Property="Foreground" Value="{DynamicResource mkm.treegrid.node.toggle.button.hover.color}" />
+                            <Setter Property="Background" Value="{DynamicResource mkm.treegrid.node.toggle.button.hover.background}" />
+                        </Trigger>
+                    </ControlTemplate.Triggers>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+
+    <Style TargetType="{x:Type local:TreeGridCell}">
+        <Setter Property="Background" Value="Transparent" />
+        <Setter Property="VerticalAlignment" Value="Stretch" />
+        <Setter Property="SnapsToDevicePixels" Value="True" />
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="{x:Type local:TreeGridCell}">
+                    <DockPanel Background="{TemplateBinding Background}">
+                        <Button x:Name="PART_Toggle" DockPanel.Dock="Left" VerticalAlignment="Center"
+                                Margin="{TemplateBinding Indent}" Style="{StaticResource mkm.TreeGrid.Bascule}">
+                            <local:Icon x:Name="Signe" Source="{x:Static local:InternalIcons.Plus}" StrokeThickness="3.43"
+                                        Width="{DynamicResource mkm.treegrid.node.toggle.button.icon.size}"
+                                        Height="{DynamicResource mkm.treegrid.node.toggle.button.icon.size}" />
+                        </Button>
+                        <local:Icon x:Name="Icone" DockPanel.Dock="Left" VerticalAlignment="Center" Source="{TemplateBinding Icon}"
+                                    Margin="{DynamicResource mkm.treegrid.node.icon.margin}"
+                                    Width="{DynamicResource mkm.treegrid.node.icon.size}" Height="{DynamicResource mkm.treegrid.node.icon.size}" />
+                        <ContentPresenter VerticalAlignment="Center" Margin="{DynamicResource mkm.treegrid.node.label.margin}">
+                            <ContentPresenter.Resources>
+                                <Style TargetType="{x:Type TextBlock}">
+                                    <Setter Property="TextTrimming" Value="CharacterEllipsis" />
+                                </Style>
+                            </ContentPresenter.Resources>
+                        </ContentPresenter>
+                    </DockPanel>
+                    <ControlTemplate.Triggers>
+                        <DataTrigger Binding="{Binding Info.HasChildren, RelativeSource={RelativeSource TemplatedParent}}" Value="False">
+                            <Setter TargetName="PART_Toggle" Property="Visibility" Value="Hidden" />
+                        </DataTrigger>
+                        <DataTrigger Binding="{Binding Info.IsExpanded, RelativeSource={RelativeSource TemplatedParent}}" Value="True">
+                            <Setter TargetName="Signe" Property="Source" Value="{x:Static local:InternalIcons.Minus}" />
+                        </DataTrigger>
+                        <Trigger Property="Icon" Value="{x:Null}">
+                            <Setter TargetName="Icone" Property="Visibility" Value="Collapsed" />
+                        </Trigger>
+                    </ControlTemplate.Triggers>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+
+</ResourceDictionary>

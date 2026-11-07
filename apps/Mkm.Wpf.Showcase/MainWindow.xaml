@@ -56,6 +56,7 @@
                         <ListBoxItem Tag="Tableau" Content="{mkm:T showcase.nav.table}" />
                         <ListBoxItem Tag="Choix" Content="{mkm:T showcase.nav.choices}" />
                         <ListBoxItem Tag="MiseEnPage" Content="{mkm:T showcase.nav.layout}" />
+                        <ListBoxItem Tag="Arborescence" Content="{mkm:T showcase.nav.structure}" />
                     </ListBox>
                 </DockPanel>
             </Border>

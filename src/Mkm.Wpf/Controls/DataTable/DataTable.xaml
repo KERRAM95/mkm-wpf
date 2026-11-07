@@ -385,4 +385,10 @@
         </Style.Triggers>
     </Style>
 
+    <!-- La grille arborescente (Controls/TreeGrid) : le tableau, ses lignes alternées comme la DataGridView de 3DX. -->
+    <Style TargetType="{x:Type local:TreeGrid}" BasedOn="{StaticResource {x:Type local:DataTable}}">
+        <Setter Property="Striped" Value="True" />
+        <Setter Property="AutoGenerateColumns" Value="False" />
+    </Style>
+
 </ResourceDictionary>

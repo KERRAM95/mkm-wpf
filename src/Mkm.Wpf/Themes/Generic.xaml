@@ -30,6 +30,7 @@
         <ResourceDictionary Source="/Mkm.Wpf;component/Controls/Select/Select.xaml" />
         <ResourceDictionary Source="/Mkm.Wpf;component/Controls/SelectButton/SelectButton.xaml" />
         <ResourceDictionary Source="/Mkm.Wpf;component/Controls/Splitter/Splitter.xaml" />
+        <ResourceDictionary Source="/Mkm.Wpf;component/Controls/StateGraph/StateGraph.xaml" />
         <ResourceDictionary Source="/Mkm.Wpf;component/Controls/Tabs/Tabs.xaml" />
         <ResourceDictionary Source="/Mkm.Wpf;component/Controls/Tag/Tag.xaml" />
         <ResourceDictionary Source="/Mkm.Wpf;component/Controls/Textarea/Textarea.xaml" />
@@ -37,6 +38,7 @@
         <ResourceDictionary Source="/Mkm.Wpf;component/Controls/ToggleButton/ToggleButton.xaml" />
         <ResourceDictionary Source="/Mkm.Wpf;component/Controls/Toolbar/Toolbar.xaml" />
         <ResourceDictionary Source="/Mkm.Wpf;component/Controls/Tree/Tree.xaml" />
+        <ResourceDictionary Source="/Mkm.Wpf;component/Controls/TreeGrid/TreeGrid.xaml" />
         <ResourceDictionary Source="/Mkm.Wpf;component/Controls/Triptych/Triptych.xaml" />
         <ResourceDictionary Source="/Mkm.Wpf;component/Controls/WelcomePanel/WelcomePanel.xaml" />
     </ResourceDictionary.MergedDictionaries>

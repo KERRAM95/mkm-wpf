@@ -1,0 +1,23 @@
+<!--
+    Le style de StateGraph, sur le graphe du cycle de vie de mkm (preset stategraph et styles/stategraph) : centré dans sa
+    place ; ses états, ses flèches et leurs noms sont dessinés en code (StateGraph.vb), aux mesures de mkm et aux couleurs
+    de ses jetons. Les couleurs des états viennent de l'application.
+-->
+<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+                    xmlns:local="clr-namespace:Mkm.Wpf.Controls">
+
+    <Style TargetType="{x:Type local:StateGraph}">
+        <Setter Property="FontFamily" Value="{DynamicResource mkm.font.family}" />
+        <Setter Property="HorizontalAlignment" Value="Center" />
+        <Setter Property="SnapsToDevicePixels" Value="True" />
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="{x:Type local:StateGraph}">
+                    <Canvas x:Name="PART_Canvas" ClipToBounds="False" />
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+
+</ResourceDictionary>

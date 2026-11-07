@@ -20,7 +20,7 @@ const THEMES = {
     Dashboard: { dossier: 'dashboard', etend: 'nora', rem: 12 },
     Ara: { dossier: 'ara' }
 };
-const COMPOSANTS = ['actionbar', 'blockui', 'button', 'checkbox', 'confirmdialog', 'contextmenu', 'datatable', 'datepicker', 'dialog', 'emptycontent', 'fieldset', 'idcard', 'inputnumber', 'inputtext', 'menu', 'message', 'panel', 'progressbar', 'progressspinner', 'propertypanel', 'radiobutton', 'select', 'selectbutton', 'splitter', 'tabs', 'tag', 'textarea', 'tieredmenu', 'toast', 'togglebutton', 'toolbar', 'tooltip', 'tree', 'triptych', 'welcomepanel'];
+const COMPOSANTS = ['actionbar', 'blockui', 'button', 'checkbox', 'confirmdialog', 'contextmenu', 'datatable', 'datepicker', 'dialog', 'emptycontent', 'fieldset', 'idcard', 'inputnumber', 'inputtext', 'menu', 'message', 'panel', 'progressbar', 'progressspinner', 'propertypanel', 'radiobutton', 'select', 'selectbutton', 'splitter', 'stategraph', 'tabs', 'tag', 'textarea', 'tieredmenu', 'toast', 'togglebutton', 'toolbar', 'tooltip', 'tree', 'treegrid', 'triptych', 'welcomepanel'];
 
 const [racine, ...demandes] = process.argv.slice(2);
 if (!racine) {
@@ -103,7 +103,10 @@ for (const [nom, theme] of Object.entries(THEMES)) {
         const lignes = [];
         const jetons = await partie(theme, composant);
         if (!jetons) throw new Error(`${nom} : pas de jetons pour ${composant}`);
-        aplatir(jetons, [composant], lignes);
+        // Le schéma clair d'un composant l'emporte sur ses valeurs communes, comme les variables CSS de mkm : il s'y fond
+        // (Nora porte des valeurs dans son schéma que le tableau de bord remplace aussi, treegrid par exemple).
+        const { colorScheme, ...communs } = jetons;
+        aplatir(colorScheme?.light ? fondre(communs, colorScheme.light) : jetons, [composant], lignes);
         blocs.push([composant, lignes]);
     }
 

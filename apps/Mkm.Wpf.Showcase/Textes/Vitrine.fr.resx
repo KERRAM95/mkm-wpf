@@ -762,4 +762,46 @@
   <data name="showcase.tree.from3dx" xml:space="preserve">
     <value>Depuis 3DEXPERIENCE</value>
   </data>
+  <data name="showcase.nav.structure" xml:space="preserve">
+    <value>Arborescence et cycle de vie</value>
+  </data>
+  <data name="showcase.structure.title" xml:space="preserve">
+    <value>Grille arborescente et cycle de vie</value>
+  </data>
+  <data name="showcase.structure.help" xml:space="preserve">
+    <value>La DataGridView de 3DEXPERIENCE : les nœuds dépliés d'un arbre en colonnes, ses traits gris clair, sa case de dépliage (+ et −) sur le trait du parent ; un tri garde l'arbre. Les flèches droite et gauche déplient et replient. Le graphe du cycle de vie : l'état courant cerné, ses actions nommées en bleu ; les couleurs de maturité viennent de l'application.</value>
+  </data>
+  <data name="showcase.structure.name" xml:space="preserve">
+    <value>Nom</value>
+  </data>
+  <data name="showcase.structure.revision" xml:space="preserve">
+    <value>Révision</value>
+  </data>
+  <data name="showcase.structure.maturity" xml:space="preserve">
+    <value>Maturité</value>
+  </data>
+  <data name="showcase.structure.owner" xml:space="preserve">
+    <value>Propriétaire</value>
+  </data>
+  <data name="showcase.structure.private" xml:space="preserve">
+    <value>Privé</value>
+  </data>
+  <data name="showcase.structure.frozen" xml:space="preserve">
+    <value>Gelé</value>
+  </data>
+  <data name="showcase.structure.obsolete" xml:space="preserve">
+    <value>Obsolète</value>
+  </data>
+  <data name="showcase.structure.freeze" xml:space="preserve">
+    <value>Geler</value>
+  </data>
+  <data name="showcase.structure.release" xml:space="preserve">
+    <value>Valider</value>
+  </data>
+  <data name="showcase.structure.demote" xml:space="preserve">
+    <value>Rétrograder</value>
+  </data>
+  <data name="showcase.structure.actionHint" xml:space="preserve">
+    <value>Cliquez le nom d'une action</value>
+  </data>
 </root>
