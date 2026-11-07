@@ -50,7 +50,12 @@ jobs:
           $p = Start-Process -FilePath $exe -ArgumentList '--captures', "`"$PWD\captures`"" -Wait -PassThru
           Write-Output "Code de sortie : $($p.ExitCode)"
           if (Test-Path captures/journal.txt) { Get-Content captures/journal.txt } else { Write-Output "pas de journal" }
-          if ($p.ExitCode -ne 0) { exit 1 }
+          if ($p.ExitCode -ne 0) {
+            # L'erreur d'un arrêt brutal, telle que .NET l'écrit au journal de Windows.
+            Get-WinEvent -FilterHashtable @{ LogName = 'Application'; ProviderName = '.NET Runtime', 'Application Error' } -MaxEvents 3 -ErrorAction SilentlyContinue |
+              ForEach-Object { $_.TimeCreated; $_.Message }
+            exit 1
+          }
 
       - name: Publication des captures
         if: always()

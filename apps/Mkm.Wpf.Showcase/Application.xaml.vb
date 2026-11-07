@@ -12,6 +12,16 @@ Namespace Mkm.Wpf.Showcase
     ''' </summary>
     Partial Public Class Application
 
+        ' En mode captures, une erreur non gérée, même avant OnStartup, s'écrit au journal.
+        Shared Sub New()
+            Dim arguments = Environment.GetCommandLineArgs()
+            Dim i = Array.IndexOf(arguments, "--captures")
+            If i < 0 OrElse i + 1 >= arguments.Length Then Return
+            Dim dossier = arguments(i + 1)
+            AddHandler AppDomain.CurrentDomain.UnhandledException,
+                Sub(s, ev) Captures.Journal(dossier, $"ERREUR fatale : {ev.ExceptionObject}")
+        End Sub
+
         ''' <summary>Avant la première fenêtre : les textes de la vitrine et sa langue de départ.</summary>
         Protected Overrides Sub OnStartup(e As StartupEventArgs)
             ' Textes/Vitrine.resx (anglais) et Vitrine.fr.resx ; VB nomme la ressource par son fichier.
@@ -34,8 +44,6 @@ Namespace Mkm.Wpf.Showcase
                                                             ev.Handled = True
                                                             Shutdown(99)
                                                         End Sub
-                AddHandler AppDomain.CurrentDomain.UnhandledException,
-                    Sub(s, ev) Captures.Journal(dossier, $"ERREUR fatale : {ev.ExceptionObject}")
                 Dispatcher.BeginInvoke(New Action(Sub() Shutdown(Captures.Executer(dossier))), DispatcherPriority.ApplicationIdle)
             End If
 
