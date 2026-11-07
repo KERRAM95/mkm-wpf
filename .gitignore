@@ -1,0 +1,30 @@
+# Compilation
+[Bb]in/
+[Oo]bj/
+artifacts/
+*.nupkg
+*.snupkg
+
+# Visual Studio, Rider, VS Code
+.vs/
+*.user
+*.suo
+*.userosscache
+*.sln.docstates
+.idea/
+*.DotSettings.user
+.vscode/
+
+# Tests
+TestResults/
+*.trx
+coverage*/
+
+# Claude : reglages propres a un poste
+.claude/settings.local.json
+
+# Systeme
+Thumbs.db
+Desktop.ini
+.DS_Store
+*.log

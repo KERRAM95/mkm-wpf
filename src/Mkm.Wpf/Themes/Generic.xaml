@@ -1,0 +1,13 @@
+<!--
+    Styles par défaut de tous les contrôles de Mkm.Wpf.
+
+    Ce fichier ne fait que fusionner le dictionnaire de chaque contrôle, une ligne par
+    contrôle, dans l'ordre alphabétique :
+        <ResourceDictionary Source="/Mkm.Wpf;component/Controls/<Nom>/<Nom>.xaml" />
+    Les tests (ConventionsTests) vérifient que chaque contrôle y trouve son style.
+-->
+<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
+    <ResourceDictionary.MergedDictionaries>
+    </ResourceDictionary.MergedDictionaries>
+</ResourceDictionary>

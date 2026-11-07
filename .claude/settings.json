@@ -1,0 +1,13 @@
+{
+  "env": {
+    "GIT_AUTHOR_NAME": "Mourad KERRAM",
+    "GIT_AUTHOR_EMAIL": "meradkerram@gmail.com",
+    "GIT_COMMITTER_NAME": "Mourad KERRAM",
+    "GIT_COMMITTER_EMAIL": "meradkerram@gmail.com"
+  },
+  "attribution": {
+    "commit": false,
+    "pr": false,
+    "sessionUrl": false
+  }
+}

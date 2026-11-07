@@ -1,0 +1,38 @@
+#!/bin/bash
+# Retire du message de commit toute attribution à l'outil de développement.
+#
+# `.claude/settings.json` la désactive déjà — `attribution.commit`, `pr` et
+# `sessionUrl` sont à `false`. Mais ce réglage ne vaut que si l'outil le
+# respecte : un pied de page écrit à la main dans le corps du message passe
+# outre, et se voit ensuite sur la forge, qui affiche un second contributeur.
+#
+# Ce hook ferme ce chemin-là. Il ne refuse pas le commit : il retire les
+# lignes et laisse passer. Refuser obligerait à recomposer un message déjà
+# écrit, pour une ligne que personne ne voulait.
+#
+# Installation, une fois par clone :
+#   git config core.hooksPath outils/hooks
+#
+# Contournement volontaire :
+#   git commit --no-verify
+
+set -u
+message=$1
+
+# Les lignes visées, et elles seules. Le corps du message n'est pas touché :
+# une phrase qui parle de l'outil dans une explication reste légitime.
+retirees=$(grep -c -E '^(Co-Authored-By: Claude|Claude-Session:|🤖 Generated with \[Claude Code\])' "$message" || true)
+
+if [ "${retirees:-0}" -eq 0 ]; then
+  exit 0
+fi
+
+nettoye=$(mktemp)
+grep -v -E '^(Co-Authored-By: Claude|Claude-Session:|🤖 Generated with \[Claude Code\]|https://claude\.ai/code/session_)' "$message" > "$nettoye"
+
+# Les lignes vides que le retrait laisse en fin de message partent avec.
+printf '%s\n' "$(cat "$nettoye")" > "$message"
+rm -f "$nettoye"
+
+echo "commit-msg : $retirees ligne(s) d'attribution retirée(s) — voir .claude/settings.json" >&2
+exit 0

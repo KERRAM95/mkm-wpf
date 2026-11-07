@@ -1,0 +1,15 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <OutputType>WinExe</OutputType>
+    <UseWPF>true</UseWPF>
+    <!-- Vide : chaque fichier ecrit son espace de noms en entier, x:Class compris. -->
+    <RootNamespace></RootNamespace>
+    <IsPackable>false</IsPackable>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\..\src\Mkm.Wpf\Mkm.Wpf.vbproj" />
+  </ItemGroup>
+
+</Project>

@@ -1,0 +1,50 @@
+# Configuration des editeurs : https://editorconfig.org
+root = true
+
+[*]
+charset = utf-8
+indent_style = space
+indent_size = 4
+insert_final_newline = true
+trim_trailing_whitespace = true
+
+[*.md]
+max_line_length = off
+trim_trailing_whitespace = false
+
+# Projets MSBuild, XML, YAML, JSON
+[*.{vbproj,csproj,props,targets,xml,config,yml,yaml,json}]
+indent_size = 2
+
+[*.sln]
+indent_style = tab
+
+# XAML : quatre espaces, comme Visual Studio
+[*.xaml]
+indent_size = 4
+
+# Code VB : regles de style (suggestions dans l'editeur, sans bloquer la compilation)
+[*.vb]
+dotnet_sort_system_directives_first = true
+dotnet_separate_import_directive_groups = false
+dotnet_style_qualification_for_field = false:suggestion
+dotnet_style_qualification_for_property = false:suggestion
+dotnet_style_qualification_for_method = false:suggestion
+dotnet_style_qualification_for_event = false:suggestion
+dotnet_style_predefined_type_for_locals_parameters_members = true:suggestion
+dotnet_style_require_accessibility_modifiers = always:suggestion
+dotnet_style_readonly_field = true:suggestion
+dotnet_style_object_initializer = true:suggestion
+dotnet_style_collection_initializer = true:suggestion
+dotnet_style_coalesce_expression = true:suggestion
+dotnet_style_null_propagation = true:suggestion
+visual_basic_preferred_modifier_order = partial,default,private,protected,public,friend,notoverridable,overridable,mustoverride,overloads,overrides,mustinherit,notinheritable,static,shared,shadows,readonly,writeonly,dim,const,withevents,widening,narrowing,custom,async,iterator:suggestion
+
+# Nommage : champs prives en _camelCase
+dotnet_naming_rule.champs_prives.symbols = champs_prives
+dotnet_naming_rule.champs_prives.style = souligne_camel
+dotnet_naming_rule.champs_prives.severity = suggestion
+dotnet_naming_symbols.champs_prives.applicable_kinds = field
+dotnet_naming_symbols.champs_prives.applicable_accessibilities = private
+dotnet_naming_style.souligne_camel.required_prefix = _
+dotnet_naming_style.souligne_camel.capitalization = camel_case

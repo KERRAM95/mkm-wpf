@@ -1,0 +1,39 @@
+# Compilation et tests sous Windows : seul Windows compile tout le XAML (x:Class
+# compris) et lance les tests WPF. Un runner Windows consomme deux fois plus de
+# minutes GitHub Actions qu'un runner Linux sur un dépôt privé.
+name: CI
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+  workflow_dispatch:
+
+# Une poussée annule la vérification encore en cours de la précédente.
+concurrency:
+  group: ci-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  windows:
+    runs-on: windows-latest
+    timeout-minutes: 20
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Restauration
+        run: dotnet restore Mkm.Wpf.sln
+
+      - name: Compilation
+        run: dotnet build Mkm.Wpf.sln --configuration Release --no-restore
+
+      - name: Tests
+        run: dotnet test Mkm.Wpf.sln --configuration Release --no-build --logger trx --results-directory TestResults
+
+      - name: Résultats des tests
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: resultats-tests
+          path: TestResults
+          if-no-files-found: ignore

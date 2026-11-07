@@ -1,0 +1,11 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <UseWPF>true</UseWPF>
+    <!-- Vide : chaque fichier ecrit son espace de noms en entier (CLAUDE.md, « Conventions VB »). -->
+    <RootNamespace></RootNamespace>
+    <GenerateDocumentationFile>true</GenerateDocumentationFile>
+    <Description>Bibliotheque de composants WPF neutre : controles, themes et commandes reutilisables.</Description>
+  </PropertyGroup>
+
+</Project>

@@ -1,0 +1,21 @@
+# Le depot stocke les textes en LF ; chaque poste les ouvre avec ses fins de ligne
+# (CRLF sous Windows avec Git pour Windows).
+* text=auto
+
+# Fichiers que Windows veut en CRLF quel que soit le poste
+*.sln text eol=crlf
+*.bat text eol=crlf
+*.cmd text eol=crlf
+
+# Scripts lances par bash (hooks Git compris), toujours en LF
+*.sh text eol=lf
+outils/hooks/* text eol=lf
+
+*.png binary
+*.jpg binary
+*.ico binary
+*.bmp binary
+*.ttf binary
+*.otf binary
+*.woff binary
+*.woff2 binary
