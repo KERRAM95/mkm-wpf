@@ -76,7 +76,6 @@ Namespace Mkm.Wpf.Showcase
                 Essayer($"{theme.Name}/fenetre", Sub() Fenetre(theme.Name))
                 Essayer($"{theme.Name}/scènes", Sub() Scenes(theme.Name))
             Next
-            Essayer("diagnostic ActionBar", Sub() DiagnostiquerActionBar())
         End Sub
 
         ' Ce qui ne paraît pas sur une page seule : ce qui s'ouvre dans une fenêtre flottante (le calendrier, un menu,
@@ -125,22 +124,6 @@ Namespace Mkm.Wpf.Showcase
             menu.RaiseEvent(New RoutedEventArgs(ContextMenu.OpenedEvent, menu))
             Return menu
         End Function
-
-        ' Ce que deviennent les commandes de l'ActionBar une fois dessinées : leur icône, sa taille, sa couleur.
-        Private Sub DiagnostiquerActionBar()
-            Dim page = Seule(New ActionBarPage())
-            For Each commande In Descendants(page).OfType(Of ActionBarButton)().Take(3)
-                Dim icone = Descendants(commande).OfType(Of Icon)().FirstOrDefault()
-                Noter($"ActionBarButton {commande.Label} : {commande.ActualWidth}×{commande.ActualHeight}, gabarit {commande.Template IsNot Nothing}, " &
-                      $"Icon {If(commande.Icon, "(aucune)")}, opacité {commande.Opacity}, visible {commande.IsVisible}")
-                If icone Is Nothing Then
-                    Noter("  pas d'élément Icon dans le gabarit")
-                Else
-                    Noter($"  élément Icon : {icone.ActualWidth}×{icone.ActualHeight}, Source {If(icone.Source, "(aucune)")}, " &
-                          $"Foreground {icone.Foreground}, opacité {icone.Opacity}, visible {icone.IsVisible}")
-                End If
-            Next
-        End Sub
 
         ' Écrit au journal ce que WPF trace, une ligne par message.
         Private NotInheritable Class Ecouteur
