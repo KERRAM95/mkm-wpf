@@ -23,10 +23,11 @@
                         <Grid.OpacityMask>
                             <VisualBrush Stretch="None">
                                 <VisualBrush.Visual>
-                                    <Border Background="Black"
+                                    <!-- Ses coins : ProgressBar.Arrondir les borne à la moitié de la hauteur, comme CSS
+                                         borne le rayon de 999 px de mkm. -->
+                                    <Border x:Name="PART_Mask" Background="Black"
                                             Width="{Binding ActualWidth, ElementName=Racine}"
-                                            Height="{Binding ActualHeight, ElementName=Racine}"
-                                            CornerRadius="{DynamicResource mkm.progressbar.border.radius}" />
+                                            Height="{Binding ActualHeight, ElementName=Racine}" />
                                 </VisualBrush.Visual>
                             </VisualBrush>
                         </Grid.OpacityMask>

@@ -254,6 +254,27 @@ l'anglais en repli (voir « Thème et langue »).
 - Un `Byte` multiplié par un `Byte` reste un `Byte` en VB et déborde : on
   convertit d'abord (`CDbl(a) * b`).
 
+## Les pièges de WPF déjà rencontrés
+
+- **Pas de chemin de liaison avec un préfixe** (`{Binding (local:Type.Prop)}`)
+  dans la bibliothèque : WPF n'en trouvait pas le préfixe à l'exécution, et la
+  liaison échouait sans bruit (les icônes de l'ActionBar). On écrit
+  `{TemplateBinding local:Type.Prop}`, ou la liaison en code
+  (`New PropertyPath(laPropriete)`). Un test le vérifie.
+- **Un `TextBox` pose lui-même son `Padding`** dans sa zone de texte : un gabarit
+  ne le pose pas une seconde fois.
+- **Le `TabPanel` retranche la marge d'un onglet** de la place qu'il lui donne :
+  la marge d'un onglet va dans son gabarit.
+- **Une couleur posée sur un `TabItem` passe à son contenu** : elle se pose sur
+  le titre, dans le gabarit.
+- **Un rayon plus grand que la moitié du côté** (999 px chez mkm) n'est pas
+  borné par WPF comme par CSS : il dessine un fuseau ; on le borne en code.
+- **`ToolTip` et `ContextMenu` ne se dessinent qu'ouverts** ; `StartupUri` ne
+  s'efface pas (`Nothing` lève une exception).
+- **Les styles implicites des contrôles de WPF eux-mêmes** (info-bulle, menu)
+  vont dans `Themes/Natifs.xaml`, que `MkmResources` fusionne ; ceux des
+  contrôles de la bibliothèque, dans `Themes/Generic.xaml`.
+
 ## Vérifier
 
 **Sous Windows (référence)** : ouvrir `Mkm.Wpf.sln` dans Visual Studio 2022,

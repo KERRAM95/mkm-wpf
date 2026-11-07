@@ -92,9 +92,12 @@ vitrine en est l'exemple (`apps/Mkm.Wpf.Showcase`).
    le dialogue~~ : faits — `Button`, `Checkbox`, `Tabs`, `Fieldset`, `Message`,
    `Toast`, `Dialog` (`docs/composants/boutons.md`, `conteneurs.md`,
    `retours.md`).
-7. La fiche de propriétés de mkm (`PropertyPanel`) : le libellé, le message et
-   la marque d'un champ obligatoire.
-8. Le registre des commandes.
+7. ~~Le lot 2~~ : fait — l'info-bulle, `ProgressBar`, `ProgressSpinner`,
+   `BlockUI`, `Textarea`, `DatePicker`, `ConfirmDialog`, `PropertyPanel`, `Tree`,
+   le menu contextuel (`docs/composants/attente.md`, `saisie.md`,
+   `fiche-de-proprietes.md`, `arbre-et-menu.md`).
+8. Le registre des commandes ; le tableau de données (`DataTable`) ; la liste de
+   choix (`RadioButton`, `SelectButton`) ; la saisie d'un nombre (`InputNumber`).
 
 ## Règles
 

@@ -133,6 +133,26 @@ Namespace Mkm.Wpf.Tests
             Assert.That(absentes, [Is].Empty)
         End Sub
 
+        ''' <summary>
+        ''' Aucun chemin de liaison avec un préfixe (« (local:ActionBarItem.Icon) ») dans les gabarits : à l'exécution,
+        ''' WPF n'en trouvait pas le préfixe, et la liaison échouait sans bruit (les icônes de l'ActionBar). On écrit
+        ''' TemplateBinding, ou la liaison en code sur la propriété elle-même.
+        ''' </summary>
+        <Test>
+        Public Sub AucunCheminDeLiaison_AvecUnPrefixe()
+            Dim bibliotheque = DossierDeLaBibliotheque()
+            If bibliotheque Is Nothing Then Assert.Ignore("les sources de Mkm.Wpf ne sont pas à côté des tests")
+
+            Dim motif As New Regex("\{Binding[^}]*\([A-Za-z]+:[A-Za-z]")
+            Dim fautifs = Directory.GetFiles(bibliotheque, "*.xaml", SearchOption.AllDirectories).
+                Where(Function(f) Not f.Contains($"{Path.DirectorySeparatorChar}obj{Path.DirectorySeparatorChar}")).
+                Where(Function(f) motif.IsMatch(File.ReadAllText(f))).
+                Select(Function(f) Path.GetFileName(f)).
+                ToList()
+
+            Assert.That(fautifs, [Is].Empty)
+        End Sub
+
         ' Le dossier de la bibliothèque dans les sources, en remontant depuis les tests ; Nothing hors du dépôt.
         Private Shared Function DossierDeLaBibliotheque() As String
             Dim dossier = New DirectoryInfo(TestContext.CurrentContext.TestDirectory)

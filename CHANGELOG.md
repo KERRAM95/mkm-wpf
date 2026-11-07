@@ -64,10 +64,32 @@ Les évolutions notables de mkm-wpf, version par version. Le format suit
   des onglets, des messages et des notifications, comme mkm les vérifie.
 
 - Les captures de la vitrine : `Mkm.Wpf.Showcase --captures <dossier>` rend chaque
-  page dans chaque thème en PNG ; la CI les publie (artefact `captures`).
+  page dans chaque thème en PNG, et des scènes (calendrier, menus, info-bulle,
+  dialogues) ; les erreurs de liaison de WPF vont à son journal ; la CI les publie
+  (artefact `captures`).
+- Le lot 2, dix composants de plus :
+  - l'attente et l'aide (`docs/composants/attente.md`) : l'info-bulle de mkm sur
+    toute info-bulle de WPF (`Themes/Natifs.xaml`, `TooltipPlacement`),
+    `ProgressBar`, `ProgressSpinner`, `BlockUI` ;
+  - le texte, la date, la confirmation (`docs/composants/saisie.md`) :
+    `Textarea`, `DatePicker` (et le calendrier de mkm), `ConfirmDialog` ;
+  - la fiche de propriétés (`docs/composants/fiche-de-proprietes.md`) :
+    `PropertyPanel`, `PropertySection`, `PropertyRow` ;
+  - l'arbre et le menu (`docs/composants/arbre-et-menu.md`) : `Tree`, `TreeNode`,
+    le menu contextuel de mkm sur tout `ContextMenu` de WPF (`MenuIcons`).
+- `InternalIcons` : les 45 icônes que les composants de mkm dessinent eux-mêmes
+  (clé `internal` du manifeste).
+- La vitrine : les pages Attente et aide, Texte date et confirmation, Fiche de
+  propriétés, Arbre et menu.
 
 ### Corrigé
 
+- ActionBar : les commandes n'avaient ni icône ni libellé (un chemin de liaison
+  `(local:…)` dont WPF ne trouvait pas le préfixe à l'exécution).
+- InputText : le retrait était posé deux fois (le texte décalé et rogné).
+- Tabs : le contenu d'un onglet prenait la couleur de son titre ; les titres des
+  onglets « strip » étaient rognés.
+- ProgressBar : ses bouts ronds (le rayon de 999 px de mkm) sont bornés comme en CSS.
 - `color-mix(…)` mêle les couleurs comme CSS : pondérées de leur opacité, avec
   des parts facultatives ; une couleur mêlée au transparent ne fonce plus
   (l'ombre des onglets, celle des messages contrastés).

@@ -299,6 +299,8 @@
         <Setter Property="FontFamily" Value="{DynamicResource mkm.font.family}" />
         <Setter Property="FontSize" Value="{DynamicResource mkm.inputtext.font.size}" />
         <Setter Property="IsTodayHighlighted" Value="True" />
+        <!-- La date courte, comme dateFormat de PrimeVue (mm/dd/yy), au format régional. -->
+        <Setter Property="SelectedDateFormat" Value="Short" />
         <Setter Property="CalendarStyle" Value="{StaticResource MkmCalendrier}" />
         <Setter Property="SnapsToDevicePixels" Value="True" />
         <Setter Property="Template">

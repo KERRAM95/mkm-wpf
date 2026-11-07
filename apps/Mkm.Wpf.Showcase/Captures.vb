@@ -93,16 +93,13 @@ Namespace Mkm.Wpf.Showcase
             page.UpdateLayout()
             Enregistrer(page, $"{theme}/6-attente-voile.png")
 
+            ' Initialisé, le DatePicker prend son style (et son calendrier) comme dans une fenêtre.
             Dim choix As New Mkm.Wpf.Controls.DatePicker()
+            choix.BeginInit()
+            choix.EndInit()
             choix.ApplyTemplate()
             Dim calendrier As New System.Windows.Controls.Calendar With {.Style = choix.CalendarStyle, .DisplayDate = Date.Today, .SelectedDate = Date.Today.AddDays(2)}
             Enregistrer(Seule(calendrier, 0), $"{theme}/calendrier.png")
-
-            Dim bulle As New ToolTip With {.Content = Localizer.Current.T("showcase.waiting.tooltipText")}
-            Enregistrer(Seule(bulle, 0), $"{theme}/infobulle.png")
-
-            Enregistrer(Seule(UnMenu(True), 0), $"{theme}/menu.png")
-            Enregistrer(Seule(UnMenu(False), 0), $"{theme}/menu-sans-icones.png")
 
             Dialogue(theme, "confirmation", New ConfirmDialog With {
                 .Title = Localizer.Current.T("showcase.inputs.update"),
@@ -216,6 +213,12 @@ Namespace Mkm.Wpf.Showcase
                 Enregistrer(DirectCast(fenetre.Content, FrameworkElement), $"{theme}/notifications.png")
                 fenetre.Notifications.RemoveAll()
 
+                ' Une info-bulle et un menu ne se dessinent qu'ouverts, dans leur fenêtre flottante.
+                Flottante(theme, "infobulle", fenetre.Composants,
+                          New ToolTip With {.Content = Localizer.Current.T("showcase.waiting.tooltipText")})
+                Flottante(theme, "menu", fenetre.Composants, UnMenu(True))
+                Flottante(theme, "menu-sans-icones", fenetre.Composants, UnMenu(False))
+
                 Dim pied As New StackPanel With {.Orientation = Orientation.Horizontal}
                 pied.Children.Add(New Mkm.Wpf.Controls.Button With {.Content = Localizer.Current.T("showcase.feedback.cancel"), .Severity = ButtonSeverity.Secondary})
                 pied.Children.Add(New Mkm.Wpf.Controls.Button With {.Content = Localizer.Current.T("showcase.feedback.ok")})
@@ -229,6 +232,26 @@ Namespace Mkm.Wpf.Showcase
                     .Content = New TextBlock With {.Text = Localizer.Current.T("showcase.containers.titleBlockText"), .TextWrapping = TextWrapping.Wrap}})
             Finally
                 fenetre.Close()
+            End Try
+        End Sub
+
+        ' Ouvre une info-bulle ou un menu contre un élément de la fenêtre, le dessine, le ferme.
+        Private Sub Flottante(theme As String, nom As String, cible As UIElement, flottante As FrameworkElement)
+            Dim bulle = TryCast(flottante, ToolTip)
+            Dim menu = TryCast(flottante, ContextMenu)
+            If bulle IsNot Nothing Then
+                bulle.PlacementTarget = cible
+                bulle.IsOpen = True
+            ElseIf menu IsNot Nothing Then
+                menu.PlacementTarget = cible
+                menu.IsOpen = True
+            End If
+            Try
+                Attendre(300)
+                Enregistrer(flottante, $"{theme}/{nom}.png")
+            Finally
+                If bulle IsNot Nothing Then bulle.IsOpen = False
+                If menu IsNot Nothing Then menu.IsOpen = False
             End Try
         End Sub
 

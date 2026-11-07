@@ -56,6 +56,23 @@ Namespace Mkm.Wpf.Controls
             _court = TryCast(GetTemplateChild(PartShort), FrameworkElement)
             If _zone IsNot Nothing Then AddHandler _zone.SizeChanged, AddressOf ZoneRedimensionnee
             Animer()
+            Arrondir()
+        End Sub
+
+        ''' <inheritdoc/>
+        Protected Overrides Sub OnRenderSizeChanged(sizeInfo As SizeChangedInfo)
+            MyBase.OnRenderSizeChanged(sizeInfo)
+            Arrondir()
+        End Sub
+
+        ' Les coins du thème (999 px chez mkm : des bouts ronds), bornés comme CSS les borne : WPF dessinerait sinon
+        ' un fuseau. Le masque coupe aussi la valeur et les traits à ces coins.
+        Private Sub Arrondir()
+            Dim masque = TryCast(GetTemplateChild("PART_Mask"), Border)
+            If masque Is Nothing Then Return
+            Dim coins = TryFindResource(Theming.ThemeResources.Prefix & "progressbar.border.radius")
+            Dim rayon = If(TypeOf coins Is CornerRadius, DirectCast(coins, CornerRadius).TopLeft, 0.0)
+            masque.CornerRadius = New CornerRadius(Math.Min(rayon, Math.Min(ActualHeight, ActualWidth) / 2))
         End Sub
 
         ''' <inheritdoc/>
