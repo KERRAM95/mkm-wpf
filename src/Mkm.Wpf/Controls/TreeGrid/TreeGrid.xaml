@@ -84,12 +84,12 @@
                         </ContentPresenter>
                     </DockPanel>
                     <ControlTemplate.Triggers>
-                        <DataTrigger Binding="{Binding Info.HasChildren, RelativeSource={RelativeSource TemplatedParent}}" Value="False">
+                        <Trigger Property="HasChildren" Value="False">
                             <Setter TargetName="PART_Toggle" Property="Visibility" Value="Hidden" />
-                        </DataTrigger>
-                        <DataTrigger Binding="{Binding Info.IsExpanded, RelativeSource={RelativeSource TemplatedParent}}" Value="True">
+                        </Trigger>
+                        <Trigger Property="IsExpanded" Value="True">
                             <Setter TargetName="Signe" Property="Source" Value="{x:Static local:InternalIcons.Minus}" />
-                        </DataTrigger>
+                        </Trigger>
                         <Trigger Property="Icon" Value="{x:Null}">
                             <Setter TargetName="Icone" Property="Visibility" Value="Collapsed" />
                         </Trigger>

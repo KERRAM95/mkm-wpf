@@ -11,6 +11,7 @@ Imports System.Windows.Markup
 ' type : le compilateur XAML d'une application refuse un espace de noms vide.
 <Assembly: XmlnsPrefix("urn:mkm-wpf", "mkm")>
 <Assembly: XmlnsDefinition("urn:mkm-wpf", "Mkm.Wpf")>
+<Assembly: XmlnsDefinition("urn:mkm-wpf", "Mkm.Wpf.Commands")>
 <Assembly: XmlnsDefinition("urn:mkm-wpf", "Mkm.Wpf.Controls")>
 <Assembly: XmlnsDefinition("urn:mkm-wpf", "Mkm.Wpf.Localization")>
 <Assembly: XmlnsDefinition("urn:mkm-wpf", "Mkm.Wpf.Theming")>

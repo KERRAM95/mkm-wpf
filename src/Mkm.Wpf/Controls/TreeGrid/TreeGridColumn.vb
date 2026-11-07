@@ -62,6 +62,16 @@ Namespace Mkm.Wpf.Controls
         ''' <summary>Le retrait de la case de dépliage : elle se pose sur le trait du parent.</summary>
         Public Shared ReadOnly IndentProperty As DependencyProperty = IndentPropertyKey.DependencyProperty
 
+        Private Shared ReadOnly HasChildrenPropertyKey As DependencyPropertyKey = DependencyProperty.RegisterReadOnly(
+            NameOf(HasChildren), GetType(Boolean), GetType(TreeGridCell), New FrameworkPropertyMetadata(False))
+        ''' <summary>Vrai si le nœud a des enfants : sa case de dépliage paraît.</summary>
+        Public Shared ReadOnly HasChildrenProperty As DependencyProperty = HasChildrenPropertyKey.DependencyProperty
+
+        Private Shared ReadOnly IsExpandedPropertyKey As DependencyPropertyKey = DependencyProperty.RegisterReadOnly(
+            NameOf(IsExpanded), GetType(Boolean), GetType(TreeGridCell), New FrameworkPropertyMetadata(False))
+        ''' <summary>Vrai si le nœud est déplié : sa case montre −.</summary>
+        Public Shared ReadOnly IsExpandedProperty As DependencyProperty = IsExpandedPropertyKey.DependencyProperty
+
         Private _bascule As ButtonBase
 
         Shared Sub New()
@@ -105,6 +115,20 @@ Namespace Mkm.Wpf.Controls
             End Set
         End Property
 
+        ''' <summary>Vrai si le nœud a des enfants.</summary>
+        Public ReadOnly Property HasChildren As Boolean
+            Get
+                Return CBool(GetValue(HasChildrenProperty))
+            End Get
+        End Property
+
+        ''' <summary>Vrai si le nœud est déplié.</summary>
+        Public ReadOnly Property IsExpanded As Boolean
+            Get
+                Return CBool(GetValue(IsExpandedProperty))
+            End Get
+        End Property
+
         ''' <summary>Le retrait de la case de dépliage.</summary>
         Public ReadOnly Property Indent As Thickness
             Get
@@ -135,6 +159,8 @@ Namespace Mkm.Wpf.Controls
             Dim niveau = If(Info Is Nothing, 1, Info.Level)
             Dim taille = Mesure("node.toggle.button.size", 15)
             SetValue(IndentPropertyKey, New Thickness(Mesure("tree.origin", 19) + Mesure("tree.indent", 25) * (niveau - 1) - (taille - 1) / 2, 0, 0, 0))
+            SetValue(HasChildrenPropertyKey, Info IsNot Nothing AndAlso Info.HasChildren)
+            SetValue(IsExpandedPropertyKey, Info IsNot Nothing AndAlso Info.IsExpanded)
             InvalidateVisual()
         End Sub
 
