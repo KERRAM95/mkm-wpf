@@ -4,7 +4,7 @@
 > Mourad valide ce qui touche au produit (« À valider ») ; la technique se
 > décide ici.
 
-**État :** à l'étude — proposition du 07/11/2026. Composant prioritaire.
+**État :** décidée le 07/11/2026 — comme l'ActionBar de mkm. Composant prioritaire.
 
 ## Le besoin
 
@@ -133,18 +133,13 @@ Elle demande deux fondations :
 - **le thème**, déjà validé : il reste à le coder ;
 - **des icônes** : mkm a le jeu Tabler (MIT), voir « À valider ».
 
-## À valider
+## Décidé
 
-1. **Le comportement de l'ActionBar de mkm, au complet** (« Ce que fait
-   mkm ») : faut-il en ôter ou y ajouter quelque chose pour les applications
-   visées ?
-2. **Son apparence** : celle de l'ActionBar de mkm dans chaque thème
-   (mesures plus haut).
-3. **Sa place** : en bas de son conteneur, comme dans 3DEXPERIENCE (les listes
-   s'ouvrent au-dessus) ; ou aussi en haut d'une fenêtre (les listes s'ouvrent
-   alors en dessous).
-4. **Les icônes** : le jeu Tabler (MIT), comme mkm, fourni par mkm-wpf ; une
-   application peut aussi donner ses propres images.
+mkm a tout tranché (`CLAUDE.md`, « Qui décide ») : l'ActionBar de mkm-wpf
+reprend **son comportement au complet**, **son apparence dans chaque thème**,
+**sa place en bas de son conteneur** (les listes s'ouvrent au-dessus quand la
+place le permet) et **le jeu d'icônes Tabler** (MIT) ; une application peut
+aussi donner ses propres images.
 
 ## Sources
 

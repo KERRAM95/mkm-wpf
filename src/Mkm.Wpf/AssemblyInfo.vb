@@ -13,6 +13,7 @@ Imports System.Windows.Markup
 <Assembly: XmlnsPrefix("urn:mkm-wpf", "mkm")>
 <Assembly: XmlnsDefinition("urn:mkm-wpf", "Mkm.Wpf")>
 <Assembly: XmlnsDefinition("urn:mkm-wpf", "Mkm.Wpf.Localization")>
+<Assembly: XmlnsDefinition("urn:mkm-wpf", "Mkm.Wpf.Theming")>
 
 ' Les tests lisent aussi ce qui est réservé à la bibliothèque (Friend).
 <Assembly: InternalsVisibleTo("Mkm.Wpf.Tests")>

@@ -24,4 +24,7 @@
   <data name="showcase.language" xml:space="preserve">
     <value>Language</value>
   </data>
+  <data name="showcase.theme" xml:space="preserve">
+    <value>Theme</value>
+  </data>
 </root>

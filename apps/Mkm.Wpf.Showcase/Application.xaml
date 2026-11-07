@@ -6,9 +6,9 @@
     <Application.Resources>
         <ResourceDictionary>
             <ResourceDictionary.MergedDictionaries>
-                <!-- La configuration de mkm-wpf. Sans Language, la langue de Windows (la plus
-                     proche des langues de la vitrine, choisie au démarrage) ; Language="fr"
-                     l'imposerait. Le thème s'y ajoutera. -->
+                <!-- La configuration de mkm-wpf : le thème (Dashboard par défaut ; la barre de
+                     la vitrine en change) et la langue (sans Language, celle de Windows, la plus
+                     proche des langues de la vitrine ; Language="fr" l'imposerait). -->
                 <mkm:MkmResources />
             </ResourceDictionary.MergedDictionaries>
         </ResourceDictionary>

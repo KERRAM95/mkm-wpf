@@ -15,6 +15,17 @@ l'emprunt (voir `CLAUDE.md`, « L'open source d'abord »).
 
 La bibliothèque `Mkm.Wpf` elle-même n'a encore aucune dépendance.
 
+## Jetons de thème
+
+| Élément de mkm-wpf | Source | Licence | Ce qui est repris |
+| ------------------ | ------ | ------- | ----------------- |
+| `src/Mkm.Wpf/Theming/Tokens/Dashboard.tokens` | mkm (`ui-kit`), `packages/themes/src/presets/dashboard`, sur `nora` en pixels | MIT (PrimeUIX, par mkm) | les jetons de la base et des composants importés, valeurs comprises |
+| `src/Mkm.Wpf/Theming/Tokens/Ara.tokens` | mkm (`ui-kit`), `packages/themes/src/presets/ara` | MIT (PrimeUIX, par mkm) ; couleurs de la charte ARA | idem |
+| la structure des jetons (primitifs, sémantiques, par composant) et leurs chemins | PrimeUIX, par mkm | MIT | les noms, tels que `dt()` les lit |
+
+Importés par `outils/themes/importer-mkm.mjs` ; les couleurs de maturité et le
+mode sombre ne le sont pas.
+
 ## Code repris
 
 Aucun pour l'instant.

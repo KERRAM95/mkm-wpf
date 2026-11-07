@@ -1,7 +1,10 @@
 Imports System.Globalization
+Imports System.Linq
 Imports System.Windows
 Imports System.Windows.Markup
+Imports System.Windows.Media
 Imports Mkm.Wpf.Localization
+Imports Mkm.Wpf.Theming
 
 Namespace Mkm.Wpf
 
@@ -11,26 +14,52 @@ Namespace Mkm.Wpf
     ''' &lt;Application.Resources&gt;
     '''     &lt;ResourceDictionary&gt;
     '''         &lt;ResourceDictionary.MergedDictionaries&gt;
-    '''             &lt;mkm:MkmResources Language="fr" /&gt;
+    '''             &lt;mkm:MkmResources Theme="Ara" Language="fr" /&gt;
     '''         &lt;/ResourceDictionary.MergedDictionaries&gt;
     '''     &lt;/ResourceDictionary&gt;
     ''' &lt;/Application.Resources&gt;
     ''' </code>
-    ''' Le thème s'y ajoutera.
     ''' </summary>
     ''' <remarks>
-    ''' Elle donne aussi aux éléments WPF le format régional de Windows pour les dates et les nombres :
-    ''' sans cela, WPF les écrit à l'américaine (en-US), quelle que soit la région du poste.
+    ''' Elle porte les ressources du thème (<c>mkm.&lt;chemin&gt;</c>). Elle règle aussi deux défauts de
+    ''' WPF pour toute l'application : les dates et les nombres prennent le format régional de Windows
+    ''' (WPF les écrirait à l'américaine) ; les textes se dessinent nets (<see cref="TextFormattingMode.Display"/>),
+    ''' WPF floutant par défaut les petits textes.
     ''' </remarks>
     Public Class MkmResources
         Inherits ResourceDictionary
 
-        Private Shared _formatsAppliques As Boolean
+        Private Shared _reglagesAppliques As Boolean
+        Private _ressourcesDuTheme As ResourceDictionary
+        Private _theme As ThemeDefinition
 
-        ''' <summary>La configuration, posée dans App.xaml.</summary>
+        ''' <summary>La configuration, posée dans App.xaml ; son thème est <see cref="Themes.Dashboard"/>.</summary>
         Public Sub New()
-            AppliquerFormatsRegionaux()
+            AppliquerReglages()
+            Current = Me
+            Appliquer(Themes.Dashboard)
         End Sub
+
+        ''' <summary>La dernière configuration créée : celle de l'application.</summary>
+        Public Shared Property Current As MkmResources
+
+        ''' <summary>
+        ''' Le thème, par son nom (« Dashboard », « Ara », ou un thème enregistré par l'application).
+        ''' Le changer remplace aussitôt toutes les ressources du thème.
+        ''' </summary>
+        Public Property Theme As String
+            Get
+                Return _theme.Name
+            End Get
+            Set(value As String)
+                Dim definition = Themes.Find(value)
+                If definition Is Nothing Then
+                    Dim connus = String.Join(", ", Themes.All.Select(Function(t) t.Name))
+                    Throw New ArgumentException($"Thème inconnu : « {value} ». Thèmes connus : {connus}.", NameOf(value))
+                End If
+                Appliquer(definition)
+            End Set
+        End Property
 
         ''' <summary>
         ''' La langue des textes, par son nom de culture (« fr », « en-GB ») : celle de
@@ -45,20 +74,44 @@ Namespace Mkm.Wpf
             End Set
         End Property
 
+        ''' <summary>Remplace les ressources du thème : les <c>DynamicResource</c> suivent.</summary>
+        Private Sub Appliquer(definition As ThemeDefinition)
+            If definition Is _theme Then Return
+
+            Dim nouvelles = ThemeResources.Build(definition)
+            Dim place = If(_ressourcesDuTheme Is Nothing, -1, MergedDictionaries.IndexOf(_ressourcesDuTheme))
+            If place < 0 Then
+                MergedDictionaries.Add(nouvelles)
+            Else
+                MergedDictionaries(place) = nouvelles
+            End If
+            _ressourcesDuTheme = nouvelles
+            _theme = definition
+        End Sub
+
         ''' <summary>
         ''' Une fois, avant le premier élément WPF : le format régional de Windows devient la langue
-        ''' (<see cref="FrameworkElement.Language"/>) par défaut des éléments, que les liaisons
-        ''' emploient pour écrire les dates et les nombres.
+        ''' (<see cref="FrameworkElement.Language"/>) par défaut des éléments, et les textes se
+        ''' dessinent en mode <see cref="TextFormattingMode.Display"/>.
         ''' </summary>
-        Private Shared Sub AppliquerFormatsRegionaux()
-            If _formatsAppliques Then Return
-            _formatsAppliques = True
+        Private Shared Sub AppliquerReglages()
+            If _reglagesAppliques Then Return
+            _reglagesAppliques = True
 
-            Dim region = New FrameworkPropertyMetadata(XmlLanguage.GetLanguage(CultureInfo.CurrentCulture.IetfLanguageTag))
+            Remplacer(FrameworkElement.LanguageProperty,
+                      New FrameworkPropertyMetadata(XmlLanguage.GetLanguage(CultureInfo.CurrentCulture.IetfLanguageTag)))
+            Remplacer(TextOptions.TextFormattingModeProperty,
+                      New FrameworkPropertyMetadata(TextFormattingMode.Display,
+                                                    FrameworkPropertyMetadataOptions.AffectsMeasure Or
+                                                    FrameworkPropertyMetadataOptions.AffectsRender Or
+                                                    FrameworkPropertyMetadataOptions.Inherits))
+        End Sub
+
+        Private Shared Sub Remplacer(propriete As DependencyProperty, metadonnee As FrameworkPropertyMetadata)
             Try
-                FrameworkElement.LanguageProperty.OverrideMetadata(GetType(FrameworkElement), region)
+                propriete.OverrideMetadata(GetType(FrameworkElement), metadonnee)
             Catch ex As InvalidOperationException
-                ' Un élément WPF existait déjà (concepteur XAML de Visual Studio) : WPF garde en-US.
+                ' Un élément WPF existait déjà (concepteur XAML de Visual Studio) : WPF garde son défaut.
             Catch ex As ArgumentException
                 ' La métadonnée était déjà remplacée par l'application : elle a le dernier mot.
             End Try

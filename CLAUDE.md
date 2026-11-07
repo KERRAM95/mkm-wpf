@@ -25,6 +25,11 @@ leur raison en une phrase dans la fiche ou le commit. On ne lui soumet que ce
 qui touche au produit : ce que l'utilisateur voit et fait, l'apparence, le
 périmètre.
 
+**Ce que mkm (`ui-kit`) a déjà décidé ne se redemande pas** (Mourad, le
+07/11/2026) : son comportement, son apparence, ses thèmes, ses icônes se
+reprennent tels quels. Une fiche le constate, sans le soumettre ; une
+question ne porte que sur ce que mkm ne tranche pas.
+
 ## Ce dépôt
 
 **mkm-wpf**, la bibliothèque de composants WPF de Mourad : la déclinaison
@@ -90,6 +95,23 @@ La langue, telle qu'elle est faite (`src/Mkm.Wpf/Localization`) :
   que l'application remplit depuis ses propres fichiers). Celles de
   l'application passent avant celles de la bibliothèque.
 - Un texte absent : sa langue parente, puis l'anglais, puis sa clé.
+
+Le thème, tel qu'il est fait (`src/Mkm.Wpf/Theming`) :
+
+- `<mkm:MkmResources Theme="Ara" />` ; sans `Theme`, Dashboard. `Themes`
+  connaît Dashboard, ARA et les thèmes qu'une application enregistre
+  (`Themes.Register`, souvent par `Themes.Dashboard.Derive(…)`).
+- Une ressource par jeton, sous `mkm.<chemin de dt() dans mkm>` :
+  `{DynamicResource mkm.actionbar.item.size}`. Un gabarit ne lit **que** ces
+  ressources, et **toujours par `DynamicResource`** : jamais une couleur ni une
+  mesure en dur.
+- Les jetons viennent de mkm : `node outils/themes/importer-mkm.mjs <ui-kit>
+  [composant…]` régénère `src/Mkm.Wpf/Theming/Tokens/*.tokens` (base, et les
+  composants de sa liste). Un composant nouveau ajoute son nom à la liste de
+  l'outil et relance l'import ; on ne retouche jamais un `.tokens` à la main.
+- `ThemesTests` vérifie, comme mkm : chaque renvoi résolu, ARA qui ne diffère
+  de Dashboard que par ses couleurs, chaque texte lisible sur son fond
+  (4,5:1) ; un composant ajoute ses paires texte/fond à la liste du test.
 
 Les règles pour chaque composant :
 

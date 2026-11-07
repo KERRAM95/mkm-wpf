@@ -25,4 +25,10 @@ Les évolutions notables de mkm-wpf, version par version. Le format suit
 - La vitrine en anglais et en français, avec le choix de la langue dans sa barre.
 - La fiche du thème (`docs/fondations/theme.md`) : Dashboard et ARA, sans mode
   sombre ni couleurs de maturité.
-- La fiche de l'ActionBar (`docs/composants/actionbar.md`), à valider.
+- Le thème : `MkmResources.Theme` (Dashboard par défaut, ARA), changeable à chaud ;
+  `ThemeDefinition` (jetons, renvois, dérivation) et `Themes` ; une ressource par
+  jeton, `mkm.<chemin>`, typée (pinceau, taille, marge, rayon, ombre, police,
+  graisse, durée) ; les jetons importés de mkm (`outils/themes/importer-mkm.mjs`).
+  Les textes se dessinent nets (mode `Display`).
+- La vitrine habillée par le thème, avec le choix du thème dans sa barre.
+- La fiche de l'ActionBar (`docs/composants/actionbar.md`) : comme celle de mkm.

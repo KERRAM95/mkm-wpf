@@ -1,5 +1,7 @@
 Imports System.Globalization
+Imports System.Windows
 Imports System.Windows.Controls
+Imports System.Windows.Media
 Imports Mkm.Wpf.Localization
 Imports NUnit.Framework
 
@@ -20,6 +22,37 @@ Namespace Mkm.Wpf.Tests
             Finally
                 Localizer.Current.Language = avant
             End Try
+        End Sub
+
+        <Test>
+        Public Sub Theme_ParDefaut_Dashboard()
+            Dim ressources As New MkmResources()
+
+            Assert.That(ressources.Theme, [Is].EqualTo("Dashboard"))
+            Assert.That(DirectCast(ressources("mkm.primary.color"), SolidColorBrush).Color, [Is].EqualTo(Color.FromRgb(&H36, &H8E, &HC4)))
+        End Sub
+
+        <Test>
+        Public Sub Theme_ChangeAChaud()
+            Dim ressources As New MkmResources()
+
+            ressources.Theme = "Ara"
+
+            Assert.That(ressources.Theme, [Is].EqualTo("Ara"))
+            Assert.That(DirectCast(ressources("mkm.primary.color"), SolidColorBrush).Color, [Is].EqualTo(Color.FromRgb(&H1, &H44, &H91)))
+            Assert.That(ressources.MergedDictionaries.Count, [Is].EqualTo(1))
+        End Sub
+
+        <Test>
+        Public Sub Theme_Inconnu_EstRefuse()
+            Dim ressources As New MkmResources()
+
+            Assert.Throws(Of ArgumentException)(New Action(Sub() ressources.Theme = "Inconnu"))
+        End Sub
+
+        <Test>
+        Public Sub Elements_DessinentLeurTexteNet()
+            Assert.That(TextOptions.GetTextFormattingMode(New TextBlock()), [Is].EqualTo(TextFormattingMode.Display))
         End Sub
 
         <Test>

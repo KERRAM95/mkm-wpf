@@ -83,8 +83,8 @@ vitrine en est l'exemple (`apps/Mkm.Wpf.Showcase`).
 
 1. ~~La langue~~ : faite — une variable, changeable pendant l'exécution
    (`docs/fondations/theme-et-langue.md`).
-2. Les thèmes : les jetons de conception, un thème par défaut et ARA, par la
-   même configuration.
+2. ~~Les thèmes~~ : faits — Dashboard et ARA, les jetons de mkm, par la même
+   configuration (`docs/fondations/theme.md`).
 3. Les icônes (le jeu Tabler, comme mkm).
 4. L'ActionBar, une barre de commandes en onglets : le composant prioritaire
    (`docs/composants/actionbar.md`).

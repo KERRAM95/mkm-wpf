@@ -1,7 +1,8 @@
 <!--
-    Fenêtre de la vitrine : sa barre (le choix de la langue, bientôt celui du thème), la liste
-    des composants à gauche, la page du composant choisi à droite. Chaque composant y aura sa
-    page (Pages/<Nom>Page.xaml). Tous les textes viennent de Textes/Vitrine*.resx par {mkm:T}.
+    Fenêtre de la vitrine : sa barre (le choix du thème et de la langue), la liste des
+    composants à gauche, la page du composant choisi à droite. Chaque composant y aura sa page
+    (Pages/<Nom>Page.xaml). Les textes viennent de Textes/Vitrine*.resx par {mkm:T} ; les
+    couleurs, la police et les tailles, du thème (mkm.<chemin>).
 -->
 <Window x:Class="Mkm.Wpf.Showcase.MainWindow"
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
@@ -9,11 +10,21 @@
         xmlns:mkm="urn:mkm-wpf"
         Title="{mkm:T showcase.title}"
         Width="1100" Height="720"
-        WindowStartupLocation="CenterScreen">
+        WindowStartupLocation="CenterScreen"
+        Background="{DynamicResource mkm.content.background}"
+        Foreground="{DynamicResource mkm.text.color}"
+        FontFamily="{DynamicResource mkm.font.family}"
+        FontSize="{DynamicResource mkm.font.size}">
     <DockPanel>
         <Border DockPanel.Dock="Top" Padding="12,6"
-                BorderBrush="#DDDDDD" BorderThickness="0,0,0,1">
+                BorderBrush="{DynamicResource mkm.content.border.color}" BorderThickness="0,0,0,1">
             <StackPanel HorizontalAlignment="Right" Orientation="Horizontal">
+                <TextBlock Margin="0,0,8,0" VerticalAlignment="Center" Text="{mkm:T showcase.theme}" />
+                <!-- Les thèmes connus ; en choisir un change toute l'apparence, à chaud. -->
+                <ComboBox x:Name="ChoixDuTheme" MinWidth="120" Margin="0,0,16,0"
+                          DisplayMemberPath="Name"
+                          ItemsSource="{x:Static mkm:Themes.All}"
+                          SelectionChanged="ChoixDuTheme_SelectionChanged" />
                 <TextBlock Margin="0,0,8,0" VerticalAlignment="Center" Text="{mkm:T showcase.language}" />
                 <!-- Les langues des textes de la vitrine ; en choisir une change tous les textes. -->
                 <ComboBox MinWidth="140"
@@ -23,10 +34,11 @@
             </StackPanel>
         </Border>
         <Border DockPanel.Dock="Left" Width="220"
-                BorderBrush="#DDDDDD" BorderThickness="0,0,1,0">
-            <TextBlock Margin="12" FontWeight="Bold" Text="{mkm:T showcase.components}" />
+                BorderBrush="{DynamicResource mkm.content.border.color}" BorderThickness="0,0,1,0">
+            <TextBlock Margin="12" FontWeight="Bold"
+                       Foreground="{DynamicResource mkm.primary.color}" Text="{mkm:T showcase.components}" />
         </Border>
         <TextBlock HorizontalAlignment="Center" VerticalAlignment="Center"
-                   Foreground="#666666" Text="{mkm:T showcase.empty}" />
+                   Foreground="{DynamicResource mkm.text.muted.color}" Text="{mkm:T showcase.empty}" />
     </DockPanel>
 </Window>

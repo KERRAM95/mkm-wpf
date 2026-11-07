@@ -1,0 +1,564 @@
+# Jetons du thème Ara, importés de mkm (ui-kit, packages/themes/src/presets/ara).
+# Fichier produit par outils/themes/importer-mkm.mjs : ne pas le modifier à la main.
+
+# base
+border.radius.none = 0
+border.radius.xs = 2px
+border.radius.sm = 2px
+border.radius.md = 4px
+border.radius.lg = 4px
+border.radius.xl = 4px
+navy.50 = #f2f6fa
+navy.100 = #c2d2e5
+navy.200 = #92afd0
+navy.300 = #628bbb
+navy.400 = #3168a6
+navy.500 = #014491
+navy.600 = #013a7b
+navy.700 = #013066
+navy.800 = #012550
+navy.900 = #001b3a
+navy.950 = #001124
+coolgray.50 = #f6f7f7
+coolgray.100 = #eaeaea
+coolgray.200 = #dadada
+coolgray.300 = #c9c9c9
+coolgray.400 = #a0a0a0
+coolgray.500 = #666977
+coolgray.600 = #525668
+coolgray.700 = #464958
+coolgray.800 = #393c49
+coolgray.900 = #2d2f39
+coolgray.950 = #21222a
+green.50 = #f5faf5
+green.100 = #cfe5cf
+green.200 = #b9d8b9
+green.300 = #84bb84
+green.400 = #6aac6a
+green.500 = #389138
+green.600 = #307b30
+green.700 = #276627
+green.800 = #1f501f
+green.900 = #163a16
+green.950 = #0e240e
+lime.50 = #fcfdf2
+lime.100 = #eff3c2
+lime.200 = #e2ea94
+lime.300 = #cfdd4c
+lime.400 = #c8d730
+lime.500 = #bbce00
+lime.600 = #9faf00
+lime.700 = #839000
+lime.800 = #677100
+lime.900 = #4b5200
+lime.950 = #2f3400
+teal.50 = #f2f7f6
+teal.100 = #bfd5d4
+teal.200 = #91b6b5
+teal.300 = #619695
+teal.400 = #337876
+teal.500 = #005654
+teal.600 = #004947
+teal.700 = #003c3b
+teal.800 = #002f2e
+teal.900 = #002222
+teal.950 = #001615
+red.50 = #fef6f5
+red.100 = #fcd2cb
+red.200 = #f9b5a9
+red.300 = #f79484
+red.400 = #f57f6c
+red.500 = #f25238
+red.600 = #ce4630
+red.700 = #a93927
+red.800 = #852d1f
+red.900 = #612116
+red.950 = #3c140e
+orange.50 = #fff8f2
+orange.100 = #ffd1ab
+orange.200 = #ffc391
+orange.300 = #ffa861
+orange.400 = #ff9640
+orange.500 = #ff7300
+orange.600 = #d96200
+orange.700 = #b25000
+orange.800 = #8c3f00
+orange.900 = #662e00
+orange.950 = #401d00
+yellow.50 = #fffbf3
+yellow.100 = #fff1d9
+yellow.200 = #ffd68c
+yellow.300 = #ffca6b
+yellow.400 = #ffb93d
+yellow.500 = #ffa910
+yellow.600 = #d9900e
+yellow.700 = #b2760b
+yellow.800 = #8c5d09
+yellow.900 = #664406
+yellow.950 = #402a04
+cyan.50 = #f8fcfe
+cyan.100 = #d4effb
+cyan.200 = #c2e8fa
+cyan.300 = #a7def8
+cyan.400 = #94d7f6
+cyan.500 = #71caf3
+cyan.600 = #60accf
+cyan.700 = #4f8daa
+cyan.800 = #3e6f86
+cyan.900 = #2d5161
+cyan.950 = #1c323d
+sky.50 = #f6faff
+sky.100 = #d4e9ff
+sky.200 = #acd5ff
+sky.300 = #8fc7ff
+sky.400 = #73b8ff
+sky.500 = #4ba4ff
+sky.600 = #408bd9
+sky.700 = #3473b2
+sky.800 = #295a8c
+sky.900 = #1e4266
+sky.950 = #132940
+blue.50 = #f5f7fb
+blue.100 = #cedaed
+blue.200 = #a3b9dd
+blue.300 = #6f92ca
+blue.400 = #5981c2
+blue.500 = #3264b4
+blue.600 = #2a5599
+blue.700 = #23467e
+blue.800 = #1c3763
+blue.900 = #142848
+blue.950 = #0c192d
+violet.50 = #f7f2ff
+violet.100 = #d9c2fe
+violet.200 = #bb91fc
+violet.300 = #a770fc
+violet.400 = #7f30fa
+violet.500 = #6100f9
+violet.600 = #5200d4
+violet.700 = #4400ae
+violet.800 = #350089
+violet.900 = #270064
+violet.950 = #18003e
+purple.50 = {violet.50}
+purple.100 = {violet.100}
+purple.200 = {violet.200}
+purple.300 = {violet.300}
+purple.400 = {violet.400}
+purple.500 = {violet.500}
+purple.600 = {violet.600}
+purple.700 = {violet.700}
+purple.800 = {violet.800}
+purple.900 = {violet.900}
+purple.950 = {violet.950}
+status.success = {green.500}
+status.warn = {orange.500}
+status.danger = {red.500}
+status.info = {sky.500}
+transition.duration = 0s
+focus.ring.width = 1px
+focus.ring.style = solid
+focus.ring.color = {primary.500}
+focus.ring.offset = 1px
+focus.ring.shadow = none
+disabled.opacity = 0.5
+icon.size = 16px
+anchor.gutter = 0
+primary.50 = {navy.50}
+primary.100 = {navy.100}
+primary.200 = {navy.200}
+primary.300 = {navy.300}
+primary.400 = {navy.400}
+primary.500 = {navy.500}
+primary.600 = {navy.600}
+primary.700 = {navy.700}
+primary.800 = {navy.800}
+primary.900 = {navy.900}
+primary.950 = {navy.950}
+form.field.padding.x = 7px
+form.field.padding.y = 6px
+form.field.font.size = 12px
+form.field.sm.font.size = 11px
+form.field.sm.padding.x = 6px
+form.field.sm.padding.y = 4px
+form.field.lg.font.size = 13px
+form.field.lg.padding.x = 9px
+form.field.lg.padding.y = 8px
+form.field.border.radius = {border.radius.xs}
+form.field.focus.ring.width = 1px
+form.field.focus.ring.style = solid
+form.field.focus.ring.color = {primary.500}
+form.field.focus.ring.offset = -1px
+form.field.focus.ring.shadow = none
+form.field.transition.duration = {transition.duration}
+list.padding = 2px 0
+list.gap = 0
+list.header.padding = 6px 8px
+list.option.padding = 5px 8px
+list.option.border.radius = 0
+list.option.group.padding = 5px 8px
+list.option.group.font.weight = 700
+content.border.radius = {border.radius.xs}
+mask.transition.duration = 0.3s
+navigation.list.padding = 0
+navigation.list.gap = 0
+navigation.item.padding = 5px 8px
+navigation.item.border.radius = 0
+navigation.item.gap = 8px
+navigation.submenu.label.padding = 5px 8px
+navigation.submenu.label.font.weight = 700
+navigation.submenu.icon.size = 12px
+overlay.select.border.radius = {border.radius.xs}
+overlay.select.shadow = 0 1px 2px {surface.400}
+overlay.popover.border.radius = {border.radius.xs}
+overlay.popover.padding = 8px
+overlay.popover.shadow = 0 1px 2px {surface.400}
+overlay.modal.border.radius = {border.radius.xs}
+overlay.modal.padding = 12px
+overlay.modal.shadow = 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 8px 10px -6px rgba(0, 0, 0, 0.1)
+overlay.navigation.shadow = 0 1px 2px {surface.400}
+surface.0 = #ffffff
+surface.50 = {coolgray.50}
+surface.100 = {coolgray.100}
+surface.200 = {coolgray.200}
+surface.300 = {coolgray.300}
+surface.400 = {coolgray.400}
+surface.500 = {coolgray.500}
+surface.600 = {coolgray.600}
+surface.700 = {coolgray.700}
+surface.800 = {coolgray.800}
+surface.900 = {coolgray.900}
+surface.950 = {coolgray.950}
+primary.color = {primary.500}
+primary.contrast.color = #ffffff
+primary.hover.color = {primary.600}
+primary.active.color = {primary.700}
+highlight.background = {primary.100}
+highlight.focus.background = {primary.100}
+highlight.color = {surface.700}
+highlight.focus.color = {surface.700}
+mask.background = rgba(0, 0, 0, 0.5)
+mask.color = {surface.200}
+form.field.background = {surface.0}
+form.field.disabled.background = {surface.100}
+form.field.filled.background = {surface.50}
+form.field.filled.hover.background = {surface.50}
+form.field.filled.focus.background = {surface.50}
+form.field.border.color = {surface.400}
+form.field.hover.border.color = {surface.500}
+form.field.focus.border.color = {primary.500}
+form.field.invalid.border.color = {status.danger}
+form.field.color = {surface.700}
+form.field.disabled.color = {surface.500}
+form.field.placeholder.color = {text.muted.color}
+form.field.invalid.placeholder.color = color-mix(in srgb, {status.danger} 70%, #000)
+form.field.float.label.color = {text.muted.color}
+form.field.float.label.focus.color = {primary.600}
+form.field.float.label.active.color = {text.muted.color}
+form.field.float.label.invalid.color = {form.field.invalid.placeholder.color}
+form.field.icon.color = {surface.500}
+form.field.shadow = none
+text.color = {surface.700}
+text.hover.color = {surface.800}
+text.muted.color = color-mix(in srgb, {surface.500} 90%, #000)
+text.hover.muted.color = {surface.600}
+content.background = {surface.0}
+content.hover.background = {surface.100}
+content.border.color = {surface.200}
+content.color = {text.color}
+content.hover.color = {text.hover.color}
+overlay.select.background = {surface.0}
+overlay.select.border.color = {surface.200}
+overlay.select.color = {text.color}
+overlay.popover.background = {surface.0}
+overlay.popover.border.color = {surface.200}
+overlay.popover.color = {text.color}
+overlay.modal.background = {surface.0}
+overlay.modal.border.color = {surface.200}
+overlay.modal.color = {text.color}
+list.option.focus.background = {surface.100}
+list.option.selected.background = {highlight.background}
+list.option.selected.focus.background = {highlight.focus.background}
+list.option.color = {text.color}
+list.option.focus.color = {text.color}
+list.option.selected.color = {highlight.color}
+list.option.selected.focus.color = {highlight.focus.color}
+list.option.icon.color = {text.muted.color}
+list.option.icon.focus.color = {text.muted.color}
+list.option.group.background = transparent
+list.option.group.color = {text.color}
+navigation.item.focus.background = {surface.100}
+navigation.item.active.background = {surface.100}
+navigation.item.color = {text.color}
+navigation.item.focus.color = {text.color}
+navigation.item.active.color = {text.color}
+navigation.item.icon.color = {surface.500}
+navigation.item.icon.focus.color = {surface.500}
+navigation.item.icon.active.color = {surface.500}
+navigation.submenu.label.background = transparent
+navigation.submenu.label.color = {text.color}
+navigation.submenu.icon.color = {surface.500}
+navigation.submenu.icon.focus.color = {surface.500}
+navigation.submenu.icon.active.color = {surface.500}
+font.family = Arial, Helvetica, sans-serif
+font.size = 12px
+line.height = 1.16667
+navigation.item.height = 24px
+navigation.icon.column.width = 44px
+
+# actionbar
+actionbar.font.size = 12px
+actionbar.line.height = 1.25
+actionbar.transition.duration = 0.2s
+actionbar.panel.background = #ffffff
+actionbar.panel.border.color = {surface.200}
+actionbar.panel.border.radius = 6px
+actionbar.panel.shadow = 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -2px rgba(0, 0, 0, 0.1)
+actionbar.header.padding = 0 4px 0 8px
+actionbar.header.gap = 8px
+actionbar.header.border.color = {surface.200}
+actionbar.tab.height = 40px
+actionbar.tab.padding = 0 16px
+actionbar.tab.gap = 0
+actionbar.tab.font.size = 14px
+actionbar.tab.font.weight = 600
+actionbar.tab.color = {surface.500}
+actionbar.tab.hover.color = {surface.700}
+actionbar.tab.active.color = {surface.950}
+actionbar.tab.active.border.color = {surface.950}
+actionbar.tab.border.width = 2px
+actionbar.tab.focus.ring.width = 1px
+actionbar.tab.focus.ring.style = solid
+actionbar.tab.focus.ring.color = {surface.950}
+actionbar.tab.focus.ring.offset = -1px
+actionbar.tab.focus.ring.shadow = none
+actionbar.toggle.size = 32px
+actionbar.toggle.border.radius = 6px
+actionbar.toggle.color = {surface.500}
+actionbar.toggle.hover.background = {surface.100}
+actionbar.toggle.hover.color = {surface.700}
+actionbar.toggle.icon.size = 16px
+actionbar.toggle.focus.ring.width = 1px
+actionbar.toggle.focus.ring.style = solid
+actionbar.toggle.focus.ring.color = {surface.950}
+actionbar.toggle.focus.ring.offset = 2px
+actionbar.toggle.focus.ring.shadow = none
+actionbar.nav.button.width = 32px
+actionbar.nav.button.background = #ffffff
+actionbar.nav.button.hover.background = {surface.100}
+actionbar.nav.button.border.color = {surface.200}
+actionbar.nav.button.color = {surface.500}
+actionbar.nav.button.hover.color = {surface.700}
+actionbar.nav.button.icon.size = 16px
+actionbar.frame.padding = 8px
+actionbar.section.gap = 4px
+actionbar.fixed.padding = 0 8px 0 0
+actionbar.fixed.gap = 2px
+actionbar.fixed.border.color = {surface.200}
+actionbar.item.size = 40px
+actionbar.item.max.width = 96px
+actionbar.item.border.radius = 6px
+actionbar.item.color = {surface.500}
+actionbar.item.hover.background = {surface.100}
+actionbar.item.hover.color = {surface.700}
+actionbar.item.active.background = {primary.color}
+actionbar.item.active.color = {primary.contrast.color}
+actionbar.item.pressed.background = {surface.100}
+actionbar.item.pressed.scale = 0.96
+actionbar.item.disabled.opacity = 0.6
+actionbar.item.icon.size = 20px
+actionbar.item.label.gap = 4px
+actionbar.item.label.font.size = 12px
+actionbar.item.label.line.height = 16px
+actionbar.item.label.color = {surface.500}
+actionbar.item.labels.width = 80px
+actionbar.item.labels.height = 72px
+actionbar.item.labels.padding = 4px
+actionbar.item.focus.ring.width = 1px
+actionbar.item.focus.ring.style = solid
+actionbar.item.focus.ring.color = {surface.950}
+actionbar.item.focus.ring.offset = 2px
+actionbar.item.focus.ring.shadow = none
+actionbar.separator.height = 24px
+actionbar.separator.margin = 0 4px
+actionbar.separator.color = {surface.200}
+actionbar.dropdown.hover.background = transparent
+actionbar.dropdown.button.width = 16px
+actionbar.dropdown.button.hover.background = {surface.100}
+actionbar.dropdown.icon.size = 12px
+actionbar.dropdown.icon.color = {surface.500}
+
+# contextmenu
+contextmenu.background = {content.background}
+contextmenu.border.color = {content.border.color}
+contextmenu.color = {content.color}
+contextmenu.border.radius = {border.radius.none}
+contextmenu.shadow = {overlay.navigation.shadow}
+contextmenu.transition.duration = {transition.duration}
+contextmenu.min.width = 90px
+contextmenu.list.padding = {navigation.list.padding}
+contextmenu.list.gap = {navigation.list.gap}
+contextmenu.item.focus.background = {navigation.item.focus.background}
+contextmenu.item.active.background = {navigation.item.active.background}
+contextmenu.item.color = {navigation.item.color}
+contextmenu.item.focus.color = {navigation.item.focus.color}
+contextmenu.item.active.color = {navigation.item.active.color}
+contextmenu.item.padding = 0 14px
+contextmenu.item.border.radius = {navigation.item.border.radius}
+contextmenu.item.gap = 14px
+contextmenu.item.icon.color = {navigation.item.icon.color}
+contextmenu.item.icon.focus.color = {navigation.item.icon.focus.color}
+contextmenu.item.icon.active.color = {navigation.item.icon.active.color}
+contextmenu.item.shortcut.color = {text.muted.color}
+contextmenu.submenu.mobile.indent = 12px
+contextmenu.submenu.icon.size = {navigation.submenu.icon.size}
+contextmenu.submenu.icon.color = {navigation.submenu.icon.color}
+contextmenu.submenu.icon.focus.color = {navigation.submenu.icon.focus.color}
+contextmenu.submenu.icon.active.color = {navigation.submenu.icon.active.color}
+contextmenu.separator.border.color = {surface.200}
+contextmenu.css = 
+    .p-contextmenu {
+        --p-anchor-gutter: 0px;
+        --p-anchor-overflow: viewport;
+        will-change: auto;
+    }
+
+    .p-contextmenu:is(.p-anchored-overlay-enter-active, .p-anchored-overlay-leave-active) {
+        animation: none;
+    }
+
+    .p-contextmenu-item-link {
+        min-height: dt('mkm.navigation.item.height');
+    }
+
+    .p-contextmenu-item-link:not(:has(> .p-contextmenu-item-icon)) {
+        padding-inline-start: dt('mkm.navigation.icon.column.width');
+    }
+
+    :is(.p-contextmenu-root-list, .p-contextmenu-submenu):not(:has(> .p-contextmenu-item > .p-contextmenu-item-content .p-contextmenu-item-icon))
+        > .p-contextmenu-item
+        > .p-contextmenu-item-content
+        > .p-contextmenu-item-link {
+        padding-inline-start: 14px;
+    }
+
+    .p-contextmenu-item-label {
+        align-self: flex-start;
+        overflow: hidden;
+        line-height: dt('mkm.navigation.item.height');
+        white-space: nowrap;
+    }
+
+    .p-contextmenu-item-label:last-child {
+        flex: 1 1 auto;
+        margin-inline-end: -14px;
+        padding-inline-end: 14px;
+    }
+
+    :is(.p-contextmenu-root-list, .p-contextmenu-submenu) > .p-contextmenu-item:is(:first-child, :last-child) > .p-contextmenu-item-content > .p-contextmenu-item-link {
+        height: calc(dt('mkm.navigation.item.height') - 1px);
+        min-height: 0;
+    }
+
+    :is(.p-contextmenu-root-list, .p-contextmenu-submenu) > .p-contextmenu-item:first-child:last-child > .p-contextmenu-item-content > .p-contextmenu-item-link {
+        height: calc(dt('mkm.navigation.item.height') - 2px);
+    }
+
+    .p-contextmenu-item.p-disabled {
+        opacity: 1;
+    }
+
+    .p-contextmenu-item.p-disabled > .p-contextmenu-item-content {
+        color: dt('surface.400');
+    }
+
+    .p-contextmenu-item.p-disabled > .p-contextmenu-item-content .p-contextmenu-item-icon {
+        color: dt('surface.300');
+        filter: grayscale(1) opacity(0.5);
+    }
+
+    :is(.p-contextmenu-root-list, .p-contextmenu-submenu) > .p-contextmenu-item.p-disabled:is(:first-child, :last-child) > .p-contextmenu-item-content::before {
+        content: '';
+        position: absolute;
+        left: 0;
+        width: dt('mkm.navigation.icon.column.width');
+        height: 1px;
+        background: dt('surface.200');
+    }
+
+    :is(.p-contextmenu-root-list, .p-contextmenu-submenu) > .p-contextmenu-item.p-disabled:first-child > .p-contextmenu-item-content::before {
+        top: -1px;
+    }
+
+    :is(.p-contextmenu-root-list, .p-contextmenu-submenu) > .p-contextmenu-item.p-disabled:last-child:not(:first-child) > .p-contextmenu-item-content::before {
+        bottom: -1px;
+    }
+
+    .p-contextmenu-keyboard :is(.p-contextmenu-root-list, .p-contextmenu-submenu) > .p-contextmenu-item.p-focus > .p-contextmenu-item-content::after {
+        content: '';
+        position: absolute;
+        inset: 0 -1px -1px;
+        z-index: 1;
+        box-shadow: inset 0 0 0 2px dt('surface.500');
+        pointer-events: none;
+    }
+
+    .p-contextmenu-keyboard :is(.p-contextmenu-root-list, .p-contextmenu-submenu) > .p-contextmenu-item.p-focus:first-child > .p-contextmenu-item-content::after {
+        top: -1px;
+    }
+
+    .p-contextmenu-item-link:is(:hover, :focus) {
+        text-decoration: none;
+    }
+
+    .p-contextmenu-item-shortcut {
+        font-size: 11px;
+    }
+
+
+# menu
+menu.background = {content.background}
+menu.border.color = {content.border.color}
+menu.color = {content.color}
+menu.border.radius = {border.radius.none}
+menu.shadow = {overlay.navigation.shadow}
+menu.transition.duration = {transition.duration}
+menu.min.width = 150px
+menu.list.padding = {navigation.list.padding}
+menu.list.gap = {navigation.list.gap}
+menu.item.focus.background = {navigation.item.focus.background}
+menu.item.color = {navigation.item.color}
+menu.item.focus.color = {navigation.item.focus.color}
+menu.item.padding = 4px 8px 4px 14px
+menu.item.border.radius = {navigation.item.border.radius}
+menu.item.gap = 14px
+menu.item.icon.color = {navigation.item.icon.color}
+menu.item.icon.focus.color = {navigation.item.icon.focus.color}
+menu.item.shortcut.color = {text.muted.color}
+menu.submenu.label.padding = {navigation.submenu.label.padding}
+menu.submenu.label.font.weight = {navigation.submenu.label.font.weight}
+menu.submenu.label.background = {navigation.submenu.label.background}
+menu.submenu.label.color = {navigation.submenu.label.color}
+menu.separator.border.color = {surface.200}
+menu.css = 
+    .p-menu-item-link {
+        min-height: dt('mkm.navigation.item.height');
+    }
+
+    .p-menu-item-link:not(:has(> .p-menu-item-icon)) {
+        padding-inline-start: dt('mkm.navigation.icon.column.width');
+    }
+
+    .p-menu-item-shortcut {
+        font-size: 11px;
+    }
+
+
+# tooltip
+tooltip.max.width = 150px
+tooltip.gutter = 3px
+tooltip.shadow = {overlay.popover.shadow}
+tooltip.padding = 4px 8px
+tooltip.border.radius = {border.radius.xs}
+tooltip.background = {surface.700}
+tooltip.color = {surface.0}

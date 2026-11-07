@@ -4,7 +4,7 @@
 > d'abord »). Mourad valide ce qui touche à l'apparence (« À valider ») ; la
 > technique se décide ici (`CLAUDE.md`, « Qui décide »).
 
-**État :** validée le 07/11/2026 (voir « À valider » pour les réponses).
+**État :** validée et faite le 07/11/2026 (`src/Mkm.Wpf/Theming`).
 
 ## Le besoin
 
@@ -76,12 +76,15 @@ définition (MaterialDesign).
    `DynamicResource`. *Pourquoi :* c'est la technique de toutes les
    bibliothèques étudiées ; construire en code, comme MaterialDesign, évite un
    fichier XAML par thème.
-3. **Les clés** : `Mkm.` puis le chemin du jeton — `Mkm.Color.Navy.500` pour
-   une couleur de palette, `Mkm.Brush.Text`, `Mkm.Brush.Primary` pour les
-   pinceaux sémantiques, `Mkm.Radius.Xs`, `Mkm.FontSize`… Les jetons d'un
-   composant (`Mkm.Button.Padding`) arrivent avec lui, dans chaque thème.
-   *Pourquoi :* un préfixe évite toute collision avec les ressources de
-   l'application, comme `MahApps.` et `MaterialDesign.`.
+3. **Les clés** : `mkm.` puis le chemin du jeton, celui de `dt()` dans mkm —
+   `{DynamicResource mkm.text.color}` pour `dt('text.color')`,
+   `mkm.actionbar.item.size`, `mkm.navy.500`. Le type de la ressource suit le
+   jeton : un pinceau pour une couleur, un `Double` pour une taille, une
+   `Thickness` pour une marge, un `CornerRadius` pour un rayon, une ombre, une
+   police, une graisse, une durée. *Pourquoi :* le préfixe évite toute collision
+   avec les ressources de l'application, comme `MahApps.` et `MaterialDesign.` ;
+   le chemin de mkm, tel quel, fait d'une feuille de mkm la lecture d'un gabarit
+   de mkm-wpf. (Décision du 07/11/2026, à la place de `Mkm.Brush.…`.)
 4. **Les valeurs sont celles de mkm, aux mêmes nombres** : un pixel CSS vaut
    une unité WPF (1/96 de pouce), si bien que 12 px restent 12.
 5. **Le texte** : Arial 12, une ligne de 14 ; les fenêtres en
@@ -92,8 +95,9 @@ définition (MaterialDesign).
    les couleurs diffèrent) ; un autre mesure chaque texte sur son fond
    (4,5:1 au moins).
 7. **L'origine** : la structure des jetons vient de PrimeUIX (MIT), par mkm ;
-   les valeurs de Dashboard et d'ARA viennent de mkm. `ORIGINES.md` le dira
-   avec le code.
+   les valeurs de Dashboard et d'ARA viennent de mkm, par
+   `outils/themes/importer-mkm.mjs` (Dashboard : Nora en pixels, sous ses
+   propres valeurs, comme dans mkm). `ORIGINES.md` le dit.
 
 ## À valider
 

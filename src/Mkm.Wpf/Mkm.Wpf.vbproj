@@ -8,4 +8,9 @@
     <Description>Bibliotheque de composants WPF neutre : controles, themes et commandes reutilisables.</Description>
   </PropertyGroup>
 
+  <ItemGroup>
+    <!-- Les jetons des thèmes, importés de mkm par outils/themes/importer-mkm.mjs. -->
+    <EmbeddedResource Include="Theming\Tokens\*.tokens" LogicalName="Mkm.Wpf.Tokens.%(Filename)%(Extension)" />
+  </ItemGroup>
+
 </Project>
