@@ -21,6 +21,7 @@
         <ResourceDictionary Source="/Mkm.Wpf;component/Controls/IdCard/IdCard.xaml" />
         <ResourceDictionary Source="/Mkm.Wpf;component/Controls/InputNumber/InputNumber.xaml" />
         <ResourceDictionary Source="/Mkm.Wpf;component/Controls/InputText/InputText.xaml" />
+        <ResourceDictionary Source="/Mkm.Wpf;component/Controls/Menu/Menu.xaml" />
         <ResourceDictionary Source="/Mkm.Wpf;component/Controls/Message/Message.xaml" />
         <ResourceDictionary Source="/Mkm.Wpf;component/Controls/ProgressBar/ProgressBar.xaml" />
         <ResourceDictionary Source="/Mkm.Wpf;component/Controls/ProgressSpinner/ProgressSpinner.xaml" />

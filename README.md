@@ -103,8 +103,10 @@ vitrine en est l'exemple (`apps/Mkm.Wpf.Showcase`).
    (`docs/composants/choix-et-barre.md`).
 11. ~~Le lot 6~~ : fait — la mise en page d'une application : `Triptych`,
    `WelcomePanel`, `Splitter`, `EmptyContent` (`docs/composants/mise-en-page.md`).
-12. Les menus (`Menu`, `TieredMenu`) ; la grille arborescente (`TreeGrid`) et le
-   graphe des états (`StateGraph`) ; le registre des commandes.
+12. ~~Le lot 7~~ : fait — les menus posés dans la page, `Menu` et `TieredMenu`
+   (`docs/composants/menus.md`).
+13. La grille arborescente (`TreeGrid`) et le graphe des états (`StateGraph`) ;
+   le registre des commandes.
 
 ## Règles
 

@@ -753,4 +753,13 @@
   <data name="showcase.layout.welcomeStates" xml:space="preserve">
     <value>WelcomePanel : déplié, replié</value>
   </data>
+  <data name="showcase.tree.drawing" xml:space="preserve">
+    <value>Plan</value>
+  </data>
+  <data name="showcase.tree.fromFile" xml:space="preserve">
+    <value>Depuis un fichier</value>
+  </data>
+  <data name="showcase.tree.from3dx" xml:space="preserve">
+    <value>Depuis 3DEXPERIENCE</value>
+  </data>
 </root>

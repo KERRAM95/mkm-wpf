@@ -63,6 +63,34 @@
                 <TextBlock HorizontalAlignment="Center" VerticalAlignment="Center"
                            Foreground="{DynamicResource mkm.text.muted.color}" Text="{mkm:T showcase.tree.rightClick}" />
             </Border>
+
+            <TextBlock Style="{StaticResource Titre}" Text="Menu, TieredMenu" />
+            <StackPanel Orientation="Horizontal">
+                <mkm:Menu>
+                    <mkm:MenuGroup Header="{mkm:T showcase.tree.drawing}">
+                        <MenuItem Header="{mkm:T showcase.layout.open}" Icon="{x:Static mkm:Icons.Open}" InputGestureText="Ctrl+O" />
+                        <MenuItem Header="{mkm:T showcase.tree.export}" Icon="{x:Static mkm:Icons.Export}" />
+                    </mkm:MenuGroup>
+                    <mkm:MenuGroup Header="{mkm:T showcase.tree.notes}">
+                        <MenuItem Header="{mkm:T showcase.tree.add}" Icon="{x:Static mkm:Icons.Add}" InputGestureText="Ctrl+N" />
+                        <MenuItem Header="{mkm:T showcase.tree.delete}" IsEnabled="False" />
+                    </mkm:MenuGroup>
+                    <Separator />
+                    <MenuItem Header="{mkm:T showcase.actionbar.settings}" Icon="{x:Static mkm:Icons.Settings}" />
+                </mkm:Menu>
+                <mkm:TieredMenu Margin="24,0,0,0" VerticalAlignment="Top">
+                    <MenuItem Header="{mkm:T showcase.tree.export}" Icon="{x:Static mkm:Icons.Export}">
+                        <MenuItem Header="PDF" />
+                        <MenuItem Header="DXF" />
+                    </MenuItem>
+                    <MenuItem Header="{mkm:T showcase.tree.import}" Icon="{x:Static mkm:Icons.Import}">
+                        <MenuItem Header="{mkm:T showcase.tree.fromFile}" />
+                        <MenuItem Header="{mkm:T showcase.tree.from3dx}" />
+                    </MenuItem>
+                    <Separator />
+                    <MenuItem Header="{mkm:T showcase.actionbar.refresh}" Icon="{x:Static mkm:Icons.Refresh}" InputGestureText="F5" />
+                </mkm:TieredMenu>
+            </StackPanel>
         </StackPanel>
     </ScrollViewer>
 </UserControl>

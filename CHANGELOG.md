@@ -93,6 +93,8 @@ Les évolutions notables de mkm-wpf, version par version. Le format suit
   `WelcomePanel` (le panneau d'accueil de 3DEXPERIENCE), `Splitter`,
   `EmptyContent` ; `GapStackPanel` et `Pill` ; la page Mise en page de la
   vitrine.
+- Le lot 7 (`docs/composants/menus.md`) : `Menu` (et ses groupes, `MenuGroup`)
+  et `TieredMenu`, posés dans la page ; sur la page Arbre et menu de la vitrine.
 - Les thèmes : une largeur de bordure côté par côté (`0 1px 1px 0`) devient
   une épaisseur.
 - `InternalIcons` : les 45 icônes que les composants de mkm dessinent eux-mêmes
