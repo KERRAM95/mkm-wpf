@@ -172,3 +172,9 @@ datepicker.date.border.radius = 12px
 datepicker.nav.button.size = {button.icon.only.width}
 datepicker.nav.button.radius = 12px
 datepicker.panel.window.padding = 0 2px 3px 2px
+
+# propertypanel (styles/propertypanel) : 2 px entre les lignes (gap de la liste) ; la marque d'une propriété obligatoire
+# 4 px après le libellé ; l'icône de la valeur 6 px avant elle.
+propertypanel.row.margin = 0 0 {propertypanel.list.gap} 0
+propertypanel.required.margin = 0 0 0 {propertypanel.required.gap}
+propertypanel.value.icon.margin = 0 {propertypanel.value.icon.gap} 0 0

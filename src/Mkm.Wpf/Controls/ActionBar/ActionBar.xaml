@@ -57,7 +57,7 @@
                 <local:Icon HorizontalAlignment="Center"
                             Width="{DynamicResource mkm.actionbar.item.icon.size}"
                             Height="{DynamicResource mkm.actionbar.item.icon.size}"
-                            Source="{Binding (local:ActionBarItem.Icon), RelativeSource={RelativeSource TemplatedParent}}" />
+                            Source="{TemplateBinding local:ActionBarItem.Icon}" />
                 <Rectangle x:Name="Ecart" Height="{DynamicResource mkm.actionbar.item.label.gap}" Visibility="Collapsed" />
                 <TextBlock x:Name="Libelle" Visibility="Collapsed"
                            TextAlignment="Center" TextWrapping="Wrap" TextTrimming="CharacterEllipsis"
@@ -65,7 +65,7 @@
                            LineHeight="{DynamicResource mkm.actionbar.item.label.line.height}"
                            LineStackingStrategy="BlockLineHeight"
                            Foreground="{DynamicResource mkm.actionbar.item.label.color}"
-                           Text="{Binding (local:ActionBarItem.Label), RelativeSource={RelativeSource TemplatedParent}}" />
+                           Text="{TemplateBinding local:ActionBarItem.Label}" />
             </StackPanel>
         </Grid>
         <ControlTemplate.Triggers>
@@ -101,12 +101,12 @@
             <DockPanel VerticalAlignment="Center">
                 <local:Icon x:Name="Icone" DockPanel.Dock="Left" Width="16" Height="16"
                             Foreground="{DynamicResource mkm.menu.item.icon.color}"
-                            Source="{Binding (local:ActionBarItem.Icon), RelativeSource={RelativeSource TemplatedParent}}" />
+                            Source="{TemplateBinding local:ActionBarItem.Icon}" />
                 <Rectangle DockPanel.Dock="Left" Width="{DynamicResource mkm.menu.item.gap}" />
                 <local:Icon x:Name="Coche" DockPanel.Dock="Right" Width="16" Height="16" Margin="8,0,0,0"
                             Source="{x:Static local:Icons.Check}" Visibility="Hidden" />
                 <TextBlock VerticalAlignment="Center"
-                           Text="{Binding (local:ActionBarItem.Label), RelativeSource={RelativeSource TemplatedParent}}" />
+                           Text="{TemplateBinding local:ActionBarItem.Label}" />
             </DockPanel>
         </Border>
         <ControlTemplate.Triggers>
@@ -214,10 +214,8 @@
                 <ControlTemplate TargetType="{x:Type local:ActionBarDropDown}">
                     <Grid x:Name="Racine">
                         <StackPanel Orientation="Horizontal">
+                            <!-- Le libellé, l'icône et l'indice de la commande montrée : ActionBarDropDown.LierLaCommande. -->
                             <local:ActionBarButton x:Name="PART_Main"
-                                                   Label="{Binding ShownItem.(local:ActionBarItem.Label), RelativeSource={RelativeSource TemplatedParent}}"
-                                                   Icon="{Binding ShownItem.(local:ActionBarItem.Icon), RelativeSource={RelativeSource TemplatedParent}}"
-                                                   Hint="{Binding ShownItem.(local:ActionBarItem.Hint), RelativeSource={RelativeSource TemplatedParent}}"
                                                    IsEnabled="{Binding ShownItem.IsEnabled, RelativeSource={RelativeSource TemplatedParent}, FallbackValue=False}" />
                             <ToggleButton x:Name="PART_Arrow"
                                           Style="{StaticResource mkm.ActionBar.DropDownArrow}"

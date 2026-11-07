@@ -3,6 +3,7 @@ Imports System.Linq
 Imports System.Windows
 Imports System.Windows.Controls
 Imports System.Windows.Controls.Primitives
+Imports System.Windows.Data
 Imports System.Windows.Input
 Imports System.Windows.Threading
 
@@ -114,6 +115,7 @@ Namespace Mkm.Wpf.Controls
             _liste = TryCast(GetTemplateChild("PART_Popup"), Popup)
 
             If _principale IsNot Nothing Then
+                LierLaCommande()
                 AddHandler _principale.Click, AddressOf OnPrincipale
                 AddHandler _principale.PreviewKeyDown, AddressOf OnToucheDansLaBarre
             End If
@@ -138,6 +140,21 @@ Namespace Mkm.Wpf.Controls
             Dim enfoncee = commandes.OfType(Of ToggleButton)().FirstOrDefault(Function(b) b.IsChecked.GetValueOrDefault())
             Dim montree = If(enfoncee, If(commandes.Contains(_derniere), _derniere, commandes.FirstOrDefault()))
             SetValue(ShownItemPropertyKey, montree)
+            LierLaCommande()
+        End Sub
+
+        ' La commande principale montre le libellé, l'icône et l'indice de la commande montrée. Les chemins sont
+        ' construits sur les propriétés elles-mêmes : un chemin écrit en XAML (« ShownItem.(local:…) ») ne trouvait
+        ' pas son préfixe à l'exécution.
+        Private Sub LierLaCommande()
+            If _principale Is Nothing Then Return
+            For Each propriete In {ActionBarItem.LabelProperty, ActionBarItem.IconProperty, ActionBarItem.HintProperty}
+                If ShownItem Is Nothing Then
+                    BindingOperations.ClearBinding(_principale, propriete)
+                Else
+                    BindingOperations.SetBinding(_principale, propriete, New Binding With {.Source = ShownItem, .Path = New PropertyPath(propriete)})
+                End If
+            Next
         End Sub
 
         ' La commande montrée se lance par celle qu'elle montre ; son propre clic ne remonte pas plus haut.

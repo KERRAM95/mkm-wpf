@@ -48,4 +48,13 @@
   <data name="aria.chooseDate" xml:space="preserve">
     <value>Choose Date</value>
   </data>
+  <data name="locale.edit" xml:space="preserve">
+    <value>Edit</value>
+  </data>
+  <data name="locale.save" xml:space="preserve">
+    <value>Save</value>
+  </data>
+  <data name="locale.cancel" xml:space="preserve">
+    <value>Cancel</value>
+  </data>
 </root>

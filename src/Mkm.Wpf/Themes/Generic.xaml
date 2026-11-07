@@ -20,6 +20,7 @@
         <ResourceDictionary Source="/Mkm.Wpf;component/Controls/Message/Message.xaml" />
         <ResourceDictionary Source="/Mkm.Wpf;component/Controls/ProgressBar/ProgressBar.xaml" />
         <ResourceDictionary Source="/Mkm.Wpf;component/Controls/ProgressSpinner/ProgressSpinner.xaml" />
+        <ResourceDictionary Source="/Mkm.Wpf;component/Controls/PropertyPanel/PropertyPanel.xaml" />
         <ResourceDictionary Source="/Mkm.Wpf;component/Controls/Select/Select.xaml" />
         <ResourceDictionary Source="/Mkm.Wpf;component/Controls/Tabs/Tabs.xaml" />
         <ResourceDictionary Source="/Mkm.Wpf;component/Controls/Textarea/Textarea.xaml" />

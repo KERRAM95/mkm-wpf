@@ -1,0 +1,285 @@
+<!--
+    Les styles de PropertyPanel, PropertySection et PropertyRow, sur la fiche de propriétés de mkm (presets
+    dashboard et ara, propertypanel) :
+    - l'en-tête : ce que donne Header à gauche, les boutons à droite, 8 px entre eux, 8 px au-dessus et au-dessous ;
+      en lecture, Modifier (le crayon, en texte) ; en modification, Enregistrer et Annuler ;
+    - une section : son titre de 13 px en demi-gras sur une ligne de 32 px aux coins de 6 px, que le survol éclaire ;
+      sa flèche à gauche, dans 20 px, grise, de la couleur principale foncée quand la section est ouverte ou survolée ;
+      ses propriétés dessous, retirées de 24 px, 2 px entre elles, 10 px sous la dernière ;
+    - une propriété : une ligne de 3 px sur 8 de retrait, aux coins de 6 px, que le survol éclaire à peine ; le
+      libellé gris de 12 px (demi-gras), au-dessus de la valeur ou devant elle sur 40 % ; la valeur de 13 px, sur
+      des lignes de 20 px ; en modification, l'éditeur sur toute la largeur, la marque rouge des obligatoires
+      (7 px, 4 px après le libellé), le message sous l'éditeur en 11 px, le libellé de la couleur de sa gravité ;
+      la note grise en 11 px.
+
+    Écarts avec mkm : pas de squelettes de chargement (loading) ; les sections s'ouvrent sans transition.
+-->
+<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+                    xmlns:local="clr-namespace:Mkm.Wpf.Controls"
+                    xmlns:loc="clr-namespace:Mkm.Wpf.Localization">
+
+    <Style TargetType="{x:Type local:PropertyPanel}">
+        <Setter Property="Background" Value="{DynamicResource mkm.propertypanel.background}" />
+        <Setter Property="Foreground" Value="{DynamicResource mkm.propertypanel.color}" />
+        <Setter Property="FontFamily" Value="{DynamicResource mkm.font.family}" />
+        <Setter Property="FontSize" Value="{DynamicResource mkm.font.size}" />
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="{x:Type local:PropertyPanel}">
+                    <DockPanel Background="{TemplateBinding Background}">
+                        <Border x:Name="EnTete" DockPanel.Dock="Top" Padding="{DynamicResource mkm.propertypanel.header.padding}">
+                            <DockPanel>
+                                <StackPanel x:Name="Actions" DockPanel.Dock="Right" Orientation="Horizontal" Visibility="Collapsed">
+                                    <local:Button x:Name="PART_EditButton" Icon="{x:Static local:InternalIcons.Pencil}"
+                                                  Severity="Secondary" Variant="Text"
+                                                  AutomationProperties.Name="{loc:T locale.edit}" ToolTip="{loc:T locale.edit}" />
+                                    <local:Button x:Name="PART_SaveButton" Visibility="Collapsed" Content="{loc:T locale.save}" />
+                                    <Rectangle x:Name="EcartBoutons" Visibility="Collapsed" Width="{DynamicResource mkm.propertypanel.header.gap}" />
+                                    <local:Button x:Name="PART_CancelButton" Visibility="Collapsed" Severity="Secondary"
+                                                  Content="{loc:T locale.cancel}" />
+                                </StackPanel>
+                                <ContentPresenter Content="{TemplateBinding Header}" VerticalAlignment="Center" />
+                            </DockPanel>
+                        </Border>
+                        <ContentPresenter DockPanel.Dock="Bottom" Content="{TemplateBinding Footer}" />
+                        <ItemsPresenter />
+                    </DockPanel>
+                    <ControlTemplate.Triggers>
+                        <MultiTrigger>
+                            <MultiTrigger.Conditions>
+                                <Condition Property="Header" Value="{x:Null}" />
+                                <Condition Property="Editable" Value="False" />
+                            </MultiTrigger.Conditions>
+                            <Setter TargetName="EnTete" Property="Visibility" Value="Collapsed" />
+                        </MultiTrigger>
+                        <Trigger Property="Editable" Value="True">
+                            <Setter TargetName="Actions" Property="Visibility" Value="Visible" />
+                        </Trigger>
+                        <Trigger Property="Editing" Value="True">
+                            <Setter TargetName="PART_EditButton" Property="Visibility" Value="Collapsed" />
+                            <Setter TargetName="PART_SaveButton" Property="Visibility" Value="Visible" />
+                            <Setter TargetName="EcartBoutons" Property="Visibility" Value="Visible" />
+                            <Setter TargetName="PART_CancelButton" Property="Visibility" Value="Visible" />
+                        </Trigger>
+                        <Trigger Property="CanSave" Value="False">
+                            <Setter TargetName="PART_SaveButton" Property="IsEnabled" Value="False" />
+                        </Trigger>
+                        <Trigger Property="Saving" Value="True">
+                            <Setter TargetName="PART_SaveButton" Property="IsEnabled" Value="False" />
+                            <Setter TargetName="PART_CancelButton" Property="IsEnabled" Value="False" />
+                        </Trigger>
+                    </ControlTemplate.Triggers>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+
+    <Style TargetType="{x:Type local:PropertySection}">
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="{x:Type local:PropertySection}">
+                    <StackPanel>
+                        <ToggleButton x:Name="Entete" Cursor="Hand" FocusVisualStyle="{x:Null}"
+                                      IsChecked="{Binding IsExpanded, RelativeSource={RelativeSource TemplatedParent}, Mode=TwoWay}"
+                                      AutomationProperties.Name="{Binding Header, RelativeSource={RelativeSource TemplatedParent}}">
+                            <ToggleButton.Template>
+                                <ControlTemplate TargetType="{x:Type ToggleButton}">
+                                    <Grid>
+                                        <Border x:Name="Fond"
+                                                Height="{DynamicResource mkm.propertypanel.section.header.height}"
+                                                Padding="{DynamicResource mkm.propertypanel.section.header.padding}"
+                                                Background="{DynamicResource mkm.propertypanel.section.header.background}"
+                                                CornerRadius="{DynamicResource mkm.propertypanel.section.header.border.radius}">
+                                            <DockPanel>
+                                                <Border DockPanel.Dock="Left" Width="{DynamicResource mkm.propertypanel.section.header.toggle.icon.width}">
+                                                    <local:Icon x:Name="Fleche" Source="{x:Static local:InternalIcons.ChevronRight}"
+                                                                Width="{DynamicResource mkm.propertypanel.section.header.toggle.icon.size}"
+                                                                Height="{DynamicResource mkm.propertypanel.section.header.toggle.icon.size}"
+                                                                Foreground="{DynamicResource mkm.propertypanel.section.header.toggle.icon.color}" />
+                                                </Border>
+                                                <Rectangle DockPanel.Dock="Left" Width="{DynamicResource mkm.propertypanel.section.header.gap}" />
+                                                <ContentPresenter VerticalAlignment="Center">
+                                                    <ContentPresenter.Resources>
+                                                        <Style TargetType="{x:Type TextBlock}">
+                                                            <Setter Property="TextTrimming" Value="CharacterEllipsis" />
+                                                        </Style>
+                                                    </ContentPresenter.Resources>
+                                                </ContentPresenter>
+                                            </DockPanel>
+                                        </Border>
+                                        <!-- L'anneau du clavier, 2 px à l'intérieur (focus.ring.offset de -2 px). -->
+                                        <Rectangle x:Name="Anneau" Margin="2" Visibility="Collapsed"
+                                                   Stroke="{DynamicResource mkm.focus.ring.color}"
+                                                   StrokeThickness="{DynamicResource mkm.focus.ring.width}" />
+                                    </Grid>
+                                    <ControlTemplate.Triggers>
+                                        <Trigger Property="IsChecked" Value="True">
+                                            <Setter TargetName="Fleche" Property="Source" Value="{x:Static local:InternalIcons.ChevronDown}" />
+                                            <Setter TargetName="Fleche" Property="Foreground" Value="{DynamicResource mkm.propertypanel.section.header.toggle.icon.active.color}" />
+                                            <Setter Property="Foreground" Value="{DynamicResource mkm.propertypanel.section.header.active.color}" />
+                                        </Trigger>
+                                        <Trigger Property="IsMouseOver" Value="True">
+                                            <Setter TargetName="Fond" Property="Background" Value="{DynamicResource mkm.propertypanel.section.header.hover.background}" />
+                                            <Setter TargetName="Fleche" Property="Foreground" Value="{DynamicResource mkm.propertypanel.section.header.toggle.icon.active.color}" />
+                                            <Setter Property="Foreground" Value="{DynamicResource mkm.propertypanel.section.header.hover.color}" />
+                                        </Trigger>
+                                        <Trigger Property="IsKeyboardFocused" Value="True">
+                                            <Setter TargetName="Fond" Property="Background" Value="{DynamicResource mkm.propertypanel.section.header.focus.background}" />
+                                            <Setter TargetName="Anneau" Property="Visibility" Value="Visible" />
+                                        </Trigger>
+                                    </ControlTemplate.Triggers>
+                                </ControlTemplate>
+                            </ToggleButton.Template>
+                            <ContentPresenter Content="{Binding Header, RelativeSource={RelativeSource TemplatedParent}}"
+                                              ContentTemplate="{Binding HeaderTemplate, RelativeSource={RelativeSource TemplatedParent}}"
+                                              TextElement.FontSize="{DynamicResource mkm.propertypanel.section.header.font.size}"
+                                              TextElement.FontWeight="{DynamicResource mkm.propertypanel.section.header.font.weight}" />
+                        </ToggleButton>
+                        <ItemsPresenter x:Name="Contenu" Visibility="Collapsed"
+                                        Margin="{DynamicResource mkm.propertypanel.section.content.padding}" />
+                    </StackPanel>
+                    <ControlTemplate.Triggers>
+                        <Trigger Property="IsExpanded" Value="True">
+                            <Setter TargetName="Contenu" Property="Visibility" Value="Visible" />
+                        </Trigger>
+                    </ControlTemplate.Triggers>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+
+    <Style TargetType="{x:Type local:PropertyRow}">
+        <Setter Property="Margin" Value="{DynamicResource mkm.propertypanel.row.margin}" />
+        <Setter Property="Padding" Value="{DynamicResource mkm.propertypanel.row.padding}" />
+        <Setter Property="HorizontalContentAlignment" Value="Stretch" />
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="{x:Type local:PropertyRow}">
+                    <Border x:Name="Ligne" Background="Transparent" Padding="{TemplateBinding Padding}"
+                            CornerRadius="{DynamicResource mkm.propertypanel.row.border.radius}"
+                            TextBlock.LineHeight="{DynamicResource mkm.propertypanel.row.line.height}">
+                        <Grid>
+                            <!-- Devant la valeur, le libellé prend 40 % de la ligne (propertypanel.label.width). -->
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="2*" />
+                                <ColumnDefinition Width="3*" />
+                            </Grid.ColumnDefinitions>
+                            <Grid.RowDefinitions>
+                                <RowDefinition Height="Auto" />
+                                <RowDefinition Height="Auto" />
+                            </Grid.RowDefinitions>
+                            <DockPanel x:Name="Libelle" Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="2"
+                                       Margin="{DynamicResource mkm.propertypanel.label.padding}"
+                                       TextElement.Foreground="{DynamicResource mkm.propertypanel.label.color}"
+                                       TextElement.FontSize="{DynamicResource mkm.propertypanel.label.font.size}"
+                                       TextElement.FontWeight="{DynamicResource mkm.propertypanel.label.font.weight}">
+                                <!-- Le libellé, et juste après lui la marque d'une propriété obligatoire : le dessin de
+                                     mkm, une étoile de trois traits. -->
+                                <TextBlock TextWrapping="Wrap">
+                                    <Run Text="{Binding Label, RelativeSource={RelativeSource TemplatedParent}}" />
+                                    <InlineUIContainer BaselineAlignment="Center">
+                                        <Path x:Name="Obligatoire" Visibility="Collapsed"
+                                              Stretch="Uniform" Data="M 4,0 V 8 M 0.54,2 L 7.46,6 M 0.54,6 L 7.46,2" StrokeThickness="1.3"
+                                              Width="{DynamicResource mkm.propertypanel.required.size}"
+                                              Height="{DynamicResource mkm.propertypanel.required.size}"
+                                              Margin="{DynamicResource mkm.propertypanel.required.margin}"
+                                              Stroke="{DynamicResource mkm.propertypanel.required.color}" />
+                                    </InlineUIContainer>
+                                </TextBlock>
+                            </DockPanel>
+                            <StackPanel x:Name="Valeur" Grid.Row="1" Grid.Column="0" Grid.ColumnSpan="2"
+                                        Margin="{DynamicResource mkm.propertypanel.value.padding}"
+                                        TextElement.Foreground="{DynamicResource mkm.propertypanel.value.color}"
+                                        TextElement.FontSize="{DynamicResource mkm.propertypanel.value.font.size}">
+                                <DockPanel x:Name="Lecture">
+                                    <ContentPresenter x:Name="IconeDeLaValeur" DockPanel.Dock="Left" Content="{TemplateBinding Icon}"
+                                                      MaxWidth="{DynamicResource mkm.propertypanel.value.icon.size}"
+                                                      MaxHeight="{DynamicResource mkm.propertypanel.value.icon.size}"
+                                                      Margin="{DynamicResource mkm.propertypanel.value.icon.margin}"
+                                                      VerticalAlignment="Center" />
+                                    <ContentPresenter Content="{TemplateBinding Value}" VerticalAlignment="Center">
+                                        <ContentPresenter.Resources>
+                                            <Style TargetType="{x:Type TextBlock}">
+                                                <Setter Property="TextWrapping" Value="Wrap" />
+                                            </Style>
+                                        </ContentPresenter.Resources>
+                                    </ContentPresenter>
+                                </DockPanel>
+                                <ContentPresenter x:Name="Editeur" Visibility="Collapsed" HorizontalAlignment="Stretch" />
+                                <TextBlock x:Name="LaNote" Text="{TemplateBinding Note}" TextWrapping="Wrap"
+                                           LineHeight="NaN" LineStackingStrategy="MaxHeight"
+                                           Foreground="{DynamicResource mkm.propertypanel.note.color}"
+                                           FontSize="{DynamicResource mkm.propertypanel.note.font.size}" />
+                                <local:Message x:Name="LeMessage" Visibility="Collapsed" Variant="Simple" Size="Small"
+                                               Severity="{TemplateBinding MessageSeverity}">
+                                    <TextBlock Text="{Binding Message, RelativeSource={RelativeSource AncestorType={x:Type local:PropertyRow}}}"
+                                               TextWrapping="Wrap" LineHeight="NaN" LineStackingStrategy="MaxHeight"
+                                               Foreground="{DynamicResource mkm.propertypanel.message.color}"
+                                               FontSize="{DynamicResource mkm.propertypanel.message.font.size}" />
+                                </local:Message>
+                            </StackPanel>
+                        </Grid>
+                    </Border>
+                    <ControlTemplate.Triggers>
+                        <Trigger Property="IsMouseOver" Value="True">
+                            <Setter TargetName="Ligne" Property="Background" Value="{DynamicResource mkm.propertypanel.row.hover.background}" />
+                        </Trigger>
+                        <Trigger Property="Layout" Value="Inline">
+                            <Setter TargetName="Libelle" Property="Grid.ColumnSpan" Value="1" />
+                            <Setter TargetName="Valeur" Property="Grid.Row" Value="0" />
+                            <Setter TargetName="Valeur" Property="Grid.Column" Value="1" />
+                            <Setter TargetName="Valeur" Property="Grid.ColumnSpan" Value="1" />
+                        </Trigger>
+                        <Trigger Property="Icon" Value="{x:Null}">
+                            <Setter TargetName="IconeDeLaValeur" Property="Visibility" Value="Collapsed" />
+                        </Trigger>
+                        <Trigger Property="Note" Value="{x:Null}">
+                            <Setter TargetName="LaNote" Property="Visibility" Value="Collapsed" />
+                        </Trigger>
+                        <Trigger Property="Note" Value="">
+                            <Setter TargetName="LaNote" Property="Visibility" Value="Collapsed" />
+                        </Trigger>
+                        <!-- Le message, en modification ; le libellé prend la couleur de sa gravité. -->
+                        <MultiTrigger>
+                            <MultiTrigger.Conditions>
+                                <Condition Property="Editing" Value="True" />
+                                <Condition Property="HasMessage" Value="True" />
+                            </MultiTrigger.Conditions>
+                            <Setter TargetName="LeMessage" Property="Visibility" Value="Visible" />
+                            <Setter TargetName="Libelle" Property="TextElement.Foreground" Value="{DynamicResource mkm.propertypanel.error.color}" />
+                        </MultiTrigger>
+                        <MultiTrigger>
+                            <MultiTrigger.Conditions>
+                                <Condition Property="Editing" Value="True" />
+                                <Condition Property="HasMessage" Value="True" />
+                                <Condition Property="MessageSeverity" Value="Warn" />
+                            </MultiTrigger.Conditions>
+                            <Setter TargetName="Libelle" Property="TextElement.Foreground" Value="{DynamicResource mkm.propertypanel.warn.color}" />
+                        </MultiTrigger>
+                        <MultiTrigger>
+                            <MultiTrigger.Conditions>
+                                <Condition Property="Editing" Value="True" />
+                                <Condition Property="HasMessage" Value="True" />
+                                <Condition Property="MessageSeverity" Value="Info" />
+                            </MultiTrigger.Conditions>
+                            <Setter TargetName="Libelle" Property="TextElement.Foreground" Value="{DynamicResource mkm.propertypanel.info.color}" />
+                        </MultiTrigger>
+                        <Trigger Property="IsEditorShown" Value="True">
+                            <Setter TargetName="Lecture" Property="Visibility" Value="Collapsed" />
+                            <Setter TargetName="Editeur" Property="Visibility" Value="Visible" />
+                        </Trigger>
+                        <MultiTrigger>
+                            <MultiTrigger.Conditions>
+                                <Condition Property="Editing" Value="True" />
+                                <Condition Property="Required" Value="True" />
+                            </MultiTrigger.Conditions>
+                            <Setter TargetName="Obligatoire" Property="Visibility" Value="Visible" />
+                        </MultiTrigger>
+                    </ControlTemplate.Triggers>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+
+</ResourceDictionary>
