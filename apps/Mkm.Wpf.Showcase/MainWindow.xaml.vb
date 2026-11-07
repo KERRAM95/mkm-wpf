@@ -23,6 +23,10 @@ Namespace Mkm.Wpf.Showcase
                 Case "Boutons" : Page.Content = New BoutonsPage()
                 Case "Conteneurs" : Page.Content = New ConteneursPage()
                 Case "Retours" : Page.Content = New RetoursPage()
+                Case "Attente" : Page.Content = New AttentePage()
+                Case "Saisie" : Page.Content = New SaisiePage()
+                Case "Fiche" : Page.Content = New FichePage()
+                Case "Arbre" : Page.Content = New ArbrePage()
             End Select
         End Sub
 

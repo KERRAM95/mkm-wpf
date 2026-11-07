@@ -339,4 +339,208 @@
   <data name="showcase.nav.feedback" xml:space="preserve">
     <value>Messages et dialogues</value>
   </data>
+  <data name="showcase.nav.waiting" xml:space="preserve">
+    <value>Attente et aide</value>
+  </data>
+  <data name="showcase.nav.inputs" xml:space="preserve">
+    <value>Texte, date, confirmation</value>
+  </data>
+  <data name="showcase.nav.properties" xml:space="preserve">
+    <value>Fiche de propriétés</value>
+  </data>
+  <data name="showcase.nav.tree" xml:space="preserve">
+    <value>Arbre et menu</value>
+  </data>
+  <data name="showcase.waiting.title" xml:space="preserve">
+    <value>Attente et aide</value>
+  </data>
+  <data name="showcase.waiting.help" xml:space="preserve">
+    <value>La barre de progression, le chargeur, le voile qui bloque une partie de la fenêtre pendant un traitement, et l'info-bulle de mkm, sur toute info-bulle de WPF.</value>
+  </data>
+  <data name="showcase.waiting.progress" xml:space="preserve">
+    <value>ProgressBar</value>
+  </data>
+  <data name="showcase.waiting.advance" xml:space="preserve">
+    <value>Avancer de 25 %</value>
+  </data>
+  <data name="showcase.waiting.indeterminate" xml:space="preserve">
+    <value>Indéterminée</value>
+  </data>
+  <data name="showcase.waiting.spinner" xml:space="preserve">
+    <value>ProgressSpinner (100, 40 et 24 px)</value>
+  </data>
+  <data name="showcase.waiting.block" xml:space="preserve">
+    <value>BlockUI</value>
+  </data>
+  <data name="showcase.waiting.blockNow" xml:space="preserve">
+    <value>Bloquer 3 secondes</value>
+  </data>
+  <data name="showcase.waiting.updating" xml:space="preserve">
+    <value>Mise à jour du cartouche…</value>
+  </data>
+  <data name="showcase.waiting.tooltips" xml:space="preserve">
+    <value>Info-bulle</value>
+  </data>
+  <data name="showcase.waiting.hover" xml:space="preserve">
+    <value>Survolez-moi</value>
+  </data>
+  <data name="showcase.waiting.tooltipText" xml:space="preserve">
+    <value>Met à jour le cartouche du plan depuis 3DEXPERIENCE.</value>
+  </data>
+  <data name="showcase.inputs.title" xml:space="preserve">
+    <value>Texte, date et confirmation</value>
+  </data>
+  <data name="showcase.inputs.help" xml:space="preserve">
+    <value>La zone de texte de plusieurs lignes, la date et son calendrier, et la confirmation qui pose une question avant d'agir.</value>
+  </data>
+  <data name="showcase.inputs.notes" xml:space="preserve">
+    <value>Notes (3 lignes)</value>
+  </data>
+  <data name="showcase.inputs.notesHint" xml:space="preserve">
+    <value>Notes du plan</value>
+  </data>
+  <data name="showcase.inputs.autoResize" xml:space="preserve">
+    <value>Grandit avec son texte</value>
+  </data>
+  <data name="showcase.inputs.date" xml:space="preserve">
+    <value>Date du plan</value>
+  </data>
+  <data name="showcase.inputs.dateHint" xml:space="preserve">
+    <value>jj/mm/aaaa</value>
+  </data>
+  <data name="showcase.inputs.confirm" xml:space="preserve">
+    <value>ConfirmDialog</value>
+  </data>
+  <data name="showcase.inputs.ask" xml:space="preserve">
+    <value>Mettre à jour le cartouche…</value>
+  </data>
+  <data name="showcase.inputs.question" xml:space="preserve">
+    <value>Mettre à jour le cartouche du plan avec les valeurs de 3DEXPERIENCE ?</value>
+  </data>
+  <data name="showcase.inputs.update" xml:space="preserve">
+    <value>Mise à jour</value>
+  </data>
+  <data name="showcase.inputs.yes" xml:space="preserve">
+    <value>Accepté</value>
+  </data>
+  <data name="showcase.inputs.no" xml:space="preserve">
+    <value>Refusé</value>
+  </data>
+  <data name="showcase.properties.title" xml:space="preserve">
+    <value>Fiche de propriétés</value>
+  </data>
+  <data name="showcase.properties.help" xml:space="preserve">
+    <value>Les propriétés d'un objet par sections repliables ; son bouton Modifier montre les éditeurs, les marques des propriétés obligatoires et les messages.</value>
+  </data>
+  <data name="showcase.properties.inline" xml:space="preserve">
+    <value>Libellés devant les valeurs (Inline)</value>
+  </data>
+  <data name="showcase.properties.drawing" xml:space="preserve">
+    <value>Plan HS-00042</value>
+  </data>
+  <data name="showcase.properties.titleBlock" xml:space="preserve">
+    <value>Cartouche</value>
+  </data>
+  <data name="showcase.properties.reference" xml:space="preserve">
+    <value>Référence</value>
+  </data>
+  <data name="showcase.properties.designation" xml:space="preserve">
+    <value>Désignation</value>
+  </data>
+  <data name="showcase.properties.scale" xml:space="preserve">
+    <value>Échelle</value>
+  </data>
+  <data name="showcase.properties.date" xml:space="preserve">
+    <value>Date</value>
+  </data>
+  <data name="showcase.properties.revision" xml:space="preserve">
+    <value>Révision</value>
+  </data>
+  <data name="showcase.properties.revisionNote" xml:space="preserve">
+    <value>Donnée par 3DEXPERIENCE</value>
+  </data>
+  <data name="showcase.properties.notes" xml:space="preserve">
+    <value>Notes</value>
+  </data>
+  <data name="showcase.properties.notesValue" xml:space="preserve">
+    <value>Casser les angles vifs.</value>
+  </data>
+  <data name="showcase.properties.scaleMessage" xml:space="preserve">
+    <value>L'échelle diffère de celle de la feuille.</value>
+  </data>
+  <data name="showcase.properties.options" xml:space="preserve">
+    <value>Options</value>
+  </data>
+  <data name="showcase.properties.sync" xml:space="preserve">
+    <value>Synchroniser avec 3DEXPERIENCE</value>
+  </data>
+  <data name="showcase.properties.yes" xml:space="preserve">
+    <value>Oui</value>
+  </data>
+  <data name="showcase.properties.saved" xml:space="preserve">
+    <value>Enregistré</value>
+  </data>
+  <data name="showcase.tree.title" xml:space="preserve">
+    <value>Arbre et menu contextuel</value>
+  </data>
+  <data name="showcase.tree.help" xml:space="preserve">
+    <value>L'arbre de mkm, et son menu contextuel sur tout menu contextuel de WPF : un clic droit sur l'arbre l'ouvre.</value>
+  </data>
+  <data name="showcase.tree.notes" xml:space="preserve">
+    <value>Notes</value>
+  </data>
+  <data name="showcase.tree.general" xml:space="preserve">
+    <value>Notes générales</value>
+  </data>
+  <data name="showcase.tree.note1" xml:space="preserve">
+    <value>Casser les angles vifs</value>
+  </data>
+  <data name="showcase.tree.note2" xml:space="preserve">
+    <value>Tolérances ISO 2768-mK</value>
+  </data>
+  <data name="showcase.tree.welding" xml:space="preserve">
+    <value>Notes de soudure</value>
+  </data>
+  <data name="showcase.tree.note3" xml:space="preserve">
+    <value>Cordon continu</value>
+  </data>
+  <data name="showcase.tree.history" xml:space="preserve">
+    <value>Historique</value>
+  </data>
+  <data name="showcase.tree.revA" xml:space="preserve">
+    <value>Révision A</value>
+  </data>
+  <data name="showcase.tree.revB" xml:space="preserve">
+    <value>Révision B</value>
+  </data>
+  <data name="showcase.tree.menu" xml:space="preserve">
+    <value>ContextMenu</value>
+  </data>
+  <data name="showcase.tree.add" xml:space="preserve">
+    <value>Ajouter une note</value>
+  </data>
+  <data name="showcase.tree.copy" xml:space="preserve">
+    <value>Copier</value>
+  </data>
+  <data name="showcase.tree.rename" xml:space="preserve">
+    <value>Renommer</value>
+  </data>
+  <data name="showcase.tree.delete" xml:space="preserve">
+    <value>Supprimer</value>
+  </data>
+  <data name="showcase.tree.more" xml:space="preserve">
+    <value>Plus</value>
+  </data>
+  <data name="showcase.tree.export" xml:space="preserve">
+    <value>Exporter</value>
+  </data>
+  <data name="showcase.tree.import" xml:space="preserve">
+    <value>Importer</value>
+  </data>
+  <data name="showcase.tree.noIcons" xml:space="preserve">
+    <value>Un menu sans icônes</value>
+  </data>
+  <data name="showcase.tree.rightClick" xml:space="preserve">
+    <value>Clic droit ici</value>
+  </data>
 </root>

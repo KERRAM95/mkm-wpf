@@ -1,0 +1,142 @@
+<!--
+    Les styles de Tree et de TreeNode, sur l'arbre de mkm (tree, jetons de Nora dans les deux thèmes) : 12 px de
+    retrait autour ; chaque nœud, 3 px sur 6 de retrait, coins de 2 px, 2 px sous lui ; sa flèche dans un rond de
+    21 px, grise, que le survol éclaire ; une icône grise ; le titre ; 3 px entre eux ; le survol éclaire le nœud,
+    le nœud choisi prend le fond et la couleur de la surbrillance ; au clavier, un anneau 2 px à l'intérieur ; les
+    enfants décalés de 12 px.
+
+    Écarts avec mkm : ni cases à cocher (selectionMode checkbox) ni filtre ; les nœuds s'ouvrent sans transition.
+-->
+<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+                    xmlns:local="clr-namespace:Mkm.Wpf.Controls">
+
+    <Style TargetType="{x:Type local:Tree}">
+        <Setter Property="Background" Value="{DynamicResource mkm.tree.background}" />
+        <Setter Property="Foreground" Value="{DynamicResource mkm.tree.color}" />
+        <Setter Property="Padding" Value="{DynamicResource mkm.tree.padding}" />
+        <Setter Property="BorderThickness" Value="0" />
+        <Setter Property="FontFamily" Value="{DynamicResource mkm.font.family}" />
+        <Setter Property="FontSize" Value="{DynamicResource mkm.font.size}" />
+        <Setter Property="VirtualizingPanel.IsVirtualizing" Value="True" />
+        <Setter Property="VirtualizingPanel.VirtualizationMode" Value="Recycling" />
+        <Setter Property="ScrollViewer.HorizontalScrollBarVisibility" Value="Auto" />
+        <Setter Property="ScrollViewer.VerticalScrollBarVisibility" Value="Auto" />
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="{x:Type local:Tree}">
+                    <Border Background="{TemplateBinding Background}"
+                            BorderBrush="{TemplateBinding BorderBrush}"
+                            BorderThickness="{TemplateBinding BorderThickness}">
+                        <ScrollViewer x:Name="_tv_scrollviewer_" Focusable="False" CanContentScroll="True"
+                                      Padding="{TemplateBinding Padding}"
+                                      HorizontalScrollBarVisibility="{TemplateBinding ScrollViewer.HorizontalScrollBarVisibility}"
+                                      VerticalScrollBarVisibility="{TemplateBinding ScrollViewer.VerticalScrollBarVisibility}">
+                            <ItemsPresenter />
+                        </ScrollViewer>
+                    </Border>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+        <Setter Property="ItemsPanel">
+            <Setter.Value>
+                <ItemsPanelTemplate>
+                    <VirtualizingStackPanel />
+                </ItemsPanelTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+
+    <!-- La flèche d'un nœud : un rond de 21 px, sans fond, que le survol éclaire. -->
+    <Style x:Key="MkmTreeFleche" TargetType="{x:Type ToggleButton}">
+        <Setter Property="Focusable" Value="False" />
+        <Setter Property="Cursor" Value="Hand" />
+        <Setter Property="Width" Value="{DynamicResource mkm.tree.node.toggle.button.size}" />
+        <Setter Property="Height" Value="{DynamicResource mkm.tree.node.toggle.button.size}" />
+        <Setter Property="Foreground" Value="{DynamicResource mkm.tree.node.toggle.button.color}" />
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="{x:Type ToggleButton}">
+                    <Border x:Name="Fond" Background="Transparent"
+                            CornerRadius="{DynamicResource mkm.tree.node.toggle.button.radius}">
+                        <local:Icon x:Name="Fleche" Source="{x:Static local:InternalIcons.ChevronRight}"
+                                    Width="{DynamicResource mkm.tree.node.toggle.icon.size}"
+                                    Height="{DynamicResource mkm.tree.node.toggle.icon.size}" />
+                    </Border>
+                    <ControlTemplate.Triggers>
+                        <Trigger Property="IsChecked" Value="True">
+                            <Setter TargetName="Fleche" Property="Source" Value="{x:Static local:InternalIcons.ChevronDown}" />
+                        </Trigger>
+                        <Trigger Property="IsMouseOver" Value="True">
+                            <Setter TargetName="Fond" Property="Background" Value="{DynamicResource mkm.tree.node.toggle.button.hover.background}" />
+                            <Setter Property="Foreground" Value="{DynamicResource mkm.tree.node.toggle.button.hover.color}" />
+                        </Trigger>
+                    </ControlTemplate.Triggers>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+
+    <Style TargetType="{x:Type local:TreeNode}">
+        <Setter Property="Foreground" Value="{DynamicResource mkm.tree.node.color}" />
+        <Setter Property="Padding" Value="{DynamicResource mkm.tree.node.padding}" />
+        <Setter Property="FocusVisualStyle" Value="{x:Null}" />
+        <Setter Property="HorizontalContentAlignment" Value="Left" />
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="{x:Type local:TreeNode}">
+                    <StackPanel>
+                        <Grid Margin="{DynamicResource mkm.tree.node.margin}">
+                            <Border x:Name="Fond" Background="Transparent" Padding="{TemplateBinding Padding}"
+                                    CornerRadius="{DynamicResource mkm.tree.node.border.radius}">
+                                <StackPanel Orientation="Horizontal">
+                                    <ToggleButton x:Name="Expander" Style="{StaticResource MkmTreeFleche}"
+                                                  IsChecked="{Binding IsExpanded, RelativeSource={RelativeSource TemplatedParent}, Mode=TwoWay}" />
+                                    <Rectangle Width="{DynamicResource mkm.tree.node.gap}" />
+                                    <local:Icon x:Name="Icone" VerticalAlignment="Center" Source="{TemplateBinding Icon}"
+                                                Width="{DynamicResource mkm.icon.size}" Height="{DynamicResource mkm.icon.size}"
+                                                Foreground="{DynamicResource mkm.tree.node.icon.color}" />
+                                    <Rectangle x:Name="EcartIcone" Width="{DynamicResource mkm.tree.node.gap}" />
+                                    <ContentPresenter x:Name="PART_Header" ContentSource="Header" VerticalAlignment="Center" />
+                                </StackPanel>
+                            </Border>
+                            <Rectangle x:Name="Anneau" Margin="2" Visibility="Collapsed"
+                                       Stroke="{DynamicResource mkm.tree.node.focus.ring.color}"
+                                       StrokeThickness="{DynamicResource mkm.tree.node.focus.ring.width}" />
+                        </Grid>
+                        <ItemsPresenter x:Name="ItemsHost" Visibility="Collapsed" Margin="{DynamicResource mkm.tree.children.margin}" />
+                    </StackPanel>
+                    <ControlTemplate.Triggers>
+                        <Trigger Property="HasItems" Value="False">
+                            <Setter TargetName="Expander" Property="Visibility" Value="Hidden" />
+                        </Trigger>
+                        <Trigger Property="IsExpanded" Value="True">
+                            <Setter TargetName="ItemsHost" Property="Visibility" Value="Visible" />
+                        </Trigger>
+                        <Trigger Property="Icon" Value="{x:Null}">
+                            <Setter TargetName="Icone" Property="Visibility" Value="Collapsed" />
+                            <Setter TargetName="EcartIcone" Property="Visibility" Value="Collapsed" />
+                        </Trigger>
+                        <Trigger SourceName="Fond" Property="IsMouseOver" Value="True">
+                            <Setter TargetName="Fond" Property="Background" Value="{DynamicResource mkm.tree.node.hover.background}" />
+                            <Setter TargetName="Fond" Property="TextElement.Foreground" Value="{DynamicResource mkm.tree.node.hover.color}" />
+                            <Setter TargetName="Icone" Property="Foreground" Value="{DynamicResource mkm.tree.node.icon.hover.color}" />
+                        </Trigger>
+                        <Trigger Property="IsSelected" Value="True">
+                            <Setter TargetName="Fond" Property="Background" Value="{DynamicResource mkm.tree.node.selected.background}" />
+                            <Setter TargetName="Fond" Property="TextElement.Foreground" Value="{DynamicResource mkm.tree.node.selected.color}" />
+                            <Setter TargetName="Icone" Property="Foreground" Value="{DynamicResource mkm.tree.node.icon.selected.color}" />
+                        </Trigger>
+                        <Trigger Property="IsKeyboardFocused" Value="True">
+                            <Setter TargetName="Anneau" Property="Visibility" Value="Visible" />
+                        </Trigger>
+                        <Trigger Property="IsEnabled" Value="False">
+                            <Setter TargetName="Fond" Property="Opacity" Value="{DynamicResource mkm.disabled.opacity}" />
+                        </Trigger>
+                    </ControlTemplate.Triggers>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+
+</ResourceDictionary>

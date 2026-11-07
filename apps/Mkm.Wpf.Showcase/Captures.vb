@@ -61,7 +61,11 @@ Namespace Mkm.Wpf.Showcase
                 Page("2-champs", Function() New ChampsPage()),
                 Page("3-boutons", Function() New BoutonsPage()),
                 Page("4-conteneurs", Function() New ConteneursPage()),
-                Page("5-retours", Function() New RetoursPage())
+                Page("5-retours", Function() New RetoursPage()),
+                Page("6-attente", Function() New AttentePage()),
+                Page("7-saisie", Function() New SaisiePage()),
+                Page("8-fiche", Function() New FichePage()),
+                Page("9-arbre", Function() New ArbrePage())
             }
 
             For Each theme In Themes.All
@@ -70,9 +74,60 @@ Namespace Mkm.Wpf.Showcase
                     Essayer($"{theme.Name}/{p.Key}", Sub() Enregistrer(Seule(p.Value.Invoke()), $"{theme.Name}/{p.Key}.png"))
                 Next
                 Essayer($"{theme.Name}/fenetre", Sub() Fenetre(theme.Name))
+                Essayer($"{theme.Name}/scènes", Sub() Scenes(theme.Name))
             Next
             Essayer("diagnostic ActionBar", Sub() DiagnostiquerActionBar())
         End Sub
+
+        ' Ce qui ne paraît pas sur une page seule : ce qui s'ouvre dans une fenêtre flottante (le calendrier, un menu,
+        ' une info-bulle) et des états qu'on n'atteint qu'en agissant (la fiche en modification, le voile posé).
+        Private Sub Scenes(theme As String)
+            Dim fiche As New FichePage()
+            fiche.Fiche.Editing = True
+            Enregistrer(Seule(fiche), $"{theme}/8-fiche-modification.png")
+
+            Dim attente = New AttentePage()
+            Dim page = Seule(attente)
+            attente.Voile.Blocked = True
+            Attendre(500)
+            page.UpdateLayout()
+            Enregistrer(page, $"{theme}/6-attente-voile.png")
+
+            Dim choix As New Mkm.Wpf.Controls.DatePicker()
+            choix.ApplyTemplate()
+            Dim calendrier As New System.Windows.Controls.Calendar With {.Style = choix.CalendarStyle, .DisplayDate = Date.Today, .SelectedDate = Date.Today.AddDays(2)}
+            Enregistrer(Seule(calendrier, 0), $"{theme}/calendrier.png")
+
+            Dim bulle As New ToolTip With {.Content = Localizer.Current.T("showcase.waiting.tooltipText")}
+            Enregistrer(Seule(bulle, 0), $"{theme}/infobulle.png")
+
+            Enregistrer(Seule(UnMenu(True), 0), $"{theme}/menu.png")
+            Enregistrer(Seule(UnMenu(False), 0), $"{theme}/menu-sans-icones.png")
+
+            Dialogue(theme, "confirmation", New ConfirmDialog With {
+                .Title = Localizer.Current.T("showcase.inputs.update"),
+                .Message = Localizer.Current.T("showcase.inputs.question"),
+                .MessageIcon = Icons.Warning})
+        End Sub
+
+        ' Un menu comme celui de la page de l'arbre, avec ou sans icônes, tel qu'il s'ouvre.
+        Private Shared Function UnMenu(icones As Boolean) As ContextMenu
+            Dim menu As New ContextMenu()
+            Dim element = Function(cle As String, icone As Object, raccourci As String) New MenuItem With {
+                .Header = Localizer.Current.T(cle), .Icon = If(icones, icone, Nothing), .InputGestureText = raccourci}
+            menu.Items.Add(element("showcase.tree.add", Icons.Add, "Ctrl+N"))
+            menu.Items.Add(element("showcase.tree.copy", Icons.Copy, "Ctrl+C"))
+            menu.Items.Add(element("showcase.tree.rename", Icons.Rename, "F2"))
+            menu.Items.Add(New Separator())
+            Dim plus = element("showcase.tree.more", Nothing, Nothing)
+            plus.Items.Add(element("showcase.tree.export", Icons.Export, Nothing))
+            menu.Items.Add(plus)
+            Dim supprimer = element("showcase.tree.delete", Icons.Delete, "Suppr")
+            supprimer.IsEnabled = False
+            menu.Items.Add(supprimer)
+            menu.RaiseEvent(New RoutedEventArgs(ContextMenu.OpenedEvent, menu))
+            Return menu
+        End Function
 
         ' Ce que deviennent les commandes de l'ActionBar une fois dessinées : leur icône, sa taille, sa couleur.
         Private Sub DiagnostiquerActionBar()
@@ -126,13 +181,15 @@ Namespace Mkm.Wpf.Showcase
         End Function
 
         ' Une page hors de toute fenêtre, à la largeur de la vitrine et à toute sa hauteur, sur le fond du thème.
-        Private Shared Function Seule(element As FrameworkElement) As FrameworkElement
-            Dim fond As New Border With {.Width = Largeur, .Child = element}
+        Private Shared Function Seule(element As FrameworkElement, Optional largeurVoulue As Double = Largeur) As FrameworkElement
+            ' Une largeur nulle : l'élément à sa taille, avec 12 px autour.
+            Dim fond As New Border With {.Child = element}
+            If largeurVoulue > 0 Then fond.Width = largeurVoulue Else fond.Padding = New Thickness(12)
             fond.SetResourceReference(Border.BackgroundProperty, ThemeResources.Prefix & "content.background")
             fond.SetResourceReference(TextElement.ForegroundProperty, ThemeResources.Prefix & "text.color")
             fond.SetResourceReference(TextElement.FontFamilyProperty, ThemeResources.Prefix & "font.family")
             fond.SetResourceReference(TextElement.FontSizeProperty, ThemeResources.Prefix & "font.size")
-            fond.Measure(New Size(Largeur, Double.PositiveInfinity))
+            fond.Measure(New Size(If(largeurVoulue > 0, largeurVoulue, Double.PositiveInfinity), Double.PositiveInfinity))
             fond.Arrange(New Rect(fond.DesiredSize))
             fond.UpdateLayout()
             Return fond

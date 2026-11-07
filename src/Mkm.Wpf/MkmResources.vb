@@ -40,6 +40,7 @@ Namespace Mkm.Wpf
             Current = Me
             Appliquer(Themes.Dashboard)
             MergedDictionaries.Add(Natifs())
+            Controls.MenuIcons.Enregistrer()
         End Sub
 
         ' Les styles que mkm-wpf pose sur des contrôles de WPF eux-mêmes (l'info-bulle…), pour toute l'application.

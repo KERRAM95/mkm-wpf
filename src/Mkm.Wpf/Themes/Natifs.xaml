@@ -3,12 +3,15 @@
     MkmResources (la configuration de App.xaml) fusionne ce dictionnaire. Un style posé par l'application
     (Style="…" ou un style implicite plus proche) l'emporte.
 
+    - ContextMenu, MenuItem, le trait d'un menu : le menu de 3DEXPERIENCE de mkm (presets dashboard et ara,
+      contextmenu), sous-menus et raccourcis compris ; un menu sans icône n'a pas leur colonne (MenuIcons).
     - ToolTip : l'info-bulle de mkm (presets dashboard et ara, tooltip) : un gris foncé, le texte blanc, 4 px sur
       8 de retrait, coins de 2 px, 150 px de large au plus, le texte à la ligne ; à droite de son élément, centrée,
       sa flèche de 3 px (tooltip.gutter) entre eux.
 
     Écarts avec mkm : l'info-bulle paraît après le délai de Windows (ToolTipService.InitialShowDelay), pas aussitôt ;
-    passée à gauche faute de place, elle garde sa flèche à gauche.
+    passée à gauche faute de place, elle garde sa flèche à gauche. Le menu : son premier et son dernier élément ne
+    prennent pas le bord du menu (ils gardent 24 px) ; une icône grisée pâlit sans passer en niveaux de gris.
 -->
 <ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
                     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
@@ -51,6 +54,159 @@
                             </ContentPresenter>
                         </Border>
                     </Grid>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+
+    <!-- Le menu contextuel de 3DEXPERIENCE (presets dashboard et ara, contextmenu) : blanc, bordé de gris clair, sans
+         arrondi, à l'ombre courte, de la largeur de ses libellés, 90 px au moins ; il s'ouvre au point du clic, sans
+         animation. -->
+    <Style TargetType="{x:Type ContextMenu}">
+        <Setter Property="Background" Value="{DynamicResource mkm.contextmenu.background}" />
+        <Setter Property="BorderBrush" Value="{DynamicResource mkm.contextmenu.border.color}" />
+        <Setter Property="Foreground" Value="{DynamicResource mkm.contextmenu.color}" />
+        <Setter Property="FontFamily" Value="{DynamicResource mkm.font.family}" />
+        <Setter Property="FontSize" Value="{DynamicResource mkm.font.size}" />
+        <Setter Property="FontWeight" Value="Normal" />
+        <Setter Property="MinWidth" Value="{DynamicResource mkm.contextmenu.min.width}" />
+        <Setter Property="Padding" Value="{DynamicResource mkm.contextmenu.list.padding}" />
+        <Setter Property="HasDropShadow" Value="False" />
+        <Setter Property="Grid.IsSharedSizeScope" Value="True" />
+        <Setter Property="SnapsToDevicePixels" Value="True" />
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="{x:Type ContextMenu}">
+                    <!-- La place de l'ombre, transparente, autour du menu. -->
+                    <Grid Margin="{DynamicResource mkm.contextmenu.window.padding}">
+                        <Border Background="{TemplateBinding Background}" Effect="{DynamicResource mkm.contextmenu.shadow}" />
+                        <Border BorderThickness="1" BorderBrush="{TemplateBinding BorderBrush}" Padding="{TemplateBinding Padding}">
+                            <StackPanel IsItemsHost="True" KeyboardNavigation.DirectionalNavigation="Cycle" />
+                        </Border>
+                    </Grid>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+
+    <!-- Le trait entre deux groupes d'un menu. -->
+    <Style x:Key="{x:Static MenuItem.SeparatorStyleKey}" TargetType="{x:Type Separator}">
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="{x:Type Separator}">
+                    <Border Height="1" Background="{DynamicResource mkm.contextmenu.separator.border.color}" />
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+
+    <!-- Un élément de menu : 24 px ; l'icône de 16 px dans une colonne de 44 px, où commence le libellé ; le raccourci
+         à droite, en 11 px, gris ; la flèche d'un sous-menu ; 14 px de retrait à droite. Survolé, gris clair ; grisé,
+         le gris de 3DX ; au clavier, cerné de 2 px de gris. -->
+    <Style TargetType="{x:Type MenuItem}">
+        <Setter Property="Foreground" Value="{DynamicResource mkm.contextmenu.item.color}" />
+        <Setter Property="Padding" Value="{DynamicResource mkm.contextmenu.item.padding}" />
+        <Setter Property="MinHeight" Value="{DynamicResource mkm.navigation.item.height}" />
+        <Setter Property="FocusVisualStyle" Value="{x:Null}" />
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="{x:Type MenuItem}">
+                    <Grid x:Name="Racine" Background="Transparent">
+                        <Border x:Name="Fond" Background="Transparent" Padding="{TemplateBinding Padding}">
+                            <Grid>
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition x:Name="ColonneIcone" Width="Auto" />
+                                    <ColumnDefinition Width="*" />
+                                    <ColumnDefinition Width="Auto" SharedSizeGroup="MkmRaccourci" />
+                                    <ColumnDefinition Width="Auto" />
+                                </Grid.ColumnDefinitions>
+                                <!-- 16 px d'icône et 14 px d'écart : le libellé commence à 44 px. -->
+                                <Grid x:Name="Icone" Grid.Column="0" Margin="{DynamicResource mkm.contextmenu.item.icon.margin}"
+                                      Width="{DynamicResource mkm.icon.size}" VerticalAlignment="Center">
+                                    <ContentPresenter x:Name="SonIcone" Content="{TemplateBinding Icon}"
+                                                      TextElement.Foreground="{DynamicResource mkm.contextmenu.item.icon.color}">
+                                        <ContentPresenter.Resources>
+                                            <DataTemplate DataType="{x:Type Geometry}">
+                                                <local:Icon Source="{Binding}" Width="{DynamicResource mkm.icon.size}" Height="{DynamicResource mkm.icon.size}" />
+                                            </DataTemplate>
+                                        </ContentPresenter.Resources>
+                                    </ContentPresenter>
+                                    <local:Icon x:Name="Coche" Visibility="Collapsed" Source="{x:Static local:InternalIcons.Check}"
+                                                Width="{DynamicResource mkm.icon.size}" Height="{DynamicResource mkm.icon.size}"
+                                                Foreground="{DynamicResource mkm.contextmenu.item.icon.color}" />
+                                </Grid>
+                                <ContentPresenter x:Name="Libelle" Grid.Column="1" ContentSource="Header" RecognizesAccessKey="True"
+                                                  VerticalAlignment="Center" />
+                                <TextBlock x:Name="Raccourci" Grid.Column="2" Margin="{DynamicResource mkm.contextmenu.item.shortcut.margin}"
+                                           VerticalAlignment="Center" Text="{TemplateBinding InputGestureText}"
+                                           FontSize="{DynamicResource mkm.contextmenu.item.shortcut.font.size}"
+                                           Foreground="{DynamicResource mkm.contextmenu.item.shortcut.color}" />
+                                <local:Icon x:Name="Fleche" Grid.Column="3" Visibility="Collapsed" VerticalAlignment="Center"
+                                            Margin="{DynamicResource mkm.contextmenu.item.shortcut.margin}"
+                                            Source="{x:Static local:InternalIcons.AngleRight}"
+                                            Width="{DynamicResource mkm.contextmenu.submenu.icon.size}"
+                                            Height="{DynamicResource mkm.contextmenu.submenu.icon.size}"
+                                            Foreground="{DynamicResource mkm.contextmenu.submenu.icon.color}" />
+                            </Grid>
+                        </Border>
+                        <Border x:Name="Anneau" Visibility="Collapsed" BorderThickness="2"
+                                BorderBrush="{DynamicResource mkm.contextmenu.item.keyboard.border.color}" />
+                        <Popup x:Name="PART_Popup" AllowsTransparency="True" Focusable="False" PopupAnimation="None"
+                               Placement="Right" HorizontalOffset="{DynamicResource mkm.contextmenu.submenu.offset}"
+                               IsOpen="{Binding IsSubmenuOpen, RelativeSource={RelativeSource TemplatedParent}}">
+                            <Grid x:Name="SousMenu" Grid.IsSharedSizeScope="True" Margin="{DynamicResource mkm.contextmenu.window.padding}">
+                                <Border Background="{DynamicResource mkm.contextmenu.background}" Effect="{DynamicResource mkm.contextmenu.shadow}" />
+                                <Border BorderThickness="1" BorderBrush="{DynamicResource mkm.contextmenu.border.color}"
+                                        MinWidth="{DynamicResource mkm.contextmenu.min.width}"
+                                        Padding="{DynamicResource mkm.contextmenu.list.padding}">
+                                    <StackPanel IsItemsHost="True" KeyboardNavigation.DirectionalNavigation="Cycle" />
+                                </Border>
+                            </Grid>
+                        </Popup>
+                    </Grid>
+                    <ControlTemplate.Triggers>
+                        <Trigger Property="local:MenuIcons.HasIcons" Value="False">
+                            <Setter TargetName="Icone" Property="Visibility" Value="Collapsed" />
+                        </Trigger>
+                        <Trigger Property="IsChecked" Value="True">
+                            <Setter TargetName="Coche" Property="Visibility" Value="Visible" />
+                        </Trigger>
+                        <Trigger Property="Role" Value="SubmenuHeader">
+                            <Setter TargetName="Fleche" Property="Visibility" Value="Visible" />
+                            <Setter TargetName="Raccourci" Property="Visibility" Value="Collapsed" />
+                        </Trigger>
+                        <Trigger Property="Role" Value="TopLevelHeader">
+                            <Setter TargetName="PART_Popup" Property="Placement" Value="Bottom" />
+                            <Setter TargetName="PART_Popup" Property="HorizontalOffset" Value="0" />
+                            <Setter TargetName="Icone" Property="Visibility" Value="Collapsed" />
+                            <Setter TargetName="Raccourci" Property="Visibility" Value="Collapsed" />
+                            <Setter Property="Padding" Value="{DynamicResource mkm.navigation.item.padding}" />
+                        </Trigger>
+                        <Trigger Property="Role" Value="TopLevelItem">
+                            <Setter TargetName="Icone" Property="Visibility" Value="Collapsed" />
+                            <Setter TargetName="Raccourci" Property="Visibility" Value="Collapsed" />
+                            <Setter Property="Padding" Value="{DynamicResource mkm.navigation.item.padding}" />
+                        </Trigger>
+                        <Trigger Property="IsHighlighted" Value="True">
+                            <Setter TargetName="Fond" Property="Background" Value="{DynamicResource mkm.contextmenu.item.focus.background}" />
+                            <Setter Property="Foreground" Value="{DynamicResource mkm.contextmenu.item.focus.color}" />
+                            <Setter TargetName="SonIcone" Property="TextElement.Foreground" Value="{DynamicResource mkm.contextmenu.item.icon.focus.color}" />
+                        </Trigger>
+                        <!-- Au clavier (le focus sans le pointeur dessus), cerné de 2 px de gris. -->
+                        <MultiTrigger>
+                            <MultiTrigger.Conditions>
+                                <Condition Property="IsKeyboardFocused" Value="True" />
+                                <Condition Property="IsMouseOver" Value="False" />
+                            </MultiTrigger.Conditions>
+                            <Setter TargetName="Anneau" Property="Visibility" Value="Visible" />
+                        </MultiTrigger>
+                        <!-- Grisé, il n'est pas transparent : son libellé prend un gris à lui, son icône pâlit de moitié. -->
+                        <Trigger Property="IsEnabled" Value="False">
+                            <Setter Property="Foreground" Value="{DynamicResource mkm.contextmenu.item.disabled.color}" />
+                            <Setter TargetName="SonIcone" Property="TextElement.Foreground" Value="{DynamicResource mkm.contextmenu.item.icon.disabled.color}" />
+                            <Setter TargetName="Icone" Property="Opacity" Value="0.5" />
+                        </Trigger>
+                    </ControlTemplate.Triggers>
                 </ControlTemplate>
             </Setter.Value>
         </Setter>

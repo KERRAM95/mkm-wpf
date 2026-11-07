@@ -25,5 +25,6 @@
         <ResourceDictionary Source="/Mkm.Wpf;component/Controls/Tabs/Tabs.xaml" />
         <ResourceDictionary Source="/Mkm.Wpf;component/Controls/Textarea/Textarea.xaml" />
         <ResourceDictionary Source="/Mkm.Wpf;component/Controls/Toast/Toast.xaml" />
+        <ResourceDictionary Source="/Mkm.Wpf;component/Controls/Tree/Tree.xaml" />
     </ResourceDictionary.MergedDictionaries>
 </ResourceDictionary>

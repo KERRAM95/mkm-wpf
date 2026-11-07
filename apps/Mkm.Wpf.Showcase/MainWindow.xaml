@@ -48,6 +48,10 @@
                         <ListBoxItem Tag="Boutons" Content="{mkm:T showcase.nav.buttons}" />
                         <ListBoxItem Tag="Conteneurs" Content="{mkm:T showcase.nav.containers}" />
                         <ListBoxItem Tag="Retours" Content="{mkm:T showcase.nav.feedback}" />
+                        <ListBoxItem Tag="Attente" Content="{mkm:T showcase.nav.waiting}" />
+                        <ListBoxItem Tag="Saisie" Content="{mkm:T showcase.nav.inputs}" />
+                        <ListBoxItem Tag="Fiche" Content="{mkm:T showcase.nav.properties}" />
+                        <ListBoxItem Tag="Arbre" Content="{mkm:T showcase.nav.tree}" />
                     </ListBox>
                 </DockPanel>
             </Border>

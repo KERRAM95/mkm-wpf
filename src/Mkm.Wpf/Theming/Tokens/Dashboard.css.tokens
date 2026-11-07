@@ -178,3 +178,23 @@ datepicker.panel.window.padding = 0 2px 3px 2px
 propertypanel.row.margin = 0 0 {propertypanel.list.gap} 0
 propertypanel.required.margin = 0 0 0 {propertypanel.required.gap}
 propertypanel.value.icon.margin = 0 {propertypanel.value.icon.gap} 0 0
+
+# tree (styles/tree) : 2 px sous chaque nœud (gap), les enfants décalés de 12 px (indent) ; la flèche dans un rond
+# (50 % de 21 px), son dessin à la taille des icônes.
+tree.node.margin = 0 0 {tree.gap} 0
+tree.children.margin = 0 0 0 {tree.indent}
+tree.node.toggle.button.radius = 10.5px
+tree.node.toggle.icon.size = {icon.size}
+
+# contextmenu (presets/dashboard/contextmenu) : l'icône de 16 px et 14 px d'écart (le libellé à 44 px, la colonne d'icône) ;
+# le raccourci à 14 px du libellé, en 11 px ; un élément grisé, son gris de 3DX, son icône plus pâle ; au clavier,
+# cerné de 2 px de gris ; un sous-menu collé à son élément (le bord de l'un sur celui de l'autre).
+# contextmenu.window.padding est une mesure de mkm-wpf : la place de l'ombre (0 1px 2px) autour du menu.
+contextmenu.item.icon.margin = 0 {contextmenu.item.gap} 0 0
+contextmenu.item.shortcut.margin = 0 0 0 {contextmenu.item.gap}
+contextmenu.item.shortcut.font.size = 11px
+contextmenu.item.disabled.color = {dspalette.ash.gray}
+contextmenu.item.icon.disabled.color = {dspalette.fog.gray}
+contextmenu.item.keyboard.border.color = {surface.500}
+contextmenu.submenu.offset = -1px
+contextmenu.window.padding = 0 2px 3px 2px
