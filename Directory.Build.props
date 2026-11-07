@@ -12,6 +12,11 @@
     <OptionCompare>Binary</OptionCompare>
     <TreatWarningsAsErrors>true</TreatWarningsAsErrors>
     <Deterministic>true</Deterministic>
+    <!-- 64 bits sur un Windows 64 bits, comme les applications des postes. Sans cela, le SDK
+         passe en silence un exe .NET Framework en 32 bits (win-x86) dès qu'une dépendance
+         apporte une DLL native. -->
+    <PlatformTarget>AnyCPU</PlatformTarget>
+    <Prefer32Bit>false</Prefer32Bit>
 
     <!-- Une seule version pour tout le depot : voir CLAUDE.md, « Les versions ». -->
     <VersionPrefix>0.1.0</VersionPrefix>

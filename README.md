@@ -27,6 +27,9 @@ En ligne de commande :
 
     dotnet build
     dotnet test
+    dotnet run --project apps/Mkm.Wpf.Showcase
+
+(Des `/` dans les chemins : ils marchent dans tous les terminaux, bash compris.)
 
 ## Structure
 
