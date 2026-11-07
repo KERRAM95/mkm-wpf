@@ -31,10 +31,9 @@ Namespace Mkm.Wpf.Showcase
             ' La langue d'affichage de Windows, ou la plus proche des langues de la vitrine.
             Localizer.Current.Language = Localizer.Current.BestLanguage(CultureInfo.CurrentUICulture)
 
-            ' --captures <dossier> : les captures de la vitrine, sans fenêtre de départ (voir Captures).
+            ' --captures <dossier> : les captures de la vitrine, sans la fenêtre de la vitrine (voir Captures).
             Dim i = Array.IndexOf(e.Args, "--captures")
             If i >= 0 AndAlso i + 1 < e.Args.Length Then
-                StartupUri = Nothing
                 ShutdownMode = ShutdownMode.OnExplicitShutdown
                 Dim dossier = e.Args(i + 1)
                 Captures.Journal(dossier, "démarrage")
@@ -45,6 +44,10 @@ Namespace Mkm.Wpf.Showcase
                                                             Shutdown(99)
                                                         End Sub
                 Dispatcher.BeginInvoke(New Action(Sub() Shutdown(Captures.Executer(dossier))), DispatcherPriority.ApplicationIdle)
+            Else
+                ' La fenêtre de la vitrine (pas de StartupUri : le mode captures n'en ouvre pas).
+                Dim fenetre As New MainWindow()
+                fenetre.Show()
             End If
 
             MyBase.OnStartup(e)
