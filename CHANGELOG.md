@@ -99,6 +99,10 @@ Les évolutions notables de mkm-wpf, version par version. Le format suit
   DataGridView de 3DEXPERIENCE sur le `DataTable`, sa colonne d'arbre) et
   `StateGraph` (le graphe du cycle de vie) ; la page Arborescence et cycle de vie
   de la vitrine.
+- Le registre des commandes (`docs/fondations/commandes.md`) : `CommandRegistry`,
+  `CommandDefinition`, `RegisteredCommand`, `CommandSubmenu` ; les menus, les
+  `Toolbar` et les sections de l'`ActionBar` fabriqués d'une disposition ; les
+  raccourcis.
 - L'importeur de jetons fond le schéma clair d'un composant dans ses valeurs
   communes, comme mkm.
 - Les thèmes : une largeur de bordure côté par côté (`0 1px 1px 0`) devient
@@ -109,6 +113,10 @@ Les évolutions notables de mkm-wpf, version par version. Le format suit
   propriétés, Arbre et menu.
 
 ### Corrigé
+
+- ActionBar : la liste d'une commande ne trouvait plus sa flèche depuis l'arrivée
+  du `ToggleButton` de mkm (le nom cachait celui de WPF) ; `ActionBarToggleButton`
+  hérite de nouveau du `ToggleButton` de WPF.
 
 - ActionBar : les commandes n'avaient ni icône ni libellé (un chemin de liaison
   `(local:…)` dont WPF ne trouvait pas le préfixe à l'exécution).

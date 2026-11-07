@@ -41,6 +41,7 @@ En ligne de commande :
     ├── apps/Mkm.Wpf.Showcase/      la vitrine
     ├── tests/Mkm.Wpf.Tests/        les tests (NUnit)
     ├── docs/composants/            une fiche par composant, écrite avant le code
+    ├── docs/fondations/            le thème, la langue, le registre des commandes
     ├── outils/                     hook Git, compilation sous Linux
     ├── Directory.Build.props       propriétés communes (net48, Option Strict…)
     ├── Directory.Packages.props    versions des paquets NuGet
@@ -69,6 +70,10 @@ Les textes de l'application viennent de ses sources, ajoutées au démarrage
 (`Localizer.Current.AddSource(…)`), et s'écrivent `{mkm:T clé}` en XAML ;
 `Localizer.Current.Language = …` change la langue pendant l'exécution. La
 vitrine en est l'exemple (`apps/Mkm.Wpf.Showcase`).
+
+Les commandes de l'application se déclarent une fois dans un `CommandRegistry`
+(`Mkm.Wpf.Commands`) ; ses menus, ses barres et ses raccourcis en sont fabriqués
+(`docs/fondations/commandes.md`).
 
 ## Choix techniques
 
@@ -107,7 +112,9 @@ vitrine en est l'exemple (`apps/Mkm.Wpf.Showcase`).
    (`docs/composants/menus.md`).
 13. ~~Le lot 8~~ : fait — la grille arborescente (`TreeGrid`) et le graphe du
    cycle de vie (`StateGraph`) (`docs/composants/arborescence-et-cycle-de-vie.md`).
-14. Le registre des commandes.
+14. ~~Le registre des commandes~~ : fait — `CommandRegistry`
+   (`docs/fondations/commandes.md`).
+15. La suite : le paquet NuGet ; hscart-next sur la bibliothèque.
 
 ## Règles
 

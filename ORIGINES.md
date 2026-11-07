@@ -30,6 +30,7 @@ La bibliothèque `Mkm.Wpf` elle-même n'a encore aucune dépendance.
 | `src/Mkm.Wpf/Controls/WelcomePanel/WelcomePanel.vb` | mkm (`ui-kit`), `packages/mkm/src/welcomepanel/WelcomePanel.vue` | MIT (mkm) | la sélection par clé, les entrées d'action, l'arrêt de tabulation unique, portés en VB |
 | `src/Mkm.Wpf/Controls/StateGraph/StateGraph.vb` (la géométrie) | mkm (`ui-kit`), `packages/mkm/src/stategraph/StateGraph.vue` | MIT (mkm) | les tailles, les couloirs, le choix droit / dessus / dessous, les départs partagés, la place des noms, portés en VB |
 | `src/Mkm.Wpf/Controls/TreeGrid/TreeGridColumn.vb` (les traits) | mkm (`ui-kit`), `packages/mkm/src/treegrid/BodyCell.vue` et `packages/styles/src/treegrid` | MIT (mkm) | la règle des traits (ancêtres, dernier frère, feuille) et la place de la case de dépliage, portées en VB |
+| `src/Mkm.Wpf/Commands/CommandRegistry.vb` | mkm (`ui-kit`), `packages/mkm/src/commands/Commands.js` | MIT (mkm) | la déclaration par clé, les règles de lancement (cases, choix d'un groupe, états tenus par l'application), les vues, les dispositions et leurs traits, portées en VB |
 | `src/Mkm.Wpf/Theming/ThemeResources.vb` (`color-mix`) | CSS Color 5, « color-mix() » (W3C) | spécification | le mélange pondéré de l'opacité, comme le calcule `contrast.ts` de mkm |
 
 Importés par `outils/themes/importer-mkm.mjs` ; les couleurs de maturité (celles
