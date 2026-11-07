@@ -1,0 +1,339 @@
+<!--
+    Les styles de DataTable, sur la grille de 3DEXPERIENCE de mkm (presets dashboard et ara, datatable) :
+    - l'en-tête des colonnes : 27 px (6 + 14 + 6, et son trait du bas) sur gris clair, bordé de gris dessous, les
+      colonnes séparées d'un trait ; les titres en graisse normale, 7 px de retrait, l'icône de tri de mkm (10,5 px,
+      grise) 6 px après le titre ; trié, le fond et la couleur de la surbrillance ;
+    - les lignes : 32 px quel que soit leur contenu, 7 px de retrait, sans trait entre elles, un fond blanc que le
+      survol ne change pas ; la ligne choisie, le fond de la surbrillance ; zébrées (Striped), une sur deux d'un gris
+      pâle ; quadrillées (GridLines), bordées de gris ; au clavier, l'anneau du focus à l'intérieur de la ligne ;
+    - Size : Small (4 px au-dessus et au-dessous du texte, 3 dans l'en-tête), Large (12 px, 9 dans l'en-tête) ;
+    - le message d'une liste vide à la place des lignes ; le voile et le chargeur pendant un chargement ; un en-tête
+      et un pied, bordés de gris.
+
+    Écarts avec mkm : ni pagination, ni filtres, ni pied de colonne ; le tri d'une colonne se fait au clic sur son
+    titre, comme dans WPF (Maj pour trier sur plusieurs colonnes).
+-->
+<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+                    xmlns:local="clr-namespace:Mkm.Wpf.Controls">
+
+    <!-- La poignée qui élargit une colonne, invisible, au bord de son titre. -->
+    <Style x:Key="MkmDataTablePoignee" TargetType="{x:Type Thumb}">
+        <Setter Property="Width" Value="8" />
+        <Setter Property="Background" Value="Transparent" />
+        <Setter Property="Cursor" Value="SizeWE" />
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="{x:Type Thumb}">
+                    <Border Background="{TemplateBinding Background}" />
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+
+    <!-- Le titre d'une colonne. -->
+    <Style x:Key="MkmDataTableTitre" TargetType="{x:Type DataGridColumnHeader}">
+        <Setter Property="Background" Value="{DynamicResource mkm.datatable.header.cell.background}" />
+        <Setter Property="Foreground" Value="{DynamicResource mkm.datatable.header.cell.color}" />
+        <Setter Property="BorderBrush" Value="{DynamicResource mkm.datatable.header.cell.border.color}" />
+        <Setter Property="FontWeight" Value="{DynamicResource mkm.datatable.column.title.font.weight}" />
+        <Setter Property="Padding" Value="{Binding HeaderPadding, RelativeSource={RelativeSource AncestorType={x:Type local:DataTable}}}" />
+        <Setter Property="HorizontalContentAlignment" Value="Left" />
+        <Setter Property="VerticalContentAlignment" Value="Center" />
+        <Setter Property="SnapsToDevicePixels" Value="True" />
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="{x:Type DataGridColumnHeader}">
+                    <Grid>
+                        <!-- Le trait de gauche sépare d'une colonne de la précédente ; le trait du bas ferme l'en-tête. -->
+                        <Border x:Name="Fond" Background="{TemplateBinding Background}" BorderBrush="{TemplateBinding BorderBrush}"
+                                BorderThickness="1,0,0,1" Padding="{TemplateBinding Padding}">
+                            <StackPanel Orientation="Horizontal" HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}"
+                                        VerticalAlignment="{TemplateBinding VerticalContentAlignment}">
+                                <ContentPresenter VerticalAlignment="Center" RecognizesAccessKey="True">
+                                    <ContentPresenter.Resources>
+                                        <Style TargetType="{x:Type TextBlock}">
+                                            <Setter Property="TextTrimming" Value="CharacterEllipsis" />
+                                        </Style>
+                                    </ContentPresenter.Resources>
+                                </ContentPresenter>
+                                <local:Icon x:Name="Tri" Visibility="Collapsed" VerticalAlignment="Center"
+                                            Margin="{DynamicResource mkm.datatable.sort.icon.margin}"
+                                            Width="{DynamicResource mkm.datatable.sort.icon.size}"
+                                            Height="{DynamicResource mkm.datatable.sort.icon.size}"
+                                            Foreground="{DynamicResource mkm.datatable.sort.icon.color}"
+                                            Source="{x:Static local:InternalIcons.SortAlt}" />
+                            </StackPanel>
+                        </Border>
+                        <Thumb x:Name="PART_LeftHeaderGripper" HorizontalAlignment="Left" Margin="-4,0,0,0" Style="{StaticResource MkmDataTablePoignee}" />
+                        <Thumb x:Name="PART_RightHeaderGripper" HorizontalAlignment="Right" Margin="0,0,-4,0" Style="{StaticResource MkmDataTablePoignee}" />
+                    </Grid>
+                    <ControlTemplate.Triggers>
+                        <Trigger Property="DisplayIndex" Value="0">
+                            <Setter TargetName="Fond" Property="BorderThickness" Value="0,0,0,1" />
+                        </Trigger>
+                        <Trigger Property="CanUserSort" Value="True">
+                            <Setter TargetName="Tri" Property="Visibility" Value="Visible" />
+                        </Trigger>
+                        <MultiTrigger>
+                            <MultiTrigger.Conditions>
+                                <Condition Property="CanUserSort" Value="True" />
+                                <Condition Property="IsMouseOver" Value="True" />
+                            </MultiTrigger.Conditions>
+                            <Setter TargetName="Fond" Property="Background" Value="{DynamicResource mkm.datatable.header.cell.hover.background}" />
+                            <Setter Property="Foreground" Value="{DynamicResource mkm.datatable.header.cell.hover.color}" />
+                            <Setter TargetName="Tri" Property="Foreground" Value="{DynamicResource mkm.datatable.sort.icon.hover.color}" />
+                        </MultiTrigger>
+                        <Trigger Property="SortDirection" Value="Ascending">
+                            <Setter TargetName="Tri" Property="Source" Value="{x:Static local:InternalIcons.SortAmountUpAlt}" />
+                            <Setter TargetName="Fond" Property="Background" Value="{DynamicResource mkm.datatable.header.cell.selected.background}" />
+                            <Setter Property="Foreground" Value="{DynamicResource mkm.datatable.header.cell.selected.color}" />
+                            <Setter TargetName="Tri" Property="Foreground" Value="{DynamicResource mkm.datatable.header.cell.selected.color}" />
+                        </Trigger>
+                        <Trigger Property="SortDirection" Value="Descending">
+                            <Setter TargetName="Tri" Property="Source" Value="{x:Static local:InternalIcons.SortAmountDown}" />
+                            <Setter TargetName="Fond" Property="Background" Value="{DynamicResource mkm.datatable.header.cell.selected.background}" />
+                            <Setter Property="Foreground" Value="{DynamicResource mkm.datatable.header.cell.selected.color}" />
+                            <Setter TargetName="Tri" Property="Foreground" Value="{DynamicResource mkm.datatable.header.cell.selected.color}" />
+                        </Trigger>
+                    </ControlTemplate.Triggers>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+
+    <!-- La rangée des titres : après la dernière colonne, le gris de l'en-tête et son trait du bas. -->
+    <Style x:Key="MkmDataTableTitres" TargetType="{x:Type DataGridColumnHeadersPresenter}">
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="{x:Type DataGridColumnHeadersPresenter}">
+                    <Grid>
+                        <Border BorderThickness="0,0,0,1"
+                                Background="{DynamicResource mkm.datatable.header.cell.background}"
+                                BorderBrush="{DynamicResource mkm.datatable.header.cell.border.color}" />
+                        <ItemsPresenter />
+                    </Grid>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+
+    <!-- Une ligne : son fond (blanc, zébré, choisi), et l'anneau du clavier à l'intérieur. -->
+    <Style x:Key="MkmDataTableLigne" TargetType="{x:Type DataGridRow}">
+        <Setter Property="Background" Value="{DynamicResource mkm.datatable.row.background}" />
+        <Setter Property="Foreground" Value="{DynamicResource mkm.datatable.row.color}" />
+        <Setter Property="SnapsToDevicePixels" Value="True" />
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="{x:Type DataGridRow}">
+                    <Grid>
+                        <Border x:Name="Fond" Background="{TemplateBinding Background}" />
+                        <SelectiveScrollingGrid>
+                            <SelectiveScrollingGrid.ColumnDefinitions>
+                                <ColumnDefinition Width="Auto" />
+                                <ColumnDefinition Width="*" />
+                            </SelectiveScrollingGrid.ColumnDefinitions>
+                            <SelectiveScrollingGrid.RowDefinitions>
+                                <RowDefinition Height="*" />
+                                <RowDefinition Height="Auto" />
+                            </SelectiveScrollingGrid.RowDefinitions>
+                            <DataGridCellsPresenter Grid.Column="1" ItemsPanel="{TemplateBinding ItemsPanel}"
+                                                    SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}" />
+                            <DataGridDetailsPresenter Grid.Column="1" Grid.Row="1" Visibility="{TemplateBinding DetailsVisibility}"
+                                                      SelectiveScrollingGrid.SelectiveScrollingOrientation="{Binding AreRowDetailsFrozen, ConverterParameter={x:Static SelectiveScrollingOrientation.Vertical}, Converter={x:Static DataGrid.RowDetailsScrollingConverter}, RelativeSource={RelativeSource AncestorType={x:Type DataGrid}}}" />
+                            <DataGridRowHeader Grid.RowSpan="2" SelectiveScrollingGrid.SelectiveScrollingOrientation="Vertical"
+                                               Visibility="{Binding HeadersVisibility, ConverterParameter={x:Static DataGridHeadersVisibility.Row}, Converter={x:Static DataGrid.HeadersVisibilityConverter}, RelativeSource={RelativeSource AncestorType={x:Type DataGrid}}}" />
+                        </SelectiveScrollingGrid>
+                        <Rectangle x:Name="Anneau" Visibility="Collapsed" IsHitTestVisible="False"
+                                   Stroke="{DynamicResource mkm.datatable.row.focus.ring.color}"
+                                   StrokeThickness="{DynamicResource mkm.datatable.row.focus.ring.width}" />
+                    </Grid>
+                    <ControlTemplate.Triggers>
+                        <Trigger Property="IsMouseOver" Value="True">
+                            <Setter TargetName="Fond" Property="Background" Value="{DynamicResource mkm.datatable.row.hover.background}" />
+                            <Setter Property="Foreground" Value="{DynamicResource mkm.datatable.row.hover.color}" />
+                        </Trigger>
+                        <!-- Zébrée, une ligne paire garde son fond au survol (la feuille de mkm). -->
+                        <Trigger Property="ItemsControl.AlternationIndex" Value="1">
+                            <Setter TargetName="Fond" Property="Background" Value="{DynamicResource mkm.datatable.row.striped.background}" />
+                        </Trigger>
+                        <Trigger Property="IsSelected" Value="True">
+                            <Setter TargetName="Fond" Property="Background" Value="{DynamicResource mkm.datatable.row.selected.background}" />
+                            <Setter Property="Foreground" Value="{DynamicResource mkm.datatable.row.selected.color}" />
+                        </Trigger>
+                        <!-- Au clavier (le focus dans la ligne sans le pointeur dessus), l'anneau du focus. -->
+                        <MultiTrigger>
+                            <MultiTrigger.Conditions>
+                                <Condition Property="IsKeyboardFocusWithin" Value="True" />
+                                <Condition Property="IsMouseOver" Value="False" />
+                            </MultiTrigger.Conditions>
+                            <Setter TargetName="Anneau" Property="Visibility" Value="Visible" />
+                        </MultiTrigger>
+                    </ControlTemplate.Triggers>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+
+    <!-- Une cellule : son retrait, son contenu au milieu de la ligne ; la ligne porte les couleurs. -->
+    <Style x:Key="MkmDataTableCellule" TargetType="{x:Type DataGridCell}">
+        <Setter Property="Background" Value="Transparent" />
+        <Setter Property="BorderThickness" Value="0" />
+        <Setter Property="FocusVisualStyle" Value="{x:Null}" />
+        <Setter Property="Padding" Value="{Binding CellPadding, RelativeSource={RelativeSource AncestorType={x:Type local:DataTable}}}" />
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="{x:Type DataGridCell}">
+                    <Border Background="{TemplateBinding Background}" Padding="{TemplateBinding Padding}" SnapsToDevicePixels="True">
+                        <ContentPresenter VerticalAlignment="Center" SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}" />
+                    </Border>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+        <Style.Triggers>
+            <Trigger Property="IsSelected" Value="True">
+                <Setter Property="Foreground" Value="{DynamicResource mkm.datatable.row.selected.color}" />
+            </Trigger>
+        </Style.Triggers>
+    </Style>
+
+    <Style TargetType="{x:Type local:DataTable}">
+        <Setter Property="Background" Value="{DynamicResource mkm.datatable.row.background}" />
+        <Setter Property="Foreground" Value="{DynamicResource mkm.datatable.row.color}" />
+        <Setter Property="FontFamily" Value="{DynamicResource mkm.font.family}" />
+        <Setter Property="FontSize" Value="{DynamicResource mkm.font.size}" />
+        <Setter Property="BorderThickness" Value="0" />
+        <Setter Property="HeadersVisibility" Value="Column" />
+        <Setter Property="GridLinesVisibility" Value="None" />
+        <Setter Property="HorizontalGridLinesBrush" Value="{DynamicResource mkm.datatable.border.color}" />
+        <Setter Property="VerticalGridLinesBrush" Value="{DynamicResource mkm.datatable.border.color}" />
+        <Setter Property="RowHeight" Value="{DynamicResource mkm.datatable.row.height}" />
+        <Setter Property="CellPadding" Value="{DynamicResource mkm.datatable.body.cell.padding}" />
+        <Setter Property="HeaderPadding" Value="{DynamicResource mkm.datatable.header.cell.padding}" />
+        <Setter Property="ColumnHeaderStyle" Value="{StaticResource MkmDataTableTitre}" />
+        <Setter Property="RowStyle" Value="{StaticResource MkmDataTableLigne}" />
+        <Setter Property="CellStyle" Value="{StaticResource MkmDataTableCellule}" />
+        <Setter Property="SnapsToDevicePixels" Value="True" />
+        <Setter Property="ScrollViewer.CanContentScroll" Value="True" />
+        <Setter Property="VirtualizingPanel.IsVirtualizing" Value="True" />
+        <Setter Property="VirtualizingPanel.VirtualizationMode" Value="Recycling" />
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="{x:Type local:DataTable}">
+                    <Grid>
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="Auto" />
+                            <RowDefinition Height="*" />
+                            <RowDefinition Height="Auto" />
+                        </Grid.RowDefinitions>
+                        <Border x:Name="EnTete" Grid.Row="0" BorderThickness="0,1,0,1"
+                                Background="{DynamicResource mkm.datatable.header.background}"
+                                BorderBrush="{DynamicResource mkm.datatable.header.border.color}"
+                                Padding="{DynamicResource mkm.datatable.header.padding}"
+                                TextElement.Foreground="{DynamicResource mkm.datatable.header.color}">
+                            <ContentPresenter Content="{TemplateBinding Header}" />
+                        </Border>
+                        <Border Grid.Row="1" Background="{TemplateBinding Background}" BorderBrush="{TemplateBinding BorderBrush}"
+                                BorderThickness="{TemplateBinding BorderThickness}" Padding="{TemplateBinding Padding}">
+                            <ScrollViewer x:Name="DG_ScrollViewer" Focusable="False">
+                                <ScrollViewer.Template>
+                                    <ControlTemplate TargetType="{x:Type ScrollViewer}">
+                                        <Grid>
+                                            <Grid.ColumnDefinitions>
+                                                <ColumnDefinition Width="Auto" />
+                                                <ColumnDefinition Width="*" />
+                                                <ColumnDefinition Width="Auto" />
+                                            </Grid.ColumnDefinitions>
+                                            <Grid.RowDefinitions>
+                                                <RowDefinition Height="Auto" />
+                                                <RowDefinition Height="*" />
+                                                <RowDefinition Height="Auto" />
+                                            </Grid.RowDefinitions>
+                                            <DataGridColumnHeadersPresenter x:Name="PART_ColumnHeadersPresenter" Grid.Column="0" Grid.ColumnSpan="2"
+                                                                            Style="{StaticResource MkmDataTableTitres}"
+                                                                            Visibility="{Binding HeadersVisibility, ConverterParameter={x:Static DataGridHeadersVisibility.Column}, Converter={x:Static DataGrid.HeadersVisibilityConverter}, RelativeSource={RelativeSource AncestorType={x:Type DataGrid}}}" />
+                                            <ScrollContentPresenter x:Name="PART_ScrollContentPresenter" Grid.Row="1" Grid.ColumnSpan="2"
+                                                                    CanContentScroll="{TemplateBinding CanContentScroll}" />
+                                            <!-- Une liste vide : son message, à la place des lignes. -->
+                                            <ContentPresenter x:Name="Vide" Grid.Row="1" Grid.ColumnSpan="2" Visibility="Collapsed"
+                                                              VerticalAlignment="Top" HorizontalAlignment="Left"
+                                                              Margin="{Binding CellPadding, RelativeSource={RelativeSource AncestorType={x:Type local:DataTable}}}"
+                                                              MinHeight="{Binding RowHeight, RelativeSource={RelativeSource AncestorType={x:Type local:DataTable}}}"
+                                                              Content="{Binding EmptyMessage, RelativeSource={RelativeSource AncestorType={x:Type local:DataTable}}}" />
+                                            <ScrollBar x:Name="PART_VerticalScrollBar" Grid.Column="2" Grid.Row="1" Orientation="Vertical"
+                                                       Maximum="{TemplateBinding ScrollableHeight}" ViewportSize="{TemplateBinding ViewportHeight}"
+                                                       Visibility="{TemplateBinding ComputedVerticalScrollBarVisibility}"
+                                                       Value="{Binding VerticalOffset, Mode=OneWay, RelativeSource={RelativeSource TemplatedParent}}" />
+                                            <Grid Grid.Column="1" Grid.Row="2">
+                                                <Grid.ColumnDefinitions>
+                                                    <ColumnDefinition Width="{Binding NonFrozenColumnsViewportHorizontalOffset, RelativeSource={RelativeSource AncestorType={x:Type DataGrid}}}" />
+                                                    <ColumnDefinition Width="*" />
+                                                </Grid.ColumnDefinitions>
+                                                <ScrollBar x:Name="PART_HorizontalScrollBar" Grid.Column="1" Orientation="Horizontal"
+                                                           Maximum="{TemplateBinding ScrollableWidth}" ViewportSize="{TemplateBinding ViewportWidth}"
+                                                           Visibility="{TemplateBinding ComputedHorizontalScrollBarVisibility}"
+                                                           Value="{Binding HorizontalOffset, Mode=OneWay, RelativeSource={RelativeSource TemplatedParent}}" />
+                                            </Grid>
+                                        </Grid>
+                                        <ControlTemplate.Triggers>
+                                            <DataTrigger Value="False" Binding="{Binding HasItems, RelativeSource={RelativeSource AncestorType={x:Type local:DataTable}}}">
+                                                <Setter TargetName="Vide" Property="Visibility" Value="Visible" />
+                                            </DataTrigger>
+                                        </ControlTemplate.Triggers>
+                                    </ControlTemplate>
+                                </ScrollViewer.Template>
+                                <ItemsPresenter SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}" />
+                            </ScrollViewer>
+                        </Border>
+                        <Border x:Name="Pied" Grid.Row="2" BorderThickness="0,0,0,1"
+                                Background="{DynamicResource mkm.datatable.footer.background}"
+                                BorderBrush="{DynamicResource mkm.datatable.footer.border.color}"
+                                Padding="{DynamicResource mkm.datatable.footer.padding}"
+                                TextElement.Foreground="{DynamicResource mkm.datatable.footer.color}">
+                            <ContentPresenter Content="{TemplateBinding Footer}" />
+                        </Border>
+                        <!-- Le chargement : le voile et le chargeur sur tout le tableau. -->
+                        <Border x:Name="Voile" Grid.RowSpan="3" Visibility="Collapsed" Background="{DynamicResource mkm.mask.background}">
+                            <local:ProgressSpinner Width="{DynamicResource mkm.datatable.loading.icon.size}"
+                                                   Height="{DynamicResource mkm.datatable.loading.icon.size}"
+                                                   StrokeWidth="4" Stroke="{DynamicResource mkm.mask.color}" />
+                        </Border>
+                    </Grid>
+                    <ControlTemplate.Triggers>
+                        <Trigger Property="Header" Value="{x:Null}">
+                            <Setter TargetName="EnTete" Property="Visibility" Value="Collapsed" />
+                        </Trigger>
+                        <Trigger Property="Footer" Value="{x:Null}">
+                            <Setter TargetName="Pied" Property="Visibility" Value="Collapsed" />
+                        </Trigger>
+                        <Trigger Property="Loading" Value="True">
+                            <Setter TargetName="Voile" Property="Visibility" Value="Visible" />
+                        </Trigger>
+                        <Trigger Property="IsEnabled" Value="False">
+                            <Setter Property="Opacity" Value="{DynamicResource mkm.disabled.opacity}" />
+                        </Trigger>
+                    </ControlTemplate.Triggers>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+        <Style.Triggers>
+            <Trigger Property="Striped" Value="True">
+                <Setter Property="AlternationCount" Value="2" />
+            </Trigger>
+            <Trigger Property="GridLines" Value="True">
+                <Setter Property="GridLinesVisibility" Value="All" />
+            </Trigger>
+            <Trigger Property="Size" Value="Small">
+                <Setter Property="RowHeight" Value="NaN" />
+                <Setter Property="CellPadding" Value="{DynamicResource mkm.datatable.body.cell.sm.padding}" />
+                <Setter Property="HeaderPadding" Value="{DynamicResource mkm.datatable.header.cell.sm.padding}" />
+            </Trigger>
+            <Trigger Property="Size" Value="Large">
+                <Setter Property="RowHeight" Value="NaN" />
+                <Setter Property="CellPadding" Value="{DynamicResource mkm.datatable.body.cell.lg.padding}" />
+                <Setter Property="HeaderPadding" Value="{DynamicResource mkm.datatable.header.cell.lg.padding}" />
+            </Trigger>
+        </Style.Triggers>
+    </Style>
+
+</ResourceDictionary>

@@ -618,4 +618,49 @@
   <data name="showcase.identity.count" xml:space="preserve">
     <value>Nombre</value>
   </data>
+  <data name="showcase.nav.table" xml:space="preserve">
+    <value>Tableau de données</value>
+  </data>
+  <data name="showcase.table.title" xml:space="preserve">
+    <value>Tableau de données</value>
+  </data>
+  <data name="showcase.table.help" xml:space="preserve">
+    <value>La grille de 3DEXPERIENCE : un clic sur un titre trie la colonne (Maj pour plusieurs), le bord d'un titre l'élargit ; on choisit une ou plusieurs lignes. Zébrée, quadrillée, trois tailles, un message quand elle est vide, un voile pendant un chargement.</value>
+  </data>
+  <data name="showcase.table.variables" xml:space="preserve">
+    <value>Variables d'environnement</value>
+  </data>
+  <data name="showcase.table.name" xml:space="preserve">
+    <value>Nom</value>
+  </data>
+  <data name="showcase.table.value" xml:space="preserve">
+    <value>Valeur</value>
+  </data>
+  <data name="showcase.table.scope" xml:space="preserve">
+    <value>Portée</value>
+  </data>
+  <data name="showcase.table.modified" xml:space="preserve">
+    <value>Modifiée le</value>
+  </data>
+  <data name="showcase.table.active" xml:space="preserve">
+    <value>Active</value>
+  </data>
+  <data name="showcase.table.count" xml:space="preserve">
+    <value>{0} variables</value>
+  </data>
+  <data name="showcase.table.striped" xml:space="preserve">
+    <value>Zébrée et quadrillée, petite</value>
+  </data>
+  <data name="showcase.table.empty" xml:space="preserve">
+    <value>Vide</value>
+  </data>
+  <data name="showcase.table.emptyMessage" xml:space="preserve">
+    <value>Aucune variable pour cet environnement.</value>
+  </data>
+  <data name="showcase.table.load" xml:space="preserve">
+    <value>Charger 2 secondes</value>
+  </data>
+  <data name="showcase.table.search" xml:space="preserve">
+    <value>Rechercher</value>
+  </data>
 </root>

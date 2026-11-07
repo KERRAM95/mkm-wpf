@@ -1,0 +1,68 @@
+<!--
+    La page du tableau de données : des variables d'environnement, avec un en-tête (titre, recherche) et un pied
+    (le nombre), triables ; zébrées et quadrillées en petit ; vide, avec son message ; un chargement de 2 s.
+-->
+<UserControl x:Class="Mkm.Wpf.Showcase.TableauPage"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mkm="urn:mkm-wpf">
+    <UserControl.Resources>
+        <Style x:Key="Titre" TargetType="TextBlock">
+            <Setter Property="Margin" Value="0,16,0,8" />
+            <Setter Property="FontWeight" Value="Bold" />
+        </Style>
+    </UserControl.Resources>
+    <ScrollViewer VerticalScrollBarVisibility="Auto">
+        <StackPanel Margin="24,20" MaxWidth="760" HorizontalAlignment="Left">
+            <TextBlock FontSize="16" FontWeight="Bold"
+                       Foreground="{DynamicResource mkm.primary.color}" Text="{mkm:T showcase.table.title}" />
+            <TextBlock Margin="0,6,0,0" TextWrapping="Wrap"
+                       Foreground="{DynamicResource mkm.text.muted.color}" Text="{mkm:T showcase.table.help}" />
+
+            <TextBlock Style="{StaticResource Titre}" Text="DataTable" />
+            <mkm:DataTable x:Name="Variables" Height="230" AutoGenerateColumns="False" IsReadOnly="True">
+                <mkm:DataTable.Header>
+                    <DockPanel>
+                        <mkm:Button DockPanel.Dock="Right" Severity="Secondary" Content="{mkm:T showcase.table.load}" Click="Charger_Click" />
+                        <mkm:InputText DockPanel.Dock="Right" Width="180" Margin="0,0,8,0" Placeholder="{mkm:T showcase.table.search}" />
+                        <TextBlock VerticalAlignment="Center" FontWeight="Bold" Text="{mkm:T showcase.table.variables}" />
+                    </DockPanel>
+                </mkm:DataTable.Header>
+                <mkm:DataTable.Columns>
+                    <DataGridTextColumn Header="{mkm:T showcase.table.name}" Binding="{Binding Nom}" Width="2*" />
+                    <DataGridTextColumn Header="{mkm:T showcase.table.value}" Binding="{Binding Valeur}" Width="3*" />
+                    <DataGridTemplateColumn Header="{mkm:T showcase.table.scope}" Width="*" SortMemberPath="Portee">
+                        <DataGridTemplateColumn.CellTemplate>
+                            <DataTemplate>
+                                <mkm:Tag Content="{Binding Portee}" Severity="Secondary" />
+                            </DataTemplate>
+                        </DataGridTemplateColumn.CellTemplate>
+                    </DataGridTemplateColumn>
+                    <DataGridTextColumn Header="{mkm:T showcase.table.modified}" Binding="{Binding Modifiee, StringFormat=d}" Width="*" />
+                    <DataGridCheckBoxColumn Header="{mkm:T showcase.table.active}" Binding="{Binding Active}" Width="60" />
+                </mkm:DataTable.Columns>
+                <mkm:DataTable.Footer>
+                    <TextBlock x:Name="Nombre" />
+                </mkm:DataTable.Footer>
+            </mkm:DataTable>
+
+            <TextBlock Style="{StaticResource Titre}" Text="{mkm:T showcase.table.striped}" />
+            <mkm:DataTable x:Name="Zebree" Height="160" AutoGenerateColumns="False" IsReadOnly="True"
+                           Striped="True" GridLines="True" Size="Small" SelectionMode="Extended">
+                <mkm:DataTable.Columns>
+                    <DataGridTextColumn Header="{mkm:T showcase.table.name}" Binding="{Binding Nom}" Width="2*" />
+                    <DataGridTextColumn Header="{mkm:T showcase.table.value}" Binding="{Binding Valeur}" Width="3*" />
+                    <DataGridTextColumn Header="{mkm:T showcase.table.scope}" Binding="{Binding Portee}" Width="*" />
+                </mkm:DataTable.Columns>
+            </mkm:DataTable>
+
+            <TextBlock Style="{StaticResource Titre}" Text="{mkm:T showcase.table.empty}" />
+            <mkm:DataTable Height="90" AutoGenerateColumns="False" EmptyMessage="{mkm:T showcase.table.emptyMessage}">
+                <mkm:DataTable.Columns>
+                    <DataGridTextColumn Header="{mkm:T showcase.table.name}" Width="2*" />
+                    <DataGridTextColumn Header="{mkm:T showcase.table.value}" Width="3*" />
+                </mkm:DataTable.Columns>
+            </mkm:DataTable>
+        </StackPanel>
+    </ScrollViewer>
+</UserControl>

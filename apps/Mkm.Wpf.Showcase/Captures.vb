@@ -66,7 +66,8 @@ Namespace Mkm.Wpf.Showcase
                 Page("7-saisie", Function() New SaisiePage()),
                 Page("8-fiche", Function() New FichePage()),
                 Page("9-arbre", Function() New ArbrePage()),
-                Page("10-identite", Function() New IdentitePage())
+                Page("10-identite", Function() New IdentitePage()),
+                Page("11-tableau", Function() New TableauPage())
             }
 
             For Each theme In Themes.All

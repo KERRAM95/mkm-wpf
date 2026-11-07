@@ -28,6 +28,7 @@ Namespace Mkm.Wpf.Showcase
                 Case "Fiche" : Page.Content = New FichePage()
                 Case "Arbre" : Page.Content = New ArbrePage()
                 Case "Identite" : Page.Content = New IdentitePage()
+                Case "Tableau" : Page.Content = New TableauPage()
             End Select
         End Sub
 

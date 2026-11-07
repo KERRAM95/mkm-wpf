@@ -233,3 +233,8 @@ inputnumber.stacked.down.border.radius = 0 0 1px 0
 inputnumber.button.icon.size = 10px
 inputnumber.horizontal.decrement.border.radius = {inputnumber.button.border.radius} 0 0 {inputnumber.button.border.radius}
 inputnumber.horizontal.increment.border.radius = 0 {inputnumber.button.border.radius} {inputnumber.button.border.radius} 0
+
+# datatable (preset dashboard/datatable) : la hauteur des lignes, que PrimeVue ne porte pas en jeton (extend de mkm) ;
+# l'icône de tri 6 px après le titre (gap des cellules de l'en-tête).
+datatable.row.height = {datatable.extend.row.height}
+datatable.sort.icon.margin = 0 0 0 {datatable.header.cell.gap}

@@ -618,4 +618,49 @@
   <data name="showcase.identity.count" xml:space="preserve">
     <value>Count</value>
   </data>
+  <data name="showcase.nav.table" xml:space="preserve">
+    <value>Data table</value>
+  </data>
+  <data name="showcase.table.title" xml:space="preserve">
+    <value>Data table</value>
+  </data>
+  <data name="showcase.table.help" xml:space="preserve">
+    <value>The grid of 3DEXPERIENCE: a click on a title sorts the column (Shift for several), the edge of a title widens it; one or several rows are chosen. Striped, gridlines, three sizes, a message when empty, a veil while loading.</value>
+  </data>
+  <data name="showcase.table.variables" xml:space="preserve">
+    <value>Environment variables</value>
+  </data>
+  <data name="showcase.table.name" xml:space="preserve">
+    <value>Name</value>
+  </data>
+  <data name="showcase.table.value" xml:space="preserve">
+    <value>Value</value>
+  </data>
+  <data name="showcase.table.scope" xml:space="preserve">
+    <value>Scope</value>
+  </data>
+  <data name="showcase.table.modified" xml:space="preserve">
+    <value>Modified</value>
+  </data>
+  <data name="showcase.table.active" xml:space="preserve">
+    <value>Active</value>
+  </data>
+  <data name="showcase.table.count" xml:space="preserve">
+    <value>{0} variables</value>
+  </data>
+  <data name="showcase.table.striped" xml:space="preserve">
+    <value>Striped and gridlines, small</value>
+  </data>
+  <data name="showcase.table.empty" xml:space="preserve">
+    <value>Empty</value>
+  </data>
+  <data name="showcase.table.emptyMessage" xml:space="preserve">
+    <value>No variable for this environment.</value>
+  </data>
+  <data name="showcase.table.load" xml:space="preserve">
+    <value>Load for 2 seconds</value>
+  </data>
+  <data name="showcase.table.search" xml:space="preserve">
+    <value>Search</value>
+  </data>
 </root>

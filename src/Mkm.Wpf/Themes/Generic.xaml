@@ -13,6 +13,7 @@
         <ResourceDictionary Source="/Mkm.Wpf;component/Controls/BlockUI/BlockUI.xaml" />
         <ResourceDictionary Source="/Mkm.Wpf;component/Controls/Button/Button.xaml" />
         <ResourceDictionary Source="/Mkm.Wpf;component/Controls/Checkbox/Checkbox.xaml" />
+        <ResourceDictionary Source="/Mkm.Wpf;component/Controls/DataTable/DataTable.xaml" />
         <ResourceDictionary Source="/Mkm.Wpf;component/Controls/DatePicker/DatePicker.xaml" />
         <ResourceDictionary Source="/Mkm.Wpf;component/Controls/Dialog/Dialog.xaml" />
         <ResourceDictionary Source="/Mkm.Wpf;component/Controls/Fieldset/Fieldset.xaml" />
