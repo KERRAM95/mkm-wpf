@@ -85,8 +85,10 @@ vitrine en est l'exemple (`apps/Mkm.Wpf.Showcase`).
    (`docs/fondations/theme-et-langue.md`).
 2. Les thèmes : les jetons de conception, un thème par défaut et ARA, par la
    même configuration.
-3. L'ActionBar, une barre de commandes en onglets.
-4. Le registre des commandes, puis les icônes.
+3. Les icônes (le jeu Tabler, comme mkm).
+4. L'ActionBar, une barre de commandes en onglets : le composant prioritaire
+   (`docs/composants/actionbar.md`).
+5. Le registre des commandes.
 
 ## Règles
 

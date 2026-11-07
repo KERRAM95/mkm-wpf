@@ -71,7 +71,10 @@ les change pendant qu'elle tourne**, comme avec mkm. La langue est une exigence
 au même titre que le thème (Mourad, le 07/11/2026) : tout composant est
 traduisible. Le pourquoi est dans `docs/fondations/theme-et-langue.md`
 (validée le 07/11/2026) ; le thème a sa fiche, `docs/fondations/theme.md`
-(à valider).
+(validée le 07/11/2026). Une application fixe son thème : elle n'offre pas
+d'en changer ; le changement à chaud sert la vitrine. Les couleurs de
+maturité ne sont pas des jetons de thème : ce sont des *policies* de
+l'application.
 
 La langue, telle qu'elle est faite (`src/Mkm.Wpf/Localization`) :
 

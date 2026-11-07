@@ -4,12 +4,12 @@
 > d'abord »). Mourad valide ce qui touche à l'apparence (« À valider ») ; la
 > technique se décide ici (`CLAUDE.md`, « Qui décide »).
 
-**État :** à l'étude — proposition du 07/11/2026.
+**État :** validée le 07/11/2026 (voir « À valider » pour les réponses).
 
 ## Le besoin
 
 Une application choisit son thème par **une variable**, posée dans
-`App.xaml` à côté de la langue, et le change pendant qu'elle tourne :
+`App.xaml` à côté de la langue :
 
 ```xml
 <mkm:MkmResources Theme="Ara" Language="fr" />
@@ -18,11 +18,17 @@ Une application choisit son thème par **une variable**, posée dans
 Le principe est validé avec la langue (`docs/fondations/theme-et-langue.md`) ;
 cette fiche dit ce qu'est un thème, ce qu'il contient, et lesquels on fournit.
 
+**Une application fixe son thème** : elle ne propose pas d'en changer
+(Mourad, le 07/11/2026). Le changement à chaud sert la vitrine, qui montre
+chaque composant dans chaque thème ; il ne coûte rien de plus, puisque les
+gabarits lisent déjà leurs ressources par `DynamicResource`.
+
 ## Ce que fait mkm
 
 - **Un thème est un preset** : des objets de jetons, à trois niveaux.
   - **Primitifs** : les palettes (onze teintes par couleur, de 50 à 950), les
-    rayons d'angle (`xs` à `xl`), les couleurs d'état et de maturité.
+    rayons d'angle (`xs` à `xl`), les couleurs d'état (et, dans mkm, celles
+    des états de maturité, que mkm-wpf ne reprend pas : voir plus bas).
   - **Sémantiques** : la couleur principale, les surfaces, le texte (normal,
     survolé, atténué), le contenu, les champs de saisie (marges, taille du
     texte, petite et grande tailles), les listes, la navigation, les
@@ -91,14 +97,18 @@ définition (MaterialDesign).
 
 ## À valider
 
-1. **Les thèmes fournis** : Dashboard, l'apparence de 3DEXPERIENCE (celle des
-   widgets mkm), par défaut ; et ARA, ses mesures aux couleurs de la charte.
-2. **Pas de mode sombre pour l'instant**, comme mkm : il viendrait plus tard
-   comme un thème de plus.
-3. **La barre de titre de Windows reste** : une barre de titre dessinée par
-   nous, à la manière de 3DEXPERIENCE, serait un composant à part, plus tard.
-4. **Les couleurs de maturité de mkm** (Private, In Work, Frozen, Released,
-   Obsolete) entrent dans les thèmes.
+1. ~~**Les thèmes fournis** : Dashboard, l'apparence de 3DEXPERIENCE (celle
+   des widgets mkm), par défaut ; et ARA, ses mesures aux couleurs de la
+   charte.~~ Validé le 07/11/2026.
+2. ~~**Pas de mode sombre pour l'instant**, comme mkm : il viendrait plus tard
+   comme un thème de plus.~~ Validé le 07/11/2026.
+3. ~~**La barre de titre de Windows reste** : une barre de titre dessinée par
+   nous, à la manière de 3DEXPERIENCE, serait un composant à part, plus
+   tard.~~ Validé le 07/11/2026.
+4. **Les couleurs de maturité n'entrent pas dans les thèmes** (Mourad, le
+   07/11/2026) : ce sont des *policies*, gérées hors de la bibliothèque de
+   composants. Un composant qui montre une maturité reçoit sa couleur de
+   l'application.
 
 ## Sources
 
