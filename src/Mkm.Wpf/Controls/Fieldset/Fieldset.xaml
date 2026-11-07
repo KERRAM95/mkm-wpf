@@ -1,0 +1,125 @@
+<!--
+    Le style de Fieldset, sur le fieldset de mkm (presets dashboard et ara, fieldset, ceux de Nora) : un cadre
+    d'un pixel aux coins du contenu, 9 px de retrait sous la légende, 13,5 px ailleurs ; la légende, en gras,
+    dans un cartouche bordé (6 px sur 9 de retrait), à cheval sur le bord du haut, au droit du contenu.
+    Repliable, la légende est un bouton : un moins devant elle, un plus une fois replié ; survolée, elle prend
+    le fond et la couleur du survol ; au clavier, l'anneau du focus, à un pixel autour.
+
+    Écart avec mkm : le contenu se replie sans transition.
+-->
+<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+                    xmlns:local="clr-namespace:Mkm.Wpf.Controls">
+
+    <!-- L'anneau du clavier de la légende : 1 px de large, 1 px autour (focus.ring.offset). -->
+    <Style x:Key="MkmFieldsetAnneau">
+        <Setter Property="Control.Template">
+            <Setter.Value>
+                <ControlTemplate>
+                    <Rectangle Margin="-2" SnapsToDevicePixels="True"
+                               Stroke="{DynamicResource mkm.fieldset.legend.focus.ring.color}"
+                               StrokeThickness="{DynamicResource mkm.fieldset.legend.focus.ring.width}" />
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+
+    <!-- Le bouton de la légende repliable : rien que son contenu, sur le retrait de la légende. -->
+    <Style x:Key="MkmFieldsetBascule" TargetType="{x:Type ToggleButton}">
+        <Setter Property="Padding" Value="{DynamicResource mkm.fieldset.legend.padding}" />
+        <Setter Property="Cursor" Value="Hand" />
+        <Setter Property="FocusVisualStyle" Value="{StaticResource MkmFieldsetAnneau}" />
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="{x:Type ToggleButton}">
+                    <Border Background="Transparent" Padding="{TemplateBinding Padding}">
+                        <ContentPresenter VerticalAlignment="Center" RecognizesAccessKey="True" />
+                    </Border>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+
+    <Style TargetType="{x:Type local:Fieldset}">
+        <Setter Property="FontFamily" Value="{DynamicResource mkm.font.family}" />
+        <Setter Property="FontSize" Value="{DynamicResource mkm.font.size}" />
+        <Setter Property="Foreground" Value="{DynamicResource mkm.fieldset.color}" />
+        <Setter Property="Background" Value="{DynamicResource mkm.fieldset.background}" />
+        <Setter Property="BorderBrush" Value="{DynamicResource mkm.fieldset.border.color}" />
+        <Setter Property="BorderThickness" Value="1" />
+        <Setter Property="Padding" Value="{DynamicResource mkm.fieldset.padding}" />
+        <Setter Property="SnapsToDevicePixels" Value="True" />
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="{x:Type local:Fieldset}">
+                    <!-- La légende couvre les deux premières lignes : le cadre commence à sa mi-hauteur. -->
+                    <Grid>
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="Auto" />
+                            <RowDefinition Height="Auto" />
+                            <RowDefinition Height="*" />
+                        </Grid.RowDefinitions>
+                        <Border x:Name="Cadre" Grid.Row="1" Grid.RowSpan="2"
+                                Background="{TemplateBinding Background}"
+                                BorderBrush="{TemplateBinding BorderBrush}"
+                                BorderThickness="{TemplateBinding BorderThickness}"
+                                CornerRadius="{DynamicResource mkm.fieldset.border.radius}" />
+                        <Border x:Name="PART_Legend" Grid.Row="0" Grid.RowSpan="2" HorizontalAlignment="Left"
+                                BorderThickness="1"
+                                Background="{DynamicResource mkm.fieldset.legend.background}"
+                                BorderBrush="{DynamicResource mkm.fieldset.legend.border.color}"
+                                CornerRadius="{DynamicResource mkm.fieldset.legend.border.radius}"
+                                Padding="{DynamicResource mkm.fieldset.legend.padding}"
+                                TextElement.Foreground="{DynamicResource mkm.fieldset.legend.color}"
+                                TextElement.FontWeight="{DynamicResource mkm.fieldset.legend.font.weight}">
+                            <Grid>
+                                <ContentPresenter x:Name="Legende" ContentSource="Header" RecognizesAccessKey="True" />
+                                <ToggleButton x:Name="Bascule" Visibility="Collapsed" Style="{StaticResource MkmFieldsetBascule}"
+                                              IsChecked="{Binding IsCollapsed, RelativeSource={RelativeSource TemplatedParent}, Mode=TwoWay}"
+                                              AutomationProperties.Name="{Binding Header, RelativeSource={RelativeSource TemplatedParent}}">
+                                    <StackPanel Orientation="Horizontal">
+                                        <local:Icon x:Name="Signe" Source="{x:Static local:Icons.Remove}" VerticalAlignment="Center"
+                                                    Foreground="{DynamicResource mkm.fieldset.toggle.icon.color}" />
+                                        <Rectangle Width="{DynamicResource mkm.fieldset.legend.gap}" />
+                                        <ContentPresenter Content="{Binding Header, RelativeSource={RelativeSource TemplatedParent}}"
+                                                          ContentTemplate="{Binding HeaderTemplate, RelativeSource={RelativeSource TemplatedParent}}"
+                                                          VerticalAlignment="Center" RecognizesAccessKey="True" />
+                                    </StackPanel>
+                                </ToggleButton>
+                            </Grid>
+                        </Border>
+                        <Border Grid.Row="2"
+                                BorderThickness="{TemplateBinding BorderThickness}" BorderBrush="Transparent"
+                                Padding="{TemplateBinding Padding}">
+                            <ContentPresenter x:Name="Contenu" Margin="{DynamicResource mkm.fieldset.content.padding}" />
+                        </Border>
+                    </Grid>
+                    <ControlTemplate.Triggers>
+                        <Trigger Property="Toggleable" Value="True">
+                            <Setter TargetName="Legende" Property="Visibility" Value="Collapsed" />
+                            <Setter TargetName="Bascule" Property="Visibility" Value="Visible" />
+                            <Setter TargetName="PART_Legend" Property="Padding" Value="0" />
+                        </Trigger>
+                        <MultiTrigger>
+                            <MultiTrigger.Conditions>
+                                <Condition Property="Toggleable" Value="True" />
+                                <Condition Property="IsCollapsed" Value="True" />
+                            </MultiTrigger.Conditions>
+                            <Setter TargetName="Contenu" Property="Visibility" Value="Collapsed" />
+                            <Setter TargetName="Signe" Property="Source" Value="{x:Static local:Icons.Add}" />
+                        </MultiTrigger>
+                        <Trigger SourceName="Bascule" Property="IsMouseOver" Value="True">
+                            <Setter TargetName="PART_Legend" Property="Background" Value="{DynamicResource mkm.fieldset.legend.hover.background}" />
+                            <Setter TargetName="PART_Legend" Property="TextElement.Foreground" Value="{DynamicResource mkm.fieldset.legend.hover.color}" />
+                            <Setter TargetName="Signe" Property="Foreground" Value="{DynamicResource mkm.fieldset.toggle.icon.hover.color}" />
+                        </Trigger>
+                        <Trigger Property="IsEnabled" Value="False">
+                            <Setter Property="Opacity" Value="{DynamicResource mkm.disabled.opacity}" />
+                        </Trigger>
+                    </ControlTemplate.Triggers>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+
+</ResourceDictionary>

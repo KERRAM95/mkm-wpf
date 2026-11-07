@@ -20,6 +20,9 @@ Namespace Mkm.Wpf.Showcase
             Select Case CStr(entree?.Tag)
                 Case "ActionBar" : Page.Content = New ActionBarPage()
                 Case "Champs" : Page.Content = New ChampsPage()
+                Case "Boutons" : Page.Content = New BoutonsPage()
+                Case "Conteneurs" : Page.Content = New ConteneursPage()
+                Case "Retours" : Page.Content = New RetoursPage()
             End Select
         End Sub
 

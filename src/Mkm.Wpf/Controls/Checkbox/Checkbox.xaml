@@ -1,0 +1,105 @@
+<!--
+    Le style de Checkbox, sur la case de 3DEXPERIENCE de mkm (presets dashboard et ara, checkbox) :
+    14 px, coins de 2 px, gris clair bordée de gris ; cochée, la couleur principale et une coche qui la
+    remplit, d'un trait de 2 px ; survolée ou au clavier, elle fonce d'un pas, enfoncée d'un pas de
+    plus ; grisée, elle garde ses couleurs, à moitié transparente. Son libellé fait partie d'elle :
+    le survoler ou l'enfoncer allume la case.
+
+    Écart avec mkm : la case de mkm n'a pas de libellé à elle ; ici, Content l'est (6 px d'écart).
+-->
+<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+                    xmlns:local="clr-namespace:Mkm.Wpf.Controls">
+
+    <Style TargetType="{x:Type local:Checkbox}">
+        <Setter Property="FontFamily" Value="{DynamicResource mkm.font.family}" />
+        <Setter Property="FontSize" Value="{DynamicResource mkm.font.size}" />
+        <Setter Property="Foreground" Value="{DynamicResource mkm.text.color}" />
+        <Setter Property="Cursor" Value="Hand" />
+        <Setter Property="FocusVisualStyle" Value="{x:Null}" />
+        <Setter Property="SnapsToDevicePixels" Value="True" />
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="{x:Type local:Checkbox}">
+                    <StackPanel x:Name="Racine" Background="Transparent" Orientation="Horizontal">
+                        <Grid VerticalAlignment="Center"
+                              Width="{DynamicResource mkm.checkbox.width}" Height="{DynamicResource mkm.checkbox.height}">
+                            <Border x:Name="Boite" BorderThickness="1"
+                                    Background="{DynamicResource mkm.checkbox.background}"
+                                    BorderBrush="{DynamicResource mkm.checkbox.border.color}"
+                                    CornerRadius="{DynamicResource mkm.checkbox.border.radius}" />
+                            <!-- La coche prend la taille de la case ; 3,43 sur la grille de 24 font 2 px à 14 px. -->
+                            <local:Icon x:Name="Coche" Visibility="Collapsed" StrokeThickness="3.43"
+                                        Width="{DynamicResource mkm.checkbox.icon.size}" Height="{DynamicResource mkm.checkbox.icon.size}"
+                                        Foreground="{DynamicResource mkm.checkbox.icon.checked.color}"
+                                        Source="{x:Static local:Icons.Check}" />
+                        </Grid>
+                        <Rectangle x:Name="Ecart" Width="{DynamicResource mkm.checkbox.label.gap}" />
+                        <ContentPresenter x:Name="Libelle" VerticalAlignment="Center" RecognizesAccessKey="True" />
+                    </StackPanel>
+                    <ControlTemplate.Triggers>
+                        <Trigger Property="HasContent" Value="False">
+                            <Setter TargetName="Ecart" Property="Visibility" Value="Collapsed" />
+                        </Trigger>
+                        <Trigger Property="IsMouseOver" Value="True">
+                            <Setter TargetName="Boite" Property="Background" Value="{DynamicResource mkm.checkbox.hover.background}" />
+                            <Setter TargetName="Boite" Property="BorderBrush" Value="{DynamicResource mkm.checkbox.hover.border.color}" />
+                        </Trigger>
+                        <Trigger Property="IsKeyboardFocused" Value="True">
+                            <Setter TargetName="Boite" Property="Background" Value="{DynamicResource mkm.checkbox.hover.background}" />
+                            <Setter TargetName="Boite" Property="BorderBrush" Value="{DynamicResource mkm.checkbox.focus.border.color}" />
+                        </Trigger>
+                        <Trigger Property="IsPressed" Value="True">
+                            <Setter TargetName="Boite" Property="Background" Value="{DynamicResource mkm.checkbox.pressed.background}" />
+                            <Setter TargetName="Boite" Property="BorderBrush" Value="{DynamicResource mkm.checkbox.pressed.border.color}" />
+                        </Trigger>
+                        <Trigger Property="IsChecked" Value="True">
+                            <Setter TargetName="Boite" Property="Background" Value="{DynamicResource mkm.checkbox.checked.background}" />
+                            <Setter TargetName="Boite" Property="BorderBrush" Value="{DynamicResource mkm.checkbox.checked.border.color}" />
+                            <Setter TargetName="Coche" Property="Visibility" Value="Visible" />
+                        </Trigger>
+                        <!-- Indéterminée : un trait, aux couleurs de la case cochée. -->
+                        <Trigger Property="IsChecked" Value="{x:Null}">
+                            <Setter TargetName="Boite" Property="Background" Value="{DynamicResource mkm.checkbox.checked.background}" />
+                            <Setter TargetName="Boite" Property="BorderBrush" Value="{DynamicResource mkm.checkbox.checked.border.color}" />
+                            <Setter TargetName="Coche" Property="Visibility" Value="Visible" />
+                            <Setter TargetName="Coche" Property="Source" Value="{x:Static local:Icons.Remove}" />
+                        </Trigger>
+                        <MultiTrigger>
+                            <MultiTrigger.Conditions>
+                                <Condition Property="IsChecked" Value="True" />
+                                <Condition Property="IsMouseOver" Value="True" />
+                            </MultiTrigger.Conditions>
+                            <Setter TargetName="Boite" Property="Background" Value="{DynamicResource mkm.checkbox.checked.hover.background}" />
+                            <Setter TargetName="Boite" Property="BorderBrush" Value="{DynamicResource mkm.checkbox.checked.hover.border.color}" />
+                        </MultiTrigger>
+                        <MultiTrigger>
+                            <MultiTrigger.Conditions>
+                                <Condition Property="IsChecked" Value="True" />
+                                <Condition Property="IsKeyboardFocused" Value="True" />
+                            </MultiTrigger.Conditions>
+                            <Setter TargetName="Boite" Property="Background" Value="{DynamicResource mkm.checkbox.checked.hover.background}" />
+                            <Setter TargetName="Boite" Property="BorderBrush" Value="{DynamicResource mkm.checkbox.checked.focus.border.color}" />
+                        </MultiTrigger>
+                        <MultiTrigger>
+                            <MultiTrigger.Conditions>
+                                <Condition Property="IsChecked" Value="True" />
+                                <Condition Property="IsPressed" Value="True" />
+                            </MultiTrigger.Conditions>
+                            <Setter TargetName="Boite" Property="Background" Value="{DynamicResource mkm.checkbox.checked.pressed.background}" />
+                            <Setter TargetName="Boite" Property="BorderBrush" Value="{DynamicResource mkm.checkbox.checked.pressed.border.color}" />
+                        </MultiTrigger>
+                        <Trigger Property="Invalid" Value="True">
+                            <Setter TargetName="Boite" Property="BorderBrush" Value="{DynamicResource mkm.checkbox.invalid.border.color}" />
+                        </Trigger>
+                        <!-- Grisée, elle garde ses couleurs, cochée comprise, à moitié transparente. -->
+                        <Trigger Property="IsEnabled" Value="False">
+                            <Setter TargetName="Racine" Property="Opacity" Value="{DynamicResource mkm.disabled.opacity}" />
+                        </Trigger>
+                    </ControlTemplate.Triggers>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+
+</ResourceDictionary>

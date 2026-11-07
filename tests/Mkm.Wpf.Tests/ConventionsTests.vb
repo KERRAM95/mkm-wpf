@@ -1,9 +1,13 @@
 Imports System.Collections.Generic
+Imports System.IO
 Imports System.Linq
 Imports System.Reflection
 Imports System.Runtime.CompilerServices
 Imports System.Windows
+Imports System.Text.RegularExpressions
 Imports System.Windows.Controls
+Imports System.Windows.Media
+Imports Mkm.Wpf.Theming
 Imports NUnit.Framework
 
 Namespace Mkm.Wpf.Tests
@@ -68,6 +72,76 @@ Namespace Mkm.Wpf.Tests
 
             Assert.That(sansStyle, [Is].Empty, "style absent de Themes/Generic.xaml")
         End Sub
+
+        ''' <summary>
+        ''' Chaque contrôle, créé seul, applique son gabarit et se met en page avec les ressources du thème : un
+        ''' gabarit qui casse (une partie absente, une ressource du mauvais type) casse ici. Une fenêtre
+        ''' (<see cref="Window"/>) applique seulement son gabarit : elle ne se met en page qu'ouverte.
+        ''' </summary>
+        <Test>
+        Public Sub ChaqueControle_AppliqueSonGabarit()
+            Dim fautifs As New List(Of String)
+            For Each genre In Controles().Where(Function(t) t.GetConstructor(Type.EmptyTypes) IsNot Nothing)
+                Try
+                    Dim controle = DirectCast(Activator.CreateInstance(genre), Control)
+                    controle.BeginInit()
+                    controle.EndInit()
+                    If Not controle.ApplyTemplate() AndAlso VisualTreeHelper.GetChildrenCount(controle) = 0 Then
+                        fautifs.Add($"{genre.Name} : pas de gabarit")
+                        Continue For
+                    End If
+                    If TypeOf controle Is Window Then
+                        DirectCast(controle, Window).Close()
+                        Continue For
+                    End If
+                    controle.Measure(New Size(400, 300))
+                    controle.Arrange(New Rect(0, 0, 400, 300))
+                    controle.UpdateLayout()
+                Catch ex As Exception
+                    fautifs.Add($"{genre.Name} : {ex.GetBaseException().Message}")
+                End Try
+            Next
+
+            Assert.That(fautifs, [Is].Empty)
+        End Sub
+
+        ''' <summary>
+        ''' Chaque ressource que nomme un gabarit (<c>{DynamicResource mkm.…}</c>) existe dans chaque thème : une
+        ''' ressource absente ne lève rien dans WPF, la propriété garde sa valeur par défaut, sans bruit.
+        ''' </summary>
+        <Test>
+        Public Sub ChaqueRessourceDesGabarits_ExisteDansChaqueTheme()
+            Dim controles = DossierDesControles()
+            If controles Is Nothing Then Assert.Ignore("les sources de Mkm.Wpf ne sont pas à côté des tests")
+
+            Dim motif As New Regex("DynamicResource (" & Regex.Escape(ThemeResources.Prefix) & "[A-Za-z0-9.]+)")
+            Dim cles = Directory.GetFiles(controles, "*.xaml", SearchOption.AllDirectories).
+                SelectMany(Function(f) motif.Matches(File.ReadAllText(f)).Cast(Of Match)().
+                    Select(Function(m) $"{m.Groups(1).Value} ({Path.GetFileName(f)})")).
+                Distinct().
+                ToList()
+            Assert.That(cles, [Is].Not.Empty)
+
+            Dim absentes As New List(Of String)
+            For Each theme In Themes.All
+                Dim ressources = ThemeResources.Build(theme)
+                absentes.AddRange(cles.Where(Function(c) Not ressources.Contains(c.Substring(0, c.IndexOf(" "c)))).
+                                       Select(Function(c) $"{theme.Name} : {c}"))
+            Next
+
+            Assert.That(absentes, [Is].Empty)
+        End Sub
+
+        ' Le dossier des contrôles dans les sources, en remontant depuis les tests ; Nothing hors du dépôt.
+        Private Shared Function DossierDesControles() As String
+            Dim dossier = New DirectoryInfo(TestContext.CurrentContext.TestDirectory)
+            While dossier IsNot Nothing
+                Dim candidat = Path.Combine(dossier.FullName, "src", "Mkm.Wpf", "Controls")
+                If Directory.Exists(candidat) Then Return candidat
+                dossier = dossier.Parent
+            End While
+            Return Nothing
+        End Function
 
     End Class
 

@@ -10,7 +10,7 @@ Namespace Mkm.Wpf.Controls
     ''' <code>&lt;mkm:ActionBarButton Label="Enregistrer" Icon="{x:Static mkm:Icons.Download}" Command="{Binding Enregistrer}" /&gt;</code>
     ''' </summary>
     Public Class ActionBarButton
-        Inherits Button
+        Inherits System.Windows.Controls.Button
         Implements IActionBarCommand
 
         ''' <summary>Le libellé de la commande.</summary>

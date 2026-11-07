@@ -147,4 +147,196 @@
   <data name="showcase.fields.long" xml:space="preserve">
     <value>5,000 values (virtualized list)</value>
   </data>
+  <data name="showcase.buttons.title" xml:space="preserve">
+    <value>Buttons and checkboxes</value>
+  </data>
+  <data name="showcase.buttons.help" xml:space="preserve">
+    <value>The buttons of mkm, as in 3DEXPERIENCE: a severity (Severity) and a form (Variant), with or without an icon; the checkbox and its label.</value>
+  </data>
+  <data name="showcase.buttons.severities" xml:space="preserve">
+    <value>Severities (Filled)</value>
+  </data>
+  <data name="showcase.buttons.outlined" xml:space="preserve">
+    <value>Outlined</value>
+  </data>
+  <data name="showcase.buttons.text" xml:space="preserve">
+    <value>Text</value>
+  </data>
+  <data name="showcase.buttons.link" xml:space="preserve">
+    <value>Link</value>
+  </data>
+  <data name="showcase.buttons.icons" xml:space="preserve">
+    <value>With an icon, icon only, « lite », disabled</value>
+  </data>
+  <data name="showcase.buttons.download" xml:space="preserve">
+    <value>Download</value>
+  </data>
+  <data name="showcase.buttons.save" xml:space="preserve">
+    <value>Save</value>
+  </data>
+  <data name="showcase.buttons.disabled" xml:space="preserve">
+    <value>Disabled</value>
+  </data>
+  <data name="showcase.buttons.checkboxes" xml:space="preserve">
+    <value>Checkbox</value>
+  </data>
+  <data name="showcase.buttons.unchecked" xml:space="preserve">
+    <value>Not checked</value>
+  </data>
+  <data name="showcase.buttons.checked" xml:space="preserve">
+    <value>Checked</value>
+  </data>
+  <data name="showcase.buttons.indeterminate" xml:space="preserve">
+    <value>Indeterminate (three states)</value>
+  </data>
+  <data name="showcase.buttons.invalid" xml:space="preserve">
+    <value>Invalid</value>
+  </data>
+  <data name="showcase.buttons.disabledChecked" xml:space="preserve">
+    <value>Disabled, checked</value>
+  </data>
+  <data name="showcase.containers.title" xml:space="preserve">
+    <value>Tabs and fieldsets</value>
+  </data>
+  <data name="showcase.containers.help" xml:space="preserve">
+    <value>The tabs of mkm: the group in the middle of its bar, or the underlined facets of a panel (Variant="Strip"); the fieldset and its legend, collapsible.</value>
+  </data>
+  <data name="showcase.containers.group" xml:space="preserve">
+    <value>Tabs (Group)</value>
+  </data>
+  <data name="showcase.containers.strip" xml:space="preserve">
+    <value>Tabs (Strip)</value>
+  </data>
+  <data name="showcase.containers.titleBlock" xml:space="preserve">
+    <value>Title block</value>
+  </data>
+  <data name="showcase.containers.notes" xml:space="preserve">
+    <value>Notes</value>
+  </data>
+  <data name="showcase.containers.history" xml:space="preserve">
+    <value>History</value>
+  </data>
+  <data name="showcase.containers.properties" xml:space="preserve">
+    <value>Properties</value>
+  </data>
+  <data name="showcase.containers.relations" xml:space="preserve">
+    <value>Relations</value>
+  </data>
+  <data name="showcase.containers.titleBlockText" xml:space="preserve">
+    <value>The title block of the drawing: reference, designation, scale.</value>
+  </data>
+  <data name="showcase.containers.notesText" xml:space="preserve">
+    <value>The notes of the drawing.</value>
+  </data>
+  <data name="showcase.containers.historyText" xml:space="preserve">
+    <value>The revisions of the drawing.</value>
+  </data>
+  <data name="showcase.containers.fieldsets" xml:space="preserve">
+    <value>Fieldset</value>
+  </data>
+  <data name="showcase.containers.drawing" xml:space="preserve">
+    <value>Drawing</value>
+  </data>
+  <data name="showcase.containers.toggleable" xml:space="preserve">
+    <value>Options (collapsible)</value>
+  </data>
+  <data name="showcase.containers.collapsed" xml:space="preserve">
+    <value>Advanced (collapsed)</value>
+  </data>
+  <data name="showcase.containers.option" xml:space="preserve">
+    <value>Update the title block on save</value>
+  </data>
+  <data name="showcase.feedback.title" xml:space="preserve">
+    <value>Messages, notifications and dialogs</value>
+  </data>
+  <data name="showcase.feedback.help" xml:space="preserve">
+    <value>The message in the page, the notifications in the top right corner of the window, the dialog: a real modal window.</value>
+  </data>
+  <data name="showcase.feedback.messages" xml:space="preserve">
+    <value>Message</value>
+  </data>
+  <data name="showcase.feedback.info" xml:space="preserve">
+    <value>The drawing is open in read-only mode.</value>
+  </data>
+  <data name="showcase.feedback.success" xml:space="preserve">
+    <value>The title block is up to date.</value>
+  </data>
+  <data name="showcase.feedback.warn" xml:space="preserve">
+    <value>The title block is not up to date.</value>
+  </data>
+  <data name="showcase.feedback.error" xml:space="preserve">
+    <value>The drawing could not be saved.</value>
+  </data>
+  <data name="showcase.feedback.secondary" xml:space="preserve">
+    <value>A secondary message.</value>
+  </data>
+  <data name="showcase.feedback.contrast" xml:space="preserve">
+    <value>A contrasted message.</value>
+  </data>
+  <data name="showcase.feedback.forms" xml:space="preserve">
+    <value>Outlined, Simple, small and large</value>
+  </data>
+  <data name="showcase.feedback.closable" xml:space="preserve">
+    <value>A message that closes, by its cross or after 5 seconds</value>
+  </data>
+  <data name="showcase.feedback.again" xml:space="preserve">
+    <value>Show it again</value>
+  </data>
+  <data name="showcase.feedback.toasts" xml:space="preserve">
+    <value>Notifications (Toast)</value>
+  </data>
+  <data name="showcase.feedback.toastHint" xml:space="preserve">
+    <value>5 seconds each, in relief for one second, then fading for one second; the pointer stops their life.</value>
+  </data>
+  <data name="showcase.feedback.sticky" xml:space="preserve">
+    <value>Until its cross</value>
+  </data>
+  <data name="showcase.feedback.clear" xml:space="preserve">
+    <value>Close all</value>
+  </data>
+  <data name="showcase.feedback.saved" xml:space="preserve">
+    <value>Saved</value>
+  </data>
+  <data name="showcase.feedback.dialogs" xml:space="preserve">
+    <value>Dialog</value>
+  </data>
+  <data name="showcase.feedback.open" xml:space="preserve">
+    <value>Rename…</value>
+  </data>
+  <data name="showcase.feedback.openResizable" xml:space="preserve">
+    <value>Resizable, long title</value>
+  </data>
+  <data name="showcase.feedback.rename" xml:space="preserve">
+    <value>Rename the drawing</value>
+  </data>
+  <data name="showcase.feedback.longTitle" xml:space="preserve">
+    <value>Properties of the drawing HS-00042 — sheet 1 of 3, revision B, in work</value>
+  </data>
+  <data name="showcase.feedback.newName" xml:space="preserve">
+    <value>New name</value>
+  </data>
+  <data name="showcase.feedback.cancel" xml:space="preserve">
+    <value>Cancel</value>
+  </data>
+  <data name="showcase.feedback.ok" xml:space="preserve">
+    <value>Rename</value>
+  </data>
+  <data name="showcase.feedback.close" xml:space="preserve">
+    <value>Close</value>
+  </data>
+  <data name="showcase.feedback.renamed" xml:space="preserve">
+    <value>Renamed: {0}</value>
+  </data>
+  <data name="showcase.feedback.cancelled" xml:space="preserve">
+    <value>Cancelled</value>
+  </data>
+  <data name="showcase.nav.buttons" xml:space="preserve">
+    <value>Buttons</value>
+  </data>
+  <data name="showcase.nav.containers" xml:space="preserve">
+    <value>Tabs and fieldsets</value>
+  </data>
+  <data name="showcase.nav.feedback" xml:space="preserve">
+    <value>Messages and dialogs</value>
+  </data>
 </root>

@@ -48,7 +48,41 @@ Namespace Mkm.Wpf.Tests.Theming
             {"inputtext.color", "inputtext.background"},
             {"select.color", "select.background"},
             {"select.option.color", "select.overlay.background"},
-            {"select.option.selected.color", "select.option.selected.background"}}
+            {"select.option.selected.color", "select.option.selected.background"},
+            {"tabs.tab.color", "tabs.tab.background"},
+            {"tabs.tab.active.color", "tabs.tab.active.background"},
+            {"fieldset.color", "fieldset.background"},
+            {"fieldset.legend.color", "fieldset.legend.background"},
+            {"dialog.color", "dialog.background"},
+            {"dialog.color", "dialog.footer.background"}}
+
+        ' Les paires de mkm par gravité : les boutons dans chaque état et chaque forme, les messages, les notifications.
+        Private Shared Function PairesParGravite() As IEnumerable(Of String())
+            Dim paires As New List(Of String())
+            For Each g In {"primary", "secondary", "success", "info", "warn", "help", "danger", "contrast"}
+                For Each etat In {"", "hover.", "active."}
+                    paires.Add({$"button.{g}.{etat}color", $"button.{g}.{etat}background"})
+                Next
+                paires.Add({$"button.outlined.{g}.color", "content.background"})
+                paires.Add({$"button.text.{g}.color", "content.background"})
+                paires.Add({$"button.text.{g}.color", $"button.text.{g}.hover.background"})
+            Next
+            paires.Add({"button.link.color", "content.background"})
+            paires.Add({"button.link.hover.color", "content.background"})
+            For Each g In {"info", "success", "warn", "error", "secondary", "contrast"}
+                paires.Add({$"message.{g}.color", $"message.{g}.background"})
+                paires.Add({$"message.{g}.outlined.color", "content.background"})
+                paires.Add({$"message.{g}.simple.color", "content.background"})
+                paires.Add({$"toast.{g}.color", $"toast.{g}.background"})
+                paires.Add({$"toast.{g}.detail.color", $"toast.{g}.background"})
+            Next
+            Return paires
+        End Function
+
+        ' Les paires qui restent sous 4,5:1 exprès, comme chez mkm (contrast.spec.ts), au-dessus de 3:1 (texte large).
+        ' Le bouton principal de 3DX : le blanc sur le bleu #368ec4 du tableau de bord, 3,6:1 ; son survol et son appui
+        ' tiennent 4,5.
+        Private Shared ReadOnly _permises As String() = {"Dashboard : button.primary.color sur button.primary.background"}
 
         Private Shared Function Integres() As IEnumerable(Of TestCaseData)
             Return {New TestCaseData(Themes.Dashboard).SetName("Dashboard"), New TestCaseData(Themes.Ara).SetName("Ara")}
@@ -70,12 +104,17 @@ Namespace Mkm.Wpf.Tests.Theming
 
         <TestCaseSource(NameOf(Integres))>
         Public Sub ChaqueTexte_SeLitSurSonFond(theme As ThemeDefinition)
+            Dim paires = Enumerable.Range(0, _paires.GetLength(0)).
+                Select(Function(i) {_paires(i, 0), _paires(i, 1)}).
+                Concat(PairesParGravite())
             Dim illisibles As New List(Of String)
-            For i = 0 To _paires.GetLength(0) - 1
-                Dim fond = Couleur(theme, _paires(i, 1), Colors.White)
-                Dim texte = Couleur(theme, _paires(i, 0), fond)
+            For Each paire In paires
+                Dim fond = Couleur(theme, paire(1), Colors.White)
+                Dim texte = Couleur(theme, paire(0), fond)
                 Dim rapport = Contraste(texte, fond)
-                If rapport < 4.5 Then illisibles.Add($"{_paires(i, 0)} sur {_paires(i, 1)} : {rapport:0.00}")
+                Dim cle = $"{theme.Name} : {paire(0)} sur {paire(1)}"
+                Dim seuil = If(_permises.Contains(cle), 3.0, 4.5)
+                If rapport < seuil Then illisibles.Add($"{cle} : {rapport:0.00}")
             Next
 
             Assert.That(illisibles, [Is].Empty)

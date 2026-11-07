@@ -1,0 +1,209 @@
+<!--
+    Les styles de Tabs et de Tab, sur les onglets de 3DEXPERIENCE de mkm (presets dashboard et ara, tabs) :
+
+    - Group (par défaut) : le groupe d'onglets au milieu d'une barre de 26 px, 2 px sous son haut, dans un
+      cadre de 25 px bordé de gris sous une ombre courte, que la barre coupe en bas ; chaque onglet de
+      23 px, 65 px de large au moins, filet blanc en haut et gris en bas, le choisi d'un bleu pâle ; le
+      premier et le dernier ont leur filet blanc de côté et leurs coins de 2 px. Ni survol ni appui.
+    - Strip : les facettes d'un panneau, des onglets de 26 px sans cadre, soulignés de 3 px (bleu moyen
+      pour le choisi, gris au survol, à l'appui et au clavier), sur une barre au dernier pixel gris.
+
+    Le contenu de l'onglet choisi vient dessous, sur le fond du contenu, 12 px de retrait.
+    Au clavier, un anneau de la couleur du focus, 2 px à l'intérieur de l'onglet.
+-->
+<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+                    xmlns:local="clr-namespace:Mkm.Wpf.Controls">
+
+    <!-- L'anneau du clavier : 2 px à l'intérieur de l'onglet (focus.ring.offset de -2 px). -->
+    <Style x:Key="MkmTabsAnneau">
+        <Setter Property="Control.Template">
+            <Setter.Value>
+                <ControlTemplate>
+                    <Rectangle Margin="2" SnapsToDevicePixels="True"
+                               Stroke="{DynamicResource mkm.tabs.tab.focus.ring.color}"
+                               StrokeThickness="{DynamicResource mkm.tabs.tab.focus.ring.width}" />
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+
+    <Style TargetType="{x:Type local:Tabs}">
+        <Setter Property="FontFamily" Value="{DynamicResource mkm.font.family}" />
+        <Setter Property="FontSize" Value="{DynamicResource mkm.font.size}" />
+        <Setter Property="Foreground" Value="{DynamicResource mkm.tabs.tabpanel.color}" />
+        <Setter Property="Background" Value="{DynamicResource mkm.tabs.tabpanel.background}" />
+        <Setter Property="Padding" Value="{DynamicResource mkm.tabs.tabpanel.padding}" />
+        <Setter Property="BorderThickness" Value="0" />
+        <Setter Property="SnapsToDevicePixels" Value="True" />
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="{x:Type local:Tabs}">
+                    <Grid KeyboardNavigation.TabNavigation="Local">
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="Auto" />
+                            <RowDefinition Height="*" />
+                        </Grid.RowDefinitions>
+                        <!-- La barre coupe le bas du cadre, sa bordure et son ombre. -->
+                        <Grid x:Name="Barre" ClipToBounds="True"
+                              Height="{DynamicResource mkm.tabs.bar.height}"
+                              Background="{DynamicResource mkm.tabs.tablist.background}">
+                            <Border x:Name="Trait" Height="1" VerticalAlignment="Bottom" Visibility="Collapsed"
+                                    Background="{DynamicResource mkm.tabs.strip.line.color}" />
+                            <Grid x:Name="Groupe" HorizontalAlignment="Center" VerticalAlignment="Top"
+                                  Height="{DynamicResource mkm.tabs.frame.height}"
+                                  Margin="{DynamicResource mkm.tabs.frame.margin}">
+                                <!-- L'ombre a sa bordure à elle : sur le cadre, elle ombrerait aussi les libellés. -->
+                                <Border x:Name="Ombre"
+                                        Background="{DynamicResource mkm.tabs.frame.background}"
+                                        CornerRadius="{DynamicResource mkm.tabs.frame.border.radius}"
+                                        Effect="{DynamicResource mkm.tabs.frame.shadow}" />
+                                <Border x:Name="Cadre" BorderThickness="1"
+                                        BorderBrush="{DynamicResource mkm.tabs.frame.border.color}"
+                                        CornerRadius="{DynamicResource mkm.tabs.frame.border.radius}">
+                                    <TabPanel x:Name="HeaderPanel" IsItemsHost="True" KeyboardNavigation.TabIndex="1" />
+                                </Border>
+                            </Grid>
+                        </Grid>
+                        <Border Grid.Row="1"
+                                Background="{TemplateBinding Background}"
+                                BorderBrush="{TemplateBinding BorderBrush}"
+                                BorderThickness="{TemplateBinding BorderThickness}"
+                                Padding="{TemplateBinding Padding}"
+                                KeyboardNavigation.TabNavigation="Local"
+                                KeyboardNavigation.DirectionalNavigation="Contained"
+                                KeyboardNavigation.TabIndex="2">
+                            <ContentPresenter x:Name="PART_SelectedContentHost" ContentSource="SelectedContent"
+                                              Margin="0" SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}" />
+                        </Border>
+                    </Grid>
+                    <ControlTemplate.Triggers>
+                        <Trigger Property="Variant" Value="Strip">
+                            <Setter TargetName="Barre" Property="Height" Value="{DynamicResource mkm.tabs.strip.height}" />
+                            <Setter TargetName="Trait" Property="Visibility" Value="Visible" />
+                            <Setter TargetName="Groupe" Property="Height" Value="{DynamicResource mkm.tabs.strip.height}" />
+                            <Setter TargetName="Groupe" Property="Margin" Value="0" />
+                            <Setter TargetName="Ombre" Property="Visibility" Value="Collapsed" />
+                            <Setter TargetName="Cadre" Property="BorderThickness" Value="0" />
+                        </Trigger>
+                        <Trigger Property="IsEnabled" Value="False">
+                            <Setter Property="Opacity" Value="{DynamicResource mkm.disabled.opacity}" />
+                        </Trigger>
+                    </ControlTemplate.Triggers>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+
+    <!-- Un onglet du groupe : trois bordures empilées font ses filets, blanc en haut et aux bouts (une seule couleur
+         chez mkm, « #ffffff #ffffff … »), gris en bas. -->
+    <ControlTemplate x:Key="MkmTabGroupe" TargetType="{x:Type local:Tab}">
+        <Border x:Name="Bas" Background="{DynamicResource mkm.tabs.tab.bottom.border.color}">
+            <Border x:Name="Filets" Margin="0,0,0,1" Background="{DynamicResource mkm.tabs.tab.top.border.color}">
+                <Border x:Name="Fond" Margin="0,1,0,0" Background="{TemplateBinding Background}"
+                        Padding="{TemplateBinding Padding}">
+                    <StackPanel HorizontalAlignment="Center" VerticalAlignment="Center" Orientation="Horizontal">
+                        <local:Icon x:Name="Icone" Width="{DynamicResource mkm.tabs.tab.icon.size}"
+                                    Height="{DynamicResource mkm.tabs.tab.icon.size}"
+                                    Source="{TemplateBinding Icon}" />
+                        <Rectangle x:Name="Ecart" Width="{DynamicResource mkm.tabs.tab.gap}" />
+                        <ContentPresenter ContentSource="Header" VerticalAlignment="Center" RecognizesAccessKey="True" />
+                    </StackPanel>
+                </Border>
+            </Border>
+        </Border>
+        <ControlTemplate.Triggers>
+            <Trigger Property="Icon" Value="{x:Null}">
+                <Setter TargetName="Icone" Property="Visibility" Value="Collapsed" />
+                <Setter TargetName="Ecart" Property="Visibility" Value="Collapsed" />
+            </Trigger>
+            <Trigger Property="IsSelected" Value="True">
+                <Setter TargetName="Fond" Property="Background" Value="{DynamicResource mkm.tabs.tab.active.background}" />
+                <Setter Property="Foreground" Value="{DynamicResource mkm.tabs.tab.active.color}" />
+            </Trigger>
+            <Trigger Property="IsFirst" Value="True">
+                <Setter TargetName="Bas" Property="CornerRadius" Value="{DynamicResource mkm.tabs.tab.first.border.radius}" />
+                <Setter TargetName="Filets" Property="CornerRadius" Value="{DynamicResource mkm.tabs.tab.first.border.radius}" />
+                <Setter TargetName="Fond" Property="Margin" Value="1,1,0,0" />
+            </Trigger>
+            <Trigger Property="IsLast" Value="True">
+                <Setter TargetName="Bas" Property="CornerRadius" Value="{DynamicResource mkm.tabs.tab.last.border.radius}" />
+                <Setter TargetName="Filets" Property="CornerRadius" Value="{DynamicResource mkm.tabs.tab.last.border.radius}" />
+                <Setter TargetName="Fond" Property="Margin" Value="0,1,1,0" />
+            </Trigger>
+            <MultiTrigger>
+                <MultiTrigger.Conditions>
+                    <Condition Property="IsFirst" Value="True" />
+                    <Condition Property="IsLast" Value="True" />
+                </MultiTrigger.Conditions>
+                <Setter TargetName="Bas" Property="CornerRadius" Value="{DynamicResource mkm.tabs.tab.edge.border.radius}" />
+                <Setter TargetName="Filets" Property="CornerRadius" Value="{DynamicResource mkm.tabs.tab.edge.border.radius}" />
+                <Setter TargetName="Fond" Property="Margin" Value="1,1,1,0" />
+            </MultiTrigger>
+            <Trigger Property="IsEnabled" Value="False">
+                <Setter TargetName="Fond" Property="Opacity" Value="{DynamicResource mkm.disabled.opacity}" />
+            </Trigger>
+        </ControlTemplate.Triggers>
+    </ControlTemplate>
+
+    <!-- Une facette : sans cadre, le libellé en haut, un trait de 3 px dessous. -->
+    <ControlTemplate x:Key="MkmTabStrip" TargetType="{x:Type local:Tab}">
+        <Grid x:Name="Fond" Background="Transparent">
+            <StackPanel Margin="{TemplateBinding Padding}" HorizontalAlignment="Center" VerticalAlignment="Top"
+                        Orientation="Horizontal">
+                <local:Icon x:Name="Icone" Width="{DynamicResource mkm.tabs.tab.icon.size}"
+                            Height="{DynamicResource mkm.tabs.tab.icon.size}"
+                            Source="{TemplateBinding Icon}" />
+                <Rectangle x:Name="Ecart" Width="{DynamicResource mkm.tabs.tab.gap}" />
+                <ContentPresenter ContentSource="Header" VerticalAlignment="Center" RecognizesAccessKey="True" />
+            </StackPanel>
+            <Border x:Name="Souligne" VerticalAlignment="Bottom" Background="Transparent"
+                    Height="{DynamicResource mkm.tabs.strip.tab.bar.height}" />
+        </Grid>
+        <ControlTemplate.Triggers>
+            <Trigger Property="Icon" Value="{x:Null}">
+                <Setter TargetName="Icone" Property="Visibility" Value="Collapsed" />
+                <Setter TargetName="Ecart" Property="Visibility" Value="Collapsed" />
+            </Trigger>
+            <Trigger Property="IsMouseOver" Value="True">
+                <Setter TargetName="Souligne" Property="Background" Value="{DynamicResource mkm.tabs.strip.tab.hover.bar.color}" />
+            </Trigger>
+            <Trigger Property="IsKeyboardFocused" Value="True">
+                <Setter TargetName="Souligne" Property="Background" Value="{DynamicResource mkm.tabs.strip.tab.hover.bar.color}" />
+            </Trigger>
+            <Trigger Property="IsSelected" Value="True">
+                <Setter TargetName="Souligne" Property="Background" Value="{DynamicResource mkm.tabs.strip.tab.active.color}" />
+                <Setter Property="Foreground" Value="{DynamicResource mkm.tabs.strip.tab.active.color}" />
+            </Trigger>
+            <Trigger Property="IsEnabled" Value="False">
+                <Setter TargetName="Fond" Property="Opacity" Value="{DynamicResource mkm.disabled.opacity}" />
+            </Trigger>
+        </ControlTemplate.Triggers>
+    </ControlTemplate>
+
+    <Style TargetType="{x:Type local:Tab}">
+        <Setter Property="Height" Value="{DynamicResource mkm.tabs.tab.height}" />
+        <Setter Property="MinWidth" Value="{DynamicResource mkm.tabs.tab.min.width}" />
+        <Setter Property="Padding" Value="{DynamicResource mkm.tabs.tab.padding}" />
+        <Setter Property="Margin" Value="{DynamicResource mkm.tabs.tab.margin}" />
+        <Setter Property="Background" Value="{DynamicResource mkm.tabs.tab.background}" />
+        <Setter Property="Foreground" Value="{DynamicResource mkm.tabs.tab.color}" />
+        <Setter Property="FontWeight" Value="{DynamicResource mkm.tabs.tab.font.weight}" />
+        <Setter Property="FocusVisualStyle" Value="{StaticResource MkmTabsAnneau}" />
+        <Setter Property="Cursor" Value="Hand" />
+        <Setter Property="SnapsToDevicePixels" Value="True" />
+        <Setter Property="Template" Value="{StaticResource MkmTabGroupe}" />
+        <Style.Triggers>
+            <Trigger Property="Variant" Value="Strip">
+                <Setter Property="Height" Value="{DynamicResource mkm.tabs.strip.height}" />
+                <Setter Property="MinWidth" Value="0" />
+                <Setter Property="Margin" Value="{DynamicResource mkm.tabs.strip.tab.margin}" />
+                <Setter Property="Padding" Value="{DynamicResource mkm.tabs.strip.tab.padding}" />
+                <Setter Property="Foreground" Value="{DynamicResource mkm.tabs.strip.tab.color}" />
+                <Setter Property="FocusVisualStyle" Value="{x:Null}" />
+                <Setter Property="Template" Value="{StaticResource MkmTabStrip}" />
+            </Trigger>
+        </Style.Triggers>
+    </Style>
+
+</ResourceDictionary>

@@ -25,6 +25,12 @@ Namespace Mkm.Wpf.Tests.Theming
         <TestCase("rgb(10 20 30)", 255, 10, 20, 30)>
         <TestCase("transparent", 0, 255, 255, 255)>
         <TestCase("color-mix(in srgb, #ffffff 50%, #000000)", 255, 128, 128, 128)>
+        <TestCase("color-mix(in srgb, #ffffff, #000000)", 255, 128, 128, 128)>
+        <TestCase("color-mix(in srgb, #334455 50%, transparent)", 128, 51, 68, 85)>
+        <TestCase("color-mix(in srgb, #ff0000, transparent 96%)", 10, 255, 0, 0)>
+        <TestCase("color-mix(in srgb, rgba(0, 0, 255, 1) 25%, #ff0000 25%)", 128, 128, 0, 128)>
+        <TestCase("color-mix(in srgb, #42a2da 70%, #000)", 255, &H2E, &H71, &H99)>
+        <TestCase("color-mix(in srgb, #ffffff, transparent 96%)", &HA, 255, 255, 255)>
         Public Sub Couleurs_DeCss(valeur As String, a As Integer, r As Integer, g As Integer, b As Integer)
             Dim c As Color
             Assert.That(ThemeResources.TryParseColor(valeur, c), [Is].True)

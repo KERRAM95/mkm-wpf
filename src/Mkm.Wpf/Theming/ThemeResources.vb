@@ -25,8 +25,8 @@ Namespace Mkm.Wpf.Theming
         Public Const Prefix As String = "mkm."
 
         Private Shared ReadOnly _nombre As New Regex("^(-?\d*\.?\d+)(px)?$", RegexOptions.Compiled)
-        Private Shared ReadOnly _couleurDansOmbre As New Regex("rgba?\([^)]*\)|#[0-9a-fA-F]{3,8}\b|\b[a-zA-Z]+$", RegexOptions.Compiled)
-        Private Shared ReadOnly _melange As New Regex("^color-mix\(in srgb,\s*(.+?)\s+(\d*\.?\d+)%\s*,\s*(.+?)(?:\s+(\d*\.?\d+)%)?\s*\)$", RegexOptions.Compiled)
+        Private Shared ReadOnly _couleurDansOmbre As New Regex("color-mix\((?:[^()]|\([^()]*\))*\)|rgba?\([^)]*\)|#[0-9a-fA-F]{3,8}\b|\b[a-zA-Z]+$", RegexOptions.Compiled)
+        Private Shared ReadOnly _part As New Regex("^(.+?)(?:\s+(\d*\.?\d+)%)?$", RegexOptions.Compiled)
         Private Shared ReadOnly _famillesGeneriques As New HashSet(Of String)(StringComparer.OrdinalIgnoreCase) From {
             "serif", "sans-serif", "monospace", "cursive", "fantasy", "system-ui"}
 
@@ -259,24 +259,67 @@ Namespace Mkm.Wpf.Theming
             Return True
         End Function
 
-        ' color-mix(in srgb, A p%, B [q%]) : la moyenne des canaux, pondérée.
+        ' color-mix(in srgb, A [p%], B [q%]), comme CSS Color 5 : les parts manquantes complètent à
+        ' 100 %, des parts dont la somme passe sous 100 % rendent le mélange d'autant plus transparent,
+        ' et les canaux se mélangent pondérés de leur opacité (« transparent » n'assombrit pas).
         Private Shared Function Melange(value As String, ByRef couleur As Color) As Boolean
-            Dim m = _melange.Match(value.Trim())
-            If Not m.Success Then Return False
+            Dim texte = value.Trim()
+            If Not texte.EndsWith(")", StringComparison.Ordinal) Then Return False
+            Dim parties = Virgules(texte.Substring("color-mix(".Length, texte.Length - "color-mix(".Length - 1))
+            If parties.Count <> 3 OrElse Not parties(0).Equals("in srgb", StringComparison.OrdinalIgnoreCase) Then Return False
 
             Dim a, b As Color
-            If Not TryParseColor(m.Groups(1).Value, a) OrElse Not TryParseColor(m.Groups(3).Value, b) Then Return False
-            Dim p = Double.Parse(m.Groups(2).Value, CultureInfo.InvariantCulture) / 100
-            Dim q = If(m.Groups(4).Success, Double.Parse(m.Groups(4).Value, CultureInfo.InvariantCulture) / 100, 1 - p)
-            Dim total = p + q
+            Dim p, q As Double?
+            If Not Part(parties(1), a, p) OrElse Not Part(parties(2), b, q) Then Return False
+            If Not p.HasValue AndAlso Not q.HasValue Then
+                p = 0.5
+                q = 0.5
+            ElseIf Not p.HasValue Then
+                p = 1 - q.Value
+            ElseIf Not q.HasValue Then
+                q = 1 - p.Value
+            End If
+            Dim total = p.Value + q.Value
             If total <= 0 Then Return False
+            Dim pa = p.Value / total
+            Dim pb = q.Value / total
 
+            Dim alpha = a.A * pa + b.A * pb
+            Dim canal = Function(ca As Byte, cb As Byte) If(alpha <= 0, 0.0, (CDbl(ca) * a.A * pa + CDbl(cb) * b.A * pb) / alpha)
             couleur = Color.FromArgb(
-                Octet((a.A * p + b.A * q) / total),
-                Octet((a.R * p + b.R * q) / total),
-                Octet((a.G * p + b.G * q) / total),
-                Octet((a.B * p + b.B * q) / total))
+                Octet(alpha * Math.Min(1, total)),
+                Octet(canal(a.R, b.R)),
+                Octet(canal(a.G, b.G)),
+                Octet(canal(a.B, b.B)))
             Return True
+        End Function
+
+        ' Une couleur de color-mix et sa part, en fraction (« #fff 40% » → 0,4).
+        Private Shared Function Part(texte As String, ByRef couleur As Color, ByRef fraction As Double?) As Boolean
+            Dim m = _part.Match(texte.Trim())
+            If Not m.Success OrElse Not TryParseColor(m.Groups(1).Value, couleur) Then Return False
+            fraction = If(m.Groups(2).Success, Double.Parse(m.Groups(2).Value, CultureInfo.InvariantCulture) / 100, New Double?())
+            Return True
+        End Function
+
+        ' Les morceaux d'une liste séparée de virgules, hors des parenthèses.
+        Private Shared Function Virgules(texte As String) As List(Of String)
+            Dim morceaux As New List(Of String)
+            Dim profondeur = 0
+            Dim debut = 0
+            For i = 0 To texte.Length - 1
+                Select Case texte(i)
+                    Case "("c : profondeur += 1
+                    Case ")"c : profondeur -= 1
+                    Case ","c
+                        If profondeur = 0 Then
+                            morceaux.Add(texte.Substring(debut, i - debut).Trim())
+                            debut = i + 1
+                        End If
+                End Select
+            Next
+            morceaux.Add(texte.Substring(debut).Trim())
+            Return morceaux
         End Function
 
         Private Shared Function Octet(valeur As Double) As Byte

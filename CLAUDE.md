@@ -245,6 +245,14 @@ l'anglais en repli (voir « Thème et langue »).
   pas entre les surcharges).
 - Une variable locale ne porte pas le nom d'un type (`Dim traducteur As New
   Localizer`, pas `localizer`) : VB ne distingue pas la casse.
+- **Les noms de mkm qui sont aussi ceux de WPF** (`Button`, `Checkbox` et
+  `CheckBox`, `Select`, `Tab`…) : un contrôle écrit son type de base en entier
+  (`Inherits System.Windows.Controls.Button`) ; un fichier qui importe les deux
+  espaces de noms écrit `Mkm.Wpf.Controls.Button` (la casse ne les distingue
+  pas). Les mots-clés de VB se mettent entre crochets (`[Select]`, `[Variant]`,
+  `[Error]`, `[Structure]`). En XAML, le préfixe suffit (`mkm:Button`).
+- Un `Byte` multiplié par un `Byte` reste un `Byte` en VB et déborde : on
+  convertit d'abord (`CDbl(a) * b`).
 
 ## Vérifier
 

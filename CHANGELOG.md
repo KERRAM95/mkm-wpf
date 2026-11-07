@@ -47,3 +47,24 @@ Les évolutions notables de mkm-wpf, version par version. Le format suit
   `Placeholder` et `Invalid`, au rendu de 3DEXPERIENCE ; les jetons de la feuille
   CSS de mkm, écrits par thème (`Theming/Tokens/<thème>.css.tokens`).
 - La vitrine : la liste des composants à gauche, et la page Champs.
+- Les boutons, comme ceux de mkm (`docs/composants/boutons.md`) : `Button` (huit
+  gravités, quatre formes, icône, icône seule, bouton « lite ») et `Checkbox`
+  (trois états, `Invalid`).
+- Les conteneurs (`docs/composants/conteneurs.md`) : `Tabs` et `Tab` (le groupe
+  de 3DEXPERIENCE et le style « strip » des facettes, `Variant`), `Fieldset`
+  (légende sur le cadre, repliable : `Toggleable`, `IsCollapsed`).
+- Les retours (`docs/composants/retours.md`) : `Message` (gravités, formes,
+  tailles, croix, `Life`), `Toast` et `ToastMessage` (les notifications de
+  3DEXPERIENCE, avec le relief, le fondu et la vie de mkm), `Dialog` (une vraie
+  fenêtre modale au dessin de mkm, pied, poignée).
+- La vitrine : les pages Boutons, Onglets et groupes, Messages et dialogues, et
+  les notifications au-dessus de la fenêtre.
+- Les tests communs : chaque contrôle applique son gabarit ; chaque ressource
+  que nomme un gabarit existe dans chaque thème ; les contrastes des boutons,
+  des onglets, des messages et des notifications, comme mkm les vérifie.
+
+### Corrigé
+
+- `color-mix(…)` mêle les couleurs comme CSS : pondérées de leur opacité, avec
+  des parts facultatives ; une couleur mêlée au transparent ne fonce plus
+  (l'ombre des onglets, celle des messages contrastés).

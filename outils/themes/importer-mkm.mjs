@@ -20,7 +20,7 @@ const THEMES = {
     Dashboard: { dossier: 'dashboard', etend: 'nora', rem: 12 },
     Ara: { dossier: 'ara' }
 };
-const COMPOSANTS = ['actionbar', 'contextmenu', 'inputtext', 'menu', 'select', 'tooltip'];
+const COMPOSANTS = ['actionbar', 'button', 'checkbox', 'contextmenu', 'dialog', 'fieldset', 'inputtext', 'menu', 'message', 'panel', 'progressbar', 'progressspinner', 'select', 'tabs', 'toast', 'tooltip'];
 
 const [racine, ...demandes] = process.argv.slice(2);
 if (!racine) {

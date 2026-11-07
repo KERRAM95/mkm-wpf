@@ -1,5 +1,5 @@
 # Ce que la feuille CSS du preset de mkm (Dashboard, « css ») dit sans jeton, écrit en jetons pour mkm-wpf.
-# Écrit à la main d'après ui-kit, packages/themes/src/presets/dashboard/(inputtext|select)/index.ts : à reprendre
+# Écrit à la main d'après ui-kit, packages/themes/src/presets/dashboard/(inputtext|select|button|checkbox|tabs|message|toast|dialog)/index.ts : à reprendre
 # quand ces feuilles changent. Lu après Dashboard.tokens (outils/themes/importer-mkm.mjs ne touche pas ce fichier).
 
 # inputtext : 24 px de haut, le retrait du bas d'un pixel de plus que celui du haut.
@@ -25,3 +25,119 @@ select.list.background = {surface.50}
 select.option.height = 22px
 select.option.border.color = {surface.50}
 select.option.selected.border.color = {dspalette.mist.gray}
+
+# button (presets/dashboard/button) : 24 px de haut (4 + 14 + 4 et la bordure), 65 px de large au moins avec un
+# libellé ; au clavier, le principal prend le bleu foncé de 3DX, enfoncé un bleu plus sombre ; en texte et d'icône seule, le
+# bouton « lite » : sans fond ni bordure, gris, du gris du texte au survol, bleu clair enfoncé.
+button.height = 24px
+button.min.width = 65px
+button.padding = {button.padding.y} {button.padding.x}
+button.primary.focus.background = {dsblue.500}
+button.primary.focus.border.color = {dsblue.600}
+button.primary.pressed.background = {dsblue.600}
+button.primary.pressed.border.color = {dspalette.deep.steel}
+button.icon.color = {surface.500}
+button.icon.hover.color = {text.color}
+button.icon.active.color = {dspalette.pale.blue}
+
+# checkbox (presets/dashboard/checkbox) : survolée ou au clavier, la case décochée prend un gris plus sombre ;
+# enfoncée, elle fonce d'un pas de plus. Le libellé fait partie de la case (6 px entre eux, mesure de mkm-wpf :
+# la case de mkm n'a pas de libellé à elle).
+checkbox.hover.background = {surface.200}
+checkbox.pressed.background = {surface.300}
+checkbox.pressed.border.color = {surface.700}
+checkbox.checked.pressed.background = {dsblue.600}
+checkbox.checked.pressed.border.color = {dspalette.deep.steel}
+checkbox.label.gap = 6px
+
+# tabs (presets/dashboard/tabs) : le groupe d'onglets au milieu d'une barre de 26 px, 2 px sous son haut, dans un
+# cadre de 25 px que la barre coupe en bas ; chaque onglet de 23 px, 65 px de large au moins, filet blanc en haut et
+# gris en bas ; le premier et le dernier ont leur filet blanc de côté et leurs coins de 2 px.
+tabs.bar.height = 26px
+tabs.frame.height = 25px
+tabs.frame.margin = 2px 0 0 0
+tabs.frame.border.color = {surface.400}
+tabs.frame.border.radius = 2px
+tabs.frame.background = {surface.200}
+tabs.frame.shadow = 0 0 4px color-mix(in srgb, {surface.700} 50%, transparent)
+tabs.tab.height = 23px
+tabs.tab.min.width = 65px
+tabs.tab.top.border.color = #ffffff
+tabs.tab.bottom.border.color = {surface.500}
+tabs.tab.edge.border.radius = 2px
+tabs.tab.first.border.radius = 2px 0 0 2px
+tabs.tab.last.border.radius = 0 2px 2px 0
+tabs.tab.line.height = 22px
+# le style « strip », celui des facettes d'un panneau : des onglets sans cadre de 26 px, soulignés de 3 px, au
+# milieu d'une barre dont le dernier pixel est un trait gris qu'ils recouvrent ; icône de 16 px.
+tabs.strip.height = 26px
+tabs.strip.line.color = {surface.300}
+tabs.strip.tab.margin = 0 5px
+tabs.strip.tab.padding = 1px 8px 0
+tabs.strip.tab.bar.height = 3px
+tabs.strip.tab.color = {surface.500}
+tabs.strip.tab.hover.bar.color = {surface.500}
+tabs.strip.tab.active.color = {dsblue.500}
+tabs.tab.icon.size = 16px
+
+# message (presets/dashboard/message) : le texte sur des lignes de 18 px ; l'icône (16 px) et la croix (24 px) centrées
+# sur la première ligne ; l'icône de la couleur de la gravité assombrie (80 % et du noir), lisible à plus de 3:1.
+message.text.line.height = 18px
+message.icon.margin = 1px 0
+message.close.button.margin = -3px -4px -3px 0
+message.info.icon.color = color-mix(in srgb, {status.info} 80%, #000)
+message.success.icon.color = color-mix(in srgb, {status.success} 80%, #000)
+message.warn.icon.color = color-mix(in srgb, {status.warn} 80%, #000)
+message.error.icon.color = color-mix(in srgb, {status.danger} 80%, #000)
+message.secondary.icon.color = {message.secondary.color}
+message.contrast.icon.color = {message.contrast.color}
+
+# toast (presets/dashboard/toast) : en haut à droite, à 20 px des bords (le style en ligne de mkm), des cartes de 250 px
+# à 7 px les unes des autres (les marges de mkm, fondues entre deux cartes), 200 px de haut au plus ; une bande de
+# 5 px de la couleur de la gravité à gauche ; l'icône à 13 px du bord et 10 du haut ; le titre et le message à 3 px
+# l'un de l'autre, sur la hauteur de ligne de 3DX (1,42857) ; la croix à 16 px du haut et 14 de la droite, grise,
+# plus foncée au survol, bleue enfoncée ; une carte en relief à son apparition et sous le pointeur.
+toast.margin = 20px
+toast.list.padding = 0 0 7px 0
+toast.message.width = 250px
+toast.message.max.height = 200px
+toast.message.margin = 7px 7px 0 7px
+toast.band.width = 5px
+toast.icon.margin = 10px 0 0 13px
+toast.summary.margin = 3px 18px 3px 0
+toast.summary.line.height = 20px
+toast.detail.margin = 3px 0
+toast.detail.alone.margin = 3px 18px 3px 0
+toast.detail.line.height = 17.142857px
+toast.close.button.margin = 16px 14px 0 0
+toast.close.icon.color = {surface.500}
+toast.close.icon.hover.color = #4d4d4d
+toast.close.icon.active.color = {dsblue.600}
+toast.highlighted.shadow = 0 1px 15px rgba(0, 0, 0, 0.39)
+toast.highlighted.inset.color = rgba(255, 255, 255, 0.43)
+
+# dialog (presets/dashboard/dialog) : la fenêtre n'a ni fond ni bord à elle ; la barre de titre de 26 px a les siens (le
+# bas plus clair) et ses coins du haut, le titre en gras, coupé et fondu au blanc sur ses 12 derniers pixels ; la
+# croix, un carré de 24 px sans fond, son dessin de 12 px, gris, foncé au survol ; le contenu a ses côtés (et le bas
+# sans pied) ; le pied, le cadre blanc et dedans le bloc gris sous son trait, les boutons à droite, 10 px entre eux ;
+# la poignée, une équerre de deux traits de 2 px au coin. dialog.window.padding est une mesure de mkm-wpf : la place
+# de l'ombre autour de la fenêtre (sans calque à elle, une fenêtre WPF dessine son ombre dans ses bords).
+dialog.window.padding = 10px 15px 20px 15px
+dialog.header.height = 26px
+dialog.header.bottom.border.color = {surface.200}
+dialog.header.border.radius = {dialog.border.radius} {dialog.border.radius} 0 0
+dialog.bottom.border.radius = 0 0 {dialog.border.radius} {dialog.border.radius}
+dialog.title.padding = 0 8px
+dialog.title.fade.width = 12px
+dialog.close.button.size = 24px
+dialog.close.icon.size = 12px
+dialog.close.icon.color = {surface.500}
+dialog.close.icon.hover.color = {surface.700}
+dialog.content.line.height = 17.142857px
+dialog.footer.background = {surface.100}
+dialog.footer.border.color = {surface.200}
+dialog.footer.button.margin = 0 0 0 10px
+dialog.resize.handle.box.size = 20px
+dialog.resize.handle.margin = 0 1px 1px 0
+dialog.resize.handle.mark.size = 6px
+dialog.resize.handle.mark.margin = 10px 0 0 10px

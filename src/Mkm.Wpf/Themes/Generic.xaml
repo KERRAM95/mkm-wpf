@@ -10,7 +10,14 @@
                     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
     <ResourceDictionary.MergedDictionaries>
         <ResourceDictionary Source="/Mkm.Wpf;component/Controls/ActionBar/ActionBar.xaml" />
+        <ResourceDictionary Source="/Mkm.Wpf;component/Controls/Button/Button.xaml" />
+        <ResourceDictionary Source="/Mkm.Wpf;component/Controls/Checkbox/Checkbox.xaml" />
+        <ResourceDictionary Source="/Mkm.Wpf;component/Controls/Dialog/Dialog.xaml" />
+        <ResourceDictionary Source="/Mkm.Wpf;component/Controls/Fieldset/Fieldset.xaml" />
         <ResourceDictionary Source="/Mkm.Wpf;component/Controls/InputText/InputText.xaml" />
+        <ResourceDictionary Source="/Mkm.Wpf;component/Controls/Message/Message.xaml" />
         <ResourceDictionary Source="/Mkm.Wpf;component/Controls/Select/Select.xaml" />
+        <ResourceDictionary Source="/Mkm.Wpf;component/Controls/Tabs/Tabs.xaml" />
+        <ResourceDictionary Source="/Mkm.Wpf;component/Controls/Toast/Toast.xaml" />
     </ResourceDictionary.MergedDictionaries>
 </ResourceDictionary>

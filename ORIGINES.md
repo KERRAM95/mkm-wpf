@@ -22,7 +22,9 @@ La bibliothèque `Mkm.Wpf` elle-même n'a encore aucune dépendance.
 | `src/Mkm.Wpf/Theming/Tokens/Dashboard.tokens` | mkm (`ui-kit`), `packages/themes/src/presets/dashboard`, sur `nora` en pixels | MIT (PrimeUIX, par mkm) | les jetons de la base et des composants importés, valeurs comprises |
 | `src/Mkm.Wpf/Theming/Tokens/Ara.tokens` | mkm (`ui-kit`), `packages/themes/src/presets/ara` | MIT (PrimeUIX, par mkm) ; couleurs de la charte ARA | idem |
 | la structure des jetons (primitifs, sémantiques, par composant) et leurs chemins | PrimeUIX, par mkm | MIT | les noms, tels que `dt()` les lit |
-| `src/Mkm.Wpf/Theming/Tokens/*.css.tokens` | mkm (`ui-kit`), la feuille CSS des presets `inputtext` et `select` de Dashboard et d'ARA | MIT (mkm) | leurs mesures et leurs couleurs, réécrites en jetons à la main |
+| `src/Mkm.Wpf/Theming/Tokens/*.css.tokens` | mkm (`ui-kit`), la feuille CSS des presets `inputtext`, `select`, `button`, `checkbox`, `tabs`, `message`, `toast` et `dialog` de Dashboard et d'ARA | MIT (mkm) | leurs mesures et leurs couleurs, réécrites en jetons à la main |
+| `src/Mkm.Wpf/Controls/Toast/ToastMessage.vb` (la vie d'une notification) | mkm (`ui-kit`), `packages/mkm/src/toast/ToastMessage.vue` | MIT (mkm, sur PrimeVue) | la règle de vie, de relief, de fondu et de repli, portée en VB |
+| `src/Mkm.Wpf/Theming/ThemeResources.vb` (`color-mix`) | CSS Color 5, « color-mix() » (W3C) | spécification | le mélange pondéré de l'opacité, comme le calcule `contrast.ts` de mkm |
 
 Importés par `outils/themes/importer-mkm.mjs` ; les couleurs de maturité et le
 mode sombre ne le sont pas.

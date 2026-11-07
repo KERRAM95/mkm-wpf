@@ -1,0 +1,180 @@
+<!--
+    Le style de Dialog, sur la fenêtre de 3DEXPERIENCE de mkm (presets dashboard et ara, dialog) : des coins de 6 px
+    sous une ombre courte ; la fenêtre n'a ni fond ni bord à elle, ce sont ceux de ses parties :
+    - la barre de titre de 26 px, bordée de gris (le bas plus clair), ses coins du haut ; le titre de 14 px en gras,
+      à 8 px des bords, coupé et fondu au blanc sur ses 12 derniers pixels ; la croix, un carré de 24 px sans fond,
+      son dessin de 12 px au milieu, gris, foncé au survol et à l'appui ;
+    - le contenu, 10 px de retrait, ses côtés bordés (et son bas, avec ses coins, sans pied) ; le texte sur la
+      hauteur de ligne de 3DX (1,42857) ;
+    - le pied, le cadre blanc de la fenêtre (côtés et bas, coins du bas), et dedans le bloc gris sous son trait du
+      haut, les boutons à droite, 10 px entre eux et autour ;
+    - la poignée du coin (ResizeMode="CanResize") : une équerre de deux traits de 2 px, grise, plus foncée au survol.
+
+    Écarts avec mkm : pas de masque sur la fenêtre propriétaire (Windows la désactive déjà) ; le dialogue paraît et
+    se ferme sans animation.
+-->
+<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+                    xmlns:local="clr-namespace:Mkm.Wpf.Controls"
+                    xmlns:loc="clr-namespace:Mkm.Wpf.Localization">
+
+    <!-- L'anneau du clavier de la croix : il déborde sur le contenu. -->
+    <Style x:Key="MkmDialogAnneau">
+        <Setter Property="Control.Template">
+            <Setter.Value>
+                <ControlTemplate>
+                    <Rectangle Margin="-2" SnapsToDevicePixels="True"
+                               Stroke="{DynamicResource mkm.focus.ring.color}"
+                               StrokeThickness="{DynamicResource mkm.focus.ring.width}" />
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+
+    <Style TargetType="{x:Type local:Dialog}">
+        <Setter Property="FontFamily" Value="{DynamicResource mkm.font.family}" />
+        <Setter Property="FontSize" Value="{DynamicResource mkm.font.size}" />
+        <Setter Property="Foreground" Value="{DynamicResource mkm.dialog.color}" />
+        <Setter Property="Padding" Value="{DynamicResource mkm.dialog.content.padding}" />
+        <Setter Property="UseLayoutRounding" Value="True" />
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="{x:Type local:Dialog}">
+                    <!-- La place de l'ombre, transparente, autour du dessin. -->
+                    <Border Padding="{DynamicResource mkm.dialog.window.padding}" Background="Transparent">
+                        <Grid>
+                            <Border Background="{DynamicResource mkm.dialog.background}"
+                                    CornerRadius="{DynamicResource mkm.dialog.border.radius}"
+                                    Effect="{DynamicResource mkm.dialog.shadow}" />
+                            <DockPanel>
+                                <Border x:Name="PART_Header" DockPanel.Dock="Top" BorderThickness="1,1,1,0"
+                                        Height="{DynamicResource mkm.dialog.header.height}"
+                                        Background="{DynamicResource mkm.dialog.background}"
+                                        BorderBrush="{DynamicResource mkm.dialog.border.color}"
+                                        CornerRadius="{DynamicResource mkm.dialog.header.border.radius}"
+                                        Padding="{DynamicResource mkm.dialog.header.padding}">
+                                    <!-- Le bas de la barre, plus clair que ses côtés. -->
+                                    <Border BorderThickness="0,0,0,1" BorderBrush="{DynamicResource mkm.dialog.header.bottom.border.color}">
+                                        <DockPanel>
+                                            <Button x:Name="PART_CloseButton" DockPanel.Dock="Right" Cursor="Hand"
+                                                    Width="{DynamicResource mkm.dialog.close.button.size}"
+                                                    Height="{DynamicResource mkm.dialog.close.button.size}"
+                                                    FocusVisualStyle="{StaticResource MkmDialogAnneau}"
+                                                    Panel.ZIndex="1"
+                                                    AutomationProperties.Name="{loc:T aria.close}">
+                                                <Button.Template>
+                                                    <ControlTemplate TargetType="{x:Type Button}">
+                                                        <Border Background="Transparent">
+                                                            <local:Icon x:Name="Croix" Source="{x:Static local:Icons.Close}"
+                                                                        Width="{DynamicResource mkm.dialog.close.icon.size}"
+                                                                        Height="{DynamicResource mkm.dialog.close.icon.size}"
+                                                                        Foreground="{DynamicResource mkm.dialog.close.icon.color}" />
+                                                        </Border>
+                                                        <ControlTemplate.Triggers>
+                                                            <Trigger Property="IsMouseOver" Value="True">
+                                                                <Setter TargetName="Croix" Property="Foreground" Value="{DynamicResource mkm.dialog.close.icon.hover.color}" />
+                                                            </Trigger>
+                                                            <Trigger Property="IsPressed" Value="True">
+                                                                <Setter TargetName="Croix" Property="Foreground" Value="{DynamicResource mkm.dialog.close.icon.hover.color}" />
+                                                            </Trigger>
+                                                        </ControlTemplate.Triggers>
+                                                    </ControlTemplate>
+                                                </Button.Template>
+                                            </Button>
+                                            <Grid ClipToBounds="True">
+                                                <TextBlock Padding="{DynamicResource mkm.dialog.title.padding}" VerticalAlignment="Center"
+                                                           FontSize="{DynamicResource mkm.dialog.title.font.size}"
+                                                           FontWeight="{DynamicResource mkm.dialog.title.font.weight}"
+                                                           Text="{TemplateBinding Title}" />
+                                                <!-- Le fondu au blanc : il ne se voit que sur un titre qui touche le bord. -->
+                                                <Rectangle HorizontalAlignment="Right" Width="{DynamicResource mkm.dialog.title.fade.width}"
+                                                           Fill="{DynamicResource mkm.dialog.background}">
+                                                    <Rectangle.OpacityMask>
+                                                        <LinearGradientBrush StartPoint="0,0.5" EndPoint="1,0.5">
+                                                            <GradientStop Offset="0" Color="Transparent" />
+                                                            <GradientStop Offset="1" Color="Black" />
+                                                        </LinearGradientBrush>
+                                                    </Rectangle.OpacityMask>
+                                                </Rectangle>
+                                            </Grid>
+                                        </DockPanel>
+                                    </Border>
+                                </Border>
+                                <!-- Le pied : le cadre blanc, et dedans le bloc gris sous son trait. -->
+                                <Border x:Name="Pied" DockPanel.Dock="Bottom" BorderThickness="1,0,1,1"
+                                        Background="{DynamicResource mkm.dialog.background}"
+                                        BorderBrush="{DynamicResource mkm.dialog.border.color}"
+                                        CornerRadius="{DynamicResource mkm.dialog.bottom.border.radius}">
+                                    <Border BorderThickness="0,1,0,0" ClipToBounds="True"
+                                            Background="{DynamicResource mkm.dialog.footer.background}"
+                                            BorderBrush="{DynamicResource mkm.dialog.footer.border.color}"
+                                            CornerRadius="{DynamicResource mkm.dialog.bottom.border.radius}"
+                                            Padding="{DynamicResource mkm.dialog.footer.padding}">
+                                        <ContentPresenter Content="{TemplateBinding Footer}" HorizontalAlignment="Right">
+                                            <ContentPresenter.Resources>
+                                                <!-- 10 px entre les boutons ; le style du bouton reste celui du thème. -->
+                                                <Style TargetType="{x:Type local:Button}">
+                                                    <Setter Property="Margin" Value="{DynamicResource mkm.dialog.footer.button.margin}" />
+                                                </Style>
+                                                <Style TargetType="{x:Type Button}">
+                                                    <Setter Property="Margin" Value="{DynamicResource mkm.dialog.footer.button.margin}" />
+                                                </Style>
+                                            </ContentPresenter.Resources>
+                                        </ContentPresenter>
+                                    </Border>
+                                </Border>
+                                <Border x:Name="Contenu" BorderThickness="1,0,1,0"
+                                        Background="{DynamicResource mkm.dialog.background}"
+                                        BorderBrush="{DynamicResource mkm.dialog.border.color}"
+                                        Padding="{TemplateBinding Padding}">
+                                    <ContentPresenter TextBlock.LineHeight="{DynamicResource mkm.dialog.content.line.height}" />
+                                </Border>
+                            </DockPanel>
+                            <Thumb x:Name="PART_ResizeGrip" HorizontalAlignment="Right" VerticalAlignment="Bottom"
+                                   Visibility="Collapsed" Cursor="SizeNWSE"
+                                   Margin="{DynamicResource mkm.dialog.resize.handle.margin}"
+                                   Width="{DynamicResource mkm.dialog.resize.handle.box.size}"
+                                   Height="{DynamicResource mkm.dialog.resize.handle.box.size}">
+                                <Thumb.Template>
+                                    <ControlTemplate TargetType="{x:Type Thumb}">
+                                        <Border Background="Transparent">
+                                            <Border x:Name="Equerre" HorizontalAlignment="Left" VerticalAlignment="Top"
+                                                    BorderThickness="0,0,2,2"
+                                                    Margin="{DynamicResource mkm.dialog.resize.handle.mark.margin}"
+                                                    Width="{DynamicResource mkm.dialog.resize.handle.mark.size}"
+                                                    Height="{DynamicResource mkm.dialog.resize.handle.mark.size}"
+                                                    BorderBrush="{DynamicResource mkm.dialog.resize.handle.color}" />
+                                        </Border>
+                                        <ControlTemplate.Triggers>
+                                            <Trigger Property="IsMouseOver" Value="True">
+                                                <Setter TargetName="Equerre" Property="BorderBrush" Value="{DynamicResource mkm.dialog.resize.handle.hover.color}" />
+                                            </Trigger>
+                                        </ControlTemplate.Triggers>
+                                    </ControlTemplate>
+                                </Thumb.Template>
+                            </Thumb>
+                        </Grid>
+                    </Border>
+                    <ControlTemplate.Triggers>
+                        <!-- Sans pied, le contenu ferme le cadre. -->
+                        <Trigger Property="Footer" Value="{x:Null}">
+                            <Setter TargetName="Pied" Property="Visibility" Value="Collapsed" />
+                            <Setter TargetName="Contenu" Property="BorderThickness" Value="1,0,1,1" />
+                            <Setter TargetName="Contenu" Property="CornerRadius" Value="{DynamicResource mkm.dialog.bottom.border.radius}" />
+                        </Trigger>
+                        <Trigger Property="Closable" Value="False">
+                            <Setter TargetName="PART_CloseButton" Property="Visibility" Value="Collapsed" />
+                        </Trigger>
+                        <Trigger Property="ResizeMode" Value="CanResize">
+                            <Setter TargetName="PART_ResizeGrip" Property="Visibility" Value="Visible" />
+                        </Trigger>
+                        <Trigger Property="ResizeMode" Value="CanResizeWithGrip">
+                            <Setter TargetName="PART_ResizeGrip" Property="Visibility" Value="Visible" />
+                        </Trigger>
+                    </ControlTemplate.Triggers>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+
+</ResourceDictionary>

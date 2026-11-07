@@ -1,0 +1,154 @@
+<!--
+    Les styles de Toast et de ToastMessage, sur les notifications de 3DEXPERIENCE de mkm (presets dashboard et ara,
+    toast) : en haut à droite, à 20 px des bords de la fenêtre, des cartes de 250 px à 7 px les unes des autres, sans
+    coins, à l'ombre courte, 200 px de haut au plus (au-delà, le message défile) ; le fond pâle de la gravité et une
+    bande de 5 px de sa couleur à gauche ; l'icône de 22 px de sa couleur, à 13 px du bord et 10 du haut ; le texte à
+    48 px du bord gauche et 10 des trois autres : le titre en 14 px gras, le message en 12 px dessous, 3 px entre eux,
+    18 px gardés à droite pour la croix ; la croix de 12 px à 16 px du haut et 14 de la droite, grise, plus foncée au
+    survol, bleue enfoncée, sans anneau ; en relief à son apparition et sous le pointeur.
+
+    Écarts avec mkm : une notification paraît et se ferme sans animation (comme chez mkm), mais son fondu et son repli
+    (Toast.FadeOutDuration) suivent la durée donnée plutôt qu'une seconde fixe.
+-->
+<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+                    xmlns:local="clr-namespace:Mkm.Wpf.Controls"
+                    xmlns:loc="clr-namespace:Mkm.Wpf.Localization">
+
+    <Style TargetType="{x:Type local:Toast}">
+        <Setter Property="Margin" Value="{DynamicResource mkm.toast.margin}" />
+        <Setter Property="Padding" Value="{DynamicResource mkm.toast.list.padding}" />
+        <Setter Property="HorizontalAlignment" Value="Right" />
+        <Setter Property="VerticalAlignment" Value="Top" />
+        <Setter Property="Panel.ZIndex" Value="1000" />
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="{x:Type local:Toast}">
+                    <ItemsPresenter Margin="{TemplateBinding Padding}" />
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+        <Style.Triggers>
+            <Trigger Property="Position" Value="TopLeft">
+                <Setter Property="HorizontalAlignment" Value="Left" />
+            </Trigger>
+            <Trigger Property="Position" Value="TopCenter">
+                <Setter Property="HorizontalAlignment" Value="Center" />
+            </Trigger>
+            <Trigger Property="Position" Value="BottomLeft">
+                <Setter Property="HorizontalAlignment" Value="Left" />
+                <Setter Property="VerticalAlignment" Value="Bottom" />
+            </Trigger>
+            <Trigger Property="Position" Value="BottomCenter">
+                <Setter Property="HorizontalAlignment" Value="Center" />
+                <Setter Property="VerticalAlignment" Value="Bottom" />
+            </Trigger>
+            <Trigger Property="Position" Value="BottomRight">
+                <Setter Property="VerticalAlignment" Value="Bottom" />
+            </Trigger>
+            <Trigger Property="Position" Value="Center">
+                <Setter Property="HorizontalAlignment" Value="Center" />
+                <Setter Property="VerticalAlignment" Value="Center" />
+            </Trigger>
+        </Style.Triggers>
+    </Style>
+
+    <Style TargetType="{x:Type local:ToastMessage}">
+        <Setter Property="Width" Value="{DynamicResource mkm.toast.message.width}" />
+        <Setter Property="MaxHeight" Value="{DynamicResource mkm.toast.message.max.height}" />
+        <Setter Property="Margin" Value="{DynamicResource mkm.toast.message.margin}" />
+        <Setter Property="Padding" Value="{DynamicResource mkm.toast.content.padding}" />
+        <Setter Property="FontFamily" Value="{DynamicResource mkm.font.family}" />
+        <Setter Property="SnapsToDevicePixels" Value="True" />
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="{x:Type local:ToastMessage}">
+                    <Grid ClipToBounds="False">
+                        <!-- L'ombre a sa bordure à elle : sur la carte, elle ombrerait aussi le texte. -->
+                        <Border x:Name="Ombre" Background="{TemplateBinding Background}" Effect="{TemplateBinding Shadow}" />
+                        <Border x:Name="Relief" BorderThickness="1" Visibility="Collapsed"
+                                BorderBrush="{DynamicResource mkm.toast.highlighted.inset.color}" />
+                        <Rectangle HorizontalAlignment="Left" Width="{DynamicResource mkm.toast.band.width}"
+                                   Fill="{TemplateBinding BandBrush}" />
+                        <local:Icon x:Name="Icone" HorizontalAlignment="Left" VerticalAlignment="Top"
+                                    Margin="{DynamicResource mkm.toast.icon.margin}"
+                                    Width="{DynamicResource mkm.toast.icon.size}" Height="{DynamicResource mkm.toast.icon.size}"
+                                    Foreground="{TemplateBinding IconForeground}"
+                                    Source="{TemplateBinding DisplayIcon}" />
+                        <DockPanel Margin="{TemplateBinding Padding}">
+                            <TextBlock x:Name="Titre" DockPanel.Dock="Top" TextWrapping="Wrap"
+                                       Margin="{DynamicResource mkm.toast.summary.margin}"
+                                       FontSize="{DynamicResource mkm.toast.summary.font.size}"
+                                       FontWeight="{DynamicResource mkm.toast.summary.font.weight}"
+                                       LineHeight="{DynamicResource mkm.toast.summary.line.height}"
+                                       LineStackingStrategy="BlockLineHeight"
+                                       Text="{TemplateBinding Summary}" />
+                            <ScrollViewer x:Name="Defilement" Margin="{DynamicResource mkm.toast.detail.margin}"
+                                          VerticalScrollBarVisibility="Auto" HorizontalScrollBarVisibility="Disabled"
+                                          Focusable="False">
+                                <ContentPresenter Content="{TemplateBinding Detail}"
+                                                  TextElement.Foreground="{TemplateBinding DetailForeground}"
+                                                  TextElement.FontSize="{DynamicResource mkm.toast.detail.font.size}"
+                                                  TextElement.FontWeight="{DynamicResource mkm.toast.detail.font.weight}"
+                                                  TextBlock.LineHeight="{DynamicResource mkm.toast.detail.line.height}"
+                                                  TextBlock.LineStackingStrategy="BlockLineHeight">
+                                    <ContentPresenter.Resources>
+                                        <Style TargetType="{x:Type TextBlock}">
+                                            <Setter Property="TextWrapping" Value="Wrap" />
+                                        </Style>
+                                    </ContentPresenter.Resources>
+                                </ContentPresenter>
+                            </ScrollViewer>
+                        </DockPanel>
+                        <Button x:Name="PART_CloseButton" HorizontalAlignment="Right" VerticalAlignment="Top"
+                                Cursor="Hand" FocusVisualStyle="{x:Null}"
+                                Margin="{DynamicResource mkm.toast.close.button.margin}"
+                                Width="{DynamicResource mkm.toast.close.button.width}"
+                                Height="{DynamicResource mkm.toast.close.button.height}"
+                                AutomationProperties.Name="{loc:T aria.close}">
+                            <Button.Template>
+                                <ControlTemplate TargetType="{x:Type Button}">
+                                    <Border Background="Transparent">
+                                        <local:Icon x:Name="Croix" Source="{x:Static local:Icons.Close}"
+                                                    Width="{DynamicResource mkm.toast.close.icon.size}"
+                                                    Height="{DynamicResource mkm.toast.close.icon.size}"
+                                                    Foreground="{DynamicResource mkm.toast.close.icon.color}" />
+                                    </Border>
+                                    <ControlTemplate.Triggers>
+                                        <Trigger Property="IsMouseOver" Value="True">
+                                            <Setter TargetName="Croix" Property="Foreground" Value="{DynamicResource mkm.toast.close.icon.hover.color}" />
+                                        </Trigger>
+                                        <Trigger Property="IsPressed" Value="True">
+                                            <Setter TargetName="Croix" Property="Foreground" Value="{DynamicResource mkm.toast.close.icon.active.color}" />
+                                        </Trigger>
+                                    </ControlTemplate.Triggers>
+                                </ControlTemplate>
+                            </Button.Template>
+                        </Button>
+                    </Grid>
+                    <ControlTemplate.Triggers>
+                        <Trigger Property="Summary" Value="{x:Null}">
+                            <Setter TargetName="Titre" Property="Visibility" Value="Collapsed" />
+                            <Setter TargetName="Defilement" Property="Margin" Value="{DynamicResource mkm.toast.detail.alone.margin}" />
+                        </Trigger>
+                        <Trigger Property="Summary" Value="">
+                            <Setter TargetName="Titre" Property="Visibility" Value="Collapsed" />
+                            <Setter TargetName="Defilement" Property="Margin" Value="{DynamicResource mkm.toast.detail.alone.margin}" />
+                        </Trigger>
+                        <Trigger Property="DisplayIcon" Value="{x:Null}">
+                            <Setter TargetName="Icone" Property="Visibility" Value="Collapsed" />
+                        </Trigger>
+                        <Trigger Property="Closable" Value="False">
+                            <Setter TargetName="PART_CloseButton" Property="Visibility" Value="Collapsed" />
+                        </Trigger>
+                        <Trigger Property="IsHighlighted" Value="True">
+                            <Setter TargetName="Ombre" Property="Effect" Value="{DynamicResource mkm.toast.highlighted.shadow}" />
+                            <Setter TargetName="Relief" Property="Visibility" Value="Visible" />
+                        </Trigger>
+                    </ControlTemplate.Triggers>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+
+</ResourceDictionary>

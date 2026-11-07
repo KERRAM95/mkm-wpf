@@ -88,9 +88,13 @@ vitrine en est l'exemple (`apps/Mkm.Wpf.Showcase`).
 3. ~~Les icônes~~ : faites — les 95 de mkm, dessinées par Tabler.
 4. ~~L'ActionBar~~ : faite, comme celle de mkm (`docs/composants/actionbar.md`).
 5. ~~Les champs~~ : faits — `InputText` et `Select` (`docs/composants/champs.md`).
-6. La fiche de propriétés de mkm (`PropertyPanel`) : le libellé, le message et
-   la marque d'un champ obligatoire ; puis les onglets et les groupes.
-7. Le registre des commandes.
+6. ~~Les boutons, les onglets, les groupes, les messages, les notifications et
+   le dialogue~~ : faits — `Button`, `Checkbox`, `Tabs`, `Fieldset`, `Message`,
+   `Toast`, `Dialog` (`docs/composants/boutons.md`, `conteneurs.md`,
+   `retours.md`).
+7. La fiche de propriétés de mkm (`PropertyPanel`) : le libellé, le message et
+   la marque d'un champ obligatoire.
+8. Le registre des commandes.
 
 ## Règles
 
