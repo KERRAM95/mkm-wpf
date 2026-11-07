@@ -17,6 +17,20 @@ Namespace Mkm.Wpf.Controls
         ''' <summary>À droite de l'élément, centrée ; à gauche en second choix.</summary>
         Public Shared ReadOnly Property Right As New CustomPopupPlacementCallback(AddressOf ADroite)
 
+        ''' <summary>
+        ''' Au-dessus de l'élément, centrée (la <c>position: 'top'</c> des commandes de l'ActionBar de mkm) ; dessous en
+        ''' second choix.
+        ''' </summary>
+        Public Shared ReadOnly Property Top As New CustomPopupPlacementCallback(AddressOf AuDessus)
+
+        Private Shared Function AuDessus(popupSize As Size, targetSize As Size, offset As Point) As CustomPopupPlacement()
+            Dim x = (targetSize.Width - popupSize.Width) / 2
+            Return {
+                New CustomPopupPlacement(New Point(x, -popupSize.Height - offset.Y), PopupPrimaryAxis.Vertical),
+                New CustomPopupPlacement(New Point(x, targetSize.Height + offset.Y), PopupPrimaryAxis.Vertical)
+            }
+        End Function
+
         Private Shared Function ADroite(popupSize As Size, targetSize As Size, offset As Point) As CustomPopupPlacement()
             Dim y = (targetSize.Height - popupSize.Height) / 2
             Return {

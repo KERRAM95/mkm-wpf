@@ -198,3 +198,5 @@ contextmenu.item.icon.disabled.color = {dspalette.fog.gray}
 contextmenu.item.keyboard.border.color = {surface.500}
 contextmenu.submenu.offset = -1px
 contextmenu.window.padding = 0 2px 3px 2px
+# l'info-bulle au-dessus d'une commande de l'ActionBar (position « top ») : sa flèche dessous ; la place de l'ombre.
+tooltip.top.window.padding = 1px 2px 0 2px

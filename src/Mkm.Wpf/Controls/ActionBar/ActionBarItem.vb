@@ -123,7 +123,6 @@ Namespace Mkm.Wpf.Controls
             Dim bulle = TryCast(element.ToolTip, ToolTip)
             If bulle Is Nothing Then Return
             bulle.PlacementTarget = element
-            bulle.Placement = PlacementMode.Top
             bulle.IsOpen = True
         End Sub
 

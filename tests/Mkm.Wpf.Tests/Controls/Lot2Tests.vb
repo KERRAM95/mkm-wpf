@@ -44,6 +44,14 @@ Namespace Mkm.Wpf.Tests.Controls
         End Sub
 
         <Test>
+        Public Sub InfoBulleDUneCommande_AuDessusEtCentree()
+            Dim places = TooltipPlacement.Top.Invoke(New Size(100, 20), New Size(40, 40), New Point(0, 0))
+
+            Assert.That(places(0).Point, [Is].EqualTo(New Point(-30, -20)))
+            Assert.That(places(1).Point, [Is].EqualTo(New Point(-30, 40)))
+        End Sub
+
+        <Test>
         Public Sub InfoBulleEtMenu_OntLeStyleDeMkm()
             Assert.That(Application.Current.TryFindResource(GetType(ToolTip)), [Is].InstanceOf(Of Style)())
             Assert.That(Application.Current.TryFindResource(GetType(ContextMenu)), [Is].InstanceOf(Of Style)())

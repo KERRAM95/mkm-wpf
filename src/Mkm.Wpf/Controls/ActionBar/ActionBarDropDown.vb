@@ -184,6 +184,9 @@ Namespace Mkm.Wpf.Controls
         ' Fermée, la liste rend le focus à la commande montrée, comme Échap.
         Private Sub OnListeFermee(sender As Object, e As EventArgs)
             If _fleche IsNot Nothing Then _fleche.IsHitTestVisible = True
+            ' Au clavier, le focus revient à la commande montrée, son anneau visible ; à la souris, il ne revient pas :
+            ' WPF y dessinerait l'anneau, que mkm ne montre qu'au clavier (:focus-visible).
+            If Not (InputManager.Current.MostRecentInputDevice Is Keyboard.PrimaryDevice) Then Return
             If IsKeyboardFocusWithin OrElse (_liste IsNot Nothing AndAlso _liste.IsKeyboardFocusWithin) Then _principale?.Focus()
         End Sub
 
