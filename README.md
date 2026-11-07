@@ -96,8 +96,11 @@ vitrine en est l'exemple (`apps/Mkm.Wpf.Showcase`).
    `BlockUI`, `Textarea`, `DatePicker`, `ConfirmDialog`, `PropertyPanel`, `Tree`,
    le menu contextuel (`docs/composants/attente.md`, `saisie.md`,
    `fiche-de-proprietes.md`, `arbre-et-menu.md`).
-8. Le registre des commandes ; le tableau de données (`DataTable`) ; la liste de
-   choix (`RadioButton`, `SelectButton`) ; la saisie d'un nombre (`InputNumber`).
+8. ~~Le lot 3~~ : fait — `IdCard`, `Tag`, `SelectButton`, `InputNumber`
+   (`docs/composants/identite-et-choix.md`).
+9. Le tableau de données (`DataTable`) ; `RadioButton`, `ToggleButton` ; la mise
+   en page d'une application (`Toolbar`, `Splitter`, `Triptych`) ; le registre
+   des commandes.
 
 ## Règles
 

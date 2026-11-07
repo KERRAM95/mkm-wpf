@@ -133,7 +133,8 @@
                                             </ItemsPanelTemplate>
                                         </ItemsControl.ItemsPanel>
                                         <ItemsControl.ItemContainerStyle>
-                                            <Style TargetType="{x:Type ContentPresenter}">
+                                            <!-- FrameworkElement : un détail texte a un ContentPresenter, un détail élément est son propre conteneur. -->
+                                            <Style TargetType="{x:Type FrameworkElement}">
                                                 <Setter Property="Margin" Value="{DynamicResource mkm.idcard.details.item.margin}" />
                                             </Style>
                                         </ItemsControl.ItemContainerStyle>

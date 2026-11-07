@@ -77,6 +77,9 @@ Les évolutions notables de mkm-wpf, version par version. Le format suit
     `PropertyPanel`, `PropertySection`, `PropertyRow` ;
   - l'arbre et le menu (`docs/composants/arbre-et-menu.md`) : `Tree`, `TreeNode`,
     le menu contextuel de mkm sur tout `ContextMenu` de WPF (`MenuIcons`).
+- Le lot 3 (`docs/composants/identite-et-choix.md`) : `IdCard` (la couleur de
+  maturité donnée par l'application), `Tag`, `SelectButton`, `InputNumber` ; la
+  page Identité et choix de la vitrine ; `InputText.CornerRadius`.
 - `InternalIcons` : les 45 icônes que les composants de mkm dessinent eux-mêmes
   (clé `internal` du manifeste).
 - La vitrine : les pages Attente et aide, Texte date et confirmation, Fiche de
