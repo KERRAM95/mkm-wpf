@@ -4,7 +4,10 @@
 
 # inputtext : 24 px de haut, le retrait du bas d'un pixel de plus que celui du haut.
 inputtext.height = 24px
-inputtext.padding = 4px 6px 5px 6px
+# Le retrait du bas : 5 px chez mkm, 4 dans mkm-wpf. Le champ garde 24 px et son texte la même place, mais le
+# TextBox de WPF rogne ce qui dépasse sa zone de texte (13 px pour une ligne de 14 : la queue d'un g, d'un p),
+# là où CSS laisse déborder.
+inputtext.padding = 4px 6px 4px 6px
 inputtext.disabled.border.color = {surface.200}
 
 # select : le champ (bord gauche arrondi) et son bouton de 22 px, chacun bordé, de 24 px de haut.
@@ -224,7 +227,7 @@ togglebutton.last.border.radius = 0 {selectbutton.border.radius} {selectbutton.b
 # coins de 1 px de moins ; le texte s'arrête avant eux (la largeur des boutons et le retrait des champs : 30 + 7 px) ;
 # à l'horizontale, moins à gauche et plus à droite, bordés, le champ sans coins. inputnumber.button.icon.size est une
 # mesure de mkm-wpf : la flèche tient dans la moitié d'un champ de 24 px.
-inputnumber.stacked.input.padding = 4px 37px 5px 6px
+inputnumber.stacked.input.padding = 4px 37px 4px 6px
 inputnumber.stacked.up.border.radius = 0 1px 0 0
 inputnumber.stacked.down.border.radius = 0 0 1px 0
 inputnumber.button.icon.size = 10px

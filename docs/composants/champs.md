@@ -67,6 +67,9 @@ de WPF** et leur ajoutent un texte d'aide. Aucune ne réécrit la saisie.
 
 ## Écarts avec mkm
 
+- Le retrait du bas d'InputText est de 4 px, pas 5 : le champ garde 24 px et son
+  texte la même place, mais le `TextBox` de WPF rogne ce qui dépasse sa zone de
+  texte (la queue d'un g, d'un p), là où CSS laisse déborder.
 - Le dernier choix de la liste garde son trait (mkm l'enlève).
 - La liste ne se recale pas sur le bord droit de la fenêtre : WPF la garde à
   l'écran à sa façon.
