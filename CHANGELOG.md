@@ -42,3 +42,8 @@ Les évolutions notables de mkm-wpf, version par version. Le format suit
   `mkm.tooltip.*`. Les textes de la bibliothèque (`Localization/Strings.resx`,
   anglais et français) et leur garde.
 - La page ActionBar de la vitrine, avec le journal des commandes lancées.
+- Les champs, comme ceux de mkm (`docs/composants/champs.md`) : `InputText` (un
+  `TextBox`) et `Select` (un `ComboBox`, éditable, liste virtualisée), avec
+  `Placeholder` et `Invalid`, au rendu de 3DEXPERIENCE ; les jetons de la feuille
+  CSS de mkm, écrits par thème (`Theming/Tokens/<thème>.css.tokens`).
+- La vitrine : la liste des composants à gauche, et la page Champs.

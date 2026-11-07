@@ -108,7 +108,12 @@ Le thème, tel qu'il est fait (`src/Mkm.Wpf/Theming`) :
 - Les jetons viennent de mkm : `node outils/themes/importer-mkm.mjs <ui-kit>
   [composant…]` régénère `src/Mkm.Wpf/Theming/Tokens/*.tokens` (base, et les
   composants de sa liste). Un composant nouveau ajoute son nom à la liste de
-  l'outil et relance l'import ; on ne retouche jamais un `.tokens` à la main.
+  l'outil et relance l'import ; on ne retouche jamais un `.tokens` importé à la
+  main.
+- Ce que la feuille CSS d'un preset de mkm (`css`) dit sans jeton s'écrit à la
+  main, par thème, dans `Theming/Tokens/<thème>.css.tokens`, lu après les
+  jetons importés : aux valeurs de mkm, avec la teinte que chaque thème y met
+  (`dsblue.100` dans Dashboard, `primary.100` dans ARA).
 - `ThemesTests` vérifie, comme mkm : chaque renvoi résolu, ARA qui ne diffère
   de Dashboard que par ses couleurs, chaque texte lisible sur son fond
   (4,5:1) ; un composant ajoute ses paires texte/fond à la liste du test.

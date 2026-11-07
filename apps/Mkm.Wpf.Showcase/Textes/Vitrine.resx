@@ -108,4 +108,43 @@
   <data name="showcase.actionbar.statistics" xml:space="preserve">
     <value>Statistics</value>
   </data>
+  <data name="showcase.fields.title" xml:space="preserve">
+    <value>Fields</value>
+  </data>
+  <data name="showcase.fields.help" xml:space="preserve">
+    <value>The fields of mkm, as in 3DEXPERIENCE: InputText and Select. Their label, message and required mark come with the property panel.</value>
+  </data>
+  <data name="showcase.fields.reference" xml:space="preserve">
+    <value>Reference (upper case, 15 characters)</value>
+  </data>
+  <data name="showcase.fields.referenceHint" xml:space="preserve">
+    <value>e.g. HS-1234</value>
+  </data>
+  <data name="showcase.fields.designation" xml:space="preserve">
+    <value>Designation</value>
+  </data>
+  <data name="showcase.fields.designationValue" xml:space="preserve">
+    <value>Gearbox housing</value>
+  </data>
+  <data name="showcase.fields.readonly" xml:space="preserve">
+    <value>Read-only</value>
+  </data>
+  <data name="showcase.fields.disabled" xml:space="preserve">
+    <value>Disabled</value>
+  </data>
+  <data name="showcase.fields.invalid" xml:space="preserve">
+    <value>Invalid</value>
+  </data>
+  <data name="showcase.fields.maturity" xml:space="preserve">
+    <value>Maturity</value>
+  </data>
+  <data name="showcase.fields.choose" xml:space="preserve">
+    <value>Choose</value>
+  </data>
+  <data name="showcase.fields.scale" xml:space="preserve">
+    <value>Scale (editable: a value outside the list)</value>
+  </data>
+  <data name="showcase.fields.long" xml:space="preserve">
+    <value>5,000 values (virtualized list)</value>
+  </data>
 </root>

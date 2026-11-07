@@ -47,13 +47,24 @@ Namespace Mkm.Wpf.Theming
             Return Nothing
         End Function
 
-        ' Les jetons importés de mkm (Theming/Tokens/*.tokens), embarqués dans l'assembly.
+        ' Les jetons d'un thème, embarqués dans l'assembly : ceux importés de mkm (<nom>.tokens), puis ce que
+        ' la feuille CSS de mkm dit sans jeton (<nom>.css.tokens, écrit à la main), qui passe après.
         Private Shared Function Embarque(nom As String) As ThemeDefinition
-            Dim ressource = "Mkm.Wpf.Tokens." & nom & ".tokens"
+            Dim texte = Lire(nom & ".tokens", obligatoire:=True) & vbLf & Lire(nom & ".css.tokens", obligatoire:=False)
+            Using lecteur As New StringReader(texte)
+                Return ThemeDefinition.Load(nom, lecteur)
+            End Using
+        End Function
+
+        Private Shared Function Lire(fichier As String, obligatoire As Boolean) As String
+            Dim ressource = "Mkm.Wpf.Tokens." & fichier
             Using flux = GetType(Themes).Assembly.GetManifestResourceStream(ressource)
-                If flux Is Nothing Then Throw New InvalidOperationException($"Ressource introuvable : {ressource}.")
+                If flux Is Nothing Then
+                    If obligatoire Then Throw New InvalidOperationException($"Ressource introuvable : {ressource}.")
+                    Return String.Empty
+                End If
                 Using lecteur As New StreamReader(flux, Encoding.UTF8)
-                    Return ThemeDefinition.Load(nom, lecteur)
+                    Return lecteur.ReadToEnd()
                 End Using
             End Using
         End Function

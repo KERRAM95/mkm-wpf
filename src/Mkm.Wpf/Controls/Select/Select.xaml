@@ -1,0 +1,253 @@
+<!--
+    Le style de Select, sur la liste déroulante de 3DEXPERIENCE de mkm (presets dashboard et ara,
+    select) : le champ, bord gauche arrondi, et à sa droite un bouton gris de 22 px qui porte la flèche,
+    chacun bordé, de 24 px de haut. Au survol, tout fonce d'un pas ; au focus (ou liste ouverte), les
+    bordures au bleu du thème, le bouton bleu pâle et sa flèche bleu foncé, sans anneau. La liste s'ouvre
+    4 px dessous, sans bordure ni coins, ses choix de 22 px séparés d'un trait, le choix actuel cerné.
+    Chaque valeur est un jeton du thème (mkm.select.…), y compris ce que mkm écrit dans sa feuille
+    (Tokens/<thème>.css.tokens).
+
+    Écarts avec mkm : le dernier choix garde son trait ; la liste ne se recale pas sur le bord droit de
+    la fenêtre (WPF la garde à l'écran).
+-->
+<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+                    xmlns:local="clr-namespace:Mkm.Wpf.Controls">
+
+    <!-- Un choix de la liste. -->
+    <Style x:Key="mkm.Select.Option" TargetType="{x:Type ComboBoxItem}">
+        <Setter Property="Height" Value="{DynamicResource mkm.select.option.height}" />
+        <Setter Property="Padding" Value="{DynamicResource mkm.select.option.padding}" />
+        <Setter Property="Background" Value="{DynamicResource mkm.select.overlay.background}" />
+        <Setter Property="Foreground" Value="{DynamicResource mkm.select.option.color}" />
+        <Setter Property="BorderBrush" Value="{DynamicResource mkm.select.option.border.color}" />
+        <Setter Property="BorderThickness" Value="0,0,0,1" />
+        <Setter Property="HorizontalContentAlignment" Value="Left" />
+        <Setter Property="FocusVisualStyle" Value="{x:Null}" />
+        <Setter Property="SnapsToDevicePixels" Value="True" />
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="{x:Type ComboBoxItem}">
+                    <Grid>
+                        <Border x:Name="Fond" Background="{TemplateBinding Background}"
+                                BorderBrush="{TemplateBinding BorderBrush}"
+                                BorderThickness="{TemplateBinding BorderThickness}"
+                                Padding="{TemplateBinding Padding}">
+                            <ContentPresenter VerticalAlignment="Center"
+                                              HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}" />
+                        </Border>
+                        <!-- Le choix actuel est cerné du bleu, trait compris. -->
+                        <Rectangle x:Name="Cerne" Visibility="Collapsed" StrokeThickness="1"
+                                   Stroke="{DynamicResource mkm.select.option.selected.focus.background}" />
+                    </Grid>
+                    <ControlTemplate.Triggers>
+                        <Trigger Property="IsSelected" Value="True">
+                            <Setter Property="Background" Value="{DynamicResource mkm.select.option.selected.background}" />
+                            <Setter Property="Foreground" Value="{DynamicResource mkm.select.option.selected.color}" />
+                            <Setter Property="BorderBrush" Value="{DynamicResource mkm.select.option.selected.border.color}" />
+                            <Setter TargetName="Cerne" Property="Visibility" Value="Visible" />
+                        </Trigger>
+                        <!-- Le choix sous le pointeur ou le clavier est bleu, son texte blanc ; à l'ouverture,
+                             c'est le choix actuel. -->
+                        <Trigger Property="IsHighlighted" Value="True">
+                            <Setter Property="Background" Value="{DynamicResource mkm.select.option.focus.background}" />
+                            <Setter Property="Foreground" Value="{DynamicResource mkm.select.option.focus.color}" />
+                        </Trigger>
+                        <Trigger Property="IsEnabled" Value="False">
+                            <Setter TargetName="Fond" Property="Opacity" Value="{DynamicResource mkm.disabled.opacity}" />
+                        </Trigger>
+                    </ControlTemplate.Triggers>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+
+    <!-- Toute la surface du champ ouvre la liste (liste non éditable). -->
+    <Style x:Key="mkm.Select.Zone" TargetType="{x:Type ToggleButton}">
+        <Setter Property="Focusable" Value="False" />
+        <Setter Property="ClickMode" Value="Press" />
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="{x:Type ToggleButton}">
+                    <Border Background="Transparent" />
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+
+    <!-- Le bouton gris de la flèche. -->
+    <Style x:Key="mkm.Select.Button" TargetType="{x:Type ToggleButton}">
+        <Setter Property="Focusable" Value="False" />
+        <Setter Property="ClickMode" Value="Press" />
+        <Setter Property="Width" Value="{DynamicResource mkm.select.dropdown.width}" />
+        <Setter Property="Background" Value="{DynamicResource mkm.select.dropdown.background}" />
+        <Setter Property="Foreground" Value="{DynamicResource mkm.select.dropdown.color}" />
+        <Setter Property="BorderBrush" Value="{DynamicResource mkm.select.border.color}" />
+        <Setter Property="BorderThickness" Value="0,1,1,1" />
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="{x:Type ToggleButton}">
+                    <Border Background="{TemplateBinding Background}"
+                            BorderBrush="{TemplateBinding BorderBrush}"
+                            BorderThickness="{TemplateBinding BorderThickness}">
+                        <local:Icon HorizontalAlignment="Center" VerticalAlignment="Center"
+                                    Width="{DynamicResource mkm.select.dropdown.icon.width}"
+                                    Height="{DynamicResource mkm.select.dropdown.icon.width}"
+                                    Source="{x:Static local:Icons.ChevronDown}" />
+                    </Border>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+
+    <!-- La saisie d'une liste éditable : sans bord ni fond, le champ les porte. -->
+    <Style x:Key="mkm.Select.Editor" TargetType="{x:Type TextBox}">
+        <Setter Property="Background" Value="Transparent" />
+        <Setter Property="BorderThickness" Value="0" />
+        <Setter Property="Padding" Value="0" />
+        <Setter Property="Foreground" Value="{Binding Foreground, RelativeSource={RelativeSource AncestorType={x:Type ComboBox}}}" />
+        <Setter Property="CaretBrush" Value="{Binding Foreground, RelativeSource={RelativeSource AncestorType={x:Type ComboBox}}}" />
+        <Setter Property="FocusVisualStyle" Value="{x:Null}" />
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="{x:Type TextBox}">
+                    <ScrollViewer x:Name="PART_ContentHost" Focusable="False" Margin="0,-2" VerticalAlignment="Center"
+                                  HorizontalScrollBarVisibility="Hidden" VerticalScrollBarVisibility="Hidden" />
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+
+    <Style TargetType="{x:Type local:Select}">
+        <Setter Property="Height" Value="{DynamicResource mkm.select.height}" />
+        <Setter Property="Padding" Value="{DynamicResource mkm.select.label.padding}" />
+        <Setter Property="Background" Value="{DynamicResource mkm.select.background}" />
+        <Setter Property="BorderBrush" Value="{DynamicResource mkm.select.border.color}" />
+        <Setter Property="Foreground" Value="{DynamicResource mkm.select.color}" />
+        <Setter Property="FontFamily" Value="{DynamicResource mkm.font.family}" />
+        <Setter Property="FontSize" Value="{DynamicResource mkm.select.font.size}" />
+        <Setter Property="FocusVisualStyle" Value="{x:Null}" />
+        <Setter Property="SnapsToDevicePixels" Value="True" />
+        <Setter Property="ItemContainerStyle" Value="{StaticResource mkm.Select.Option}" />
+        <!-- La liste est virtualisée : seuls les choix visibles existent. -->
+        <Setter Property="ScrollViewer.CanContentScroll" Value="True" />
+        <Setter Property="VirtualizingPanel.IsVirtualizing" Value="True" />
+        <Setter Property="VirtualizingPanel.VirtualizationMode" Value="Recycling" />
+        <Setter Property="ItemsPanel">
+            <Setter.Value>
+                <ItemsPanelTemplate>
+                    <VirtualizingStackPanel />
+                </ItemsPanelTemplate>
+            </Setter.Value>
+        </Setter>
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="{x:Type local:Select}">
+                    <Grid x:Name="Racine">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="*" />
+                            <ColumnDefinition Width="Auto" />
+                        </Grid.ColumnDefinitions>
+                        <!-- Le champ : la valeur choisie, ou la saisie d'une liste éditable. -->
+                        <Border x:Name="Champ" BorderThickness="1"
+                                Background="{TemplateBinding Background}"
+                                BorderBrush="{TemplateBinding BorderBrush}"
+                                CornerRadius="{DynamicResource mkm.select.label.border.radius}">
+                            <Grid Margin="{TemplateBinding Padding}">
+                                <TextBlock x:Name="Aide" Visibility="Collapsed" VerticalAlignment="Center"
+                                           IsHitTestVisible="False" TextTrimming="CharacterEllipsis"
+                                           Foreground="{DynamicResource mkm.select.placeholder.color}"
+                                           Text="{TemplateBinding Placeholder}" />
+                                <ContentPresenter x:Name="ContentSite" VerticalAlignment="Center" IsHitTestVisible="False"
+                                                  Content="{TemplateBinding SelectionBoxItem}"
+                                                  ContentTemplate="{TemplateBinding SelectionBoxItemTemplate}"
+                                                  ContentTemplateSelector="{TemplateBinding ItemTemplateSelector}"
+                                                  ContentStringFormat="{TemplateBinding SelectionBoxItemStringFormat}" />
+                                <TextBox x:Name="PART_EditableTextBox" Visibility="Collapsed"
+                                         Style="{StaticResource mkm.Select.Editor}"
+                                         IsReadOnly="{Binding IsReadOnly, RelativeSource={RelativeSource TemplatedParent}}" />
+                            </Grid>
+                        </Border>
+                        <ToggleButton x:Name="Zone" Style="{StaticResource mkm.Select.Zone}"
+                                      IsChecked="{Binding IsDropDownOpen, Mode=TwoWay, RelativeSource={RelativeSource TemplatedParent}}" />
+                        <ToggleButton x:Name="Bouton" Grid.Column="1" Style="{StaticResource mkm.Select.Button}"
+                                      IsChecked="{Binding IsDropDownOpen, Mode=TwoWay, RelativeSource={RelativeSource TemplatedParent}}" />
+                        <Popup x:Name="PART_Popup" Grid.ColumnSpan="2" AllowsTransparency="True" Focusable="False"
+                               Placement="Bottom" PlacementTarget="{Binding ElementName=Racine}" PopupAnimation="None"
+                               VerticalOffset="{DynamicResource mkm.select.overlay.gutter}"
+                               IsOpen="{Binding IsDropDownOpen, RelativeSource={RelativeSource TemplatedParent}}">
+                            <!-- L'ombre est derrière la liste, pour que ses textes restent nets. -->
+                            <Grid Margin="0,0,4,4" MinWidth="{Binding ActualWidth, ElementName=Racine}">
+                                <Border Background="{DynamicResource mkm.select.list.background}"
+                                        Effect="{DynamicResource mkm.select.overlay.shadow}" />
+                                <Border Background="{DynamicResource mkm.select.list.background}"
+                                        Padding="{DynamicResource mkm.select.list.padding}">
+                                    <ScrollViewer MaxHeight="{TemplateBinding MaxDropDownHeight}" Focusable="False"
+                                                  CanContentScroll="True" VerticalScrollBarVisibility="Auto">
+                                        <ItemsPresenter KeyboardNavigation.DirectionalNavigation="Contained" />
+                                    </ScrollViewer>
+                                </Border>
+                            </Grid>
+                        </Popup>
+                    </Grid>
+                    <ControlTemplate.Triggers>
+                        <Trigger Property="SelectedItem" Value="{x:Null}">
+                            <Setter TargetName="Aide" Property="Visibility" Value="Visible" />
+                        </Trigger>
+                        <Trigger Property="IsEditable" Value="True">
+                            <Setter TargetName="PART_EditableTextBox" Property="Visibility" Value="Visible" />
+                            <Setter TargetName="ContentSite" Property="Visibility" Value="Hidden" />
+                            <Setter TargetName="Zone" Property="Visibility" Value="Collapsed" />
+                            <Setter TargetName="Aide" Property="Visibility" Value="Collapsed" />
+                        </Trigger>
+                        <MultiTrigger>
+                            <MultiTrigger.Conditions>
+                                <Condition Property="IsEditable" Value="True" />
+                                <Condition Property="Text" Value="" />
+                            </MultiTrigger.Conditions>
+                            <Setter TargetName="Aide" Property="Visibility" Value="Visible" />
+                        </MultiTrigger>
+                        <!-- Au survol, tout fonce d'un pas. -->
+                        <Trigger Property="IsMouseOver" Value="True">
+                            <Setter Property="BorderBrush" Value="{DynamicResource mkm.select.hover.border.color}" />
+                            <Setter TargetName="Bouton" Property="BorderBrush" Value="{DynamicResource mkm.select.hover.border.color}" />
+                            <Setter TargetName="Bouton" Property="Background" Value="{DynamicResource mkm.select.dropdown.hover.background}" />
+                        </Trigger>
+                        <!-- Au focus ou liste ouverte : le bleu du thème, le bouton bleu pâle. -->
+                        <Trigger Property="IsKeyboardFocusWithin" Value="True">
+                            <Setter Property="BorderBrush" Value="{DynamicResource mkm.select.focus.border.color}" />
+                            <Setter TargetName="Bouton" Property="BorderBrush" Value="{DynamicResource mkm.select.focus.border.color}" />
+                            <Setter TargetName="Bouton" Property="Background" Value="{DynamicResource mkm.select.dropdown.focus.background}" />
+                            <Setter TargetName="Bouton" Property="Foreground" Value="{DynamicResource mkm.select.dropdown.focus.color}" />
+                        </Trigger>
+                        <Trigger Property="IsDropDownOpen" Value="True">
+                            <Setter Property="BorderBrush" Value="{DynamicResource mkm.select.focus.border.color}" />
+                            <Setter TargetName="Bouton" Property="BorderBrush" Value="{DynamicResource mkm.select.focus.border.color}" />
+                            <Setter TargetName="Bouton" Property="Background" Value="{DynamicResource mkm.select.dropdown.focus.background}" />
+                            <Setter TargetName="Bouton" Property="Foreground" Value="{DynamicResource mkm.select.dropdown.focus.color}" />
+                        </Trigger>
+                        <!-- Le bouton enfoncé fonce encore d'un pas, bordures comprises. -->
+                        <Trigger SourceName="Bouton" Property="IsPressed" Value="True">
+                            <Setter Property="BorderBrush" Value="{DynamicResource mkm.select.dropdown.pressed.border.color}" />
+                            <Setter TargetName="Bouton" Property="BorderBrush" Value="{DynamicResource mkm.select.dropdown.pressed.border.color}" />
+                            <Setter TargetName="Bouton" Property="Background" Value="{DynamicResource mkm.select.dropdown.pressed.background}" />
+                            <Setter TargetName="Bouton" Property="Foreground" Value="{DynamicResource mkm.select.dropdown.color}" />
+                        </Trigger>
+                        <Trigger Property="Invalid" Value="True">
+                            <Setter Property="BorderBrush" Value="{DynamicResource mkm.select.invalid.border.color}" />
+                            <Setter TargetName="Bouton" Property="BorderBrush" Value="{DynamicResource mkm.select.invalid.border.color}" />
+                            <Setter TargetName="Aide" Property="Foreground" Value="{DynamicResource mkm.select.invalid.placeholder.color}" />
+                        </Trigger>
+                        <!-- Grisée : à moitié transparente, bordée du gris pâle. -->
+                        <Trigger Property="IsEnabled" Value="False">
+                            <Setter TargetName="Racine" Property="Opacity" Value="{DynamicResource mkm.disabled.opacity}" />
+                            <Setter Property="BorderBrush" Value="{DynamicResource mkm.select.disabled.border.color}" />
+                            <Setter TargetName="Bouton" Property="BorderBrush" Value="{DynamicResource mkm.select.disabled.border.color}" />
+                        </Trigger>
+                    </ControlTemplate.Triggers>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+
+</ResourceDictionary>

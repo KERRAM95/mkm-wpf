@@ -44,7 +44,11 @@ Namespace Mkm.Wpf.Tests.Theming
             {"actionbar.tab.active.color", "actionbar.panel.background"},
             {"actionbar.item.color", "actionbar.panel.background"},
             {"actionbar.item.label.color", "actionbar.panel.background"},
-            {"actionbar.item.active.color", "actionbar.item.active.background"}}
+            {"actionbar.item.active.color", "actionbar.item.active.background"},
+            {"inputtext.color", "inputtext.background"},
+            {"select.color", "select.background"},
+            {"select.option.color", "select.overlay.background"},
+            {"select.option.selected.color", "select.option.selected.background"}}
 
         Private Shared Function Integres() As IEnumerable(Of TestCaseData)
             Return {New TestCaseData(Themes.Dashboard).SetName("Dashboard"), New TestCaseData(Themes.Ara).SetName("Ara")}

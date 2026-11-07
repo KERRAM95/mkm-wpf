@@ -1,0 +1,27 @@
+# Ce que la feuille CSS du preset de mkm (Ara, « css ») dit sans jeton, écrit en jetons pour mkm-wpf.
+# Écrit à la main d'après ui-kit, packages/themes/src/presets/ara/(inputtext|select)/index.ts : à reprendre
+# quand ces feuilles changent. Lu après Ara.tokens (outils/themes/importer-mkm.mjs ne touche pas ce fichier).
+
+# inputtext : 24 px de haut, le retrait du bas d'un pixel de plus que celui du haut.
+inputtext.height = 24px
+inputtext.padding = 4px 6px 5px 6px
+inputtext.disabled.border.color = {surface.200}
+
+# select : le champ (bord gauche arrondi) et son bouton de 22 px, chacun bordé, de 24 px de haut.
+select.height = 24px
+select.label.padding = 4px 0 5px 6px
+select.label.border.radius = {select.border.radius} 0 0 {select.border.radius}
+select.dropdown.background = {surface.100}
+select.dropdown.hover.background = {surface.200}
+select.dropdown.focus.background = {primary.100}
+select.dropdown.focus.color = {primary.600}
+select.dropdown.pressed.background = {surface.300}
+select.dropdown.pressed.border.color = {surface.700}
+select.dropdown.icon.width = 10px
+select.disabled.border.color = {surface.200}
+# La liste : 4 px sous le champ, ses choix de 22 px séparés d'un trait, le choix actuel cerné.
+select.overlay.gutter = 4px
+select.list.background = {surface.50}
+select.option.height = 22px
+select.option.border.color = {surface.50}
+select.option.selected.border.color = {surface.200}

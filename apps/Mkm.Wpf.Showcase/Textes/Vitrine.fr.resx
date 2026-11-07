@@ -108,4 +108,43 @@
   <data name="showcase.actionbar.statistics" xml:space="preserve">
     <value>Statistiques</value>
   </data>
+  <data name="showcase.fields.title" xml:space="preserve">
+    <value>Champs</value>
+  </data>
+  <data name="showcase.fields.help" xml:space="preserve">
+    <value>Les champs de mkm, comme dans 3DEXPERIENCE : InputText et Select. Leur libellé, leur message et la marque d'un champ obligatoire viendront avec la fiche de propriétés.</value>
+  </data>
+  <data name="showcase.fields.reference" xml:space="preserve">
+    <value>Référence (majuscules, 15 caractères)</value>
+  </data>
+  <data name="showcase.fields.referenceHint" xml:space="preserve">
+    <value>ex. HS-1234</value>
+  </data>
+  <data name="showcase.fields.designation" xml:space="preserve">
+    <value>Désignation</value>
+  </data>
+  <data name="showcase.fields.designationValue" xml:space="preserve">
+    <value>Carter de boîte de vitesses</value>
+  </data>
+  <data name="showcase.fields.readonly" xml:space="preserve">
+    <value>Lecture seule</value>
+  </data>
+  <data name="showcase.fields.disabled" xml:space="preserve">
+    <value>Grisé</value>
+  </data>
+  <data name="showcase.fields.invalid" xml:space="preserve">
+    <value>Invalide</value>
+  </data>
+  <data name="showcase.fields.maturity" xml:space="preserve">
+    <value>Maturité</value>
+  </data>
+  <data name="showcase.fields.choose" xml:space="preserve">
+    <value>Choisir</value>
+  </data>
+  <data name="showcase.fields.scale" xml:space="preserve">
+    <value>Échelle (éditable : une valeur hors de la liste)</value>
+  </data>
+  <data name="showcase.fields.long" xml:space="preserve">
+    <value>5 000 valeurs (liste virtualisée)</value>
+  </data>
 </root>
