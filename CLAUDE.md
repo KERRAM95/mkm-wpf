@@ -274,6 +274,15 @@ l'anglais en repli (voir « Thème et langue »).
 - **Les styles implicites des contrôles de WPF eux-mêmes** (info-bulle, menu)
   vont dans `Themes/Natifs.xaml`, que `MkmResources` fusionne ; ceux des
   contrôles de la bibliothèque, dans `Themes/Generic.xaml`.
+- **Un nom de mkm cache celui de WPF** dans l'espace de noms des contrôles :
+  `ToggleButton`, `RadioButton`, `Menu`, `Button` y désignent ceux de mkm, même
+  là où l'on voulait celui de WPF (un `TryCast(…, ToggleButton)` sur une partie
+  de gabarit rend alors `Nothing`, sans bruit). Écrire le nom complet
+  (`System.Windows.Controls.Primitives.ToggleButton`) ; `ConventionsTests`
+  vérifie le type de chaque partie annoncée d'un gabarit.
+- **Une ligne recyclée du `DataGrid` garde ses cellules** : `GenerateElement`
+  n'est pas rappelé pour le nouvel objet, seul le `DataContext` change. Ce que
+  la cellule tient de son objet suit `DataContextChanged`.
 - **Pas de `MinWidth` lié au `ViewportWidth` d'un `ScrollViewer`** qui le
   contient : c'est un cliquet, le contenu ne rétrécit plus jamais (l'ActionBar
   gardait la largeur de sa plus large section). Le `ScrollViewer` étire déjà son

@@ -9,7 +9,7 @@ Namespace Mkm.Wpf.Controls
     ''' montre pleine de la couleur principale quand elle l'est.
     ''' </summary>
     Public Class ActionBarToggleButton
-        Inherits ToggleButton
+        Inherits System.Windows.Controls.Primitives.ToggleButton
         Implements IActionBarCommand
 
         ''' <summary>Le libellé de la commande.</summary>

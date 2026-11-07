@@ -106,6 +106,31 @@ Namespace Mkm.Wpf.Tests
         End Sub
 
         ''' <summary>
+        ''' Chaque partie annoncée d'un gabarit (<see cref="TemplatePartAttribute"/>), quand le gabarit l'a, est du type
+        ''' annoncé : sinon le contrôle ne la trouve pas (<c>TryCast</c> rend <c>Nothing</c>), sans bruit. Le piège : un
+        ''' nom de mkm qui cache celui de WPF (<c>ToggleButton</c> dans l'espace de noms des contrôles).
+        ''' </summary>
+        <Test>
+        Public Sub ChaquePartieDeGabarit_EstDuTypeAnnonce()
+            Dim fautifs As New List(Of String)
+            For Each genre In Controles().Where(Function(t) t.GetConstructor(Type.EmptyTypes) IsNot Nothing AndAlso Not GetType(Window).IsAssignableFrom(t))
+                Dim controle = DirectCast(Activator.CreateInstance(genre), Control)
+                controle.BeginInit()
+                controle.EndInit()
+                controle.ApplyTemplate()
+                If controle.Template Is Nothing Then Continue For
+                For Each partie In genre.GetCustomAttributes(GetType(TemplatePartAttribute), True).Cast(Of TemplatePartAttribute)()
+                    Dim trouvee = controle.Template.FindName(partie.Name, controle)
+                    If trouvee IsNot Nothing AndAlso Not partie.Type.IsInstanceOfType(trouvee) Then
+                        fautifs.Add($"{genre.Name}.{partie.Name} : {trouvee.GetType().FullName}, annoncée {partie.Type.FullName}")
+                    End If
+                Next
+            Next
+
+            Assert.That(fautifs, [Is].Empty)
+        End Sub
+
+        ''' <summary>
         ''' Chaque ressource que nomme un gabarit (<c>{DynamicResource mkm.…}</c>) existe dans chaque thème : une
         ''' ressource absente ne lève rien dans WPF, la propriété garde sa valeur par défaut, sans bruit.
         ''' </summary>

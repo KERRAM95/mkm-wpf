@@ -95,6 +95,12 @@ Les évolutions notables de mkm-wpf, version par version. Le format suit
   vitrine.
 - Le lot 7 (`docs/composants/menus.md`) : `Menu` (et ses groupes, `MenuGroup`)
   et `TieredMenu`, posés dans la page ; sur la page Arbre et menu de la vitrine.
+- Le lot 8 (`docs/composants/arborescence-et-cycle-de-vie.md`) : `TreeGrid` (la
+  DataGridView de 3DEXPERIENCE sur le `DataTable`, sa colonne d'arbre) et
+  `StateGraph` (le graphe du cycle de vie) ; la page Arborescence et cycle de vie
+  de la vitrine.
+- L'importeur de jetons fond le schéma clair d'un composant dans ses valeurs
+  communes, comme mkm.
 - Les thèmes : une largeur de bordure côté par côté (`0 1px 1px 0`) devient
   une épaisseur.
 - `InternalIcons` : les 45 icônes que les composants de mkm dessinent eux-mêmes

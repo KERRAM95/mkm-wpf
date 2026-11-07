@@ -69,8 +69,21 @@ Namespace Mkm.Wpf.Controls
             FocusableProperty.OverrideMetadata(GetType(TreeGridCell), New FrameworkPropertyMetadata(False))
         End Sub
 
+        ''' <summary>Une cellule d'arbre : elle suit le nœud de sa ligne.</summary>
+        Public Sub New()
+            ' Une ligne recyclée par la grille garde ses cellules : seul le nœud change ; sa place suit.
+            AddHandler DataContextChanged, Sub(s, e) Lier()
+        End Sub
+
         ''' <summary>La grille de la cellule.</summary>
         Friend Property Grid As TreeGrid
+
+        ''' <summary>Prend la place du nœud de la ligne dans la grille.</summary>
+        Friend Sub Lier()
+            Dim grille = If(Grid, TryCast(ItemsControl.ItemsControlFromItemContainer(DataGridRow.GetRowContainingElement(Me)), TreeGrid))
+            Dim place = grille?.GetRowInfo(DataContext)
+            If place IsNot Nothing Then Info = place
+        End Sub
 
         ''' <summary>La place du nœud dans l'arbre.</summary>
         Public Property Info As TreeGridRowInfo

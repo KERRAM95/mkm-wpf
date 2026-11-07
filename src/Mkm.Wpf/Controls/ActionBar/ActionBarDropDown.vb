@@ -21,7 +21,7 @@ Namespace Mkm.Wpf.Controls
     ''' </code>
     ''' </summary>
     <TemplatePart(Name:="PART_Main", Type:=GetType(ButtonBase))>
-    <TemplatePart(Name:="PART_Arrow", Type:=GetType(ToggleButton))>
+    <TemplatePart(Name:="PART_Arrow", Type:=GetType(Primitives.ToggleButton))>
     <TemplatePart(Name:="PART_Popup", Type:=GetType(Popup))>
     Public Class ActionBarDropDown
         Inherits ItemsControl
@@ -45,7 +45,7 @@ Namespace Mkm.Wpf.Controls
             New FrameworkPropertyMetadata(False, FrameworkPropertyMetadataOptions.Inherits))
 
         Private _principale As ButtonBase
-        Private _fleche As ToggleButton
+        Private _fleche As Primitives.ToggleButton
         Private _liste As Popup
         Private _derniere As UIElement
 
@@ -58,8 +58,8 @@ Namespace Mkm.Wpf.Controls
         Public Sub New()
             ' Les événements routés de ses commandes (AddHandler, en VB, est aussi un mot-clé : Me.AddHandler).
             Me.AddHandler(ButtonBase.ClickEvent, New RoutedEventHandler(AddressOf OnCommandeLancee))
-            Me.AddHandler(ToggleButton.CheckedEvent, New RoutedEventHandler(AddressOf OnBascule))
-            Me.AddHandler(ToggleButton.UncheckedEvent, New RoutedEventHandler(AddressOf OnBascule))
+            Me.AddHandler(Primitives.ToggleButton.CheckedEvent, New RoutedEventHandler(AddressOf OnBascule))
+            Me.AddHandler(Primitives.ToggleButton.UncheckedEvent, New RoutedEventHandler(AddressOf OnBascule))
         End Sub
 
         ''' <summary>La commande que la barre montre.</summary>
@@ -111,7 +111,7 @@ Namespace Mkm.Wpf.Controls
 
             MyBase.OnApplyTemplate()
             _principale = TryCast(GetTemplateChild("PART_Main"), ButtonBase)
-            _fleche = TryCast(GetTemplateChild("PART_Arrow"), ToggleButton)
+            _fleche = TryCast(GetTemplateChild("PART_Arrow"), Primitives.ToggleButton)
             _liste = TryCast(GetTemplateChild("PART_Popup"), Popup)
 
             If _principale IsNot Nothing Then
@@ -137,7 +137,7 @@ Namespace Mkm.Wpf.Controls
         ''' <summary>La commande montrée : celle à bascule enfoncée, sinon la dernière lancée, sinon la première.</summary>
         Friend Sub MettreAJour()
             Dim commandes = Items.OfType(Of UIElement)().ToList()
-            Dim enfoncee = commandes.OfType(Of ToggleButton)().FirstOrDefault(Function(b) b.IsChecked.GetValueOrDefault())
+            Dim enfoncee = commandes.OfType(Of Primitives.ToggleButton)().FirstOrDefault(Function(b) b.IsChecked.GetValueOrDefault())
             Dim montree = If(enfoncee, If(commandes.Contains(_derniere), _derniere, commandes.FirstOrDefault()))
             SetValue(ShownItemPropertyKey, montree)
             LierLaCommande()
