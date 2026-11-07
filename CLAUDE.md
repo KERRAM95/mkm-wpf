@@ -70,7 +70,8 @@ premier d'entre eux, après l'étude de l'open source (plus bas).
 les change pendant qu'elle tourne**, comme avec mkm. La langue est une exigence
 au même titre que le thème (Mourad, le 07/11/2026) : tout composant est
 traduisible. Le pourquoi est dans `docs/fondations/theme-et-langue.md`
-(validée le 07/11/2026) ; le thème attend sa propre fiche.
+(validée le 07/11/2026) ; le thème a sa fiche, `docs/fondations/theme.md`
+(à valider).
 
 La langue, telle qu'elle est faite (`src/Mkm.Wpf/Localization`) :
 

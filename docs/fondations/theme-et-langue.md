@@ -5,8 +5,8 @@
 > valide avant le développement.
 
 **État :** validée le 07/11/2026. La langue est faite
-(`src/Mkm.Wpf/Localization`, règles dans `CLAUDE.md`) ; le thème attend sa
-fiche.
+(`src/Mkm.Wpf/Localization`, règles dans `CLAUDE.md`) ; le thème a sa fiche,
+`docs/fondations/theme.md`.
 
 ## Le besoin
 
