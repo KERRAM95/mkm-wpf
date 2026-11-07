@@ -18,13 +18,94 @@
   <data name="showcase.components" xml:space="preserve">
     <value>Components</value>
   </data>
-  <data name="showcase.empty" xml:space="preserve">
-    <value>No component yet.</value>
-  </data>
   <data name="showcase.language" xml:space="preserve">
     <value>Language</value>
   </data>
   <data name="showcase.theme" xml:space="preserve">
     <value>Theme</value>
+  </data>
+  <data name="showcase.actionbar.title" xml:space="preserve">
+    <value>ActionBar</value>
+  </data>
+  <data name="showcase.actionbar.help" xml:space="preserve">
+    <value>The command bar of mkm: tabs of sections, fixed commands, toggles, lists that keep the last command run. Right-click the bar to show the labels; its arrow collapses it.</value>
+  </data>
+  <data name="showcase.actionbar.log" xml:space="preserve">
+    <value>Commands run</value>
+  </data>
+  <data name="showcase.actionbar.save" xml:space="preserve">
+    <value>Save</value>
+  </data>
+  <data name="showcase.actionbar.edit" xml:space="preserve">
+    <value>Edit</value>
+  </data>
+  <data name="showcase.actionbar.view" xml:space="preserve">
+    <value>View</value>
+  </data>
+  <data name="showcase.actionbar.tools" xml:space="preserve">
+    <value>Tools</value>
+  </data>
+  <data name="showcase.actionbar.add" xml:space="preserve">
+    <value>Add</value>
+  </data>
+  <data name="showcase.actionbar.copy" xml:space="preserve">
+    <value>Copy</value>
+  </data>
+  <data name="showcase.actionbar.delete" xml:space="preserve">
+    <value>Delete</value>
+  </data>
+  <data name="showcase.actionbar.deleteHint" xml:space="preserve">
+    <value>Select an item first</value>
+  </data>
+  <data name="showcase.actionbar.lock" xml:space="preserve">
+    <value>Lock</value>
+  </data>
+  <data name="showcase.actionbar.zoomIn" xml:space="preserve">
+    <value>Zoom In</value>
+  </data>
+  <data name="showcase.actionbar.zoomOut" xml:space="preserve">
+    <value>Zoom Out</value>
+  </data>
+  <data name="showcase.actionbar.fit" xml:space="preserve">
+    <value>Fit</value>
+  </data>
+  <data name="showcase.actionbar.show" xml:space="preserve">
+    <value>Show</value>
+  </data>
+  <data name="showcase.actionbar.refresh" xml:space="preserve">
+    <value>Refresh</value>
+  </data>
+  <data name="showcase.actionbar.settings" xml:space="preserve">
+    <value>Settings</value>
+  </data>
+  <data name="showcase.actionbar.search" xml:space="preserve">
+    <value>Search</value>
+  </data>
+  <data name="showcase.actionbar.filter" xml:space="preserve">
+    <value>Filter</value>
+  </data>
+  <data name="showcase.actionbar.sort" xml:space="preserve">
+    <value>Sort</value>
+  </data>
+  <data name="showcase.actionbar.history" xml:space="preserve">
+    <value>History</value>
+  </data>
+  <data name="showcase.actionbar.import" xml:space="preserve">
+    <value>Import</value>
+  </data>
+  <data name="showcase.actionbar.export" xml:space="preserve">
+    <value>Export</value>
+  </data>
+  <data name="showcase.actionbar.upload" xml:space="preserve">
+    <value>Upload</value>
+  </data>
+  <data name="showcase.actionbar.download" xml:space="preserve">
+    <value>Download</value>
+  </data>
+  <data name="showcase.actionbar.structure" xml:space="preserve">
+    <value>Structure</value>
+  </data>
+  <data name="showcase.actionbar.statistics" xml:space="preserve">
+    <value>Statistics</value>
   </data>
 </root>

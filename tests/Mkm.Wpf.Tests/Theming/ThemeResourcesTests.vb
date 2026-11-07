@@ -95,8 +95,10 @@ Namespace Mkm.Wpf.Tests.Theming
         <Test>
         Public Sub Build_UneRessourceParJeton()
             Dim ressources = ThemeResources.Build(Themes.Ara)
+            ' Un jeton sans valeur WPF (une ombre « none ») n'a pas de ressource : WPF garde son défaut.
+            Dim attendues = Themes.Ara.Paths.Count(Function(p) ThemeResources.Convert(p, Themes.Ara.Resolve(p)) IsNot Nothing)
 
-            Assert.That(ressources.Count, [Is].EqualTo(Themes.Ara.Paths.Count()))
+            Assert.That(ressources.Count, [Is].EqualTo(attendues))
             Assert.That(DirectCast(ressources("mkm.primary.color"), SolidColorBrush).Color, [Is].EqualTo(Color.FromRgb(&H1, &H44, &H91)))
             Assert.That(ressources("mkm.font.size"), [Is].EqualTo(12.0))
         End Sub

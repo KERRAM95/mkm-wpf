@@ -4,8 +4,8 @@ Bibliothèque de composants WPF en VB.NET, déclinaison bureau de **mkm**
 (`ui-kit`) : contrôles, thèmes, icônes et commandes réutilisables, avec une
 vitrine. Neutre, indépendante de toute application.
 
-**État :** la langue est en place (textes traduits, changement de langue à
-chaud) ; le thème vient ensuite, puis les composants. La version 0.1.0 est en
+**État :** les fondations (langue et thème, changeables à chaud), les icônes
+de mkm et le premier composant, l'ActionBar. La version 0.1.0 est en
 préparation.
 
 ## Prérequis
@@ -86,8 +86,7 @@ vitrine en est l'exemple (`apps/Mkm.Wpf.Showcase`).
 2. ~~Les thèmes~~ : faits — Dashboard et ARA, les jetons de mkm, par la même
    configuration (`docs/fondations/theme.md`).
 3. ~~Les icônes~~ : faites — les 95 de mkm, dessinées par Tabler.
-4. L'ActionBar, une barre de commandes en onglets : le composant prioritaire
-   (`docs/composants/actionbar.md`).
+4. ~~L'ActionBar~~ : faite, comme celle de mkm (`docs/composants/actionbar.md`).
 5. Le registre des commandes.
 
 ## Règles

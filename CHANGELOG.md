@@ -33,4 +33,12 @@ Les évolutions notables de mkm-wpf, version par version. Le format suit
 - La vitrine habillée par le thème, avec le choix du thème dans sa barre.
 - Les icônes : les 95 de mkm (`Icons`, dessinées par Tabler Icons 3.48.0, MIT) et
   l'élément `Icon`, qui les trace à la couleur du texte ; `THIRD-PARTY-NOTICES.md`.
-- La fiche de l'ActionBar (`docs/composants/actionbar.md`) : comme celle de mkm.
+- L'ActionBar, comme celle de mkm (`docs/composants/actionbar.md`) : `ActionBar`
+  (sections en onglets, commandes fixes, repli, libellés au clic droit, défilement,
+  Début et Fin), `ActionBarSection`, `ActionBarButton`, `ActionBarToggleButton`,
+  `ActionBarDropDown` (la commande enfoncée, sinon la dernière lancée, sinon la
+  première), `ActionBarSeparator` ; info-bulles « libellé — indice », aussi au
+  clavier ; jetons `mkm.actionbar.*`, `mkm.menu.*`, `mkm.contextmenu.*`,
+  `mkm.tooltip.*`. Les textes de la bibliothèque (`Localization/Strings.resx`,
+  anglais et français) et leur garde.
+- La page ActionBar de la vitrine, avec le journal des commandes lancées.

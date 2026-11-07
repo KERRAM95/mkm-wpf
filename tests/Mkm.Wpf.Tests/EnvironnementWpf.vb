@@ -25,6 +25,8 @@ Namespace Mkm.Wpf.Tests
             If Application.Current Is Nothing Then
                 _application = New Application With {.ShutdownMode = ShutdownMode.OnExplicitShutdown}
             End If
+            ' Les ressources du thème, comme App.xaml les pose : les gabarits y lisent leurs jetons.
+            Application.Current.Resources.MergedDictionaries.Add(_ressources)
         End Sub
 
     End Class

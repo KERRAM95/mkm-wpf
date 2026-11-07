@@ -1,0 +1,533 @@
+<!--
+    Les styles de l'ActionBar et de ses commandes, sur ceux de mkm (packages/styles/src/actionbar) :
+    chaque mesure et chaque couleur est un jeton du thème (mkm.actionbar.…, mkm.menu.…, mkm.tooltip.…),
+    lu par DynamicResource.
+
+    Écarts avec mkm : les couleurs changent sans transition (mkm : 200 ms) ; la rangée paraît sans
+    fondu ; le panneau n'a pas d'ombre (celle de mkm tombe sous le bord, hors de la vue).
+-->
+<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+                    xmlns:local="clr-namespace:Mkm.Wpf.Controls"
+                    xmlns:loc="clr-namespace:Mkm.Wpf.Localization">
+
+    <!-- Les anneaux de focus, au clavier seulement (focus-visible) : 1 px, à l'écart que donne le thème. -->
+    <Style x:Key="mkm.ActionBar.ItemFocus">
+        <Setter Property="Control.Template">
+            <Setter.Value>
+                <ControlTemplate>
+                    <Rectangle Margin="-3" RadiusX="7" RadiusY="7" SnapsToDevicePixels="True"
+                               Stroke="{DynamicResource mkm.actionbar.item.focus.ring.color}"
+                               StrokeThickness="{DynamicResource mkm.actionbar.item.focus.ring.width}" />
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+
+    <Style x:Key="mkm.ActionBar.TabFocus">
+        <Setter Property="Control.Template">
+            <Setter.Value>
+                <ControlTemplate>
+                    <Rectangle SnapsToDevicePixels="True"
+                               Stroke="{DynamicResource mkm.actionbar.tab.focus.ring.color}"
+                               StrokeThickness="{DynamicResource mkm.actionbar.tab.focus.ring.width}" />
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+
+    <Style x:Key="mkm.ActionBar.ToggleFocus">
+        <Setter Property="Control.Template">
+            <Setter.Value>
+                <ControlTemplate>
+                    <Rectangle Margin="-3" RadiusX="7" RadiusY="7" SnapsToDevicePixels="True"
+                               Stroke="{DynamicResource mkm.actionbar.toggle.focus.ring.color}"
+                               StrokeThickness="{DynamicResource mkm.actionbar.toggle.focus.ring.width}" />
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+
+    <!-- Une commande dans la barre : l'icône, et le libellé dessous quand la barre les montre. -->
+    <ControlTemplate x:Key="mkm.ActionBar.ItemTemplate" TargetType="{x:Type ButtonBase}">
+        <Grid x:Name="Racine" Background="Transparent">
+            <Border Background="{TemplateBinding Background}"
+                    CornerRadius="{DynamicResource mkm.actionbar.item.border.radius}" />
+            <StackPanel Margin="{TemplateBinding Padding}" HorizontalAlignment="Center" VerticalAlignment="Center">
+                <local:Icon HorizontalAlignment="Center"
+                            Width="{DynamicResource mkm.actionbar.item.icon.size}"
+                            Height="{DynamicResource mkm.actionbar.item.icon.size}"
+                            Source="{Binding (local:ActionBarItem.Icon), RelativeSource={RelativeSource TemplatedParent}}" />
+                <Rectangle x:Name="Ecart" Height="{DynamicResource mkm.actionbar.item.label.gap}" Visibility="Collapsed" />
+                <TextBlock x:Name="Libelle" Visibility="Collapsed"
+                           TextAlignment="Center" TextWrapping="Wrap" TextTrimming="CharacterEllipsis"
+                           FontSize="{DynamicResource mkm.actionbar.item.label.font.size}"
+                           LineHeight="{DynamicResource mkm.actionbar.item.label.line.height}"
+                           LineStackingStrategy="BlockLineHeight"
+                           Foreground="{DynamicResource mkm.actionbar.item.label.color}"
+                           Text="{Binding (local:ActionBarItem.Label), RelativeSource={RelativeSource TemplatedParent}}" />
+            </StackPanel>
+        </Grid>
+        <ControlTemplate.Triggers>
+            <Trigger Property="IsMouseOver" Value="True">
+                <Setter Property="Background" Value="{DynamicResource mkm.actionbar.item.hover.background}" />
+                <Setter Property="Foreground" Value="{DynamicResource mkm.actionbar.item.hover.color}" />
+            </Trigger>
+            <!-- Enfoncée, la commande rétrécit (mkm.actionbar.item.pressed.scale) : ActionBarItem.Presser. -->
+            <Trigger Property="IsPressed" Value="True">
+                <Setter Property="Background" Value="{DynamicResource mkm.actionbar.item.pressed.background}" />
+            </Trigger>
+            <!-- Enfoncée, une bascule est pleine de la couleur principale ; son libellé en prend la couleur. -->
+            <Trigger Property="ToggleButton.IsChecked" Value="True">
+                <Setter Property="Background" Value="{DynamicResource mkm.actionbar.item.active.background}" />
+                <Setter Property="Foreground" Value="{DynamicResource mkm.actionbar.item.active.color}" />
+                <Setter TargetName="Libelle" Property="Foreground" Value="{Binding Foreground, RelativeSource={RelativeSource TemplatedParent}}" />
+            </Trigger>
+            <Trigger Property="local:ActionBar.ShowLabels" Value="True">
+                <Setter TargetName="Libelle" Property="Visibility" Value="Visible" />
+                <Setter TargetName="Ecart" Property="Visibility" Value="Visible" />
+            </Trigger>
+            <!-- Grisée, la commande garde son info-bulle : elle dit ce qui lui manque. -->
+            <Trigger Property="IsEnabled" Value="False">
+                <Setter TargetName="Racine" Property="Opacity" Value="{DynamicResource mkm.actionbar.item.disabled.opacity}" />
+            </Trigger>
+        </ControlTemplate.Triggers>
+    </ControlTemplate>
+
+    <!-- Une commande dans la liste ouverte d'une ActionBarDropDown : une ligne de menu. -->
+    <ControlTemplate x:Key="mkm.ActionBar.RowTemplate" TargetType="{x:Type ButtonBase}">
+        <Border x:Name="Fond" Background="Transparent" Padding="{TemplateBinding Padding}"
+                MinHeight="{DynamicResource mkm.navigation.item.height}">
+            <DockPanel VerticalAlignment="Center">
+                <local:Icon x:Name="Icone" DockPanel.Dock="Left" Width="16" Height="16"
+                            Foreground="{DynamicResource mkm.menu.item.icon.color}"
+                            Source="{Binding (local:ActionBarItem.Icon), RelativeSource={RelativeSource TemplatedParent}}" />
+                <Rectangle DockPanel.Dock="Left" Width="{DynamicResource mkm.menu.item.gap}" />
+                <local:Icon x:Name="Coche" DockPanel.Dock="Right" Width="16" Height="16" Margin="8,0,0,0"
+                            Source="{x:Static local:Icons.Check}" Visibility="Hidden" />
+                <TextBlock VerticalAlignment="Center"
+                           Text="{Binding (local:ActionBarItem.Label), RelativeSource={RelativeSource TemplatedParent}}" />
+            </DockPanel>
+        </Border>
+        <ControlTemplate.Triggers>
+            <Trigger Property="IsMouseOver" Value="True">
+                <Setter TargetName="Fond" Property="Background" Value="{DynamicResource mkm.menu.item.focus.background}" />
+                <Setter Property="Foreground" Value="{DynamicResource mkm.menu.item.focus.color}" />
+                <Setter TargetName="Icone" Property="Foreground" Value="{DynamicResource mkm.menu.item.icon.focus.color}" />
+            </Trigger>
+            <Trigger Property="IsKeyboardFocused" Value="True">
+                <Setter TargetName="Fond" Property="Background" Value="{DynamicResource mkm.menu.item.focus.background}" />
+                <Setter Property="Foreground" Value="{DynamicResource mkm.menu.item.focus.color}" />
+                <Setter TargetName="Icone" Property="Foreground" Value="{DynamicResource mkm.menu.item.icon.focus.color}" />
+            </Trigger>
+            <Trigger Property="ToggleButton.IsChecked" Value="True">
+                <Setter TargetName="Coche" Property="Visibility" Value="Visible" />
+            </Trigger>
+            <Trigger Property="IsEnabled" Value="False">
+                <Setter TargetName="Fond" Property="Opacity" Value="{DynamicResource mkm.actionbar.item.disabled.opacity}" />
+            </Trigger>
+        </ControlTemplate.Triggers>
+    </ControlTemplate>
+
+    <Style x:Key="mkm.ActionBar.ItemStyle" TargetType="{x:Type ButtonBase}">
+        <Setter Property="Width" Value="{DynamicResource mkm.actionbar.item.size}" />
+        <Setter Property="Height" Value="{DynamicResource mkm.actionbar.item.size}" />
+        <Setter Property="MaxWidth" Value="{DynamicResource mkm.actionbar.item.max.width}" />
+        <Setter Property="Padding" Value="0" />
+        <Setter Property="Background" Value="Transparent" />
+        <Setter Property="Foreground" Value="{DynamicResource mkm.actionbar.item.color}" />
+        <Setter Property="Cursor" Value="Hand" />
+        <Setter Property="FocusVisualStyle" Value="{StaticResource mkm.ActionBar.ItemFocus}" />
+        <Setter Property="Template" Value="{StaticResource mkm.ActionBar.ItemTemplate}" />
+        <Style.Triggers>
+            <Trigger Property="local:ActionBar.ShowLabels" Value="True">
+                <Setter Property="Width" Value="{DynamicResource mkm.actionbar.item.labels.width}" />
+                <Setter Property="Height" Value="{DynamicResource mkm.actionbar.item.labels.height}" />
+                <Setter Property="Padding" Value="{DynamicResource mkm.actionbar.item.labels.padding}" />
+            </Trigger>
+            <Trigger Property="local:ActionBarDropDown.IsInList" Value="True">
+                <Setter Property="Width" Value="Auto" />
+                <Setter Property="Height" Value="Auto" />
+                <Setter Property="MaxWidth" Value="Infinity" />
+                <Setter Property="HorizontalAlignment" Value="Stretch" />
+                <Setter Property="Padding" Value="{DynamicResource mkm.menu.item.padding}" />
+                <Setter Property="Foreground" Value="{DynamicResource mkm.menu.item.color}" />
+                <Setter Property="FocusVisualStyle" Value="{x:Null}" />
+                <Setter Property="Template" Value="{StaticResource mkm.ActionBar.RowTemplate}" />
+            </Trigger>
+        </Style.Triggers>
+    </Style>
+
+    <Style TargetType="{x:Type local:ActionBarButton}" BasedOn="{StaticResource mkm.ActionBar.ItemStyle}" />
+
+    <Style TargetType="{x:Type local:ActionBarToggleButton}" BasedOn="{StaticResource mkm.ActionBar.ItemStyle}" />
+
+    <Style TargetType="{x:Type local:ActionBarSeparator}">
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="{x:Type local:ActionBarSeparator}">
+                    <Rectangle Width="1"
+                               Height="{DynamicResource mkm.actionbar.separator.height}"
+                               Margin="{DynamicResource mkm.actionbar.separator.margin}"
+                               Fill="{DynamicResource mkm.actionbar.separator.color}" />
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+
+    <!-- La flèche d'une liste. -->
+    <Style x:Key="mkm.ActionBar.DropDownArrow" TargetType="{x:Type ToggleButton}">
+        <Setter Property="Width" Value="{DynamicResource mkm.actionbar.dropdown.button.width}" />
+        <Setter Property="Background" Value="Transparent" />
+        <Setter Property="Foreground" Value="{DynamicResource mkm.actionbar.dropdown.icon.color}" />
+        <Setter Property="Cursor" Value="Hand" />
+        <Setter Property="FocusVisualStyle" Value="{StaticResource mkm.ActionBar.ItemFocus}" />
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="{x:Type ToggleButton}">
+                    <Border Background="{TemplateBinding Background}"
+                            CornerRadius="{DynamicResource mkm.actionbar.item.border.radius}">
+                        <local:Icon HorizontalAlignment="Center" VerticalAlignment="Center"
+                                    Width="{DynamicResource mkm.actionbar.dropdown.icon.size}"
+                                    Height="{DynamicResource mkm.actionbar.dropdown.icon.size}"
+                                    Source="{x:Static local:Icons.ChevronDown}" />
+                    </Border>
+                    <ControlTemplate.Triggers>
+                        <Trigger Property="IsMouseOver" Value="True">
+                            <Setter Property="Background" Value="{DynamicResource mkm.actionbar.dropdown.button.hover.background}" />
+                            <Setter Property="Foreground" Value="{DynamicResource mkm.actionbar.item.hover.color}" />
+                        </Trigger>
+                        <Trigger Property="IsChecked" Value="True">
+                            <Setter Property="Background" Value="{DynamicResource mkm.actionbar.dropdown.button.hover.background}" />
+                            <Setter Property="Foreground" Value="{DynamicResource mkm.actionbar.item.hover.color}" />
+                        </Trigger>
+                    </ControlTemplate.Triggers>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+
+    <!-- Une liste : la commande montrée, la flèche, et la liste qui s'ouvre au-dessus. -->
+    <Style TargetType="{x:Type local:ActionBarDropDown}">
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="{x:Type local:ActionBarDropDown}">
+                    <Grid x:Name="Racine">
+                        <StackPanel Orientation="Horizontal">
+                            <local:ActionBarButton x:Name="PART_Main"
+                                                   Label="{Binding ShownItem.(local:ActionBarItem.Label), RelativeSource={RelativeSource TemplatedParent}}"
+                                                   Icon="{Binding ShownItem.(local:ActionBarItem.Icon), RelativeSource={RelativeSource TemplatedParent}}"
+                                                   Hint="{Binding ShownItem.(local:ActionBarItem.Hint), RelativeSource={RelativeSource TemplatedParent}}"
+                                                   IsEnabled="{Binding ShownItem.IsEnabled, RelativeSource={RelativeSource TemplatedParent}, FallbackValue=False}" />
+                            <ToggleButton x:Name="PART_Arrow"
+                                          Style="{StaticResource mkm.ActionBar.DropDownArrow}"
+                                          AutomationProperties.Name="{loc:T actionBar.moreCommands}"
+                                          IsChecked="{Binding IsOpen, RelativeSource={RelativeSource TemplatedParent}, Mode=TwoWay}" />
+                        </StackPanel>
+                        <Popup x:Name="PART_Popup"
+                               AllowsTransparency="True" Focusable="False" StaysOpen="False"
+                               Placement="Top" PlacementTarget="{Binding ElementName=Racine}" VerticalOffset="-4"
+                               IsOpen="{Binding IsOpen, RelativeSource={RelativeSource TemplatedParent}, Mode=TwoWay}">
+                            <Border local:ActionBarDropDown.IsInList="True"
+                                    MinWidth="{DynamicResource mkm.menu.min.width}"
+                                    Padding="{DynamicResource mkm.menu.list.padding}"
+                                    Background="{DynamicResource mkm.menu.background}"
+                                    BorderBrush="{DynamicResource mkm.menu.border.color}" BorderThickness="1"
+                                    CornerRadius="{DynamicResource mkm.menu.border.radius}"
+                                    TextElement.Foreground="{DynamicResource mkm.menu.color}"
+                                    KeyboardNavigation.DirectionalNavigation="Cycle"
+                                    KeyboardNavigation.TabNavigation="Cycle">
+                                <ItemsPresenter />
+                            </Border>
+                        </Popup>
+                    </Grid>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+
+    <!-- L'onglet d'une section : du texte, souligné quand la section est choisie. -->
+    <Style TargetType="{x:Type local:ActionBarSection}">
+        <Setter Property="Height" Value="{DynamicResource mkm.actionbar.tab.height}" />
+        <Setter Property="Padding" Value="{DynamicResource mkm.actionbar.tab.padding}" />
+        <Setter Property="Foreground" Value="{DynamicResource mkm.actionbar.tab.color}" />
+        <Setter Property="FontSize" Value="{DynamicResource mkm.actionbar.tab.font.size}" />
+        <Setter Property="FontWeight" Value="{DynamicResource mkm.actionbar.tab.font.weight}" />
+        <Setter Property="Cursor" Value="Hand" />
+        <Setter Property="FocusVisualStyle" Value="{StaticResource mkm.ActionBar.TabFocus}" />
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="{x:Type local:ActionBarSection}">
+                    <Grid Background="Transparent">
+                        <TextBlock Margin="{TemplateBinding Padding}" VerticalAlignment="Center"
+                                   TextTrimming="CharacterEllipsis"
+                                   Text="{Binding Header, RelativeSource={RelativeSource TemplatedParent}}" />
+                        <Rectangle x:Name="Souligne" VerticalAlignment="Bottom" Fill="Transparent"
+                                   Height="{DynamicResource mkm.actionbar.tab.border.width}" />
+                    </Grid>
+                    <ControlTemplate.Triggers>
+                        <Trigger Property="IsMouseOver" Value="True">
+                            <Setter Property="Foreground" Value="{DynamicResource mkm.actionbar.tab.hover.color}" />
+                        </Trigger>
+                        <Trigger Property="IsSelected" Value="True">
+                            <Setter Property="Foreground" Value="{DynamicResource mkm.actionbar.tab.active.color}" />
+                            <Setter TargetName="Souligne" Property="Fill" Value="{DynamicResource mkm.actionbar.tab.active.border.color}" />
+                        </Trigger>
+                    </ControlTemplate.Triggers>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+
+    <!-- Le bouton qui replie la barre, au bout de l'en-tête. -->
+    <Style x:Key="mkm.ActionBar.Toggle" TargetType="{x:Type Button}">
+        <Setter Property="Width" Value="{DynamicResource mkm.actionbar.toggle.size}" />
+        <Setter Property="Height" Value="{DynamicResource mkm.actionbar.toggle.size}" />
+        <Setter Property="Background" Value="Transparent" />
+        <Setter Property="Foreground" Value="{DynamicResource mkm.actionbar.toggle.color}" />
+        <Setter Property="Cursor" Value="Hand" />
+        <Setter Property="FocusVisualStyle" Value="{StaticResource mkm.ActionBar.ToggleFocus}" />
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="{x:Type Button}">
+                    <Border Background="{TemplateBinding Background}"
+                            CornerRadius="{DynamicResource mkm.actionbar.toggle.border.radius}">
+                        <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center" />
+                    </Border>
+                    <ControlTemplate.Triggers>
+                        <Trigger Property="IsMouseOver" Value="True">
+                            <Setter Property="Background" Value="{DynamicResource mkm.actionbar.toggle.hover.background}" />
+                            <Setter Property="Foreground" Value="{DynamicResource mkm.actionbar.toggle.hover.color}" />
+                        </Trigger>
+                    </ControlTemplate.Triggers>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+
+    <!-- Les flèches de défilement, aux bords de la rangée quand la section ne tient pas. -->
+    <Style x:Key="mkm.ActionBar.Nav" TargetType="{x:Type Button}">
+        <Setter Property="Width" Value="{DynamicResource mkm.actionbar.nav.button.width}" />
+        <Setter Property="VerticalAlignment" Value="Stretch" />
+        <Setter Property="Focusable" Value="False" />
+        <Setter Property="Background" Value="{DynamicResource mkm.actionbar.nav.button.background}" />
+        <Setter Property="BorderBrush" Value="{DynamicResource mkm.actionbar.nav.button.border.color}" />
+        <Setter Property="Foreground" Value="{DynamicResource mkm.actionbar.nav.button.color}" />
+        <Setter Property="Cursor" Value="Hand" />
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="{x:Type Button}">
+                    <Border Background="{TemplateBinding Background}"
+                            BorderBrush="{TemplateBinding BorderBrush}"
+                            BorderThickness="{TemplateBinding BorderThickness}">
+                        <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center" />
+                    </Border>
+                    <ControlTemplate.Triggers>
+                        <Trigger Property="IsMouseOver" Value="True">
+                            <Setter Property="Background" Value="{DynamicResource mkm.actionbar.nav.button.hover.background}" />
+                            <Setter Property="Foreground" Value="{DynamicResource mkm.actionbar.nav.button.hover.color}" />
+                        </Trigger>
+                    </ControlTemplate.Triggers>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+
+    <!-- La barre : un panneau posé sur le bord, l'en-tête (onglets, repli), puis la rangée. -->
+    <Style TargetType="{x:Type local:ActionBar}">
+        <Setter Property="HorizontalAlignment" Value="Center" />
+        <Setter Property="VerticalAlignment" Value="Bottom" />
+        <Setter Property="FontFamily" Value="{DynamicResource mkm.font.family}" />
+        <Setter Property="FontSize" Value="{DynamicResource mkm.actionbar.font.size}" />
+        <Setter Property="ItemsPanel">
+            <Setter.Value>
+                <ItemsPanelTemplate>
+                    <local:ActionBarPanel Gap="{DynamicResource mkm.actionbar.tab.gap}" />
+                </ItemsPanelTemplate>
+            </Setter.Value>
+        </Setter>
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="{x:Type local:ActionBar}">
+                    <!-- Le panneau descend sous le bord : ses coins du bas n'y paraissent pas, comme dans
+                         mkm, qui n'arrondit que ceux du haut. -->
+                    <Grid ClipToBounds="True">
+                        <Border Margin="0,0,0,-8" Padding="0,0,0,8" BorderThickness="1,1,1,0"
+                                Background="{DynamicResource mkm.actionbar.panel.background}"
+                                BorderBrush="{DynamicResource mkm.actionbar.panel.border.color}"
+                                CornerRadius="{DynamicResource mkm.actionbar.panel.border.radius}">
+                            <DockPanel>
+                                <Border x:Name="EnTete" DockPanel.Dock="Top" BorderThickness="0,0,0,1"
+                                        Padding="{DynamicResource mkm.actionbar.header.padding}"
+                                        BorderBrush="{DynamicResource mkm.actionbar.header.border.color}">
+                                    <DockPanel>
+                                        <Button x:Name="PART_Toggle" DockPanel.Dock="Right"
+                                                Style="{StaticResource mkm.ActionBar.Toggle}"
+                                                AutomationProperties.Name="{loc:T actionBar.hideCommands}">
+                                            <local:Icon x:Name="IconeDuRepli"
+                                                        Width="{DynamicResource mkm.actionbar.toggle.icon.size}"
+                                                        Height="{DynamicResource mkm.actionbar.toggle.icon.size}"
+                                                        Source="{x:Static local:Icons.ChevronDown}" />
+                                        </Button>
+                                        <Rectangle DockPanel.Dock="Right" Width="{DynamicResource mkm.actionbar.header.gap}" />
+                                        <!-- Les onglets descendent d'un pixel sur le filet de l'en-tête. -->
+                                        <ItemsPresenter x:Name="Onglets" Margin="0,0,0,-1"
+                                                        KeyboardNavigation.TabNavigation="Once"
+                                                        KeyboardNavigation.DirectionalNavigation="Cycle" />
+                                    </DockPanel>
+                                </Border>
+                                <Grid x:Name="Rangee">
+                                    <ScrollViewer x:Name="PART_Scroll" Focusable="False" CanContentScroll="False"
+                                                  HorizontalScrollBarVisibility="Hidden" VerticalScrollBarVisibility="Disabled">
+                                        <!-- Une section plus étroite que la barre s'y centre. -->
+                                        <Grid MinWidth="{Binding ViewportWidth, RelativeSource={RelativeSource AncestorType={x:Type ScrollViewer}}}">
+                                            <StackPanel HorizontalAlignment="Center" Orientation="Horizontal"
+                                                        Margin="{DynamicResource mkm.actionbar.frame.padding}"
+                                                        KeyboardNavigation.TabNavigation="Once"
+                                                        KeyboardNavigation.DirectionalNavigation="Contained">
+                                                <Border x:Name="Fixes" BorderThickness="0,0,1,0"
+                                                        Padding="{DynamicResource mkm.actionbar.fixed.padding}"
+                                                        BorderBrush="{DynamicResource mkm.actionbar.fixed.border.color}">
+                                                    <ItemsControl Focusable="False"
+                                                                  ItemsSource="{Binding FixedItems, RelativeSource={RelativeSource TemplatedParent}}">
+                                                        <ItemsControl.ItemsPanel>
+                                                            <ItemsPanelTemplate>
+                                                                <local:ActionBarPanel Gap="{DynamicResource mkm.actionbar.fixed.gap}" />
+                                                            </ItemsPanelTemplate>
+                                                        </ItemsControl.ItemsPanel>
+                                                    </ItemsControl>
+                                                </Border>
+                                                <ItemsControl x:Name="PART_Commands" Focusable="False">
+                                                    <ItemsControl.ItemsPanel>
+                                                        <ItemsPanelTemplate>
+                                                            <local:ActionBarPanel Gap="{DynamicResource mkm.actionbar.section.gap}" />
+                                                        </ItemsPanelTemplate>
+                                                    </ItemsControl.ItemsPanel>
+                                                </ItemsControl>
+                                            </StackPanel>
+                                        </Grid>
+                                    </ScrollViewer>
+                                    <Button x:Name="PART_Previous" HorizontalAlignment="Left" Visibility="Collapsed"
+                                            BorderThickness="0,0,1,0" Style="{StaticResource mkm.ActionBar.Nav}"
+                                            AutomationProperties.Name="{loc:T actionBar.previous}">
+                                        <local:Icon Width="{DynamicResource mkm.actionbar.nav.button.icon.size}"
+                                                    Height="{DynamicResource mkm.actionbar.nav.button.icon.size}"
+                                                    Source="{x:Static local:Icons.ChevronLeft}" />
+                                    </Button>
+                                    <Button x:Name="PART_Next" HorizontalAlignment="Right" Visibility="Collapsed"
+                                            BorderThickness="1,0,0,0" Style="{StaticResource mkm.ActionBar.Nav}"
+                                            AutomationProperties.Name="{loc:T actionBar.next}">
+                                        <local:Icon Width="{DynamicResource mkm.actionbar.nav.button.icon.size}"
+                                                    Height="{DynamicResource mkm.actionbar.nav.button.icon.size}"
+                                                    Source="{x:Static local:Icons.ChevronRight}" />
+                                    </Button>
+                                </Grid>
+                            </DockPanel>
+                        </Border>
+                    </Grid>
+                    <ControlTemplate.Triggers>
+                        <!-- Les onglets : un par section, s'il y en a plusieurs, et seulement barre ouverte. -->
+                        <Trigger Property="HasTabs" Value="False">
+                            <Setter TargetName="Onglets" Property="Visibility" Value="Collapsed" />
+                        </Trigger>
+                        <!-- Repliée, il ne reste que le bouton qui la rouvre. -->
+                        <Trigger Property="IsCollapsed" Value="True">
+                            <Setter TargetName="Rangee" Property="Visibility" Value="Collapsed" />
+                            <Setter TargetName="Onglets" Property="Visibility" Value="Collapsed" />
+                            <Setter TargetName="EnTete" Property="BorderBrush" Value="Transparent" />
+                            <Setter TargetName="IconeDuRepli" Property="Source" Value="{x:Static local:Icons.ChevronUp}" />
+                            <Setter TargetName="PART_Toggle" Property="AutomationProperties.Name" Value="{loc:T actionBar.showCommands}" />
+                        </Trigger>
+                        <Trigger Property="HasFixedItems" Value="False">
+                            <Setter TargetName="Fixes" Property="Visibility" Value="Collapsed" />
+                        </Trigger>
+                        <!-- Seule dans sa section, la zone fixe n'a rien à séparer. -->
+                        <Trigger Property="HasSectionItems" Value="False">
+                            <Setter TargetName="Fixes" Property="BorderThickness" Value="0" />
+                            <Setter TargetName="Fixes" Property="Padding" Value="0" />
+                        </Trigger>
+                        <Trigger Property="IsScrollable" Value="True">
+                            <Setter TargetName="PART_Previous" Property="Visibility" Value="Visible" />
+                            <Setter TargetName="PART_Next" Property="Visibility" Value="Visible" />
+                        </Trigger>
+                    </ControlTemplate.Triggers>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+
+    <!-- L'info-bulle d'une commande. -->
+    <Style x:Key="{x:Static local:ActionBar.ToolTipStyleKey}" TargetType="{x:Type ToolTip}">
+        <Setter Property="Background" Value="{DynamicResource mkm.tooltip.background}" />
+        <Setter Property="Foreground" Value="{DynamicResource mkm.tooltip.color}" />
+        <Setter Property="Padding" Value="{DynamicResource mkm.tooltip.padding}" />
+        <Setter Property="MaxWidth" Value="{DynamicResource mkm.tooltip.max.width}" />
+        <Setter Property="FontFamily" Value="{DynamicResource mkm.font.family}" />
+        <Setter Property="FontSize" Value="{DynamicResource mkm.font.size}" />
+        <Setter Property="HasDropShadow" Value="False" />
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="{x:Type ToolTip}">
+                    <Border Background="{TemplateBinding Background}" Padding="{TemplateBinding Padding}"
+                            CornerRadius="{DynamicResource mkm.tooltip.border.radius}">
+                        <TextBlock TextWrapping="Wrap"
+                                   Text="{Binding Content, RelativeSource={RelativeSource TemplatedParent}}" />
+                    </Border>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+
+    <!-- Le menu du clic droit : montrer ou cacher les libellés. -->
+    <Style x:Key="{x:Static local:ActionBar.ContextMenuStyleKey}" TargetType="{x:Type ContextMenu}">
+        <Setter Property="Background" Value="{DynamicResource mkm.contextmenu.background}" />
+        <Setter Property="BorderBrush" Value="{DynamicResource mkm.contextmenu.border.color}" />
+        <Setter Property="Foreground" Value="{DynamicResource mkm.contextmenu.color}" />
+        <Setter Property="FontFamily" Value="{DynamicResource mkm.font.family}" />
+        <Setter Property="FontSize" Value="{DynamicResource mkm.font.size}" />
+        <Setter Property="MinWidth" Value="{DynamicResource mkm.contextmenu.min.width}" />
+        <Setter Property="Padding" Value="{DynamicResource mkm.contextmenu.list.padding}" />
+        <Setter Property="HasDropShadow" Value="False" />
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="{x:Type ContextMenu}">
+                    <Border Background="{TemplateBinding Background}" BorderBrush="{TemplateBinding BorderBrush}"
+                            BorderThickness="1" Padding="{TemplateBinding Padding}"
+                            CornerRadius="{DynamicResource mkm.contextmenu.border.radius}">
+                        <StackPanel IsItemsHost="True" KeyboardNavigation.DirectionalNavigation="Cycle" />
+                    </Border>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+
+    <Style x:Key="{x:Static local:ActionBar.MenuItemStyleKey}" TargetType="{x:Type MenuItem}">
+        <Setter Property="Padding" Value="{DynamicResource mkm.contextmenu.item.padding}" />
+        <Setter Property="Foreground" Value="{DynamicResource mkm.contextmenu.item.color}" />
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="{x:Type MenuItem}">
+                    <Border x:Name="Fond" Background="Transparent" Padding="{TemplateBinding Padding}"
+                            MinHeight="{DynamicResource mkm.navigation.item.height}">
+                        <DockPanel VerticalAlignment="Center">
+                            <local:Icon x:Name="Coche" DockPanel.Dock="Left" Width="16" Height="16"
+                                        Source="{x:Static local:Icons.Check}" Visibility="Hidden" />
+                            <Rectangle DockPanel.Dock="Left" Width="{DynamicResource mkm.contextmenu.item.gap}" />
+                            <ContentPresenter VerticalAlignment="Center" ContentSource="Header" RecognizesAccessKey="True" />
+                        </DockPanel>
+                    </Border>
+                    <ControlTemplate.Triggers>
+                        <Trigger Property="IsHighlighted" Value="True">
+                            <Setter TargetName="Fond" Property="Background" Value="{DynamicResource mkm.contextmenu.item.focus.background}" />
+                            <Setter Property="Foreground" Value="{DynamicResource mkm.contextmenu.item.focus.color}" />
+                        </Trigger>
+                        <Trigger Property="IsChecked" Value="True">
+                            <Setter TargetName="Coche" Property="Visibility" Value="Visible" />
+                        </Trigger>
+                    </ControlTemplate.Triggers>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+
+</ResourceDictionary>

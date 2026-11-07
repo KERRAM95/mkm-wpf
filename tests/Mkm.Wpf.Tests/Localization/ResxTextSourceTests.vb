@@ -62,6 +62,20 @@ Namespace Mkm.Wpf.Tests.Localization
             Assert.That(manquantes, [Is].EqualTo({"essai.onlyEnglish"}))
         End Sub
 
+        ''' <summary>Les textes de mkm-wpf (Localization/Strings.resx) ont tous leur traduction française.</summary>
+        <Test>
+        Public Sub TextesDeLaBibliotheque_TousTraduits()
+            Assert.That(ClesSansTraduction(Localizer.TextesDeLaBibliotheque(), CultureInfo.GetCultureInfo("fr")), [Is].Empty)
+        End Sub
+
+        <Test>
+        Public Sub TextesDeLaBibliotheque_DansLeLocalizer()
+            Dim traducteur As New Localizer With {.Language = CultureInfo.GetCultureInfo("fr")}
+            traducteur.AddLibrarySource(New ResxTextSource(Localizer.TextesDeLaBibliotheque(), "en", "fr"))
+
+            Assert.That(traducteur("actionBar.showLabels"), [Is].EqualTo("Afficher les libellés"))
+        End Sub
+
         ''' <summary>Les clés de la langue neutre qui n'ont pas de texte dans <paramref name="langue"/>.</summary>
         Friend Shared Function ClesSansTraduction(textes As ResourceManager, langue As CultureInfo) As String()
             Dim cles = Function(culture As CultureInfo) textes.GetResourceSet(culture, True, False).

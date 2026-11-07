@@ -3,6 +3,7 @@ Imports System.ComponentModel
 Imports System.Globalization
 Imports System.Linq
 Imports System.Reflection
+Imports System.Resources
 Imports System.Text.RegularExpressions
 Imports System.Threading
 Imports System.Windows.Data
@@ -31,8 +32,21 @@ Namespace Mkm.Wpf.Localization
         Private ReadOnly _librarySources As New List(Of ITextSource)
         Private _language As CultureInfo
 
-        ''' <summary>Le <see cref="Localizer"/> de l'application, auquel <c>{mkm:T}</c> se lie.</summary>
-        Public Shared ReadOnly Property Current As Localizer = New Localizer()
+        ''' <summary>
+        ''' Le <see cref="Localizer"/> de l'application, auquel <c>{mkm:T}</c> se lie ; il porte déjà les
+        ''' textes de la bibliothèque (Localization/Strings.resx, en anglais, et Strings.fr.resx).
+        ''' </summary>
+        Public Shared ReadOnly Property Current As Localizer = AvecLesTextesDeLaBibliotheque(New Localizer())
+
+        ''' <summary>Les textes de mkm-wpf : VB nomme la ressource par son fichier, « Strings ».</summary>
+        Friend Shared Function TextesDeLaBibliotheque() As ResourceManager
+            Return New ResourceManager("Strings", GetType(Localizer).Assembly)
+        End Function
+
+        Private Shared Function AvecLesTextesDeLaBibliotheque(traducteur As Localizer) As Localizer
+            traducteur.AddLibrarySource(New ResxTextSource(TextesDeLaBibliotheque(), "en", "fr"))
+            Return traducteur
+        End Function
 
         ''' <summary>Un <see cref="Localizer"/> à part, dans la langue d'affichage de Windows.</summary>
         Public Sub New()

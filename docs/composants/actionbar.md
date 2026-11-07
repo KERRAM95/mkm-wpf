@@ -4,7 +4,7 @@
 > Mourad valide ce qui touche au produit (« À valider ») ; la technique se
 > décide ici.
 
-**État :** décidée le 07/11/2026 — comme l'ActionBar de mkm. Composant prioritaire.
+**État :** faite le 07/11/2026 (`src/Mkm.Wpf/Controls/ActionBar`), comme l'ActionBar de mkm. Composant prioritaire.
 
 ## Le besoin
 
@@ -140,6 +140,14 @@ reprend **son comportement au complet**, **son apparence dans chaque thème**,
 **sa place en bas de son conteneur** (les listes s'ouvrent au-dessus quand la
 place le permet) et **le jeu d'icônes Tabler** (MIT) ; une application peut
 aussi donner ses propres images.
+
+## Écarts avec mkm
+
+- Les couleurs changent sans transition (mkm : 200 ms), et la rangée paraît
+  sans fondu quand la barre se rouvre.
+- Le panneau n'a pas d'ombre : celle de mkm tombe sous le bord du conteneur,
+  hors de la vue.
+- Le défilement des flèches est immédiat (mkm : défilement doux).
 
 ## Sources
 
