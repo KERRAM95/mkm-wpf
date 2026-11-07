@@ -1,7 +1,16 @@
 <Application x:Class="Mkm.Wpf.Showcase.Application"
              xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mkm="urn:mkm-wpf"
              StartupUri="MainWindow.xaml">
     <Application.Resources>
+        <ResourceDictionary>
+            <ResourceDictionary.MergedDictionaries>
+                <!-- La configuration de mkm-wpf. Sans Language, la langue de Windows (la plus
+                     proche des langues de la vitrine, choisie au démarrage) ; Language="fr"
+                     l'imposerait. Le thème s'y ajoutera. -->
+                <mkm:MkmResources />
+            </ResourceDictionary.MergedDictionaries>
+        </ResourceDictionary>
     </Application.Resources>
 </Application>

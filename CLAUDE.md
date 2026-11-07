@@ -17,6 +17,14 @@ Contexte de travail sur le dépôt `mkm-wpf`.
 - Les messages de commit sont en français : une première ligne qui dit ce que
   le commit apporte, puis le pourquoi.
 
+## Qui décide
+
+**Mourad n'est pas développeur VB.NET** (le 07/11/2026) : les décisions
+techniques — VB, WPF, MSBuild, l'organisation du code — se prennent ici, avec
+leur raison en une phrase dans la fiche ou le commit. On ne lui soumet que ce
+qui touche au produit : ce que l'utilisateur voit et fait, l'apparence, le
+périmètre.
+
 ## Ce dépôt
 
 **mkm-wpf**, la bibliothèque de composants WPF de Mourad : la déclinaison
@@ -32,7 +40,7 @@ ou reste dans l'application.
 
 | Dossier                 | Projet             | Rôle                                                                     |
 | ----------------------- | ------------------ | ------------------------------------------------------------------------ |
-| `src/Mkm.Wpf`           | `Mkm.Wpf`          | les contrôles et leurs styles par défaut (`Themes/Generic.xaml`)         |
+| `src/Mkm.Wpf`           | `Mkm.Wpf`          | les contrôles et leurs styles par défaut (`Themes/Generic.xaml`), la configuration (`MkmResources`) et la langue (`Localization`) |
 | `apps/Mkm.Wpf.Showcase` | `Mkm.Wpf.Showcase` | la vitrine : une page par composant                                      |
 | `tests/Mkm.Wpf.Tests`   | `Mkm.Wpf.Tests`    | les tests (NUnit), dont les règles communes à tous les contrôles         |
 | `docs/fondations`       | aucun              | ce dont tous les composants dépendent : thème et langue                  |
@@ -61,8 +69,41 @@ premier d'entre eux, après l'étude de l'open source (plus bas).
 **Une application choisit son thème et sa langue par une variable chacun, et
 les change pendant qu'elle tourne**, comme avec mkm. La langue est une exigence
 au même titre que le thème (Mourad, le 07/11/2026) : tout composant est
-traduisible. Le mécanisme est dans `docs/fondations/theme-et-langue.md`, à
-valider avant le premier composant ; ses règles entrent ici une fois validé.
+traduisible. Le pourquoi est dans `docs/fondations/theme-et-langue.md`
+(validée le 07/11/2026) ; le thème attend sa propre fiche.
+
+La langue, telle qu'elle est faite (`src/Mkm.Wpf/Localization`) :
+
+- `<mkm:MkmResources Language="fr" />` dans `App.xaml` : la configuration ;
+  sans `Language`, la langue d'affichage de Windows. Elle donne aussi aux
+  éléments WPF le **format régional de Windows** pour les dates et les nombres
+  (WPF écrirait sinon à l'américaine) ; changer de langue ne change pas ce
+  format, pour qu'une valeur saisie (`2,5` kg) ne change pas de sens.
+- `Localizer.Current` : la langue (`Language`, à chaud), les langues proposées
+  (`Languages`), les sources (`AddSource`), et `T(clé, paramètres)` en code.
+- `{mkm:T clé}` en XAML : un texte qui suit la langue.
+- Les sources : `ResxTextSource` (fichiers `.resx`) et `TextTable` (une table
+  que l'application remplit depuis ses propres fichiers). Celles de
+  l'application passent avant celles de la bibliothèque.
+- Un texte absent : sa langue parente, puis l'anglais, puis sa clé.
+
+Les règles pour chaque composant :
+
+- aucun texte en dur : une clé dans `src/Mkm.Wpf/Localization/Strings.resx`
+  (anglais) et sa traduction dans `Strings.fr.resx` — le premier composant qui
+  affiche un texte les crée, avec la source de la bibliothèque
+  (`AddLibrarySource`) et le test qui compare leurs clés
+  (`ResxTextSourceTests.ClesSansTraduction`) ;
+- les clés sont en anglais, en `camelCase` séparé par des points, préfixées
+  par le composant : `actionBar.more` ;
+- un texte que l'application voudrait changer est aussi une propriété du
+  contrôle, qui l'emporte sur la ressource ;
+- aucune largeur fixe pour un élément qui porte un texte : le français est
+  20 à 30 % plus long que l'anglais ;
+- aucune phrase construite par morceaux : un texte à paramètres (`{count}`) ;
+- la vitrine a le choix de la langue dans sa barre (et aura celui du thème) :
+  chaque composant s'y voit dans les deux langues ;
+- l'écriture de droite à gauche n'est pas visée.
 
 ## L'open source d'abord
 
@@ -151,12 +192,20 @@ l'anglais en repli (voir « Thème et langue »).
   `Directory.Build.props` : c'est pourquoi la ligne est dans chaque projet.)
 - Chaque espace de noms public de `Mkm.Wpf` est associé à
   `xmlns:mkm="urn:mkm-wpf"` par un `XmlnsDefinition` dans
-  `src/Mkm.Wpf/AssemblyInfo.vb`.
+  `src/Mkm.Wpf/AssemblyInfo.vb`, **dès qu'il a un type** : le compilateur XAML
+  d'une application refuse un espace de noms vide.
+- VB nomme une ressource `.resx` par le seul nom de son fichier, sans son
+  dossier (`Textes/Vitrine.resx` → `"Vitrine"`) : deux `.resx` d'un même projet
+  ne portent jamais le même nom.
 - Les `Imports` sont écrits en tête de chaque fichier ; on n'ajoute pas
   d'imports au niveau du projet.
 - Champs privés en `_camelCase` ; types, membres et constantes en PascalCase.
 - NUnit : `Is` est un mot-clé de VB, on écrit `[Is]`
-  (`Assert.That(x, [Is].EqualTo(1))`).
+  (`Assert.That(x, [Is].EqualTo(1))`) ; une exception s'attend par
+  `Assert.Throws(Of T)(New Action(Sub() …))` (sans `New Action`, VB ne choisit
+  pas entre les surcharges).
+- Une variable locale ne porte pas le nom d'un type (`Dim traducteur As New
+  Localizer`, pas `localizer`) : VB ne distingue pas la casse.
 
 ## Vérifier
 

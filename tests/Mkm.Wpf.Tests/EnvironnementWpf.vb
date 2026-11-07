@@ -1,4 +1,5 @@
 Imports System.Windows
+Imports Mkm.Wpf
 Imports NUnit.Framework
 
 Namespace Mkm.Wpf.Tests
@@ -10,13 +11,17 @@ Namespace Mkm.Wpf.Tests
     Public NotInheritable Class EnvironnementWpf
 
         Private Shared _application As Application
+        Private Shared _ressources As MkmResources
 
         ''' <summary>
-        ''' Crée l'application WPF : sans elle, le schéma pack://application n'existe pas
+        ''' Pose la configuration de mkm-wpf, puis crée l'application WPF : sans elle, le schéma pack://application n'existe pas
         ''' et aucun dictionnaire de ressources de la bibliothèque ne se charge.
         ''' </summary>
         <OneTimeSetUp>
         Public Sub Preparer()
+            ' La configuration d'abord, comme App.xaml : avant tout élément WPF.
+            _ressources = New MkmResources()
+
             If Application.Current Is Nothing Then
                 _application = New Application With {.ShutdownMode = ShutdownMode.OnExplicitShutdown}
             End If

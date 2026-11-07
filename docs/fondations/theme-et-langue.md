@@ -4,9 +4,9 @@
 > Écrite avant le code (`CLAUDE.md`, « L'open source d'abord ») ; Mourad la
 > valide avant le développement.
 
-**État :** principe validé le 07/11/2026 (une configuration, deux variables
-changeables à chaud ; extension `{mkm:T}` ; anglais et français). Les sources
-de textes (plus bas) sont à valider.
+**État :** validée le 07/11/2026. La langue est faite
+(`src/Mkm.Wpf/Localization`, règles dans `CLAUDE.md`) ; le thème attend sa
+fiche.
 
 ## Le besoin
 
@@ -135,9 +135,13 @@ l'objet de configuration en code) se fixent avec le code.
 - **Un texte absent** : celui de la langue de repli, l'anglais ; puis la clé
   elle-même, repère visible d'un oubli. Pour les `.resx`, un test compare les
   clés de chaque langue : une traduction oubliée fait échouer la CI.
-- **Dates et nombres** : changer de langue change aussi la culture de
-  l'application et la langue (`Language`) de chaque fenêtre. Sans cela, WPF
-  écrit les dates et les nombres à l'américaine, même sur un Windows français.
+- **Dates et nombres** : ils suivent le **format régional de Windows**, que
+  `MkmResources` donne aux éléments WPF au démarrage — sans cela, WPF les
+  écrit à l'américaine, même sur un Windows français. Changer de langue ne
+  change pas ce format (décision technique du 07/11/2026) : Windows sépare
+  déjà la langue d'affichage et le format régional, et une valeur saisie
+  (`2,5` kg) ne doit pas changer de sens quand l'utilisateur passe à
+  l'anglais.
 - **Les langues de la bibliothèque** : l'anglais et le français (validé).
 
 ### Qui choisit la langue
@@ -172,10 +176,11 @@ Une fois cette fiche validée, elles entrent dans `CLAUDE.md` :
    07/11/2026.
 3. ~~Les langues de la bibliothèque : anglais et français.~~ Validé le
    07/11/2026.
-4. Les sources de textes : `.resx` pour la bibliothèque, et une table de
-   textes que l'application remplit depuis ses propres fichiers.
-5. Le sélecteur et la mémoire de la langue : l'affaire de l'application, la
-   mémoire de préférence par utilisateur.
+4. ~~Les sources de textes : `.resx` pour la bibliothèque, et une table de
+   textes que l'application remplit depuis ses propres fichiers.~~ Validé le
+   07/11/2026.
+5. ~~Le sélecteur et la mémoire de la langue : l'affaire de l'application, la
+   mémoire de préférence par utilisateur.~~ Validé le 07/11/2026.
 
 ## Sources
 

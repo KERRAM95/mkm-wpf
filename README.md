@@ -4,8 +4,9 @@ Bibliothèque de composants WPF en VB.NET, déclinaison bureau de **mkm**
 (`ui-kit`) : contrôles, thèmes, icônes et commandes réutilisables, avec une
 vitrine. Neutre, indépendante de toute application.
 
-**État :** squelette. La structure, les règles, la vitrine et les tests sont en
-place ; aucun composant pour l'instant. La version 0.1.0 est en préparation.
+**État :** la langue est en place (textes traduits, changement de langue à
+chaud) ; le thème vient ensuite, puis les composants. La version 0.1.0 est en
+préparation.
 
 ## Prérequis
 
@@ -50,11 +51,24 @@ En ligne de commande :
 ## Employer la bibliothèque
 
 Pour l'instant, par une référence de projet vers `src/Mkm.Wpf/Mkm.Wpf.vbproj`.
-Dans le XAML :
+La configuration se pose une fois dans `App.xaml` :
 
 ```xml
-<Window xmlns:mkm="urn:mkm-wpf" …>
+<Application xmlns:mkm="urn:mkm-wpf" …>
+    <Application.Resources>
+        <ResourceDictionary>
+            <ResourceDictionary.MergedDictionaries>
+                <mkm:MkmResources Language="fr" />
+            </ResourceDictionary.MergedDictionaries>
+        </ResourceDictionary>
+    </Application.Resources>
+</Application>
 ```
+
+Les textes de l'application viennent de ses sources, ajoutées au démarrage
+(`Localizer.Current.AddSource(…)`), et s'écrivent `{mkm:T clé}` en XAML ;
+`Localizer.Current.Language = …` change la langue pendant l'exécution. La
+vitrine en est l'exemple (`apps/Mkm.Wpf.Showcase`).
 
 ## Choix techniques
 
@@ -67,9 +81,10 @@ Dans le XAML :
 
 ## Feuille de route
 
-1. Les fondations : le thème et la langue, une variable chacun, changeables
-   pendant l'exécution (`docs/fondations/theme-et-langue.md`).
-2. Les thèmes : les jetons de conception, un thème par défaut et ARA.
+1. ~~La langue~~ : faite — une variable, changeable pendant l'exécution
+   (`docs/fondations/theme-et-langue.md`).
+2. Les thèmes : les jetons de conception, un thème par défaut et ARA, par la
+   même configuration.
 3. L'ActionBar, une barre de commandes en onglets.
 4. Le registre des commandes, puis les icônes.
 
