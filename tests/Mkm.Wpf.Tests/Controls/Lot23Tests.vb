@@ -85,6 +85,27 @@ Namespace Mkm.Wpf.Tests.Controls
             Assert.That(source.Count, [Is].EqualTo(4))
         End Sub
 
+        <Test>
+        Public Sub PickList_LesDeuxListesOntLaMemeLargeur()
+            Dim choix As New PickList With {
+                .Source = New ObservableCollection(Of String) From {"QA"},
+                .Target = New ObservableCollection(Of String) From {"Bureau d'études et méthodes"}}
+            choix.BeginInit()
+            choix.EndInit()
+            choix.ApplyTemplate()
+            choix.Measure(New Size(Double.PositiveInfinity, 300))
+            choix.Arrange(New Rect(choix.DesiredSize))
+            choix.UpdateLayout()
+            Dim gauche = DirectCast(choix.Template.FindName("PART_Source", choix), OrderList)
+            Dim droite = DirectCast(choix.Template.FindName("PART_Target", choix), OrderList)
+            Assert.That(gauche.ActualWidth, [Is].EqualTo(droite.ActualWidth).Within(0.5), "à sa taille naturelle")
+            choix.Measure(New Size(800, 300))
+            choix.Arrange(New Rect(0, 0, 800, 300))
+            choix.UpdateLayout()
+            Assert.That(gauche.ActualWidth, [Is].EqualTo(droite.ActualWidth).Within(0.5), "étirée")
+            Assert.That(gauche.ActualWidth, [Is].GreaterThan(300))
+        End Sub
+
         ' ---- DataView ----
 
         <Test>

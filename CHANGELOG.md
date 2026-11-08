@@ -199,6 +199,8 @@ Les évolutions notables de mkm-wpf, version par version. Le format suit
   scénarios. La priorité 3 est faite.
 - PickList : un double clic rend la souris avant de faire passer l'élément
   (le clic suivant se perdait).
+- PickList : ses deux listes ont toujours la même largeur, même quand elle
+  prend sa taille naturelle (la grille en étoile les laissait à leur taille).
 - Info-bulle et Popover : la page qui défile les referme, comme mkm.
 - Le zoom de toute l'interface (`docs/fondations/zoom.md`) :
   `MkmResources.Zoom` (80 à 200 %), `ZoomIn`, `ZoomOut`, `ResetZoom`,

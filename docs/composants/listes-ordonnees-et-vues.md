@@ -32,7 +32,8 @@
 - **PickList** hérite de `Control` et porte deux OrderList : `Source`,
   `Target`, leurs en-têtes et leurs boutons ; `MoveToTarget`,
   `MoveAllToTarget`, `MoveToSource`, `MoveAllToSource` ; les évènements
-  `MovedToTarget`, `MovedToSource` (les éléments passés).
+  `MovedToTarget`, `MovedToSource` (les éléments passés). Les deux listes ont
+  la même largeur (une rangée symétrique, interne), étirées ou non.
 - **DataView** hérite de `Control` : `ItemsSource`, `ItemTemplate`,
   `GridItemTemplate`, `Layout` (List, Grid), `GridColumns`, `Paginator`,
   `Rows`, `First`, `Header`, `Footer` ; `PageItems`, `TotalRecords`,
