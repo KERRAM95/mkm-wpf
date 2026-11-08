@@ -12,7 +12,7 @@ Namespace Mkm.Wpf.Controls
     ''' les autres ; un trait ne finit pas la rangée : celui qui précéderait le bouton « … » se cache aussi.
     ''' </summary>
     Public Class ToolbarPanel
-        Inherits Panel
+        Inherits System.Windows.Controls.Panel
 
         ''' <summary>L'écart entre deux commandes visibles.</summary>
         Public Shared ReadOnly GapProperty As DependencyProperty = DependencyProperty.Register(

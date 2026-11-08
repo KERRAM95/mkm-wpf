@@ -312,3 +312,13 @@ chip.removable.padding = {chip.padding.y} {chip.padding.y} {chip.padding.y} {chi
 chip.image.padding = 3px {chip.padding.x} 3px {chip.padding.x}
 chip.image.removable.padding = 3px {chip.padding.y} 3px {chip.padding.x}
 chip.image.margin = 0 0 0 -{chip.padding.y}
+
+# accordion : la première section bordée de tous côtés (first.border.width est un nombre) ; les coins de l'accordéon,
+# ceux du haut sur la première section, ceux du bas sur la dernière (de coin carré quand elle est ouverte : son
+# contenu dessous).
+accordion.header.first.all.border.width = {accordion.header.first.border.width} {accordion.header.first.border.width}
+accordion.header.first.corner.radius = {accordion.header.first.top.border.radius} {accordion.header.first.top.border.radius} 0 0
+accordion.header.last.corner.radius = 0 0 {accordion.header.last.bottom.border.radius} {accordion.header.last.bottom.border.radius}
+accordion.header.last.active.corner.radius = 0 0 {accordion.header.last.active.bottom.border.radius} {accordion.header.last.active.bottom.border.radius}
+accordion.header.single.corner.radius = {accordion.header.first.top.border.radius} {accordion.header.first.top.border.radius} {accordion.header.last.bottom.border.radius} {accordion.header.last.bottom.border.radius}
+accordion.header.single.active.corner.radius = {accordion.header.first.top.border.radius} {accordion.header.first.top.border.radius} {accordion.header.last.active.bottom.border.radius} {accordion.header.last.active.bottom.border.radius}

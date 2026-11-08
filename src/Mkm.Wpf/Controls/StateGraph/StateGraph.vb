@@ -398,7 +398,7 @@ Namespace Mkm.Wpf.Controls
             If Double.IsNaN(ligneDeBase) OrElse ligneDeBase <= 0 Then ligneDeBase = nom.DesiredSize.Height * 0.8
             Canvas.SetLeft(nom, If(finit, x - nom.DesiredSize.Width, x))
             Canvas.SetTop(nom, y - ligneDeBase)
-            Panel.SetZIndex(nom, 30)
+            System.Windows.Controls.Panel.SetZIndex(nom, 30)
             AddHandler nom.MouseEnter, Sub(s, e) Survoler(a.To)
             AddHandler nom.MouseLeave, Sub(s, e) Survoler(Nothing)
             AddHandler nom.GotKeyboardFocus, Sub(s, e) Survoler(a.To)
@@ -472,7 +472,7 @@ Namespace Mkm.Wpf.Controls
             boite.Child = contenu
             Canvas.SetLeft(boite, x)
             Canvas.SetTop(boite, y)
-            Panel.SetZIndex(boite, 20)
+            System.Windows.Controls.Panel.SetZIndex(boite, 20)
             _toile.Children.Add(boite)
         End Sub
 

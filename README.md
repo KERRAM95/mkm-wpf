@@ -5,7 +5,7 @@ Bibliothèque de composants WPF en VB.NET, déclinaison bureau de **mkm**
 documentation. Neutre, indépendante de toute application.
 
 **État :** les fondations (langue et thème, changeables à chaud), les icônes
-de mkm et 44 composants, chacun avec sa page de documentation, ses tests et
+de mkm et 48 composants, chacun avec sa page de documentation, ses tests et
 ses scénarios d'interaction. La version 0.1.0 est en préparation.
 
 **La documentation** est l'application `Mkm.Wpf.Showcase`, sur le modèle de
@@ -123,11 +123,12 @@ Les commandes de l'application se déclarent une fois dans un `CommandRegistry`
 15. ~~Le lot 10~~ : fait — les barres de défilement de mkm partout, `ScrollPanel`,
    `Divider`, `ToggleSwitch`, `Skeleton` (`docs/composants/bases-et-defilement.md`).
 16. ~~Le lot 11~~ : fait — `Badge`, `OverlayBadge`, `Avatar`, `AvatarGroup`, `Chip`
-   (`docs/composants/pastilles-et-personnes.md`). Les lots 12 à 14 :
-   `Panel`, `Card`, `Accordion` ; `Breadcrumb`,
-   `SplitButton`, `Popover` ; `Listbox`, `MultiSelect`, `AutoComplete`,
-   `IconField`, `InputGroup`.
-17. La suite : le paquet NuGet ; hscart-next sur la bibliothèque.
+   (`docs/composants/pastilles-et-personnes.md`).
+17. ~~Le lot 12~~ : fait — `Panel`, `Card`, `Accordion`, `AccordionPanel`
+   (`docs/composants/panneaux-et-accordeon.md`). Les lots 13 et 14 :
+   `Breadcrumb`, `SplitButton`, `Popover` ; `Listbox`, `MultiSelect`,
+   `AutoComplete`, `IconField`, `InputGroup`.
+18. La suite : le paquet NuGet ; hscart-next sur la bibliothèque.
 
 ## Règles
 

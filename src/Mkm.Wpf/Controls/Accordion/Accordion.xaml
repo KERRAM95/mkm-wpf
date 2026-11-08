@@ -1,0 +1,161 @@
+<!--
+    Le style d'Accordion, sur l'accordéon de mkm (styles/accordion ; jetons de Nora en pixels pour Dashboard, preset ara) :
+    des sections l'une sous l'autre ; chaque en-tête, 13,5 px de retrait, en gras, bordé sur les côtés et en bas (la
+    première tout autour), un chevron à droite, vers le bas replié et vers le haut ouvert ; plus foncé au survol replié ;
+    au clavier, un anneau dedans (focus.ring.offset : -2 px). Le contenu ouvert dessous, bordé sur les côtés et en bas.
+    Les coins de l'accordéon : en haut de la première section, en bas de la dernière quand elle est repliée.
+-->
+<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+                    xmlns:local="clr-namespace:Mkm.Wpf.Controls">
+
+    <!-- L'anneau du clavier de l'en-tête : dedans, à 2 px du bord de la section (1 px dans la bordure). -->
+    <Style x:Key="MkmAccordionAnneau">
+        <Setter Property="Control.Template">
+            <Setter.Value>
+                <ControlTemplate>
+                    <Rectangle Margin="1" SnapsToDevicePixels="True"
+                               Stroke="{DynamicResource mkm.accordion.header.focus.ring.color}"
+                               StrokeThickness="{DynamicResource mkm.accordion.header.focus.ring.width}" />
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+
+    <!-- Le bouton de l'en-tête : son contenu et le chevron, sur le retrait de l'en-tête ; le fond est celui de la section. -->
+    <Style x:Key="MkmAccordionEnTete" TargetType="{x:Type local:EnTeteDAccordeon}">
+        <Setter Property="Padding" Value="{DynamicResource mkm.accordion.header.padding}" />
+        <Setter Property="Foreground" Value="{DynamicResource mkm.accordion.header.color}" />
+        <Setter Property="FontWeight" Value="{DynamicResource mkm.accordion.header.font.weight}" />
+        <Setter Property="Cursor" Value="Hand" />
+        <Setter Property="FocusVisualStyle" Value="{StaticResource MkmAccordionAnneau}" />
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="{x:Type local:EnTeteDAccordeon}">
+                    <DockPanel Background="Transparent" Margin="{TemplateBinding Padding}">
+                        <local:Icon x:Name="Chevron" DockPanel.Dock="Right" VerticalAlignment="Center"
+                                    Source="{x:Static local:InternalIcons.ChevronDown}"
+                                    Width="{DynamicResource mkm.icon.size}" Height="{DynamicResource mkm.icon.size}"
+                                    Foreground="{DynamicResource mkm.accordion.header.toggle.icon.color}" />
+                        <ContentPresenter VerticalAlignment="Center" RecognizesAccessKey="True" />
+                    </DockPanel>
+                    <ControlTemplate.Triggers>
+                        <Trigger Property="IsMouseOver" Value="True">
+                            <Setter TargetName="Chevron" Property="Foreground" Value="{DynamicResource mkm.accordion.header.toggle.icon.hover.color}" />
+                        </Trigger>
+                        <Trigger Property="IsChecked" Value="True">
+                            <Setter TargetName="Chevron" Property="Source" Value="{x:Static local:InternalIcons.ChevronUp}" />
+                            <Setter TargetName="Chevron" Property="Foreground" Value="{DynamicResource mkm.accordion.header.toggle.icon.active.color}" />
+                        </Trigger>
+                        <MultiTrigger>
+                            <MultiTrigger.Conditions>
+                                <Condition Property="IsChecked" Value="True" />
+                                <Condition Property="IsMouseOver" Value="True" />
+                            </MultiTrigger.Conditions>
+                            <Setter TargetName="Chevron" Property="Foreground" Value="{DynamicResource mkm.accordion.header.toggle.icon.active.hover.color}" />
+                        </MultiTrigger>
+                    </ControlTemplate.Triggers>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+
+    <Style TargetType="{x:Type local:Accordion}">
+        <Setter Property="FontFamily" Value="{DynamicResource mkm.font.family}" />
+        <Setter Property="FontSize" Value="{DynamicResource mkm.font.size}" />
+        <Setter Property="SnapsToDevicePixels" Value="True" />
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="{x:Type local:Accordion}">
+                    <Border Background="{TemplateBinding Background}" BorderBrush="{TemplateBinding BorderBrush}"
+                            BorderThickness="{TemplateBinding BorderThickness}" Padding="{TemplateBinding Padding}">
+                        <ItemsPresenter />
+                    </Border>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+
+    <Style TargetType="{x:Type local:AccordionPanel}">
+        <Setter Property="FontFamily" Value="{DynamicResource mkm.font.family}" />
+        <Setter Property="FontSize" Value="{DynamicResource mkm.font.size}" />
+        <Setter Property="Foreground" Value="{DynamicResource mkm.accordion.content.color}" />
+        <Setter Property="SnapsToDevicePixels" Value="True" />
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="{x:Type local:AccordionPanel}">
+                    <DockPanel x:Name="Racine">
+                        <Border x:Name="EnTete" DockPanel.Dock="Top"
+                                Background="{DynamicResource mkm.accordion.header.background}"
+                                BorderBrush="{DynamicResource mkm.accordion.header.border.color}"
+                                BorderThickness="{DynamicResource mkm.accordion.header.border.width}"
+                                CornerRadius="{DynamicResource mkm.accordion.header.border.radius}">
+                            <local:EnTeteDAccordeon x:Name="PART_Header" Style="{StaticResource MkmAccordionEnTete}"
+                                                    IsChecked="{Binding IsExpanded, RelativeSource={RelativeSource TemplatedParent}, Mode=TwoWay}"
+                                                    Content="{TemplateBinding Header}" ContentTemplate="{TemplateBinding HeaderTemplate}" />
+                        </Border>
+                        <Border x:Name="Contenu" Visibility="Collapsed"
+                                Background="{DynamicResource mkm.accordion.content.background}"
+                                BorderBrush="{DynamicResource mkm.accordion.content.border.color}"
+                                BorderThickness="{DynamicResource mkm.accordion.content.border.width}"
+                                Padding="{DynamicResource mkm.accordion.content.padding}">
+                            <ContentPresenter />
+                        </Border>
+                    </DockPanel>
+                    <ControlTemplate.Triggers>
+                        <Trigger Property="IsFirst" Value="True">
+                            <Setter TargetName="EnTete" Property="BorderThickness" Value="{DynamicResource mkm.accordion.header.first.all.border.width}" />
+                            <Setter TargetName="EnTete" Property="CornerRadius" Value="{DynamicResource mkm.accordion.header.first.corner.radius}" />
+                        </Trigger>
+                        <Trigger Property="IsLast" Value="True">
+                            <Setter TargetName="EnTete" Property="CornerRadius" Value="{DynamicResource mkm.accordion.header.last.corner.radius}" />
+                        </Trigger>
+                        <MultiTrigger>
+                            <MultiTrigger.Conditions>
+                                <Condition Property="IsLast" Value="True" />
+                                <Condition Property="IsExpanded" Value="True" />
+                            </MultiTrigger.Conditions>
+                            <Setter TargetName="EnTete" Property="CornerRadius" Value="{DynamicResource mkm.accordion.header.last.active.corner.radius}" />
+                        </MultiTrigger>
+                        <MultiTrigger>
+                            <MultiTrigger.Conditions>
+                                <Condition Property="IsFirst" Value="True" />
+                                <Condition Property="IsLast" Value="True" />
+                            </MultiTrigger.Conditions>
+                            <Setter TargetName="EnTete" Property="CornerRadius" Value="{DynamicResource mkm.accordion.header.single.corner.radius}" />
+                        </MultiTrigger>
+                        <MultiTrigger>
+                            <MultiTrigger.Conditions>
+                                <Condition Property="IsFirst" Value="True" />
+                                <Condition Property="IsLast" Value="True" />
+                                <Condition Property="IsExpanded" Value="True" />
+                            </MultiTrigger.Conditions>
+                            <Setter TargetName="EnTete" Property="CornerRadius" Value="{DynamicResource mkm.accordion.header.single.active.corner.radius}" />
+                        </MultiTrigger>
+                        <Trigger SourceName="PART_Header" Property="IsMouseOver" Value="True">
+                            <Setter TargetName="EnTete" Property="Background" Value="{DynamicResource mkm.accordion.header.hover.background}" />
+                            <Setter TargetName="PART_Header" Property="Foreground" Value="{DynamicResource mkm.accordion.header.hover.color}" />
+                        </Trigger>
+                        <Trigger Property="IsExpanded" Value="True">
+                            <Setter TargetName="Contenu" Property="Visibility" Value="Visible" />
+                            <Setter TargetName="EnTete" Property="Background" Value="{DynamicResource mkm.accordion.header.active.background}" />
+                            <Setter TargetName="PART_Header" Property="Foreground" Value="{DynamicResource mkm.accordion.header.active.color}" />
+                        </Trigger>
+                        <MultiTrigger>
+                            <MultiTrigger.Conditions>
+                                <Condition Property="IsExpanded" Value="True" />
+                                <Condition SourceName="PART_Header" Property="IsMouseOver" Value="True" />
+                            </MultiTrigger.Conditions>
+                            <Setter TargetName="EnTete" Property="Background" Value="{DynamicResource mkm.accordion.header.active.hover.background}" />
+                            <Setter TargetName="PART_Header" Property="Foreground" Value="{DynamicResource mkm.accordion.header.active.hover.color}" />
+                        </MultiTrigger>
+                        <Trigger Property="IsEnabled" Value="False">
+                            <Setter TargetName="Racine" Property="Opacity" Value="{DynamicResource mkm.disabled.opacity}" />
+                        </Trigger>
+                    </ControlTemplate.Triggers>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+
+</ResourceDictionary>

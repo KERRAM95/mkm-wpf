@@ -8,7 +8,7 @@ Imports NUnit.Framework
 
 Namespace Mkm.Wpf.UiTests
 
-    ''' <summary>Les panneaux, sur leurs pages : onglets, groupes, carte, fiche, barre, séparateur, panneau d'accueil.</summary>
+    ''' <summary>Les panneaux, sur leurs pages : onglets, groupes, carte, fiche, barre, séparateur, panneau d'accueil, panneau, accordéon.</summary>
     <TestFixture>
     Public Class PanneauTests
         Inherits Scenario
@@ -143,6 +143,52 @@ Namespace Mkm.Wpf.UiTests
             Mouse.Scroll(-2)
             Wait.UntilInputIsProcessed()
             AttendreQue(Function() defilement.VerticalScrollPercent.Value > 0, "la zone a défilé à la molette")
+        End Sub
+
+        <Test>
+        Public Sub Panel_SonBoutonLeReplieEtLeDeplie()
+            Dim page = OuvrirLaDoc("panel")
+            Dim panneau = Trouver("Repliable", page)
+            Dim notes = Trouver("Notes", panneau)
+            Dim bouton = TrouverParNom(T("aria.collapse"), ControlType.Button, panneau)
+
+            Assert.That(NomDe(panneau), [Is].EqualTo("Notes"), "un groupe nommé par son titre")
+            Cliquer(bouton)
+            AttendreQue(Function() notes.IsOffscreen, "replié : son contenu caché")
+            AttendreQue(Function() NomDe(bouton) = T("aria.expand"), "replié : son bouton dit « Déplier »")
+            Cliquer(bouton)
+            AttendreQue(Function() Not notes.IsOffscreen, "déplié : son contenu revenu")
+            AttendreQue(Function() NomDe(bouton) = T("aria.collapse"), "déplié : « Replier »")
+        End Sub
+
+        <Test>
+        Public Sub Card_UnGroupeNommeParSonTitre()
+            Dim page = OuvrirLaDoc("card")
+            Dim carte = Trouver("Carte", page)
+
+            Assert.That(carte.ControlType, [Is].EqualTo(ControlType.Group))
+            Assert.That(NomDe(carte), [Is].EqualTo("Plan d'ensemble"))
+        End Sub
+
+        <Test>
+        Public Sub Accordion_UnClicEtLeClavierOuvrentUneSectionEtRefermentLAutre()
+            Dim page = OuvrirLaDoc("accordion")
+            Dim sections = Trouver("Sections", page)
+            Dim cartouche = TrouverParNom("Cartouche", ControlType.Button, sections)
+            Dim notes = TrouverParNom("Notes", ControlType.Button, sections)
+            Dim etat = Function(entete As AutomationElement) entete.Patterns.ExpandCollapse.Pattern.ExpandCollapseState.Value
+
+            Assert.That(etat(cartouche), [Is].EqualTo(ExpandCollapseState.Expanded), "« Cartouche » ouverte au départ")
+            Cliquer(notes)
+            AttendreQue(Function() etat(notes) = ExpandCollapseState.Expanded, "« Notes » ouverte")
+            AttendreQue(Function() etat(cartouche) = ExpandCollapseState.Collapsed, "« Cartouche » refermée : une seule ouverte")
+            Trouver("TexteNotes", sections)
+
+            Taper(VirtualKeyShort.UP)
+            AttendreQue(Function() AFocus(cartouche), "↑ : le clavier sur « Cartouche »")
+            Taper(VirtualKeyShort.RETURN)
+            AttendreQue(Function() etat(cartouche) = ExpandCollapseState.Expanded, "Entrée : « Cartouche » ouverte")
+            AttendreQue(Function() etat(notes) = ExpandCollapseState.Collapsed, "« Notes » refermée")
         End Sub
 
     End Class

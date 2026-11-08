@@ -268,7 +268,10 @@ l'anglais en repli (voir « Thème et langue »).
 - Une variable locale ne porte pas le nom d'un type (`Dim traducteur As New
   Localizer`, pas `localizer`) : VB ne distingue pas la casse.
 - **Les noms de mkm qui sont aussi ceux de WPF** (`Button`, `Checkbox` et
-  `CheckBox`, `Select`, `Tab`…) : un contrôle écrit son type de base en entier
+  `CheckBox`, `Select`, `Tab`, `Menu`, `Toolbar`, `ToggleButton`,
+  `RadioButton`, `Panel`…) : `Panel` surtout, que les panneaux de mise en page
+  de la bibliothèque héritent de WPF (`Inherits System.Windows.Controls.Panel`,
+  `System.Windows.Controls.Panel.SetZIndex`). Un contrôle écrit son type de base en entier
   (`Inherits System.Windows.Controls.Button`) ; un fichier qui importe les deux
   espaces de noms écrit `Mkm.Wpf.Controls.Button` (la casse ne les distingue
   pas). Les mots-clés de VB se mettent entre crochets (`[Select]`, `[Variant]`,

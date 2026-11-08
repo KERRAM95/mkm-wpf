@@ -119,6 +119,10 @@ Les évolutions notables de mkm-wpf, version par version. Le format suit
 - Le lot 11 (`docs/composants/pastilles-et-personnes.md`) : `Badge` et
   `OverlayBadge`, `Avatar` et `AvatarGroup`, `Chip` (retirable, au clavier
   aussi) ; leurs jetons, leurs pages, leurs tests et leurs scénarios.
+- Le lot 12 (`docs/composants/panneaux-et-accordeon.md`) : `Panel` (repliable,
+  ses actions et son pied), `Card`, `Accordion` et `AccordionPanel` (une seule
+  section ouverte ou plusieurs, ↑ ↓ Début Fin) ; leurs jetons, leurs pages,
+  leurs tests et leurs scénarios.
 - La documentation, sur le modèle d'ui-kit : la vitrine devient une page par
   composant, rangée par catégorie (Pour commencer, Formulaire, Bouton, Données,
   Panneau, Superposition, Menu, Messages, Divers), avec une recherche. Chaque

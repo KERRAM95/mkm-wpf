@@ -227,8 +227,8 @@ Namespace Mkm.Wpf.Showcase.Documentation
                 Dim racine = DirectCast(XamlReader.Parse(EnveloppeOuvrante & xaml & EnveloppeFermante), FrameworkElement)
                 If CStr(xml.Attribute("etendu")) = "oui" Then
                     ' Un exemple qui prend toute la largeur (un tableau, une mise en page) : ses éléments l'un sous l'autre.
-                    Dim enfants = DirectCast(racine, Panel).Children.Cast(Of UIElement)().ToList()
-                    DirectCast(racine, Panel).Children.Clear()
+                    Dim enfants = DirectCast(racine, System.Windows.Controls.Panel).Children.Cast(Of UIElement)().ToList()
+                    DirectCast(racine, System.Windows.Controls.Panel).Children.Clear()
                     Dim colonne As New StackPanel()
                     For Each enfant In enfants
                         colonne.Children.Add(enfant)

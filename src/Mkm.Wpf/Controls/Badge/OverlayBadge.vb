@@ -71,7 +71,7 @@ Namespace Mkm.Wpf.Controls
     ''' (le <c>translate(50%, -50%)</c> de mkm) ; la pastille déborde sans prendre de place.
     ''' </summary>
     Friend NotInheritable Class CoinDePastille
-        Inherits Panel
+        Inherits System.Windows.Controls.Panel
 
         Protected Overrides Function MeasureOverride(disponible As Size) As Size
             Dim taille As New Size()

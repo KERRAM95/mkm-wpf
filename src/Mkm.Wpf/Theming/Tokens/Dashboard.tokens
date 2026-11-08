@@ -435,6 +435,42 @@ line.height = 1.16667
 navigation.item.height = 24px
 navigation.icon.column.width = 44px
 
+# accordion
+accordion.transition.duration = {transition.duration}
+accordion.panel.border.width = 0
+accordion.panel.border.color = {content.border.color}
+accordion.header.color = {text.color}
+accordion.header.hover.color = {text.color}
+accordion.header.active.color = {text.color}
+accordion.header.active.hover.color = {text.color}
+accordion.header.padding = 13.5px
+accordion.header.font.weight = 700
+accordion.header.border.radius = 0
+accordion.header.border.width = 0 1px 1px 1px
+accordion.header.border.color = {content.border.color}
+accordion.header.background = {content.background}
+accordion.header.hover.background = {content.hover.background}
+accordion.header.active.background = {content.background}
+accordion.header.active.hover.background = {content.hover.background}
+accordion.header.focus.ring.width = {focus.ring.width}
+accordion.header.focus.ring.style = {focus.ring.style}
+accordion.header.focus.ring.color = {focus.ring.color}
+accordion.header.focus.ring.offset = -2px
+accordion.header.focus.ring.shadow = {focus.ring.shadow}
+accordion.header.toggle.icon.color = {text.color}
+accordion.header.toggle.icon.hover.color = {text.color}
+accordion.header.toggle.icon.active.color = {text.color}
+accordion.header.toggle.icon.active.hover.color = {text.color}
+accordion.header.first.top.border.radius = {content.border.radius}
+accordion.header.first.border.width = 1px
+accordion.header.last.bottom.border.radius = {content.border.radius}
+accordion.header.last.active.bottom.border.radius = 0
+accordion.content.border.width = 0 1px 1px 1px
+accordion.content.border.color = {content.border.color}
+accordion.content.background = {content.background}
+accordion.content.color = {text.color}
+accordion.content.padding = 13.5px
+
 # actionbar
 actionbar.font.size = 12px
 actionbar.line.height = 1.25
@@ -750,6 +786,18 @@ button.text.plain.color = {surface.900}
 button.link.color = {primary.600}
 button.link.hover.color = {primary.700}
 button.link.active.color = {primary.700}
+
+# card
+card.background = {content.background}
+card.border.radius = {border.radius.sm}
+card.color = {content.color}
+card.shadow = 0 1px 4px 0 rgba(0, 0, 0, 0.1)
+card.body.padding = 15px
+card.body.gap = 6px
+card.caption.gap = 6px
+card.title.font.size = 15px
+card.title.font.weight = 500
+card.subtitle.color = {text.muted.color}
 
 # checkbox
 checkbox.border.radius = {border.radius.xs}

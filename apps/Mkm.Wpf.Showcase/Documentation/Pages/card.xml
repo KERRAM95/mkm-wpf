@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="utf-8"?>
+<page titre="Card" categorie="Panneau" types="Card" jetons="card">
+  <resume>Une carte blanche et ombrée, sans bordure : un titre, un sous-titre, un contenu et un pied, et en haut une
+    image ou un aperçu bord à bord.</resume>
+
+  <section titre="Import">
+    <code><![CDATA[
+<Window xmlns:mkm="urn:mkm-wpf">
+    <mkm:Card Title="Plan d'ensemble">
+        <!-- Le contenu de la carte. -->
+    </mkm:Card>
+</Window>
+]]></code>
+  </section>
+
+  <section titre="Basique">
+    <p><c>Title</c> se pose en haut, en demi-gras ; <c>Subtitle</c> dessous, en gris ; le contenu suit. Chacun disparaît
+      quand il est vide.</p>
+    <exemple><![CDATA[
+<mkm:Card x:Name="Carte" Title="Plan d'ensemble" Subtitle="HS-00042, révision B" Width="320">
+    <TextBlock TextWrapping="Wrap" Text="Carter de transmission, vue de face et coupe A-A." />
+</mkm:Card>
+]]></exemple>
+  </section>
+
+  <section titre="Haut et pied">
+    <p><c>Header</c> se pose en haut de la carte, sans retrait : une image, un aperçu. <c>Footer</c> se pose sous le
+      contenu : des boutons.</p>
+    <exemple><![CDATA[
+<mkm:Card Title="Carter de transmission" Subtitle="Pièce, en cours" Width="320">
+    <mkm:Card.Header>
+        <Border Height="120" Background="{DynamicResource mkm.surface.100}">
+            <mkm:Icon Source="{x:Static mkm:Icons.Drawings}" Width="48" Height="48"
+                      Foreground="{DynamicResource mkm.text.muted.color}" />
+        </Border>
+    </mkm:Card.Header>
+    <mkm:Card.Footer>
+        <StackPanel Orientation="Horizontal">
+            <mkm:Button Content="Ouvrir" Margin="0,0,8,0" />
+            <mkm:Button Content="Partager" Severity="Secondary" Variant="Outlined" />
+        </StackPanel>
+    </mkm:Card.Footer>
+    <TextBlock TextWrapping="Wrap" Text="Aluminium 6061, 1,24 kg. Dernière révision le 8 novembre 2026." />
+</mkm:Card>
+]]></exemple>
+  </section>
+
+  <section titre="Accessibilité">
+    <h3>Lecteur d'écran</h3>
+    <p>Narrateur dit la carte « groupe », nommée par son titre quand c'est un texte. Les boutons du pied gardent leur
+      nom.</p>
+    <h3>Clavier</h3>
+    <p>La carte ne prend pas le clavier : Tab passe aux éléments de son contenu et de son pied.</p>
+  </section>
+</page>

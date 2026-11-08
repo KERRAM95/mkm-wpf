@@ -1,0 +1,69 @@
+<?xml version="1.0" encoding="utf-8"?>
+<page titre="Panel" categorie="Panneau" types="Panel" jetons="panel">
+  <resume>Un cadre bordé sous un en-tête titré : il regroupe un contenu, des actions à droite de son titre, un pied. Il
+    peut se replier sous son en-tête.</resume>
+
+  <section titre="Import">
+    <p>« Panel » est aussi le nom d'une classe de WPF (<c>System.Windows.Controls.Panel</c>) : dans un fichier VB qui
+      importe <c>Mkm.Wpf.Controls</c>, écrivez <c>System.Windows.Controls.Panel</c> pour celle de WPF.</p>
+    <code><![CDATA[
+<Window xmlns:mkm="urn:mkm-wpf">
+    <mkm:Panel Header="Cartouche">
+        <!-- Le contenu du panneau. -->
+    </mkm:Panel>
+</Window>
+]]></code>
+  </section>
+
+  <section titre="Basique">
+    <p>Le titre est l'en-tête du panneau (<c>Header</c>), en gras ; le contenu se pose dessous, en retrait du bord.</p>
+    <exemple><![CDATA[
+<mkm:Panel Header="Cartouche" Width="420">
+    <TextBlock TextWrapping="Wrap"
+               Text="Plan d'ensemble HS-00042, révision B. Dessiné par M. Kerram, vérifié par J. Durand." />
+</mkm:Panel>
+]]></exemple>
+  </section>
+
+  <section titre="Repliable">
+    <p><c>Toggleable</c> pose un bouton moins à droite de l'en-tête : un clic replie le panneau, seul l'en-tête reste, et
+      le bouton devient plus. <c>IsCollapsed</c> dit s'il est replié, et se lie dans les deux sens ;
+      <c>IsCollapsed="True"</c> le montre replié au départ.</p>
+    <exemple><![CDATA[
+<mkm:Panel x:Name="Repliable" Header="Notes" Toggleable="True" Width="420">
+    <TextBlock x:Name="Notes" TextWrapping="Wrap" Text="Casser les angles vifs. Tolérances ISO 2768-mK." />
+</mkm:Panel>
+]]></exemple>
+  </section>
+
+  <section titre="Actions et pied">
+    <p><c>Actions</c> se pose à droite du titre, avant le bouton du repli : des boutons de texte à icône seule, nommés par
+      leur info-bulle. <c>Footer</c> se pose sous le contenu.</p>
+    <exemple><![CDATA[
+<mkm:Panel Header="Propriétés" Toggleable="True" Width="420">
+    <mkm:Panel.Actions>
+        <StackPanel Orientation="Horizontal">
+            <mkm:Button Icon="{x:Static mkm:Icons.Refresh}" Variant="Text" Severity="Secondary" ToolTip="Actualiser" />
+            <mkm:Button Icon="{x:Static mkm:Icons.Settings}" Variant="Text" Severity="Secondary" ToolTip="Paramètres" />
+        </StackPanel>
+    </mkm:Panel.Actions>
+    <mkm:Panel.Footer>
+        <TextBlock Foreground="{DynamicResource mkm.text.muted.color}" Text="Modifié le 8 novembre 2026" />
+    </mkm:Panel.Footer>
+    <TextBlock TextWrapping="Wrap" Text="Matière : aluminium 6061. Masse : 1,24 kg." />
+</mkm:Panel>
+]]></exemple>
+  </section>
+
+  <section titre="Accessibilité">
+    <h3>Lecteur d'écran</h3>
+    <p>Narrateur dit le panneau « groupe », nommé par son titre. Le bouton du repli se nomme « Replier » ou
+      « Déplier » selon l'état du panneau, comme <c>aria-label</c> et <c>aria-expanded</c> dans mkm.</p>
+    <h3>Clavier</h3>
+    <touches>
+      <touche nom="Tab">Amène le clavier sur les actions, puis sur le bouton du repli, puis dans le contenu.</touche>
+      <touche nom="Entrée">Replie ou déplie le panneau, sur son bouton.</touche>
+      <touche nom="Espace">Replie ou déplie le panneau, sur son bouton.</touche>
+    </touches>
+  </section>
+</page>

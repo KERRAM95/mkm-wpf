@@ -10,7 +10,7 @@ Namespace Mkm.Wpf.Controls
     ''' Verticale par défaut ; chaque élément y prend toute la largeur, son alignement faisant le reste.
     ''' </summary>
     Public Class GapStackPanel
-        Inherits Panel
+        Inherits System.Windows.Controls.Panel
 
         ''' <summary>
         ''' Un groupe pour les lecteurs d'écran quand la pile est une région « vivante » (<c>AutomationProperties.LiveSetting</c>,

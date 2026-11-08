@@ -9,7 +9,7 @@ Namespace Mkm.Wpf.Controls
     ''' d'une <see cref="ActionBar"/>.
     ''' </summary>
     Public Class ActionBarPanel
-        Inherits Panel
+        Inherits System.Windows.Controls.Panel
 
         ''' <summary>L'écart entre deux éléments visibles.</summary>
         Public Shared ReadOnly GapProperty As DependencyProperty = DependencyProperty.Register(

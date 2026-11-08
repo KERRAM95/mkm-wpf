@@ -9,7 +9,7 @@ Namespace Mkm.Wpf.Showcase.Documentation.Exemples
     Friend NotInheritable Class ChipsRetirables
 
         Friend Shared Sub Preparer(exemple As FrameworkElement)
-            Dim filtres = DirectCast(exemple.FindName("Filtres"), Panel)
+            Dim filtres = DirectCast(exemple.FindName("Filtres"), System.Windows.Controls.Panel)
             AddHandler DirectCast(exemple.FindName("ToutRemettre"), Mkm.Wpf.Controls.Button).Click,
                 Sub()
                     For Each puce In filtres.Children.OfType(Of Chip)()

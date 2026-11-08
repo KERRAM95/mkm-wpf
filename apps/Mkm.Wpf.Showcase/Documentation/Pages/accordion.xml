@@ -1,0 +1,85 @@
+<?xml version="1.0" encoding="utf-8"?>
+<page titre="Accordion" categorie="Panneau" types="Accordion AccordionPanel" jetons="accordion">
+  <resume>Des sections l'une sous l'autre, chacune un en-tête qui déplie son contenu : une seule ouverte à la fois, ou
+    plusieurs.</resume>
+
+  <section titre="Import">
+    <code><![CDATA[
+<Window xmlns:mkm="urn:mkm-wpf">
+    <mkm:Accordion>
+        <mkm:AccordionPanel Header="Cartouche">
+            <!-- Le contenu de la section. -->
+        </mkm:AccordionPanel>
+    </mkm:Accordion>
+</Window>
+]]></code>
+  </section>
+
+  <section titre="Basique">
+    <p>Chaque section est un <c>AccordionPanel</c> : son titre est son en-tête (<c>Header</c>), en gras, un chevron à
+      droite ; un clic sur l'en-tête l'ouvre et referme celle qui l'était. <c>IsExpanded</c> dit si une section est
+      ouverte, et se lie dans les deux sens.</p>
+    <exemple><![CDATA[
+<mkm:Accordion x:Name="Sections" Width="420">
+    <mkm:AccordionPanel Header="Cartouche" IsExpanded="True">
+        <TextBlock x:Name="TexteCartouche" TextWrapping="Wrap" Text="Plan d'ensemble HS-00042, révision B." />
+    </mkm:AccordionPanel>
+    <mkm:AccordionPanel Header="Notes">
+        <TextBlock x:Name="TexteNotes" TextWrapping="Wrap" Text="Casser les angles vifs. Tolérances ISO 2768-mK." />
+    </mkm:AccordionPanel>
+    <mkm:AccordionPanel Header="Historique">
+        <TextBlock TextWrapping="Wrap" Text="Révision A : création. Révision B : cotes reprises." />
+    </mkm:AccordionPanel>
+</mkm:Accordion>
+]]></exemple>
+  </section>
+
+  <section titre="Plusieurs ouvertes">
+    <p><c>Multiple="True"</c> laisse ouvertes autant de sections qu'on veut : chaque en-tête ouvre et referme la sienne
+      seulement.</p>
+    <exemple><![CDATA[
+<mkm:Accordion Multiple="True" Width="420">
+    <mkm:AccordionPanel Header="Matière" IsExpanded="True">
+        <TextBlock Text="Aluminium 6061" />
+    </mkm:AccordionPanel>
+    <mkm:AccordionPanel Header="Masse" IsExpanded="True">
+        <TextBlock Text="1,24 kg" />
+    </mkm:AccordionPanel>
+    <mkm:AccordionPanel Header="Traitement">
+        <TextBlock Text="Anodisation noire" />
+    </mkm:AccordionPanel>
+</mkm:Accordion>
+]]></exemple>
+  </section>
+
+  <section titre="Désactivée">
+    <p>Une section à <c>IsEnabled="False"</c> pâlit et ne s'ouvre plus ; le clavier la saute.</p>
+    <exemple><![CDATA[
+<mkm:Accordion Width="420">
+    <mkm:AccordionPanel Header="Cartouche">
+        <TextBlock Text="Plan d'ensemble HS-00042" />
+    </mkm:AccordionPanel>
+    <mkm:AccordionPanel Header="Signatures (réservé au valideur)" IsEnabled="False">
+        <TextBlock Text="Validé par J. Durand" />
+    </mkm:AccordionPanel>
+</mkm:Accordion>
+]]></exemple>
+  </section>
+
+  <section titre="Accessibilité">
+    <h3>Lecteur d'écran</h3>
+    <p>Narrateur dit l'accordéon « groupe », et chaque section « groupe » nommé par son titre. Son en-tête est un bouton
+      qui se dit « développé » ou « réduit », comme <c>aria-expanded</c> dans mkm ; un lecteur d'écran peut aussi
+      l'ouvrir ou le refermer lui-même.</p>
+    <h3>Clavier</h3>
+    <touches>
+      <touche nom="Tab">Passe d'un en-tête au suivant, puis dans le contenu ouvert.</touche>
+      <touche nom="Flèche bas">Amène le clavier sur l'en-tête suivant ; du dernier, sur le premier.</touche>
+      <touche nom="Flèche haut">Amène le clavier sur l'en-tête précédent ; du premier, sur le dernier.</touche>
+      <touche nom="Début">Amène le clavier sur le premier en-tête.</touche>
+      <touche nom="Fin">Amène le clavier sur le dernier en-tête.</touche>
+      <touche nom="Entrée">Ouvre ou referme la section.</touche>
+      <touche nom="Espace">Ouvre ou referme la section.</touche>
+    </touches>
+  </section>
+</page>
