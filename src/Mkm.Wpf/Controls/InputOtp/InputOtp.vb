@@ -255,7 +255,8 @@ Namespace Mkm.Wpf.Controls
             Aller(indice + 1)
         End Sub
 
-        ' ← et → passent d'une case à l'autre ; Retour arrière vide la case et revient à la précédente ; Suppr la vide.
+        ' ← et → passent d'une case à l'autre ; Retour arrière vide la case et revient à la précédente ; Suppr la vide et
+        ' passe à la suivante.
         Private Sub Case_PreviewKeyDown(sender As Object, e As KeyEventArgs)
             Dim indice = _cases.IndexOf(DirectCast(sender, Control))
             Select Case e.Key
@@ -268,7 +269,9 @@ Namespace Mkm.Wpf.Controls
                     If Not IsReadOnly AndAlso _jetons(indice).Length > 0 Then Poser(indice, String.Empty)
                     Aller(indice - 1)
                 Case Key.Delete
+                    ' Suppr vide la case et passe à la suivante, comme mkm (deleteContentForward).
                     If Not IsReadOnly Then Poser(indice, String.Empty)
+                    Aller(indice + 1)
                 Case Else
                     Return
             End Select

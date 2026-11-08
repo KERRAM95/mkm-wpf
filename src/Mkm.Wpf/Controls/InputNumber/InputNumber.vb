@@ -401,6 +401,13 @@ Namespace Mkm.Wpf.Controls
                     e.Handled = True
                 Case Input.Key.Enter
                     Valider()
+                Case Input.Key.Home, Input.Key.End
+                    ' Début et Fin : le minimum et le maximum, s'ils sont donnés (mkm) ; sinon le curseur dans le texte.
+                    Dim borne = If(e.Key = Input.Key.Home, Minimum, Maximum)
+                    If Double.IsInfinity(borne) OrElse Input.Keyboard.Modifiers <> Input.ModifierKeys.None Then Return
+                    Value = borne
+                    Ecrire()
+                    e.Handled = True
             End Select
         End Sub
 

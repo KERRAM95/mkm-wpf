@@ -328,6 +328,9 @@ Les évolutions notables de mkm-wpf, version par version. Le format suit
     choisi de mkm.
   - ConfirmDialog : DefaultFocus (Accept ou Reject) choisit le bouton qui a
     le clavier à l'ouverture ; un jeton écrit deux fois retiré.
+  - InputOtp : Suppr vide la case et passe à la suivante ; InputMask : Échap
+    rend la valeur qu'avait le champ en prenant le clavier ; InputNumber :
+    Début et Fin donnent le minimum et le maximum, s'ils sont fixés (mkm).
   - InputOtp, ColorPicker, Terminal, Password : la langue n'est suivie que
     tant que le contrôle est chargé (l'abonnement à vie le gardait en
     mémoire).

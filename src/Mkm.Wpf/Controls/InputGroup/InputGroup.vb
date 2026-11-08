@@ -35,11 +35,19 @@ Namespace Mkm.Wpf.Controls
             AddHandler LayoutUpdated, Sub()
                                           If Not _aRefaire Then Return
                                           _aRefaire = False
-                                          Placer()
+                                          _apresLaMiseEnPage = True
+                                          Try
+                                              Placer()
+                                          Finally
+                                              _apresLaMiseEnPage = False
+                                          End Try
                                       End Sub
         End Sub
 
+        ' Les gabarits imbriqués (le bouton d'un Select, le champ d'un InputNumber) ne sont là qu'après la mise en page :
+        ' chaque rangement en demande un de plus, une fois celle-ci faite.
         Private _aRefaire As Boolean
+        Private _apresLaMiseEnPage As Boolean
 
         ''' <summary>Un groupe pour les lecteurs d'écran, nommé par <c>AutomationProperties.Name</c> : ses champs et ses boutons.</summary>
         Protected Overrides Function OnCreateAutomationPeer() As AutomationPeer
@@ -83,7 +91,8 @@ Namespace Mkm.Wpf.Controls
                 ElseIf TypeOf elements(i) Is Control Then
                     ' Select, InputNumber, Password, DatePicker, IconField, FloatLabel : leurs coins sont dans leur gabarit ;
                     ' ceux du côté d'un voisin passent à zéro, comme mkm (.p-inputgroup > .p-inputwrapper > .p-component).
-                    If Not Equarrir(DirectCast(elements(i), Control), gauche:=Not premier, droite:=Not dernier) Then _aRefaire = True
+                    Equarrir(DirectCast(elements(i), Control), gauche:=Not premier, droite:=Not dernier)
+                    If Not _apresLaMiseEnPage Then _aRefaire = True
                 End If
             Next
         End Sub
@@ -113,6 +122,8 @@ Namespace Mkm.Wpf.Controls
         Private Shared Iterator Function Bordures(element As DependencyObject) As IEnumerable(Of DependencyObject)
             For i = 0 To Media.VisualTreeHelper.GetChildrenCount(element) - 1
                 Dim enfant = Media.VisualTreeHelper.GetChild(element, i)
+                ' Un contrôle imbriqué (le bouton d'un Select) : son gabarit, tout de suite, pour y trouver ses bordures.
+                TryCast(enfant, FrameworkElement)?.ApplyTemplate()
                 Dim aDesCoins = TypeOf enfant Is Border OrElse APropreCoins(enfant)
                 If aDesCoins Then
                     Dim c = DirectCast(If(enfant.GetValue(CoinsDOrigineProperty), enfant.GetValue(Border.CornerRadiusProperty)), CornerRadius)

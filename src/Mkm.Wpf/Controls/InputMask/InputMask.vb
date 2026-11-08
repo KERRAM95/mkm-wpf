@@ -330,6 +330,7 @@ Namespace Mkm.Wpf.Controls
         ''' <summary>Au clavier, les cases se montrent ; le curseur va à la première vide.</summary>
         Protected Overrides Sub OnGotKeyboardFocus(e As KeyboardFocusChangedEventArgs)
             MyBase.OnGotKeyboardFocus(e)
+            _texteAuFocus = Text
             If Longueur = 0 Then Return
             Dim position = Placer(Text, True)
             Dispatcher.BeginInvoke(Threading.DispatcherPriority.Input, New System.Action(Sub() Placer(Math.Min(position, Premiere()))))
@@ -374,8 +375,17 @@ Namespace Mkm.Wpf.Controls
             Placer(Suivante(p))
         End Sub
 
-        ''' <summary>Retour arrière et Suppr vident une case et ramènent ce qui suit.</summary>
+        ' Le texte qu'avait le champ en prenant le clavier : Échap le lui rend, comme mkm.
+        Private _texteAuFocus As String
+
+        ''' <summary>Retour arrière et Suppr vident une case et ramènent ce qui suit ; Échap rend la valeur d'entrée.</summary>
         Protected Overrides Sub OnPreviewKeyDown(e As KeyEventArgs)
+            If e.Key = Key.Escape AndAlso Not IsReadOnly AndAlso _texteAuFocus IsNot Nothing AndAlso Text <> _texteAuFocus Then
+                Text = _texteAuFocus
+                CaretIndex = Text.Length
+                e.Handled = True
+                Return
+            End If
             If Longueur = 0 OrElse IsReadOnly OrElse (e.Key <> Key.Back AndAlso e.Key <> Key.Delete) Then
                 MyBase.OnPreviewKeyDown(e)
                 Return
