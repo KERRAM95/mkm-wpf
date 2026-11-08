@@ -13,6 +13,11 @@ Namespace Mkm.Wpf.Controls
     Public Class Textarea
         Inherits TextBox
 
+        ''' <summary>Sans libellé, son texte indicatif le nomme pour les lecteurs d'écran.</summary>
+        Protected Overrides Function OnCreateAutomationPeer() As System.Windows.Automation.Peers.AutomationPeer
+            Return New PairDeTexte(Me, Function() Placeholder)
+        End Function
+
         ''' <summary>Le texte d'aide, montré tant que la zone est vide.</summary>
         Public Shared ReadOnly PlaceholderProperty As DependencyProperty = InputText.PlaceholderProperty.AddOwner(GetType(Textarea))
 

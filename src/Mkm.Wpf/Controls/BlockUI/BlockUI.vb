@@ -27,6 +27,11 @@ Namespace Mkm.Wpf.Controls
     Public Class BlockUI
         Inherits ContentControl
 
+        ''' <summary>Un groupe pour les lecteurs d'écran : son contenu et son voile dedans.</summary>
+        Protected Overrides Function OnCreateAutomationPeer() As System.Windows.Automation.Peers.AutomationPeer
+            Return New PairDeConteneur(Me, System.Windows.Automation.Peers.AutomationControlType.Group)
+        End Function
+
         ''' <summary>Le nom du voile dans le gabarit.</summary>
         Public Const PartMask As String = "PART_Mask"
 

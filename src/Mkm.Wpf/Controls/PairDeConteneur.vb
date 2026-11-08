@@ -19,11 +19,21 @@ Namespace Mkm.Wpf.Controls
         Inherits FrameworkElementAutomationPeer
 
         Private ReadOnly _role As AutomationControlType
+        Private ReadOnly _nom As Func(Of String)
 
-        Friend Sub New(proprietaire As FrameworkElement, role As AutomationControlType)
+        ''' <param name="nom">Son nom, quand l'application ne lui en donne pas (son titre, son libellé).</param>
+        Friend Sub New(proprietaire As FrameworkElement, role As AutomationControlType, Optional nom As Func(Of String) = Nothing)
             MyBase.New(proprietaire)
             _role = role
+            _nom = nom
         End Sub
+
+        ''' <inheritdoc/>
+        Protected Overrides Function GetNameCore() As String
+            Dim nom = MyBase.GetNameCore()
+            If String.IsNullOrEmpty(nom) AndAlso _nom IsNot Nothing Then nom = If(_nom(), String.Empty)
+            Return nom
+        End Function
 
         ''' <inheritdoc/>
         Protected Overrides Function GetAutomationControlTypeCore() As AutomationControlType

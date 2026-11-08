@@ -15,6 +15,11 @@ Namespace Mkm.Wpf.Controls
     Public Class InputText
         Inherits TextBox
 
+        ''' <summary>Sans libellé, son texte indicatif le nomme pour les lecteurs d'écran.</summary>
+        Protected Overrides Function OnCreateAutomationPeer() As System.Windows.Automation.Peers.AutomationPeer
+            Return New PairDeTexte(Me, Function() Placeholder)
+        End Function
+
         ''' <summary>Le texte d'aide, montré quand le champ est vide.</summary>
         Public Shared ReadOnly PlaceholderProperty As DependencyProperty = DependencyProperty.Register(
             NameOf(Placeholder), GetType(String), GetType(InputText), New FrameworkPropertyMetadata(Nothing))

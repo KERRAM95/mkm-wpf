@@ -46,6 +46,11 @@ Namespace Mkm.Wpf.Controls
     Public Class Triptych
         Inherits ContentControl
 
+        ''' <summary>Un volet pour les lecteurs d'écran : ses trois panneaux et leurs poignées dedans.</summary>
+        Protected Overrides Function OnCreateAutomationPeer() As System.Windows.Automation.Peers.AutomationPeer
+            Return New PairDeConteneur(Me, System.Windows.Automation.Peers.AutomationControlType.Pane)
+        End Function
+
         ' Le panneau principal garde toujours cette place quand un seul panneau est ouvert, et un peu plus quand les deux
         ' le sont (mkm).
         Private Const PlaceDuPrincipal As Double = 100

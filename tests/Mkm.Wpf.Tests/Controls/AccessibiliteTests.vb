@@ -119,6 +119,47 @@ Namespace Mkm.Wpf.Tests.Controls
             Assert.That(PairDe(epingle).GetName(), [Is].EqualTo("Épingler"), "icône seule : son info-bulle")
         End Sub
 
+        <Test>
+        Public Sub ControlesSansPairDeWpf_OntLeLeur()
+            Dim message As New Message With {.Content = "Le plan est ouvert."}
+            Pret(message)
+            Assert.That(PairDe(message), [Is].Not.Null, "sans pair, l'annonce (LiveSetting) du message ne partait pas")
+            Assert.That(PairDe(message).GetLiveSetting(), [Is].EqualTo(System.Windows.Automation.AutomationLiveSetting.Assertive))
+
+            Dim attente As New ProgressSpinner()
+            Pret(attente)
+            Assert.That(PairDe(attente).GetAutomationControlType(), [Is].EqualTo(AutomationControlType.ProgressBar))
+            Assert.That(PairDe(attente).GetName(), [Is].EqualTo(Localizer.Current.T("aria.busy")))
+
+            Dim carte As New IdCard With {.Title = "Plan HS-00042"}
+            Pret(carte)
+            Assert.That(PairDe(carte).GetName(), [Is].EqualTo("Plan HS-00042"))
+        End Sub
+
+        <Test>
+        Public Sub InputNumber_EstUneToupieQuiDitSaValeur()
+            Dim nombre As New InputNumber With {.Value = 3, .Minimum = 1, .Maximum = 10}
+            Pret(nombre)
+            Dim pair = PairDe(nombre)
+            Assert.That(pair.GetAutomationControlType(), [Is].EqualTo(AutomationControlType.Spinner))
+            Dim plage = DirectCast(pair.GetPattern(PatternInterface.RangeValue), System.Windows.Automation.Provider.IRangeValueProvider)
+
+            Assert.That(plage.Value, [Is].EqualTo(3))
+            Assert.That(plage.Maximum, [Is].EqualTo(10))
+            plage.SetValue(42)
+            Assert.That(nombre.Value, [Is].EqualTo(10), "ramenée à la borne")
+        End Sub
+
+        <Test>
+        Public Sub ChampSansLibelle_SonTexteIndicatifLeNomme()
+            Dim champ As New InputText With {.Placeholder = "ex. HS-1234"}
+            Pret(champ)
+            Assert.That(PairDe(champ).GetName(), [Is].EqualTo("ex. HS-1234"))
+
+            System.Windows.Automation.AutomationProperties.SetName(champ, "Référence")
+            Assert.That(PairDe(champ).GetName(), [Is].EqualTo("Référence"), "son nom passe avant")
+        End Sub
+
     End Class
 
 End Namespace

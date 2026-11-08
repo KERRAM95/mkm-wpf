@@ -33,6 +33,11 @@ Namespace Mkm.Wpf.Controls
     Public Class Splitter
         Inherits Control
 
+        ''' <summary>Un groupe pour les lecteurs d'écran : ses panneaux et ses gouttières dedans.</summary>
+        Protected Overrides Function OnCreateAutomationPeer() As System.Windows.Automation.Peers.AutomationPeer
+            Return New PairDeConteneur(Me, System.Windows.Automation.Peers.AutomationControlType.Group)
+        End Function
+
         ''' <summary>Le sens : côte à côte (<c>Horizontal</c>, par défaut) ou l'un sous l'autre.</summary>
         Public Shared ReadOnly OrientationProperty As DependencyProperty = StackPanel.OrientationProperty.AddOwner(
             GetType(Splitter), New FrameworkPropertyMetadata(Orientation.Horizontal, FrameworkPropertyMetadataOptions.AffectsMeasure))

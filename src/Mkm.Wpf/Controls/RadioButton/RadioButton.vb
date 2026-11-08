@@ -86,6 +86,60 @@ Namespace Mkm.Wpf.Controls
             SetValue(IsFocusVisiblePropertyKey, False)
         End Sub
 
+        ''' <summary>
+        ''' Les flèches, comme mkm et Windows : → et ↓ choisissent le bouton suivant du groupe, ← et ↑ le précédent, du
+        ''' dernier on revient au premier ; le choisi prend le clavier.
+        ''' </summary>
+        Protected Overrides Sub OnKeyDown(e As KeyEventArgs)
+            MyBase.OnKeyDown(e)
+            If e.Handled Then Return
+            Dim sens As Integer
+            Select Case e.Key
+                Case Key.Right, Key.Down : sens = 1
+                Case Key.Left, Key.Up : sens = -1
+                Case Else : Return
+            End Select
+            Dim groupe = BoutonsDuGroupe()
+            Dim ici = groupe.IndexOf(Me)
+            If groupe.Count < 2 OrElse ici < 0 Then Return
+            Dim voisin = groupe((ici + sens + groupe.Count) Mod groupe.Count)
+            voisin.Focus()
+            voisin.IsChecked = True
+            e.Handled = True
+        End Sub
+
+        ' Les boutons du même groupe qu'on peut choisir, dans l'ordre de l'écran : même GroupName dans la même fenêtre, ou,
+        ' sans GroupName, les frères du même panneau (la règle de WPF).
+        Private Function BoutonsDuGroupe() As System.Collections.Generic.List(Of RadioButton)
+            Dim racine As DependencyObject
+            If String.IsNullOrEmpty(GroupName) Then
+                racine = System.Windows.Media.VisualTreeHelper.GetParent(Me)
+            Else
+                racine = Me
+                Dim parent = System.Windows.Media.VisualTreeHelper.GetParent(racine)
+                While parent IsNot Nothing
+                    racine = parent
+                    parent = System.Windows.Media.VisualTreeHelper.GetParent(racine)
+                End While
+            End If
+            Dim boutons As New System.Collections.Generic.List(Of RadioButton)()
+            If racine IsNot Nothing Then Rassembler(racine, String.IsNullOrEmpty(GroupName), boutons)
+            Return boutons
+        End Function
+
+        Private Sub Rassembler(parent As DependencyObject, freresSeuls As Boolean, boutons As System.Collections.Generic.List(Of RadioButton))
+            For i = 0 To System.Windows.Media.VisualTreeHelper.GetChildrenCount(parent) - 1
+                Dim enfant = System.Windows.Media.VisualTreeHelper.GetChild(parent, i)
+                Dim bouton = TryCast(enfant, RadioButton)
+                If bouton IsNot Nothing Then
+                    If String.Equals(If(bouton.GroupName, ""), If(GroupName, ""), StringComparison.Ordinal) AndAlso
+                       (bouton Is Me OrElse (bouton.IsEnabled AndAlso bouton.IsVisible)) Then boutons.Add(bouton)
+                ElseIf Not freresSeuls Then
+                    Rassembler(enfant, freresSeuls, boutons)
+                End If
+            Next
+        End Sub
+
     End Class
 
 End Namespace

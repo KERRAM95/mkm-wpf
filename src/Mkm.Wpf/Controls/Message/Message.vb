@@ -57,6 +57,11 @@ Namespace Mkm.Wpf.Controls
     Public Class Message
         Inherits ContentControl
 
+        ''' <summary>Un groupe pour les lecteurs d'écran, qui l'annoncent dès qu'il paraît (LiveSetting) : sans pair, ils ne le voyaient pas.</summary>
+        Protected Overrides Function OnCreateAutomationPeer() As System.Windows.Automation.Peers.AutomationPeer
+            Return New PairDeConteneur(Me, System.Windows.Automation.Peers.AutomationControlType.Group)
+        End Function
+
         ' Les couleurs et les mesures de la gravité ; une valeur posée par l'application l'emporte.
         Private ReadOnly _habillage As New Habillage(Me)
 

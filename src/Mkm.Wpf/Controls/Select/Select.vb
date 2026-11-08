@@ -18,6 +18,11 @@ Namespace Mkm.Wpf.Controls
     Public Class [Select]
         Inherits ComboBox
 
+        ''' <summary>Sans libellé, son texte indicatif le nomme pour les lecteurs d'écran.</summary>
+        Protected Overrides Function OnCreateAutomationPeer() As System.Windows.Automation.Peers.AutomationPeer
+            Return New PairDeListe(Me)
+        End Function
+
         ''' <summary>Le texte d'aide, montré quand rien n'est choisi.</summary>
         Public Shared ReadOnly PlaceholderProperty As DependencyProperty = DependencyProperty.Register(
             NameOf(Placeholder), GetType(String), GetType([Select]), New FrameworkPropertyMetadata(Nothing))

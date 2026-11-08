@@ -130,7 +130,17 @@ Les évolutions notables de mkm-wpf, version par version. Le format suit
     un ToggleButton, celui de son libellé d'état (OnLabel, OffLabel) ;
   - le bouton plier/déplier d'un nœud de la TreeGrid a un nom ;
   - les actions du StateGraph sont des boutons, qu'un lecteur d'écran lance ;
-  - une entrée du WelcomePanel se dit choisie ou non.
+  - une entrée du WelcomePanel se dit choisie ou non ;
+  - Message, ToastMessage, ProgressSpinner, IdCard, PropertyRow, StateGraph,
+    BlockUI, Splitter et Triptych n'avaient pas de pair d'automatisation :
+    invisibles aux lecteurs d'écran, et l'annonce d'un message ou d'une
+    notification (LiveSetting) ne partait pas ;
+  - InputNumber est une toupie (Spinner) qui dit sa valeur et ses bornes ;
+  - un InputText, un Textarea ou un Select sans libellé prend le nom de son
+    texte indicatif, comme sur le web ;
+  - les boutons plier/déplier du Tree et les cases d'une colonne du DataTable
+    ont un nom.
+- RadioButton : les flèches choisissent le bouton voisin du groupe, comme mkm.
 - La relecture des lots 1 à 4 :
   - ActionBar : les commandes d'une liste ouverte n'avaient pas la forme de lignes
     de menu ; Début et Fin faisaient défiler la rangée sans déplacer le focus ;

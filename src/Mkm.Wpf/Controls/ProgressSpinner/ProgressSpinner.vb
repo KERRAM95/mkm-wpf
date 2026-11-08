@@ -15,6 +15,11 @@ Namespace Mkm.Wpf.Controls
     Public Class ProgressSpinner
         Inherits Control
 
+        ''' <summary>Une barre de progression sans valeur pour les lecteurs d'écran, nommée « Chargement en cours ».</summary>
+        Protected Overrides Function OnCreateAutomationPeer() As System.Windows.Automation.Peers.AutomationPeer
+            Return New PairDeConteneur(Me, System.Windows.Automation.Peers.AutomationControlType.ProgressBar)
+        End Function
+
         ''' <summary>La couleur de l'arc.</summary>
         Public Shared ReadOnly StrokeProperty As DependencyProperty = DependencyProperty.Register(
             NameOf(Stroke), GetType(Brush), GetType(ProgressSpinner),

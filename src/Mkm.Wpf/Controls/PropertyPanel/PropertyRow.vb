@@ -13,6 +13,11 @@ Namespace Mkm.Wpf.Controls
     Public Class PropertyRow
         Inherits ContentControl
 
+        ''' <summary>Un groupe nommé par son libellé pour les lecteurs d'écran : son éditeur y est annoncé avec lui.</summary>
+        Protected Overrides Function OnCreateAutomationPeer() As System.Windows.Automation.Peers.AutomationPeer
+            Return New PairDeConteneur(Me, System.Windows.Automation.Peers.AutomationControlType.Group, Function() Label)
+        End Function
+
         ''' <summary>Le libellé.</summary>
         Public Shared ReadOnly LabelProperty As DependencyProperty = DependencyProperty.Register(
             NameOf(Label), GetType(String), GetType(PropertyRow), New FrameworkPropertyMetadata(Nothing))

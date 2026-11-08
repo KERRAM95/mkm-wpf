@@ -9,7 +9,8 @@
 -->
 <ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
                     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-                    xmlns:local="clr-namespace:Mkm.Wpf.Controls">
+                    xmlns:local="clr-namespace:Mkm.Wpf.Controls"
+                    xmlns:loc="clr-namespace:Mkm.Wpf.Localization">
 
     <Style TargetType="{x:Type local:Tree}">
         <Setter Property="Background" Value="{DynamicResource mkm.tree.background}" />
@@ -91,6 +92,7 @@
                                     CornerRadius="{DynamicResource mkm.tree.node.border.radius}">
                                 <StackPanel Orientation="Horizontal">
                                     <ToggleButton x:Name="Expander" Style="{StaticResource MkmTreeFleche}"
+                                                  AutomationProperties.Name="{loc:T aria.expand}"
                                                   IsChecked="{Binding IsExpanded, RelativeSource={RelativeSource TemplatedParent}, Mode=TwoWay}" />
                                     <Rectangle Width="{DynamicResource mkm.tree.node.gap}" />
                                     <local:Icon x:Name="Icone" VerticalAlignment="Center" Source="{TemplateBinding Icon}"
@@ -112,6 +114,7 @@
                         </Trigger>
                         <Trigger Property="IsExpanded" Value="True">
                             <Setter TargetName="ItemsHost" Property="Visibility" Value="Visible" />
+                            <Setter TargetName="Expander" Property="AutomationProperties.Name" Value="{loc:T aria.collapse}" />
                         </Trigger>
                         <Trigger Property="Icon" Value="{x:Null}">
                             <Setter TargetName="Icone" Property="Visibility" Value="Collapsed" />

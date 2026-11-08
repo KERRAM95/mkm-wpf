@@ -74,6 +74,11 @@ Namespace Mkm.Wpf.Controls
     Public Class StateGraph
         Inherits Control
 
+        ''' <summary>Un groupe pour les lecteurs d'écran : ses états et ses actions dedans.</summary>
+        Protected Overrides Function OnCreateAutomationPeer() As System.Windows.Automation.Peers.AutomationPeer
+            Return New PairDeConteneur(Me, System.Windows.Automation.Peers.AutomationControlType.Group)
+        End Function
+
         ' La géométrie de mkm : des états de 90 × 40 sur une ligne, 30 px entre deux ; une flèche qui passe au-dessus ou
         ' au-dessous des états prend un couloir, à 21 px des états pour le premier, 42 pour le second, et ainsi de suite.
         Private Const Largeur As Double = 90

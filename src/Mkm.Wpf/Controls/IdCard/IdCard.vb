@@ -33,6 +33,11 @@ Namespace Mkm.Wpf.Controls
     Public Class IdCard
         Inherits ContentControl
 
+        ''' <summary>Un groupe nommé par son titre pour les lecteurs d'écran, son gabarit compris.</summary>
+        Protected Overrides Function OnCreateAutomationPeer() As System.Windows.Automation.Peers.AutomationPeer
+            Return New PairDeConteneur(Me, System.Windows.Automation.Peers.AutomationControlType.Group, Function() Title)
+        End Function
+
         ''' <summary>Le bouton qui replie la carte, dans le gabarit.</summary>
         Public Const PartCollapseButton As String = "PART_CollapseButton"
         ''' <summary>Le bouton qui la ferme, dans le gabarit.</summary>

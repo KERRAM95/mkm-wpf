@@ -85,6 +85,13 @@ Namespace Mkm.Wpf.Controls
             AddHandler Loaded, Sub() HabillerLesCases()
         End Sub
 
+        ' La case d'une cellule nommée par l'en-tête de sa colonne : un lecteur d'écran dit « Active, cochée ».
+        Private Shared Function NomParLaColonne() As Setter
+            Return New Setter(System.Windows.Automation.AutomationProperties.NameProperty,
+                              New System.Windows.Data.Binding("Column.Header") With {
+                                  .RelativeSource = New System.Windows.Data.RelativeSource(System.Windows.Data.RelativeSourceMode.FindAncestor, GetType(DataGridCell), 1)})
+        End Function
+
         ' La case d'une colonne de cases que l'application n'a pas habillée elle-même : celle de mkm, en lecture comme
         ' en modification.
         Private Sub HabillerLesCases()
@@ -96,10 +103,13 @@ Namespace Mkm.Wpf.Controls
                     Dim lecture As New Style(GetType(System.Windows.Controls.CheckBox), style)
                     lecture.Setters.Add(New Setter(IsHitTestVisibleProperty, False))
                     lecture.Setters.Add(New Setter(FocusableProperty, False))
+                    lecture.Setters.Add(NomParLaColonne())
                     colonne.ElementStyle = lecture
                 End If
                 If colonne.EditingElementStyle Is Nothing OrElse colonne.EditingElementStyle Is DataGridCheckBoxColumn.DefaultEditingElementStyle Then
-                    colonne.EditingElementStyle = style
+                    Dim edition As New Style(GetType(System.Windows.Controls.CheckBox), style)
+                    edition.Setters.Add(NomParLaColonne())
+                    colonne.EditingElementStyle = edition
                 End If
             Next
         End Sub

@@ -29,6 +29,11 @@ Namespace Mkm.Wpf.Controls
     Public Class InputNumber
         Inherits Control
 
+        ''' <summary>Une toupie pour les lecteurs d'écran : sa valeur, ses bornes, son champ et ses boutons.</summary>
+        Protected Overrides Function OnCreateAutomationPeer() As System.Windows.Automation.Peers.AutomationPeer
+            Return New PairDeNombre(Me)
+        End Function
+
         ''' <summary>Le champ dans le gabarit.</summary>
         Public Const PartTextBox As String = "PART_TextBox"
         ''' <summary>Le bouton qui augmente.</summary>
