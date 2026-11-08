@@ -442,3 +442,18 @@ floatlabel.in.input.all.padding = 18px 6px 6px 6px
 # colorpicker : l'anneau du carré en épaisseur ; la place de l'ombre du panneau.
 colorpicker.preview.ring.border.width = {colorpicker.preview.focus.ring.width} {colorpicker.preview.focus.ring.width}
 colorpicker.overlay.window.padding = 0 2px 3px 2px
+
+# menubar, megamenu : le début de la barre à gap de ses éléments ; le chevron d'un élément à 6 px de son libellé ; la
+# place de l'ombre du panneau.
+menubar.start.margin = 0 {menubar.gap} 0 0
+megamenu.submenu.icon.margin = 6px 0 0 0
+megamenu.overlay.window.padding = 0 2px 3px 2px
+
+# panelmenu : la bordure d'un panneau du milieu en épaisseur ; les coins du premier (en haut), du dernier (en bas) et
+# d'un panneau seul ; les éléments d'un élément décalés de submenu.indent ; le chevron à la taille des sous-menus.
+panelmenu.panel.all.border.width = {panelmenu.panel.border.width} {panelmenu.panel.border.width}
+panelmenu.panel.first.corner.radius = {panelmenu.panel.first.top.border.radius} {panelmenu.panel.first.top.border.radius} 0 0
+panelmenu.panel.last.corner.radius = 0 0 {panelmenu.panel.last.bottom.border.radius} {panelmenu.panel.last.bottom.border.radius}
+panelmenu.panel.single.corner.radius = {panelmenu.panel.first.top.border.radius} {panelmenu.panel.first.top.border.radius} {panelmenu.panel.last.bottom.border.radius} {panelmenu.panel.last.bottom.border.radius}
+panelmenu.submenu.margin = {panelmenu.submenu.indent} 0 0 0
+panelmenu.submenu.icon.size = {navigation.submenu.icon.size}

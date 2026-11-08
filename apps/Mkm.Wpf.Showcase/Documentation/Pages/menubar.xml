@@ -1,0 +1,73 @@
+<?xml version="1.0" encoding="utf-8"?>
+<page titre="Menubar" categorie="Menu" types="Menubar" jetons="menubar">
+  <resume>Une barre de menus : ses éléments en ligne, chacun ouvrant son sous-menu ; un début et une fin à ses
+    bouts.</resume>
+
+  <section titre="Import">
+    <code><![CDATA[
+<Window xmlns:mkm="urn:mkm-wpf">
+    <mkm:Menubar>
+        <MenuItem Header="Fichier">
+            <MenuItem Header="Ouvrir" />
+        </MenuItem>
+    </mkm:Menubar>
+</Window>
+]]></code>
+  </section>
+
+  <section titre="Basique">
+    <p>Menubar est le <c>Menu</c> de WPF : ses éléments sont des <c>MenuItem</c>, leurs sous-menus ceux du menu de mkm,
+      avec icônes, raccourcis et sous-menus en cascade. <c>MenuItem.Click</c> dit l'élément choisi.</p>
+    <exemple comportement="MenuJournal"><![CDATA[
+<StackPanel>
+    <mkm:Menubar x:Name="Barre">
+        <MenuItem Header="_Fichier" Icon="{x:Static mkm:Icons.Files}">
+            <MenuItem Header="Nouveau" Icon="{x:Static mkm:Icons.Add}" InputGestureText="Ctrl+N" />
+            <MenuItem Header="Ouvrir" Icon="{x:Static mkm:Icons.Open}" InputGestureText="Ctrl+O" />
+            <Separator />
+            <MenuItem Header="Exporter">
+                <MenuItem Header="PDF" />
+                <MenuItem Header="STEP" />
+            </MenuItem>
+        </MenuItem>
+        <MenuItem Header="_Édition" Icon="{x:Static mkm:Icons.Edit}">
+            <MenuItem Header="Copier" Icon="{x:Static mkm:Icons.Copy}" />
+            <MenuItem Header="Supprimer" Icon="{x:Static mkm:Icons.Delete}" />
+        </MenuItem>
+        <MenuItem Header="Aide" Icon="{x:Static mkm:Icons.Info}" />
+    </mkm:Menubar>
+    <TextBlock x:Name="Journal" Margin="0,12,0,0" Text="Aucun choix" />
+</StackPanel>
+]]></exemple>
+  </section>
+
+  <section titre="Début et fin">
+    <p><c>Start</c> se pose avant les éléments, <c>End</c> au bout de la barre.</p>
+    <exemple><![CDATA[
+<mkm:Menubar>
+    <mkm:Menubar.Start>
+        <TextBlock Text="HS CART" FontWeight="Bold" VerticalAlignment="Center" />
+    </mkm:Menubar.Start>
+    <mkm:Menubar.End>
+        <mkm:Avatar Label="MK" Shape="Circle" />
+    </mkm:Menubar.End>
+    <MenuItem Header="Projets" />
+    <MenuItem Header="Documents" />
+</mkm:Menubar>
+]]></exemple>
+  </section>
+
+  <section titre="Accessibilité">
+    <h3>Lecteur d'écran</h3>
+    <p>Narrateur dit la barre « barre de menus », ses éléments « élément de menu », développés ou réduits.</p>
+    <h3>Clavier</h3>
+    <touches>
+      <touche nom="Alt">Amène le clavier sur la barre (F10 aussi) ; Alt+lettre ouvre l'élément dont la lettre est soulignée.</touche>
+      <touche nom="Flèche droite">Passe à l'élément suivant ; dans un sous-menu, ouvre le sien.</touche>
+      <touche nom="Flèche gauche">Passe à l'élément précédent.</touche>
+      <touche nom="Flèche bas">Ouvre le sous-menu ; dedans, passe à l'élément suivant.</touche>
+      <touche nom="Entrée">Choisit l'élément.</touche>
+      <touche nom="Échap">Referme le sous-menu.</touche>
+    </touches>
+  </section>
+</page>

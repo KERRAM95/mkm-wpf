@@ -167,6 +167,11 @@ Les évolutions notables de mkm-wpf, version par version. Le format suit
   `ColorPicker` (nuances et teintes, en place ou dans un panneau) ; leurs
   jetons, leurs pages, leurs tests et leurs scénarios. L'import des jetons
   suit aussi les renvois écrits en camelCase.
+- Le lot 21 (`docs/composants/barres-et-menus-de-navigation.md`) : `Menubar`
+  (la barre de menus, sur le Menu de WPF), `MegaMenu` avec `MegaMenuItem` et
+  `MegaMenuColumn` (des panneaux en colonnes de liens), `PanelMenu` et
+  `PanelMenuItem` (des panneaux qui se déplient en arbre) ; leurs jetons,
+  leurs pages, leurs tests et leurs scénarios.
 - Info-bulle et Popover : la page qui défile les referme, comme mkm.
 - Le zoom de toute l'interface (`docs/fondations/zoom.md`) :
   `MkmResources.Zoom` (80 à 200 %), `ZoomIn`, `ZoomOut`, `ResetZoom`,

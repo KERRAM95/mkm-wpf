@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="utf-8"?>
+<page titre="PanelMenu" categorie="Menu" types="PanelMenu PanelMenuItem" jetons="panelmenu">
+  <resume>Un menu en panneaux : des panneaux l'un sous l'autre ; chacun, cliqué, déplie ses éléments, qui déplient les
+    leurs.</resume>
+
+  <section titre="Import">
+    <code><![CDATA[
+<Window xmlns:mkm="urn:mkm-wpf">
+    <mkm:PanelMenu>
+        <mkm:PanelMenuItem Header="Documents">
+            <mkm:PanelMenuItem Header="Plans" />
+        </mkm:PanelMenuItem>
+    </mkm:PanelMenu>
+</Window>
+]]></code>
+  </section>
+
+  <section titre="Basique">
+    <p>Les éléments sont des <c>PanelMenuItem</c> : au premier niveau, des panneaux. Un élément qui en a d'autres se
+      déplie au clic ; un élément sans suite se lance : <c>Click</c> et <c>Command</c>. Un seul panneau se déplie à la
+      fois ; <c>Multiple</c> en garde plusieurs.</p>
+    <exemple comportement="PanelMenuJournal"><![CDATA[
+<StackPanel Width="280" HorizontalAlignment="Left">
+    <mkm:PanelMenu x:Name="Navigation">
+        <mkm:PanelMenuItem Header="Documents" Icon="{x:Static mkm:Icons.Documents}">
+            <mkm:PanelMenuItem Header="Plans" Icon="{x:Static mkm:Icons.Drawings}">
+                <mkm:PanelMenuItem Header="Définition" />
+                <mkm:PanelMenuItem Header="Ensemble" />
+            </mkm:PanelMenuItem>
+            <mkm:PanelMenuItem Header="Notices" Icon="{x:Static mkm:Icons.Document}" />
+        </mkm:PanelMenuItem>
+        <mkm:PanelMenuItem Header="Ateliers" Icon="{x:Static mkm:Icons.Settings}">
+            <mkm:PanelMenuItem Header="Usinage" />
+            <mkm:PanelMenuItem Header="Montage" />
+        </mkm:PanelMenuItem>
+        <mkm:PanelMenuItem Header="Statistiques" Icon="{x:Static mkm:Icons.Statistics}" />
+    </mkm:PanelMenu>
+    <TextBlock x:Name="Journal" Margin="0,12,0,0" Text="Aucun choix" />
+</StackPanel>
+]]></exemple>
+  </section>
+
+  <section titre="Plusieurs panneaux">
+    <exemple><![CDATA[
+<mkm:PanelMenu Multiple="True" Width="280" HorizontalAlignment="Left">
+    <mkm:PanelMenuItem Header="Documents" IsExpanded="True">
+        <mkm:PanelMenuItem Header="Plans" />
+    </mkm:PanelMenuItem>
+    <mkm:PanelMenuItem Header="Ateliers" IsExpanded="True">
+        <mkm:PanelMenuItem Header="Usinage" />
+    </mkm:PanelMenuItem>
+</mkm:PanelMenu>
+]]></exemple>
+  </section>
+
+  <section titre="Accessibilité">
+    <h3>Lecteur d'écran</h3>
+    <p>Narrateur dit chaque élément « bouton », développé ou réduit s'il en a d'autres.</p>
+    <h3>Clavier</h3>
+    <touches>
+      <touche nom="Tab">Passe d'un élément montré à l'autre.</touche>
+      <touche nom="Flèche bas">Passe à l'élément suivant.</touche>
+      <touche nom="Flèche haut">Passe à l'élément précédent.</touche>
+      <touche nom="Flèche droite">Déplie l'élément, puis passe à son premier élément.</touche>
+      <touche nom="Flèche gauche">Replie l'élément, ou remonte à son parent.</touche>
+      <touche nom="Entrée">Déplie ou replie l'élément ; sans suite, le lance.</touche>
+      <touche nom="Espace">Comme Entrée.</touche>
+    </touches>
+  </section>
+</page>

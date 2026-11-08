@@ -1,0 +1,133 @@
+<!--
+    Les styles de PanelMenu, sur le menu en panneaux de mkm (styles/panelmenu ; jetons de Nora en pixels, dans les deux
+    thèmes) : des panneaux collés, au fond et à la bordure du contenu (le premier sans bordure du bas, le dernier sans
+    bordure du haut, les coins du thème en haut du premier et en bas du dernier), 3 px de retrait ; chaque élément, le
+    retrait des éléments de navigation, son chevron (à droite replié, en bas déplié), son icône grise et son libellé à
+    6 px ; survolé ou au clavier, le fond des éléments de navigation ; les éléments d'un élément décalés de 12 px.
+-->
+<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+                    xmlns:local="clr-namespace:Mkm.Wpf.Controls">
+
+    <Style TargetType="{x:Type local:EnTeteDePanelMenu}">
+        <Setter Property="FocusVisualStyle" Value="{x:Null}" />
+        <Setter Property="Cursor" Value="Hand" />
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="{x:Type local:EnTeteDePanelMenu}">
+                    <ContentPresenter />
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+
+    <Style TargetType="{x:Type local:PanelMenuItem}">
+        <Setter Property="Foreground" Value="{DynamicResource mkm.panelmenu.item.color}" />
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="{x:Type local:PanelMenuItem}">
+                    <Border x:Name="Cadre" Background="Transparent" BorderThickness="0">
+                        <StackPanel>
+                            <local:EnTeteDePanelMenu x:Name="PART_Header">
+                                <Border x:Name="Fond" Background="Transparent" Padding="{DynamicResource mkm.panelmenu.item.padding}"
+                                        CornerRadius="{DynamicResource mkm.panelmenu.item.border.radius}">
+                                    <local:GapStackPanel Orientation="Horizontal" Gap="{DynamicResource mkm.panelmenu.item.gap}">
+                                        <local:Icon x:Name="Fleche" VerticalAlignment="Center" Source="{x:Static local:InternalIcons.ChevronRight}"
+                                                    Width="{DynamicResource mkm.panelmenu.submenu.icon.size}"
+                                                    Height="{DynamicResource mkm.panelmenu.submenu.icon.size}"
+                                                    Foreground="{DynamicResource mkm.panelmenu.submenu.icon.color}" />
+                                        <ContentPresenter x:Name="Icone" Content="{TemplateBinding Icon}" VerticalAlignment="Center"
+                                                          TextElement.Foreground="{DynamicResource mkm.panelmenu.item.icon.color}">
+                                            <ContentPresenter.Resources>
+                                                <DataTemplate DataType="{x:Type Geometry}">
+                                                    <local:Icon Source="{Binding}" Width="{DynamicResource mkm.icon.size}" Height="{DynamicResource mkm.icon.size}" />
+                                                </DataTemplate>
+                                            </ContentPresenter.Resources>
+                                        </ContentPresenter>
+                                        <ContentPresenter ContentSource="Header" VerticalAlignment="Center" />
+                                    </local:GapStackPanel>
+                                </Border>
+                            </local:EnTeteDePanelMenu>
+                            <ItemsPresenter x:Name="Elements" Visibility="Collapsed" Margin="{DynamicResource mkm.panelmenu.submenu.margin}" />
+                        </StackPanel>
+                    </Border>
+                    <ControlTemplate.Triggers>
+                        <Trigger Property="Level" Value="0">
+                            <Setter TargetName="Cadre" Property="Background" Value="{DynamicResource mkm.panelmenu.panel.background}" />
+                            <Setter TargetName="Cadre" Property="BorderBrush" Value="{DynamicResource mkm.panelmenu.panel.border.color}" />
+                            <Setter TargetName="Cadre" Property="BorderThickness" Value="{DynamicResource mkm.panelmenu.panel.all.border.width}" />
+                            <Setter TargetName="Cadre" Property="CornerRadius" Value="{DynamicResource mkm.panelmenu.panel.border.radius}" />
+                            <Setter TargetName="Cadre" Property="Padding" Value="{DynamicResource mkm.panelmenu.panel.padding}" />
+                            <Setter TargetName="Cadre" Property="TextElement.Foreground" Value="{DynamicResource mkm.panelmenu.panel.color}" />
+                            <Setter TargetName="Elements" Property="Margin" Value="0" />
+                        </Trigger>
+                        <MultiTrigger>
+                            <MultiTrigger.Conditions>
+                                <Condition Property="Level" Value="0" />
+                                <Condition Property="IsFirst" Value="True" />
+                            </MultiTrigger.Conditions>
+                            <Setter TargetName="Cadre" Property="BorderThickness" Value="{DynamicResource mkm.panelmenu.panel.first.border.width}" />
+                            <Setter TargetName="Cadre" Property="CornerRadius" Value="{DynamicResource mkm.panelmenu.panel.first.corner.radius}" />
+                        </MultiTrigger>
+                        <MultiTrigger>
+                            <MultiTrigger.Conditions>
+                                <Condition Property="Level" Value="0" />
+                                <Condition Property="IsLast" Value="True" />
+                            </MultiTrigger.Conditions>
+                            <Setter TargetName="Cadre" Property="BorderThickness" Value="{DynamicResource mkm.panelmenu.panel.last.border.width}" />
+                            <Setter TargetName="Cadre" Property="CornerRadius" Value="{DynamicResource mkm.panelmenu.panel.last.corner.radius}" />
+                        </MultiTrigger>
+                        <MultiTrigger>
+                            <MultiTrigger.Conditions>
+                                <Condition Property="Level" Value="0" />
+                                <Condition Property="IsFirst" Value="True" />
+                                <Condition Property="IsLast" Value="True" />
+                            </MultiTrigger.Conditions>
+                            <Setter TargetName="Cadre" Property="BorderThickness" Value="{DynamicResource mkm.panelmenu.panel.all.border.width}" />
+                            <Setter TargetName="Cadre" Property="CornerRadius" Value="{DynamicResource mkm.panelmenu.panel.single.corner.radius}" />
+                        </MultiTrigger>
+                        <Trigger Property="HasItems" Value="False">
+                            <Setter TargetName="Fleche" Property="Visibility" Value="Collapsed" />
+                        </Trigger>
+                        <Trigger Property="IsExpanded" Value="True">
+                            <Setter TargetName="Elements" Property="Visibility" Value="Visible" />
+                            <Setter TargetName="Fleche" Property="Source" Value="{x:Static local:InternalIcons.ChevronDown}" />
+                        </Trigger>
+                        <Trigger Property="Icon" Value="{x:Null}">
+                            <Setter TargetName="Icone" Property="Visibility" Value="Collapsed" />
+                        </Trigger>
+                        <Trigger SourceName="PART_Header" Property="IsMouseOver" Value="True">
+                            <Setter TargetName="Fond" Property="Background" Value="{DynamicResource mkm.panelmenu.item.focus.background}" />
+                            <Setter TargetName="Fond" Property="TextElement.Foreground" Value="{DynamicResource mkm.panelmenu.item.focus.color}" />
+                            <Setter TargetName="Icone" Property="TextElement.Foreground" Value="{DynamicResource mkm.panelmenu.item.icon.focus.color}" />
+                            <Setter TargetName="Fleche" Property="Foreground" Value="{DynamicResource mkm.panelmenu.submenu.icon.focus.color}" />
+                        </Trigger>
+                        <Trigger SourceName="PART_Header" Property="local:FocusVisible.IsVisible" Value="True">
+                            <Setter TargetName="Fond" Property="Background" Value="{DynamicResource mkm.panelmenu.item.focus.background}" />
+                            <Setter TargetName="Fond" Property="TextElement.Foreground" Value="{DynamicResource mkm.panelmenu.item.focus.color}" />
+                            <Setter TargetName="Icone" Property="TextElement.Foreground" Value="{DynamicResource mkm.panelmenu.item.icon.focus.color}" />
+                            <Setter TargetName="Fleche" Property="Foreground" Value="{DynamicResource mkm.panelmenu.submenu.icon.focus.color}" />
+                        </Trigger>
+                        <Trigger Property="IsEnabled" Value="False">
+                            <Setter TargetName="PART_Header" Property="Opacity" Value="{DynamicResource mkm.disabled.opacity}" />
+                        </Trigger>
+                    </ControlTemplate.Triggers>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+
+    <Style TargetType="{x:Type local:PanelMenu}">
+        <Setter Property="FontFamily" Value="{DynamicResource mkm.font.family}" />
+        <Setter Property="FontSize" Value="{DynamicResource mkm.font.size}" />
+        <Setter Property="SnapsToDevicePixels" Value="True" />
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="{x:Type local:PanelMenu}">
+                    <local:GapStackPanel IsItemsHost="True" Gap="{DynamicResource mkm.panelmenu.gap}" />
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+
+</ResourceDictionary>

@@ -43,11 +43,14 @@
         <ResourceDictionary Source="/Mkm.Wpf;component/Controls/InputText/InputText.xaml" />
         <ResourceDictionary Source="/Mkm.Wpf;component/Controls/Knob/Knob.xaml" />
         <ResourceDictionary Source="/Mkm.Wpf;component/Controls/Listbox/Listbox.xaml" />
+        <ResourceDictionary Source="/Mkm.Wpf;component/Controls/MegaMenu/MegaMenu.xaml" />
         <ResourceDictionary Source="/Mkm.Wpf;component/Controls/Menu/Menu.xaml" />
+        <ResourceDictionary Source="/Mkm.Wpf;component/Controls/Menubar/Menubar.xaml" />
         <ResourceDictionary Source="/Mkm.Wpf;component/Controls/Message/Message.xaml" />
         <ResourceDictionary Source="/Mkm.Wpf;component/Controls/MultiSelect/MultiSelect.xaml" />
         <ResourceDictionary Source="/Mkm.Wpf;component/Controls/Paginator/Paginator.xaml" />
         <ResourceDictionary Source="/Mkm.Wpf;component/Controls/Panel/Panel.xaml" />
+        <ResourceDictionary Source="/Mkm.Wpf;component/Controls/PanelMenu/PanelMenu.xaml" />
         <ResourceDictionary Source="/Mkm.Wpf;component/Controls/Password/Password.xaml" />
         <ResourceDictionary Source="/Mkm.Wpf;component/Controls/Popover/Popover.xaml" />
         <ResourceDictionary Source="/Mkm.Wpf;component/Controls/ProgressBar/ProgressBar.xaml" />

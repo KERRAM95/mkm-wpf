@@ -196,6 +196,39 @@ Namespace Mkm.Wpf.UiTests
             AttendreQue(Function() etat() = ExpandCollapseState.Collapsed, "Échap le referme")
         End Sub
 
+        <Test>
+        Public Sub Menubar_UnElementOuvreSonSousMenuEtUnChoixSeDit()
+            Dim page = OuvrirLaDoc("menubar")
+            Dim barre = Trouver("Barre", page)
+            Cliquer(TrouverParNom("Fichier", ControlType.MenuItem, barre))
+            Cliquer(TrouverAilleurs("Ouvrir", ControlType.MenuItem))
+            AttendreQue(Function() NomDe(Trouver("Journal", page)) = "Choisi : Ouvrir", "« Choisi : Ouvrir »")
+            AttendreQue(Function() Referme("Ouvrir"), "le sous-menu refermé")
+        End Sub
+
+        <Test>
+        Public Sub MegaMenu_LePanneauSOuvreEtUnLienLeReferme()
+            Dim page = OuvrirLaDoc("megamenu")
+            Dim mega = Trouver("Mega", page)
+            Cliquer(TrouverParNom("Produits", ControlType.MenuItem, mega))
+            Cliquer(TrouverAilleurs("Nomenclatures", ControlType.MenuItem))
+            AttendreQue(Function() NomDe(Trouver("Journal", page)) = "Choisi : Nomenclatures", "« Choisi : Nomenclatures »")
+            AttendreQue(Function() Referme("Nomenclatures"), "le panneau refermé")
+        End Sub
+
+        <Test>
+        Public Sub PanelMenu_UnPanneauDeplieEtUnElementSeLance()
+            Dim page = OuvrirLaDoc("panelmenu")
+            Dim menu = Trouver("Navigation", page)
+            Dim plans = Function() menu.FindFirstDescendant(Function(cf) cf.ByName("Plans").And(cf.ByControlType(ControlType.Button)))
+            Cliquer(TrouverParNom("Documents", ControlType.Button, menu))
+            AttendreQue(Function() plans() IsNot Nothing AndAlso Not plans().IsOffscreen, "« Documents » déplié")
+            Cliquer(TrouverParNom("Notices", ControlType.Button, menu))
+            AttendreQue(Function() NomDe(Trouver("Journal", page)) = "Lancé : Notices", "« Lancé : Notices »")
+            Cliquer(TrouverParNom("Ateliers", ControlType.Button, menu))
+            AttendreQue(Function() plans() Is Nothing OrElse plans().IsOffscreen, "un seul panneau déplié")
+        End Sub
+
     End Class
 
 End Namespace

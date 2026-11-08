@@ -5,7 +5,7 @@ Bibliothèque de composants WPF en VB.NET, déclinaison bureau de **mkm**
 documentation. Neutre, indépendante de toute application.
 
 **État :** les fondations (langue, thème et zoom, changeables à chaud), les icônes
-de mkm et 80 composants, chacun avec sa page de documentation, ses tests et
+de mkm et 83 composants, chacun avec sa page de documentation, ses tests et
 ses scénarios d'interaction. La version 0.1.0 est en préparation.
 
 **La documentation** est l'application `Mkm.Wpf.Showcase`, sur le modèle de
@@ -144,11 +144,12 @@ Les commandes de l'application se déclarent une fois dans un `CommandRegistry`
 25. ~~Le lot 20~~ : fait — `InputChips`, `FloatLabel`, `IftaLabel`,
    `ColorPicker` (`docs/composants/puces-libelles-et-couleur.md`). Les champs
    sont faits.
-26. La suite de la priorité 3 : les menus (Menubar, MegaMenu, PanelMenu,
-   Dock, SpeedDial), les données
+26. ~~Le lot 21~~ : fait — `Menubar`, `MegaMenu`, `PanelMenu`
+   (`docs/composants/barres-et-menus-de-navigation.md`).
+27. La suite de la priorité 3 : Dock, SpeedDial, les données
    (DataView, OrderList, PickList, OrganizationChart, MeterGroup), les médias
    (Carousel, Galleria), ButtonGroup et Terminal.
-27. La suite : le paquet NuGet ; hscart-next sur la bibliothèque.
+28. La suite : le paquet NuGet ; hscart-next sur la bibliothèque.
 
 ## Règles
 

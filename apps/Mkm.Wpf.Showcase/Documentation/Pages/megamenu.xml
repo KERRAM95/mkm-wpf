@@ -1,0 +1,96 @@
+<?xml version="1.0" encoding="utf-8"?>
+<page titre="MegaMenu" categorie="Menu" types="MegaMenu MegaMenuItem MegaMenuColumn" jetons="megamenu">
+  <resume>Un méga-menu : une barre d'éléments ; chacun ouvre un grand panneau, en colonnes de groupes de liens.</resume>
+
+  <section titre="Import">
+    <code><![CDATA[
+<Window xmlns:mkm="urn:mkm-wpf">
+    <mkm:MegaMenu>
+        <mkm:MegaMenuItem Header="Produits">
+            <mkm:MegaMenuColumn>
+                <mkm:MenuGroup Header="Pièces">
+                    <MenuItem Header="Usinées" />
+                </mkm:MenuGroup>
+            </mkm:MegaMenuColumn>
+        </mkm:MegaMenuItem>
+    </mkm:MegaMenu>
+</Window>
+]]></code>
+  </section>
+
+  <section titre="Basique">
+    <p>Chaque <c>MegaMenuItem</c> ouvre son panneau : des <c>MegaMenuColumn</c>, côte à côte, chacune des
+      <c>MenuGroup</c> (ceux du <lien page="menu">Menu</lien>) de liens. Un lien choisi referme le panneau ;
+      <c>MenuItem.Click</c> le dit.</p>
+    <exemple comportement="MenuJournal"><![CDATA[
+<StackPanel>
+    <mkm:MegaMenu x:Name="Mega">
+        <mkm:MegaMenuItem Header="Produits" Icon="{x:Static mkm:Icons.Documents}">
+            <mkm:MegaMenuColumn>
+                <mkm:MenuGroup Header="Pièces">
+                    <MenuItem Header="Usinées" />
+                    <MenuItem Header="Achetées" />
+                </mkm:MenuGroup>
+                <mkm:MenuGroup Header="Assemblages">
+                    <MenuItem Header="Sous-ensembles" />
+                </mkm:MenuGroup>
+            </mkm:MegaMenuColumn>
+            <mkm:MegaMenuColumn>
+                <mkm:MenuGroup Header="Plans">
+                    <MenuItem Header="Plans de définition" />
+                    <MenuItem Header="Plans d'ensemble" />
+                    <MenuItem Header="Nomenclatures" />
+                </mkm:MenuGroup>
+            </mkm:MegaMenuColumn>
+        </mkm:MegaMenuItem>
+        <mkm:MegaMenuItem Header="Ateliers" Icon="{x:Static mkm:Icons.Settings}">
+            <mkm:MegaMenuColumn>
+                <mkm:MenuGroup Header="Lyon">
+                    <MenuItem Header="Usinage" />
+                    <MenuItem Header="Montage" />
+                </mkm:MenuGroup>
+            </mkm:MegaMenuColumn>
+        </mkm:MegaMenuItem>
+    </mkm:MegaMenu>
+    <TextBlock x:Name="Journal" Margin="0,12,0,0" Text="Aucun choix" />
+</StackPanel>
+]]></exemple>
+  </section>
+
+  <section titre="En colonne">
+    <p><c>Orientation="Vertical"</c> : les éléments l'un sous l'autre, les panneaux à droite.</p>
+    <exemple><![CDATA[
+<mkm:MegaMenu Orientation="Vertical">
+    <mkm:MegaMenuItem Header="Produits">
+        <mkm:MegaMenuColumn>
+            <mkm:MenuGroup Header="Pièces">
+                <MenuItem Header="Usinées" />
+            </mkm:MenuGroup>
+        </mkm:MegaMenuColumn>
+    </mkm:MegaMenuItem>
+    <mkm:MegaMenuItem Header="Ateliers">
+        <mkm:MegaMenuColumn>
+            <mkm:MenuGroup Header="Lyon">
+                <MenuItem Header="Usinage" />
+            </mkm:MenuGroup>
+        </mkm:MegaMenuColumn>
+    </mkm:MegaMenuItem>
+</mkm:MegaMenu>
+]]></exemple>
+  </section>
+
+  <section titre="Accessibilité">
+    <h3>Lecteur d'écran</h3>
+    <p>Narrateur dit la barre « barre de menus », ses éléments « élément de menu », développés ou réduits ; dans le
+      panneau, les colonnes sont des groupes, leurs liens des éléments de menu.</p>
+    <h3>Clavier</h3>
+    <touches>
+      <touche nom="Alt">Amène le clavier sur la barre (F10 aussi).</touche>
+      <touche nom="Flèche droite">Passe à l'élément suivant.</touche>
+      <touche nom="Flèche gauche">Passe à l'élément précédent.</touche>
+      <touche nom="Flèche bas">Ouvre le panneau ; dedans, passe au lien suivant.</touche>
+      <touche nom="Entrée">Choisit le lien.</touche>
+      <touche nom="Échap">Referme le panneau.</touche>
+    </touches>
+  </section>
+</page>
