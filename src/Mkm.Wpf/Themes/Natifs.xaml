@@ -9,6 +9,10 @@
       8 de retrait, coins de 2 px, 150 px de large au plus, le texte à la ligne ; à droite de son élément, centrée,
       sa flèche de 3 px (tooltip.gutter) entre eux.
 
+    - ScrollBar : les barres de défilement de mkm (presets dashboard et ara, scrollpanel) : 9 px, sans flèches ni
+      gouttière, la poignée aux coins du thème, d'un gris pâle qui fonce au survol et quand on la tire. Elles habillent
+      toutes les zones qui défilent de l'application : les pages, les listes, les tableaux, les champs de texte.
+
     Écarts avec mkm : l'info-bulle paraît après le délai de Windows (ToolTipService.InitialShowDelay), pas aussitôt ;
     passée à gauche faute de place, elle garde sa flèche à gauche. Le menu : son premier et son dernier élément ne
     prennent pas le bord du menu (ils gardent 24 px) ; une icône grisée pâlit sans passer en niveaux de gris.
@@ -16,6 +20,91 @@
 <ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
                     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
                     xmlns:local="clr-namespace:Mkm.Wpf.Controls">
+
+    <!-- Les barres de défilement : la gouttière transparente (un clic y fait défiler d'une page), la poignée seule. -->
+    <Style x:Key="MkmBarrePage" TargetType="{x:Type RepeatButton}">
+        <Setter Property="OverridesDefaultStyle" Value="True" />
+        <Setter Property="Focusable" Value="False" />
+        <Setter Property="IsTabStop" Value="False" />
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="{x:Type RepeatButton}">
+                    <Rectangle Fill="Transparent" />
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+
+    <Style x:Key="MkmBarrePoignee" TargetType="{x:Type Thumb}">
+        <Setter Property="OverridesDefaultStyle" Value="True" />
+        <Setter Property="Focusable" Value="False" />
+        <Setter Property="IsTabStop" Value="False" />
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="{x:Type Thumb}">
+                    <Border x:Name="Poignee" CornerRadius="{DynamicResource mkm.scrollpanel.bar.border.radius}"
+                            Background="{DynamicResource mkm.scrollpanel.bar.background}" />
+                    <ControlTemplate.Triggers>
+                        <Trigger Property="IsMouseOver" Value="True">
+                            <Setter TargetName="Poignee" Property="Background" Value="{DynamicResource mkm.scrollpanel.bar.hover.background}" />
+                        </Trigger>
+                        <Trigger Property="IsDragging" Value="True">
+                            <Setter TargetName="Poignee" Property="Background" Value="{DynamicResource mkm.scrollpanel.bar.hover.background}" />
+                        </Trigger>
+                    </ControlTemplate.Triggers>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+
+    <ControlTemplate x:Key="MkmBarreVerticale" TargetType="{x:Type ScrollBar}">
+        <Grid Background="{TemplateBinding Background}" SnapsToDevicePixels="True">
+            <Track x:Name="PART_Track" IsDirectionReversed="True">
+                <Track.DecreaseRepeatButton>
+                    <RepeatButton Style="{StaticResource MkmBarrePage}" Command="{x:Static ScrollBar.PageUpCommand}" />
+                </Track.DecreaseRepeatButton>
+                <Track.IncreaseRepeatButton>
+                    <RepeatButton Style="{StaticResource MkmBarrePage}" Command="{x:Static ScrollBar.PageDownCommand}" />
+                </Track.IncreaseRepeatButton>
+                <Track.Thumb>
+                    <Thumb Style="{StaticResource MkmBarrePoignee}" />
+                </Track.Thumb>
+            </Track>
+        </Grid>
+    </ControlTemplate>
+
+    <ControlTemplate x:Key="MkmBarreHorizontale" TargetType="{x:Type ScrollBar}">
+        <Grid Background="{TemplateBinding Background}" SnapsToDevicePixels="True">
+            <Track x:Name="PART_Track">
+                <Track.DecreaseRepeatButton>
+                    <RepeatButton Style="{StaticResource MkmBarrePage}" Command="{x:Static ScrollBar.PageLeftCommand}" />
+                </Track.DecreaseRepeatButton>
+                <Track.IncreaseRepeatButton>
+                    <RepeatButton Style="{StaticResource MkmBarrePage}" Command="{x:Static ScrollBar.PageRightCommand}" />
+                </Track.IncreaseRepeatButton>
+                <Track.Thumb>
+                    <Thumb Style="{StaticResource MkmBarrePoignee}" />
+                </Track.Thumb>
+            </Track>
+        </Grid>
+    </ControlTemplate>
+
+    <Style TargetType="{x:Type ScrollBar}">
+        <Setter Property="Stylus.IsFlicksEnabled" Value="False" />
+        <Setter Property="Background" Value="Transparent" />
+        <Setter Property="Width" Value="{DynamicResource mkm.scrollpanel.bar.size}" />
+        <Setter Property="MinWidth" Value="{DynamicResource mkm.scrollpanel.bar.size}" />
+        <Setter Property="Template" Value="{StaticResource MkmBarreVerticale}" />
+        <Style.Triggers>
+            <Trigger Property="Orientation" Value="Horizontal">
+                <Setter Property="Width" Value="Auto" />
+                <Setter Property="MinWidth" Value="0" />
+                <Setter Property="Height" Value="{DynamicResource mkm.scrollpanel.bar.size}" />
+                <Setter Property="MinHeight" Value="{DynamicResource mkm.scrollpanel.bar.size}" />
+                <Setter Property="Template" Value="{StaticResource MkmBarreHorizontale}" />
+            </Trigger>
+        </Style.Triggers>
+    </Style>
 
     <Style TargetType="{x:Type ToolTip}">
         <Setter Property="Background" Value="{DynamicResource mkm.tooltip.background}" />

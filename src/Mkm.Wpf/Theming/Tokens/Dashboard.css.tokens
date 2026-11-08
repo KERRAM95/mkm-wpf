@@ -287,3 +287,13 @@ treegrid.node.label.margin = 0 {treegrid.body.cell.gap} 0 {treegrid.body.cell.ga
 # confirmdialog : la question passe à la ligne à 420 px (mesure de mkm-wpf : une fenêtre à la taille de son contenu se
 # mesure sur une largeur infinie ; 420 px, comme le bloc de l'écran vide).
 confirmdialog.message.max.width = 420px
+
+# toggleswitch : la poignée à « gap » du bord de l'interrupteur (inset-inline-start de mkm).
+toggleswitch.handle.margin = 0 {toggleswitch.gap}
+
+# scrollpanel : la poignée survolée ou tirée fonce (mkm-wpf : les barres de bureau restent visibles, elles se
+# repèrent ainsi sous la souris).
+scrollpanel.bar.hover.background = {surface.400}
+
+# skeleton : 12 px de haut par défaut (1rem, la hauteur que mkm lui donne sans Height).
+skeleton.height = 12px

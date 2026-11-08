@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="utf-8"?>
+<page titre="Divider" categorie="Panneau" types="Divider DividerLayout DividerType DividerAlign" jetons="divider">
+  <resume>Le séparateur : un trait d'un pixel entre deux blocs, horizontal ou vertical, plein, en tirets ou en
+    pointillés ; un titre peut s'y poser.</resume>
+
+  <section titre="Import">
+    <code><![CDATA[
+<Window xmlns:mkm="urn:mkm-wpf">
+    <mkm:Divider />
+</Window>
+]]></code>
+  </section>
+
+  <section titre="Basique">
+    <p>Un trait horizontal de la couleur des bordures, avec 12 px de marge au-dessus et au-dessous.</p>
+    <exemple etendu="oui"><![CDATA[
+<TextBlock Text="Le cartouche du plan : référence, désignation, échelle." TextWrapping="Wrap" />
+<mkm:Divider />
+<TextBlock Text="Les notes du plan : casser les angles vifs." TextWrapping="Wrap" />
+]]></exemple>
+  </section>
+
+  <section titre="Type">
+    <p><c>Type</c> : <c>Solid</c> (par défaut), <c>Dashed</c> ou <c>Dotted</c>.</p>
+    <exemple etendu="oui"><![CDATA[
+<mkm:Divider Type="Solid" />
+<mkm:Divider Type="Dashed" />
+<mkm:Divider Type="Dotted" />
+]]></exemple>
+  </section>
+
+  <section titre="Contenu">
+    <p><c>Content</c> pose un titre (ou une icône) sur le trait, sur le fond de la page ; <c>Align</c> le place :
+      <c>Left</c> (par défaut), <c>Center</c> ou <c>Right</c>.</p>
+    <exemple etendu="oui"><![CDATA[
+<mkm:Divider x:Name="Titre" Content="Cotes" />
+<mkm:Divider Content="Notes" Align="Center" />
+<mkm:Divider Content="Révisions" Align="Right" Type="Dashed" />
+]]></exemple>
+  </section>
+
+  <section titre="Vertical">
+    <p><c>Layout="Vertical"</c> sépare deux éléments côte à côte ; son contenu se place avec <c>Align</c> :
+      <c>Top</c>, <c>Center</c> (par défaut) ou <c>Bottom</c>.</p>
+    <exemple><![CDATA[
+<StackPanel Orientation="Horizontal" Height="80">
+    <TextBlock Text="Plan" VerticalAlignment="Center" />
+    <mkm:Divider Layout="Vertical" />
+    <TextBlock Text="Article" VerticalAlignment="Center" />
+    <mkm:Divider Layout="Vertical" Content="ou" />
+    <TextBlock Text="Les deux" VerticalAlignment="Center" />
+</StackPanel>
+]]></exemple>
+  </section>
+
+  <section titre="Accessibilité">
+    <h3>Lecteur d'écran</h3>
+    <p>Narrateur le dit « séparateur », nommé par son contenu s'il en a un, comme le rôle <c>separator</c> de mkm. Il
+      ne prend pas le clavier.</p>
+  </section>
+</page>

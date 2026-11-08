@@ -5,7 +5,7 @@ Bibliothèque de composants WPF en VB.NET, déclinaison bureau de **mkm**
 documentation. Neutre, indépendante de toute application.
 
 **État :** les fondations (langue et thème, changeables à chaud), les icônes
-de mkm et 36 composants, chacun avec sa page de documentation, ses tests et
+de mkm et 40 composants, chacun avec sa page de documentation, ses tests et
 ses scénarios d'interaction. La version 0.1.0 est en préparation.
 
 **La documentation** est l'application `Mkm.Wpf.Showcase`, sur le modèle de
@@ -120,7 +120,13 @@ Les commandes de l'application se déclarent une fois dans un `CommandRegistry`
    cycle de vie (`StateGraph`) (`docs/composants/arborescence-et-cycle-de-vie.md`).
 14. ~~Le registre des commandes~~ : fait — `CommandRegistry`
    (`docs/fondations/commandes.md`).
-15. La suite : le paquet NuGet ; hscart-next sur la bibliothèque.
+15. ~~Le lot 10~~ : fait — les barres de défilement de mkm partout, `ScrollPanel`,
+   `Divider`, `ToggleSwitch`, `Skeleton` (`docs/composants/bases-et-defilement.md`).
+16. Les lots 11 à 14, la suite des composants d'ui-kit utiles au bureau :
+   `Badge`, `Avatar`, `Chip` ; `Panel`, `Card`, `Accordion` ; `Breadcrumb`,
+   `SplitButton`, `Popover` ; `Listbox`, `MultiSelect`, `AutoComplete`,
+   `IconField`, `InputGroup`.
+17. La suite : le paquet NuGet ; hscart-next sur la bibliothèque.
 
 ## Règles
 

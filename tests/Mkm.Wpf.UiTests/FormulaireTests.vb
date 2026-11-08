@@ -160,6 +160,19 @@ Namespace Mkm.Wpf.UiTests
             AttendreQue(Function() champ.Patterns.Value.Pattern.Value.Value = "2", "↑ : 2")
         End Sub
 
+        <Test>
+        Public Sub ToggleSwitch_UnClicEtEspaceLeBasculent()
+            Dim page = OuvrirLaDoc("toggleswitch")
+            Dim synchro = Trouver("Synchro", page)
+            Dim etat = Function() synchro.Patterns.Toggle.Pattern.ToggleState.Value
+
+            Assert.That(NomDe(synchro), [Is].EqualTo("Synchroniser avec 3DEXPERIENCE"))
+            Cliquer(synchro)
+            AttendreQue(Function() etat() = ToggleState.On, "activé au clic")
+            Taper(VirtualKeyShort.SPACE)
+            AttendreQue(Function() etat() = ToggleState.Off, "désactivé par Espace")
+        End Sub
+
     End Class
 
 End Namespace

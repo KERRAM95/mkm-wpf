@@ -111,6 +111,11 @@ Les évolutions notables de mkm-wpf, version par version. Le format suit
   (clé `internal` du manifeste).
 - La vitrine : les pages Attente et aide, Texte date et confirmation, Fiche de
   propriétés, Arbre et menu.
+- Le lot 10 (`docs/composants/bases-et-defilement.md`) : les barres de
+  défilement de mkm pour toute l'application (9 px, sans flèches ni gouttière),
+  `ScrollPanel` (ses barres posées sur le contenu, au survol), `Divider`,
+  `ToggleSwitch`, `Skeleton` ; leurs jetons importés de mkm, leurs pages de
+  documentation, leurs tests et leurs scénarios d'interaction.
 - La documentation, sur le modèle d'ui-kit : la vitrine devient une page par
   composant, rangée par catégorie (Pour commencer, Formulaire, Bouton, Données,
   Panneau, Superposition, Menu, Messages, Divers), avec une recherche. Chaque

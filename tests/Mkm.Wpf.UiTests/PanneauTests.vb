@@ -121,6 +121,29 @@ Namespace Mkm.Wpf.UiTests
             AttendreQue(Function() NomDe(Trouver("Journal", page)) = "Entrée : Tous les plans — choisie : tous", "son évènement")
         End Sub
 
+        <Test>
+        Public Sub Divider_UnSeparateurNommeParSonContenu()
+            Dim page = OuvrirLaDoc("divider")
+            Dim titre = Trouver("Titre", page)
+
+            Assert.That(titre.ControlType, [Is].EqualTo(ControlType.Separator))
+            Assert.That(NomDe(titre), [Is].EqualTo("Cotes"))
+        End Sub
+
+        <Test>
+        Public Sub ScrollPanel_DefileALaMoletteSansLaPage()
+            Dim page = OuvrirLaDoc("scrollpanel")
+            Dim zone = Trouver("Zone", page)
+            Montrer(zone)
+            Dim defilement = zone.Patterns.Scroll.Pattern
+
+            Assert.That(defilement.VerticalScrollPercent.Value, [Is].EqualTo(0).Within(0.1))
+            Survoler(zone)
+            Mouse.Scroll(-2)
+            Wait.UntilInputIsProcessed()
+            AttendreQue(Function() defilement.VerticalScrollPercent.Value > 0, "la zone a défilé à la molette")
+        End Sub
+
     End Class
 
 End Namespace

@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="utf-8"?>
+<page titre="ScrollPanel" categorie="Panneau" types="ScrollPanel" jetons="scrollpanel">
+  <resume>La zone de défilement : son contenu défile dans les deux sens, sous des barres fines qui ne paraissent qu'au
+    survol. Les barres de toute l'application ont déjà l'apparence de celles de mkm.</resume>
+
+  <section titre="Import">
+    <code><![CDATA[
+<Window xmlns:mkm="urn:mkm-wpf">
+    <mkm:ScrollPanel Height="200">
+        <!-- Le contenu. -->
+    </mkm:ScrollPanel>
+</Window>
+]]></code>
+  </section>
+
+  <section titre="Les barres de toute l'application">
+    <p><c>MkmResources</c> habille toutes les barres de défilement de WPF : celles des pages, des listes, des tableaux,
+      des zones de texte. Elles ont 9 px, sans flèches ni gouttière ; leur poignée, gris pâle, fonce au survol. Rien à
+      écrire : la liste ci-dessous est une <c>ListBox</c> de WPF.</p>
+    <exemple><![CDATA[
+<ListBox Width="240" Height="120">
+    <ListBoxItem Content="HS-00001" />
+    <ListBoxItem Content="HS-00002" />
+    <ListBoxItem Content="HS-00003" />
+    <ListBoxItem Content="HS-00004" />
+    <ListBoxItem Content="HS-00005" />
+    <ListBoxItem Content="HS-00006" />
+    <ListBoxItem Content="HS-00007" />
+    <ListBoxItem Content="HS-00008" />
+</ListBox>
+]]></exemple>
+  </section>
+
+  <section titre="Basique">
+    <p>ScrollPanel pose ses barres sur le contenu, qui garde toute la place ; elles paraissent au survol de la zone.
+      Il défile dans les deux sens.</p>
+    <exemple><![CDATA[
+<Border Width="320" BorderThickness="1" BorderBrush="{DynamicResource mkm.content.border.color}">
+    <mkm:ScrollPanel x:Name="Zone" Height="140">
+        <TextBlock Margin="12" Width="420" TextWrapping="Wrap"
+                   Text="Les notes du plan HS-00042. Casser les angles vifs. Tolérances générales ISO 2768-mK. Rayons non cotés : 1 mm. Cordon de soudure continu, gorge de 3 mm, sur tout le pourtour du carter. Traitement de surface : zingage, 8 µm au moins. Les cotes encadrées sont des cotes de contrôle. Les filetages sont à protéger avant traitement. Révision B : cotes reprises au contrôle de réception." />
+    </mkm:ScrollPanel>
+</Border>
+]]></exemple>
+  </section>
+
+  <section titre="Accessibilité">
+    <h3>Lecteur d'écran</h3>
+    <p>C'est un <c>ScrollViewer</c> de WPF : un lecteur d'écran le fait défiler (Scroll) et lit son contenu.</p>
+    <h3>Clavier</h3>
+    <touches>
+      <touche nom="Flèches">Font défiler la zone qui a le clavier, ou celle de l'élément qui l'a.</touche>
+      <touche nom="Page préc., Page suiv.">Font défiler d'une page.</touche>
+      <touche nom="Début, Fin">Mènent au début ou à la fin.</touche>
+    </touches>
+  </section>
+</page>

@@ -1,0 +1,90 @@
+<!--
+    Le style de ToggleSwitch, sur l'interrupteur de mkm (styles/toggleswitch ; jetons de Nora en pixels pour Dashboard,
+    preset ara) : une piste de 30 × 18 px aux bouts ronds, blanche, bordée du gris des champs, sa poignée de 12 px grise à
+    3 px du bord gauche ; activé, la piste et sa bordure de la couleur principale, la poignée blanche à droite ; au
+    clavier, l'anneau du focus ; refusé, la bordure d'erreur ; grisé, le fond et la poignée des champs grisés.
+
+    Écarts avec mkm : la poignée change de côté sans glisser (0,1 s chez mkm) ; le libellé (Content) est à droite.
+-->
+<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+                    xmlns:local="clr-namespace:Mkm.Wpf.Controls">
+
+    <Style TargetType="{x:Type local:ToggleSwitch}">
+        <Setter Property="FontFamily" Value="{DynamicResource mkm.font.family}" />
+        <Setter Property="FontSize" Value="{DynamicResource mkm.font.size}" />
+        <Setter Property="Foreground" Value="{DynamicResource mkm.text.color}" />
+        <Setter Property="Cursor" Value="Hand" />
+        <Setter Property="FocusVisualStyle" Value="{x:Null}" />
+        <Setter Property="SnapsToDevicePixels" Value="True" />
+        <Setter Property="HorizontalAlignment" Value="Left" />
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="{x:Type local:ToggleSwitch}">
+                    <StackPanel x:Name="Racine" Background="Transparent" Orientation="Horizontal">
+                        <Grid VerticalAlignment="Center"
+                              Width="{DynamicResource mkm.toggleswitch.width}" Height="{DynamicResource mkm.toggleswitch.height}">
+                            <!-- L'anneau du focus, 1 px autour de la piste (outline et outline-offset de mkm). -->
+                            <Border x:Name="Anneau" Margin="-2" Visibility="Collapsed"
+                                    CornerRadius="{DynamicResource mkm.toggleswitch.border.radius}"
+                                    BorderBrush="{DynamicResource mkm.toggleswitch.focus.ring.color}"
+                                    BorderThickness="{DynamicResource mkm.toggleswitch.focus.ring.width}" />
+                            <Border x:Name="Piste"
+                                    CornerRadius="{DynamicResource mkm.toggleswitch.border.radius}"
+                                    BorderThickness="{DynamicResource mkm.toggleswitch.border.width}"
+                                    Background="{DynamicResource mkm.toggleswitch.background}"
+                                    BorderBrush="{DynamicResource mkm.toggleswitch.border.color}" />
+                            <!-- La poignée, à « gap » du bord de l'interrupteur, comme le inset de mkm. -->
+                            <Ellipse x:Name="Poignee" HorizontalAlignment="Left" VerticalAlignment="Center"
+                                     Margin="{DynamicResource mkm.toggleswitch.handle.margin}"
+                                     Width="{DynamicResource mkm.toggleswitch.handle.size}"
+                                     Height="{DynamicResource mkm.toggleswitch.handle.size}"
+                                     Fill="{DynamicResource mkm.toggleswitch.handle.background}" />
+                        </Grid>
+                        <Rectangle x:Name="Ecart" Width="{DynamicResource mkm.checkbox.label.gap}" />
+                        <ContentPresenter x:Name="Libelle" VerticalAlignment="Center" RecognizesAccessKey="True" />
+                    </StackPanel>
+                    <ControlTemplate.Triggers>
+                        <Trigger Property="HasContent" Value="False">
+                            <Setter TargetName="Ecart" Property="Visibility" Value="Collapsed" />
+                        </Trigger>
+                        <Trigger Property="IsMouseOver" Value="True">
+                            <Setter TargetName="Piste" Property="Background" Value="{DynamicResource mkm.toggleswitch.hover.background}" />
+                            <Setter TargetName="Piste" Property="BorderBrush" Value="{DynamicResource mkm.toggleswitch.hover.border.color}" />
+                            <Setter TargetName="Poignee" Property="Fill" Value="{DynamicResource mkm.toggleswitch.handle.hover.background}" />
+                        </Trigger>
+                        <Trigger Property="IsChecked" Value="True">
+                            <Setter TargetName="Piste" Property="Background" Value="{DynamicResource mkm.toggleswitch.checked.background}" />
+                            <Setter TargetName="Piste" Property="BorderBrush" Value="{DynamicResource mkm.toggleswitch.checked.border.color}" />
+                            <Setter TargetName="Poignee" Property="Fill" Value="{DynamicResource mkm.toggleswitch.handle.checked.background}" />
+                            <Setter TargetName="Poignee" Property="HorizontalAlignment" Value="Right" />
+                        </Trigger>
+                        <MultiTrigger>
+                            <MultiTrigger.Conditions>
+                                <Condition Property="IsChecked" Value="True" />
+                                <Condition Property="IsMouseOver" Value="True" />
+                            </MultiTrigger.Conditions>
+                            <Setter TargetName="Piste" Property="Background" Value="{DynamicResource mkm.toggleswitch.checked.hover.background}" />
+                            <Setter TargetName="Piste" Property="BorderBrush" Value="{DynamicResource mkm.toggleswitch.checked.hover.border.color}" />
+                            <Setter TargetName="Poignee" Property="Fill" Value="{DynamicResource mkm.toggleswitch.handle.checked.hover.background}" />
+                        </MultiTrigger>
+                        <Trigger Property="IsFocusVisible" Value="True">
+                            <Setter TargetName="Anneau" Property="Visibility" Value="Visible" />
+                        </Trigger>
+                        <Trigger Property="Invalid" Value="True">
+                            <Setter TargetName="Piste" Property="BorderBrush" Value="{DynamicResource mkm.toggleswitch.invalid.border.color}" />
+                        </Trigger>
+                        <Trigger Property="IsEnabled" Value="False">
+                            <Setter Property="Cursor" Value="Arrow" />
+                            <Setter TargetName="Piste" Property="Background" Value="{DynamicResource mkm.toggleswitch.disabled.background}" />
+                            <Setter TargetName="Piste" Property="BorderBrush" Value="{DynamicResource mkm.toggleswitch.border.color}" />
+                            <Setter TargetName="Poignee" Property="Fill" Value="{DynamicResource mkm.toggleswitch.handle.disabled.background}" />
+                            <Setter TargetName="Libelle" Property="TextElement.Foreground" Value="{DynamicResource mkm.form.field.disabled.color}" />
+                        </Trigger>
+                    </ControlTemplate.Triggers>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+
+</ResourceDictionary>

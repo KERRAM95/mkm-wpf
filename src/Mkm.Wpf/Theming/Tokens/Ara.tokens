@@ -854,6 +854,17 @@ dialog.resize.handle.focus.ring.color = {focus.ring.color}
 dialog.resize.handle.focus.ring.offset = {focus.ring.offset}
 dialog.resize.handle.focus.ring.shadow = {focus.ring.shadow}
 
+# divider
+divider.border.color = {content.border.color}
+divider.content.background = {content.background}
+divider.content.color = {text.color}
+divider.horizontal.margin = 12px 0
+divider.horizontal.padding = 0 12px
+divider.horizontal.content.padding = 0 6px
+divider.vertical.margin = 0 12px
+divider.vertical.padding = 6px 0
+divider.vertical.content.padding = 6px 0
+
 # emptycontent
 emptycontent.background = transparent
 emptycontent.color = {text.color}
@@ -1235,6 +1246,17 @@ radiobutton.icon.disabled.color = {form.field.disabled.color}
 radiobutton.icon.sm.size = 6px
 radiobutton.icon.lg.size = 12px
 
+# scrollpanel
+scrollpanel.transition.duration = {transition.duration}
+scrollpanel.bar.size = 9px
+scrollpanel.bar.border.radius = {border.radius.xs}
+scrollpanel.bar.focus.ring.width = {focus.ring.width}
+scrollpanel.bar.focus.ring.style = {focus.ring.style}
+scrollpanel.bar.focus.ring.color = {focus.ring.color}
+scrollpanel.bar.focus.ring.offset = {focus.ring.offset}
+scrollpanel.bar.focus.ring.shadow = {focus.ring.shadow}
+scrollpanel.bar.background = {surface.200}
+
 # select
 select.background = {form.field.background}
 select.disabled.background = {form.field.background}
@@ -1298,6 +1320,11 @@ select.empty.message.padding = {list.option.padding}
 # selectbutton
 selectbutton.border.radius = 4px
 selectbutton.invalid.border.color = {form.field.invalid.border.color}
+
+# skeleton
+skeleton.border.radius = {content.border.radius}
+skeleton.background = {surface.300}
+skeleton.animation.background = rgba(255,255,255,0.4)
 
 # splitter
 splitter.background = {content.background}
@@ -1582,6 +1609,42 @@ togglebutton.content.padding = 0
 togglebutton.content.border.radius = 0
 togglebutton.content.sm.padding = 0
 togglebutton.content.lg.padding = 0
+
+# toggleswitch
+toggleswitch.width = 30px
+toggleswitch.height = 18px
+toggleswitch.border.radius = 30px
+toggleswitch.gap = 3px
+toggleswitch.shadow = {form.field.shadow}
+toggleswitch.focus.ring.width = {focus.ring.width}
+toggleswitch.focus.ring.style = {focus.ring.style}
+toggleswitch.focus.ring.color = {focus.ring.color}
+toggleswitch.focus.ring.offset = {focus.ring.offset}
+toggleswitch.focus.ring.shadow = {focus.ring.shadow}
+toggleswitch.border.width = 1px
+toggleswitch.border.color = {form.field.border.color}
+toggleswitch.hover.border.color = {form.field.border.color}
+toggleswitch.checked.border.color = {primary.color}
+toggleswitch.checked.hover.border.color = {primary.color}
+toggleswitch.invalid.border.color = {form.field.invalid.border.color}
+toggleswitch.background = {form.field.background}
+toggleswitch.hover.background = {form.field.background}
+toggleswitch.checked.background = {primary.color}
+toggleswitch.checked.hover.background = {primary.color}
+toggleswitch.transition.duration = {form.field.transition.duration}
+toggleswitch.slide.duration = 0.1s
+toggleswitch.disabled.background = {form.field.disabled.background}
+toggleswitch.handle.border.radius = 50%
+toggleswitch.handle.size = 12px
+toggleswitch.handle.background = {form.field.border.color}
+toggleswitch.handle.hover.background = {form.field.border.color}
+toggleswitch.handle.checked.background = {primary.contrast.color}
+toggleswitch.handle.checked.hover.background = {primary.contrast.color}
+toggleswitch.handle.disabled.background = {form.field.disabled.color}
+toggleswitch.handle.color = {surface.0}
+toggleswitch.handle.hover.color = {surface.0}
+toggleswitch.handle.checked.color = {primary.color}
+toggleswitch.handle.checked.hover.color = {primary.color}
 
 # toolbar
 toolbar.background = transparent

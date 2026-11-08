@@ -1,0 +1,63 @@
+<!--
+    Le style de Divider, sur le séparateur de mkm (styles/divider ; jetons de Nora en pixels pour Dashboard, preset ara) :
+    un trait d'un pixel de la couleur des bordures, plein, en tirets ou en pointillés, avec 12 px de marge autour
+    (horizontal.margin) ; le contenu, sur le fond de la page, 12 px du bord (horizontal.padding), 6 px de chaque côté
+    (horizontal.content.padding). Vertical : les mêmes mesures dans l'autre sens.
+-->
+<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+                    xmlns:local="clr-namespace:Mkm.Wpf.Controls">
+
+    <Style TargetType="{x:Type local:Divider}">
+        <Setter Property="FontFamily" Value="{DynamicResource mkm.font.family}" />
+        <Setter Property="FontSize" Value="{DynamicResource mkm.font.size}" />
+        <Setter Property="Foreground" Value="{DynamicResource mkm.divider.content.color}" />
+        <Setter Property="Margin" Value="{DynamicResource mkm.divider.horizontal.margin}" />
+        <Setter Property="SnapsToDevicePixels" Value="True" />
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="{x:Type local:Divider}">
+                    <Grid>
+                        <!-- Stretch="Fill" étire le trait sans épaissir son crayon : les tirets gardent leur pas. -->
+                        <Path x:Name="Trait" Data="M0,0 L1,0" Stretch="Fill" Height="1" VerticalAlignment="Center"
+                              StrokeThickness="1" Stroke="{DynamicResource mkm.divider.border.color}" />
+                        <Border x:Name="Contenu" Margin="{DynamicResource mkm.divider.horizontal.padding}"
+                                Padding="{DynamicResource mkm.divider.horizontal.content.padding}"
+                                HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}" VerticalAlignment="Center"
+                                Background="{DynamicResource mkm.divider.content.background}">
+                            <ContentPresenter RecognizesAccessKey="True" />
+                        </Border>
+                    </Grid>
+                    <ControlTemplate.Triggers>
+                        <Trigger Property="HasContent" Value="False">
+                            <Setter TargetName="Contenu" Property="Visibility" Value="Collapsed" />
+                        </Trigger>
+                        <Trigger Property="Layout" Value="Vertical">
+                            <Setter TargetName="Trait" Property="Data" Value="M0,0 L0,1" />
+                            <Setter TargetName="Trait" Property="Height" Value="NaN" />
+                            <Setter TargetName="Trait" Property="Width" Value="1" />
+                            <Setter TargetName="Trait" Property="VerticalAlignment" Value="Stretch" />
+                            <Setter TargetName="Trait" Property="HorizontalAlignment" Value="Center" />
+                            <Setter TargetName="Contenu" Property="Margin" Value="{DynamicResource mkm.divider.vertical.padding}" />
+                            <Setter TargetName="Contenu" Property="Padding" Value="{DynamicResource mkm.divider.vertical.content.padding}" />
+                            <Setter TargetName="Contenu" Property="HorizontalAlignment" Value="Center" />
+                            <Setter TargetName="Contenu" Property="VerticalAlignment" Value="{Binding VerticalContentAlignment, RelativeSource={RelativeSource TemplatedParent}}" />
+                        </Trigger>
+                        <Trigger Property="Type" Value="Dashed">
+                            <Setter TargetName="Trait" Property="StrokeDashArray" Value="4 2" />
+                        </Trigger>
+                        <Trigger Property="Type" Value="Dotted">
+                            <Setter TargetName="Trait" Property="StrokeDashArray" Value="1 2" />
+                        </Trigger>
+                    </ControlTemplate.Triggers>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+        <Style.Triggers>
+            <Trigger Property="Layout" Value="Vertical">
+                <Setter Property="Margin" Value="{DynamicResource mkm.divider.vertical.margin}" />
+            </Trigger>
+        </Style.Triggers>
+    </Style>
+
+</ResourceDictionary>

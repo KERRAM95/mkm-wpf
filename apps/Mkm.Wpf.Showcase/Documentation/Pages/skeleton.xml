@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="utf-8"?>
+<page titre="Skeleton" categorie="Divers" types="Skeleton SkeletonShape SkeletonAnimation" jetons="skeleton">
+  <resume>La silhouette : un bloc gris pâle à la place d'un contenu qui charge, qu'une vague claire traverse.
+    Plusieurs silhouettes dessinent la forme de ce qui va venir.</resume>
+
+  <section titre="Import">
+    <code><![CDATA[
+<Window xmlns:mkm="urn:mkm-wpf">
+    <mkm:Skeleton Width="200" />
+</Window>
+]]></code>
+  </section>
+
+  <section titre="Basique">
+    <p>Une silhouette prend la taille qu'on lui donne : <c>Width</c>, et <c>Height</c> (12 px par défaut, la hauteur
+      d'une ligne de texte).</p>
+    <exemple etendu="oui"><![CDATA[
+<mkm:Skeleton Width="300" Margin="0,0,0,8" />
+<mkm:Skeleton Width="220" Margin="0,0,0,8" />
+<mkm:Skeleton Width="260" />
+]]></exemple>
+  </section>
+
+  <section titre="Formes">
+    <p><c>Shape="Circle"</c> dessine un rond (un avatar) ; <c>CornerRadius</c> change les coins d'un rectangle.</p>
+    <exemple><![CDATA[
+<mkm:Skeleton Shape="Circle" Width="48" Height="48" />
+<mkm:Skeleton Width="80" Height="48" CornerRadius="8" />
+<mkm:Skeleton Width="120" Height="48" CornerRadius="0" />
+]]></exemple>
+  </section>
+
+  <section titre="Carte en chargement">
+    <p>Des silhouettes assemblées à la forme de la carte qui va venir : l'utilisateur voit où chaque chose paraîtra.</p>
+    <exemple><![CDATA[
+<Border Width="360" Padding="16" BorderThickness="1" CornerRadius="4" BorderBrush="{DynamicResource mkm.content.border.color}">
+    <StackPanel>
+        <StackPanel Orientation="Horizontal" Margin="0,0,0,16">
+            <mkm:Skeleton Shape="Circle" Width="40" Height="40" Margin="0,0,12,0" />
+            <StackPanel VerticalAlignment="Center">
+                <mkm:Skeleton Width="160" Margin="0,0,0,6" />
+                <mkm:Skeleton Width="100" />
+            </StackPanel>
+        </StackPanel>
+        <mkm:Skeleton Height="120" Margin="0,0,0,12" />
+        <mkm:Skeleton Width="200" />
+    </StackPanel>
+</Border>
+]]></exemple>
+  </section>
+
+  <section titre="Sans animation">
+    <p><c>Animation="None"</c> arrête la vague.</p>
+    <exemple etendu="oui"><![CDATA[
+<mkm:Skeleton Width="300" Animation="None" />
+]]></exemple>
+  </section>
+
+  <section titre="Accessibilité">
+    <h3>Lecteur d'écran</h3>
+    <p>Une silhouette est un dessin : Narrateur ne la lit pas. C'est son conteneur qui doit dire qu'il charge : un
+      <lien page="blockui">BlockUI</lien>, l'état d'un <lien page="datatable">DataTable</lien>, ou
+      <c>AutomationProperties.ItemStatus</c> sur le panneau.</p>
+  </section>
+</page>
