@@ -60,7 +60,7 @@ Namespace Mkm.Wpf.Controls
         Public Shared ReadOnly IsInvalidProperty As DependencyProperty = IsInvalidPropertyKey.DependencyProperty
 
         ' Les propriétés qu'on suit sur le champ, quand il les a.
-        Private Shared ReadOnly Suivies As String() = {"Text", "SelectedItem", "HasSelection", "HasPassword", "HasValues", "Value", "Placeholder", "Invalid"}
+        Private Shared ReadOnly Suivies As String() = {"Text", "SelectedItem", "SelectedDate", "HasSelection", "HasPassword", "HasValues", "Value", "Placeholder", "Invalid"}
 
         Private _libelle As FrameworkElement
         Private _champ As DependencyObject
@@ -136,15 +136,40 @@ Namespace Mkm.Wpf.Controls
             _libelle = TryCast(GetTemplateChild("PART_Label"), FrameworkElement)
             Nommer()
             Evaluer()
+            Decaler()
+        End Sub
+
+        ' Le champ suivi : le contenu, ou celui d'un IconField (le champ et son icône).
+        Private Function ChampSuivi() As DependencyObject
+            Dim iconField = TryCast(Content, IconField)
+            If iconField IsNot Nothing Then Return TryCast(iconField.Content, DependencyObject)
+            Return TryCast(Content, DependencyObject)
+        End Function
+
+        ' Après l'icône d'un IconField de tête, le libellé commence où commence le texte, comme mkm.
+        Private Sub Decaler()
+            Dim decalage = TryCast(GetTemplateChild("Decalage"), FrameworkElement)
+            If decalage Is Nothing Then Return
+            Dim iconField = TryCast(Content, IconField)
+            If iconField Is Nothing OrElse iconField.Icon Is Nothing OrElse iconField.IconPosition <> IconFieldPosition.Left Then
+                decalage.ClearValue(MarginProperty)
+                Return
+            End If
+            Dim retrait = TryFindResource("mkm.iconfield.start.padding")
+            Dim marge = TryFindResource("mkm.floatlabel.label.margin")
+            If TypeOf retrait Is Thickness AndAlso TypeOf marge Is Thickness Then
+                decalage.Margin = New Thickness(Math.Max(0, DirectCast(retrait, Thickness).Left - DirectCast(marge, Thickness).Left), 0, 0, 0)
+            End If
         End Sub
 
         ''' <inheritdoc/>
         Protected Overrides Sub OnContentChanged(ancien As Object, nouveau As Object)
             MyBase.OnContentChanged(ancien, nouveau)
-            Suivre(TryCast(nouveau, DependencyObject))
+            Suivre(ChampSuivi())
             Agrandir()
             Nommer()
             Evaluer()
+            Decaler()
         End Sub
 
         ''' <inheritdoc/>
@@ -195,9 +220,12 @@ Namespace Mkm.Wpf.Controls
             If texte IsNot Nothing Then Return texte.Text.Length > 0
             Dim choix = TryCast(_champ, Selector)
             If choix IsNot Nothing Then Return choix.SelectedItem IsNot Nothing
+            Dim date_ = TryCast(_champ, System.Windows.Controls.DatePicker)
+            If date_ IsNot Nothing Then Return date_.SelectedDate.HasValue OrElse Not String.IsNullOrEmpty(date_.Text)
             Dim valeurDuChamp = Lire("Value")
             If valeurDuChamp IsNot Nothing Then Return Not (TypeOf valeurDuChamp Is String AndAlso CStr(valeurDuChamp).Length = 0)
-            Return False
+            Dim texteDuChamp = TryCast(Lire("Text"), String)
+            Return Not String.IsNullOrEmpty(texteDuChamp)
         End Function
 
         Private Sub Evaluer()
@@ -209,17 +237,21 @@ Namespace Mkm.Wpf.Controls
             SetValue(IsFloatingPropertyKey, ToujoursEnvole OrElse rempli OrElse IsKeyboardFocusWithin OrElse Not String.IsNullOrEmpty(aide))
         End Sub
 
-        ' Dans le champ (In), le champ s'agrandit : son texte descend sous le libellé.
+        ' Dans le champ (In), le champ s'agrandit : son texte descend sous le libellé. Seul ce que le libellé a posé est
+        ' retiré ensuite : une hauteur ou un retrait de l'application restent.
+        Private _agrandi As Control
+
         Private Sub Agrandir()
-            Dim champ = TryCast(Content, Control)
-            If champ Is Nothing Then Return
-            If [Variant] = FloatLabelVariant.In Then
-                champ.SetResourceReference(PaddingProperty, "mkm.floatlabel.in.input.all.padding")
-                champ.Height = Double.NaN
-            Else
-                champ.ClearValue(PaddingProperty)
-                champ.ClearValue(HeightProperty)
+            Dim champ = TryCast(ChampSuivi(), Control)
+            If _agrandi IsNot Nothing AndAlso (champ IsNot _agrandi OrElse [Variant] <> FloatLabelVariant.In) Then
+                _agrandi.ClearValue(PaddingProperty)
+                _agrandi.ClearValue(HeightProperty)
+                _agrandi = Nothing
             End If
+            If champ Is Nothing OrElse [Variant] <> FloatLabelVariant.In OrElse _agrandi Is champ Then Return
+            champ.SetResourceReference(PaddingProperty, "mkm.floatlabel.in.input.all.padding")
+            champ.Height = Double.NaN
+            _agrandi = champ
         End Sub
 
         Private Shared Sub OnLabelChanged(d As DependencyObject, e As DependencyPropertyChangedEventArgs)
@@ -231,7 +263,7 @@ Namespace Mkm.Wpf.Controls
         Private _nomPose As String
 
         Private Sub Nommer()
-            Dim champ = TryCast(Content, UIElement)
+            Dim champ = TryCast(ChampSuivi(), UIElement)
             If champ Is Nothing Then Return
             Dim texte = TryCast(Label, String)
             Dim actuel = AutomationProperties.GetName(champ)

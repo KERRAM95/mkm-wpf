@@ -12,12 +12,15 @@
     <Style TargetType="{x:Type local:FloatLabel}">
         <Setter Property="IsTabStop" Value="False" />
         <Setter Property="HorizontalContentAlignment" Value="Stretch" />
-        <Setter Property="VerticalContentAlignment" Value="Stretch" />
+        <Setter Property="VerticalContentAlignment" Value="Top" />
         <Setter Property="Template">
             <Setter.Value>
                 <ControlTemplate TargetType="{x:Type local:FloatLabel}">
-                    <Grid>
+                    <!-- La grille épouse le champ : le libellé se place par rapport à lui, même dans une rangée plus haute. -->
+                    <Grid VerticalAlignment="{TemplateBinding VerticalContentAlignment}">
                         <ContentPresenter />
+                        <!-- Décalé après l'icône d'un IconField de tête (FloatLabel.Decaler). -->
+                        <Grid x:Name="Decalage" IsHitTestVisible="False">
                         <Border x:Name="PART_Label" IsHitTestVisible="False" HorizontalAlignment="Left" VerticalAlignment="Center"
                                 Margin="{DynamicResource mkm.floatlabel.label.margin}"
                                 CornerRadius="{DynamicResource mkm.floatlabel.on.border.radius}">
@@ -27,6 +30,7 @@
                                               TextElement.FontWeight="{DynamicResource mkm.floatlabel.font.weight}"
                                               TextElement.Foreground="{DynamicResource mkm.floatlabel.color}" />
                         </Border>
+                        </Grid>
                     </Grid>
                     <ControlTemplate.Triggers>
                         <Trigger Property="IsFloating" Value="True">

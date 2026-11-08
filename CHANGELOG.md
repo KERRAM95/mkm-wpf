@@ -216,6 +216,16 @@ Les évolutions notables de mkm-wpf, version par version. Le format suit
     remontré, il est réannoncé et sa vie repart.
   - ButtonGroup : un bouton caché ou montré replace les autres (coins et
     bordures) ; un groupe lié par ItemsSource est rangé lui aussi.
+  - AutoComplete : Alt+↓ demande enfin toutes les suggestions (WPF donne
+    Key.System avec Alt) ; Alt+↑ choisit et referme ; ↑ sans suggestion
+    surlignée va à la dernière ; retaper défait le choix ; une liste de
+    suggestions remplie sur place est suivie.
+  - Checkbox : indéterminée, elle n'est pas cochée (un trait de la couleur
+    du texte sur la case grise, comme mkm) ; l'anneau du clavier de mkm.
+  - FloatLabel et IftaLabel : le libellé se place par rapport au champ, même
+    dans une rangée plus haute ; il suit le champ d'un IconField (et se
+    décale après son icône) et d'un DatePicker ; une hauteur ou un retrait
+    posés par l'application ne sont plus effacés.
   - InputOtp, ColorPicker, Terminal, Password : la langue n'est suivie que
     tant que le contrôle est chargé (l'abonnement à vie le gardait en
     mémoire).

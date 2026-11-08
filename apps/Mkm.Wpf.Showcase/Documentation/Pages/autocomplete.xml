@@ -24,7 +24,7 @@
 
   <section titre="Bouton">
     <p><c>Dropdown</c> accole un bouton à droite du champ : il demande toutes les suggestions (<c>e.Query</c> est vide).
-      Alt+↓ fait de même au clavier.</p>
+      Alt+↓ fait de même au clavier (le bouton n'est pas un arrêt de la touche Tab).</p>
     <exemple comportement="AutoCompleteReferences"><![CDATA[
 <mkm:AutoComplete x:Name="Maturite" Dropdown="True" Placeholder="Maturité" Width="260" />
 ]]></exemple>
@@ -50,11 +50,12 @@ End Sub
     <h3>Clavier</h3>
     <touches>
       <touche nom="Flèche bas">Surligne la suggestion suivante.</touche>
-      <touche nom="Flèche haut">Surligne la suggestion précédente.</touche>
+      <touche nom="Flèche haut">Surligne la suggestion précédente ; sans suggestion surlignée, la dernière.</touche>
       <touche nom="Entrée">Choisit la suggestion surlignée.</touche>
       <touche nom="Tab">Choisit la suggestion surlignée et passe à l'élément suivant.</touche>
       <touche nom="Échap">Referme les suggestions.</touche>
       <touche nom="Alt+Flèche bas">Avec le bouton, demande toutes les suggestions.</touche>
+      <touche nom="Alt+Flèche haut">Choisit la suggestion surlignée et referme la liste.</touche>
     </touches>
   </section>
 </page>

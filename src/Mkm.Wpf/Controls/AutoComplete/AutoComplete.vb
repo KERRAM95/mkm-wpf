@@ -246,6 +246,8 @@ Namespace Mkm.Wpf.Controls
         Protected Overrides Sub OnTextChanged(e As TextChangedEventArgs)
             MyBase.OnTextChanged(e)
             If _texteInterne Then Return
+            ' Retaper après un choix le défait : la valeur redevient le texte, comme mkm.
+            If SelectedItem IsNot Nothing Then SetCurrentValue(SelectedItemProperty, Nothing)
             _attente.Stop()
             If Text.Length < MinLength Then
                 SetCurrentValue(IsDropDownOpenProperty, False)
@@ -282,16 +284,29 @@ Namespace Mkm.Wpf.Controls
 
         Private Shared Sub OnSuggestionsChanged(d As DependencyObject, e As DependencyPropertyChangedEventArgs)
             Dim champ = DirectCast(d, AutoComplete)
+            ' Une liste observable remplie sur place compte aussi (abonnement faible : elle ne retient pas le champ).
+            Dim ancienne = TryCast(e.OldValue, System.Collections.Specialized.INotifyCollectionChanged)
+            If ancienne IsNot Nothing Then System.Collections.Specialized.CollectionChangedEventManager.RemoveHandler(ancienne, AddressOf champ.Suggestions_CollectionChanged)
+            Dim nouvelle = TryCast(e.NewValue, System.Collections.Specialized.INotifyCollectionChanged)
+            If nouvelle IsNot Nothing Then System.Collections.Specialized.CollectionChangedEventManager.AddHandler(nouvelle, AddressOf champ.Suggestions_CollectionChanged)
             If champ._liste IsNot Nothing Then
                 champ._liste.ItemsSource = champ.Suggestions
                 champ._liste.SelectedIndex = -1
             End If
-            Dim nombre = If(champ.Suggestions Is Nothing, 0, champ.Suggestions.Cast(Of Object)().Count())
-            champ.SetValue(HasSuggestionsPropertyKey, nombre > 0)
-            ' La réponse à une demande ouvre la liste, s'il y a quoi montrer.
-            If champ._demande AndAlso champ.IsKeyboardFocusWithin Then
-                champ._demande = False
-                champ.SetCurrentValue(IsDropDownOpenProperty, nombre > 0 OrElse champ.ShowEmptyMessage)
+            champ.Relire()
+        End Sub
+
+        Private Sub Suggestions_CollectionChanged(sender As Object, e As System.Collections.Specialized.NotifyCollectionChangedEventArgs)
+            Relire()
+        End Sub
+
+        ' Le nombre de suggestions ; la réponse à une demande ouvre la liste, s'il y a quoi montrer.
+        Private Sub Relire()
+            Dim nombre = If(Suggestions Is Nothing, 0, Suggestions.Cast(Of Object)().Count())
+            SetValue(HasSuggestionsPropertyKey, nombre > 0)
+            If _demande AndAlso IsKeyboardFocusWithin Then
+                _demande = False
+                SetCurrentValue(IsDropDownOpenProperty, nombre > 0 OrElse ShowEmptyMessage)
             End If
         End Sub
 
@@ -337,8 +352,11 @@ Namespace Mkm.Wpf.Controls
 
         ''' <summary>↓ ↑ parcourent les suggestions, Entrée et Tab choisissent, Échap referme la liste.</summary>
         Protected Overrides Sub OnPreviewKeyDown(e As KeyEventArgs)
+            ' Avec Alt, WPF donne Key.System : la vraie touche est dans SystemKey.
+            Dim touche = If(e.Key = Key.System, e.SystemKey, e.Key)
+            Dim alt = (Keyboard.Modifiers And ModifierKeys.Alt) = ModifierKeys.Alt
             If Not IsDropDownOpen OrElse _liste Is Nothing Then
-                If e.Key = Key.Down AndAlso Keyboard.Modifiers = ModifierKeys.Alt AndAlso Dropdown Then
+                If touche = Key.Down AndAlso alt AndAlso Dropdown Then
                     Demander(String.Empty)
                     e.Handled = True
                 End If
@@ -346,12 +364,20 @@ Namespace Mkm.Wpf.Controls
                 Return
             End If
             Dim nombre = _liste.Items.Count
-            Select Case e.Key
+            If touche = Key.Up AndAlso alt Then
+                ' Alt+↑ : la suggestion surlignée choisie, la liste refermée.
+                If _liste.SelectedIndex >= 0 Then SelectItem(_liste.SelectedItem) Else SetCurrentValue(IsDropDownOpenProperty, False)
+                e.Handled = True
+                MyBase.OnPreviewKeyDown(e)
+                Return
+            End If
+            Select Case touche
                 Case Key.Down
                     If nombre > 0 Then Surligner(Math.Min(nombre - 1, _liste.SelectedIndex + 1))
                     e.Handled = True
                 Case Key.Up
-                    If nombre > 0 Then Surligner(Math.Max(0, _liste.SelectedIndex - 1))
+                    ' Sans suggestion surlignée, ↑ va à la dernière, comme mkm.
+                    If nombre > 0 Then Surligner(If(_liste.SelectedIndex < 0, nombre - 1, Math.Max(0, _liste.SelectedIndex - 1)))
                     e.Handled = True
                 Case Key.Home, Key.End
                     ' Début et Fin restent ceux du texte.

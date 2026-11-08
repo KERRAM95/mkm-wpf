@@ -1,8 +1,8 @@
 <!--
     Le style de Checkbox, sur la case de 3DEXPERIENCE de mkm (presets dashboard et ara, checkbox) :
     14 px, coins de 2 px, gris clair bordée de gris ; cochée, la couleur principale et une coche qui la
-    remplit, d'un trait de 2 px ; survolée ou au clavier, elle fonce d'un pas, enfoncée d'un pas de
-    plus ; grisée, elle garde ses couleurs, à moitié transparente. Son libellé fait partie d'elle :
+    remplit, d'un trait de 2 px ; indéterminée, pas cochée, un trait de la couleur du texte ; survolée ou au
+    clavier, elle fonce d'un pas (au clavier, cernée d'un anneau d'un pixel), enfoncée d'un pas de plus ; grisée, elle garde ses couleurs, à moitié transparente. Son libellé fait partie d'elle :
     le survoler ou l'enfoncer allume la case.
 
     Écart avec mkm : la case de mkm n'a pas de libellé à elle ; ici, Content l'est (6 px d'écart).
@@ -33,6 +33,10 @@
                                         Width="{DynamicResource mkm.checkbox.icon.size}" Height="{DynamicResource mkm.checkbox.icon.size}"
                                         Foreground="{DynamicResource mkm.checkbox.icon.checked.color}"
                                         Source="{x:Static local:Icons.Check}" />
+                            <!-- L'anneau du clavier : 1 px, à 1 px au-dehors de la case (outline de mkm). -->
+                            <Rectangle x:Name="Anneau" Margin="-2" Visibility="Collapsed" IsHitTestVisible="False" RadiusX="3" RadiusY="3"
+                                       Stroke="{DynamicResource mkm.checkbox.focus.ring.color}"
+                                       StrokeThickness="{DynamicResource mkm.checkbox.focus.ring.width}" />
                         </Grid>
                         <Rectangle x:Name="Ecart" Width="{DynamicResource mkm.checkbox.label.gap}" />
                         <ContentPresenter x:Name="Libelle" VerticalAlignment="Center" RecognizesAccessKey="True" />
@@ -46,6 +50,7 @@
                             <Setter TargetName="Boite" Property="BorderBrush" Value="{DynamicResource mkm.checkbox.hover.border.color}" />
                         </Trigger>
                         <Trigger Property="IsFocusVisible" Value="True">
+                            <Setter TargetName="Anneau" Property="Visibility" Value="Visible" />
                             <Setter TargetName="Boite" Property="Background" Value="{DynamicResource mkm.checkbox.hover.background}" />
                             <Setter TargetName="Boite" Property="BorderBrush" Value="{DynamicResource mkm.checkbox.focus.border.color}" />
                         </Trigger>
@@ -58,12 +63,11 @@
                             <Setter TargetName="Boite" Property="BorderBrush" Value="{DynamicResource mkm.checkbox.checked.border.color}" />
                             <Setter TargetName="Coche" Property="Visibility" Value="Visible" />
                         </Trigger>
-                        <!-- Indéterminée : un trait, aux couleurs de la case cochée. -->
+                        <!-- Indéterminée : pas cochée (mkm) ; la case garde ses couleurs, un trait de la couleur du texte. -->
                         <Trigger Property="IsChecked" Value="{x:Null}">
-                            <Setter TargetName="Boite" Property="Background" Value="{DynamicResource mkm.checkbox.checked.background}" />
-                            <Setter TargetName="Boite" Property="BorderBrush" Value="{DynamicResource mkm.checkbox.checked.border.color}" />
                             <Setter TargetName="Coche" Property="Visibility" Value="Visible" />
                             <Setter TargetName="Coche" Property="Source" Value="{x:Static local:Icons.Remove}" />
+                            <Setter TargetName="Coche" Property="Foreground" Value="{DynamicResource mkm.checkbox.icon.color}" />
                         </Trigger>
                         <MultiTrigger>
                             <MultiTrigger.Conditions>

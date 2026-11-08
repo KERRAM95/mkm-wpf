@@ -223,6 +223,19 @@ Namespace Mkm.Wpf.UiTests
             Assert.That(reference.Patterns.Value.Pattern.Value.Value, [Is].EqualTo("HS-00041"))
         End Sub
 
+        <Test>
+        Public Sub AutoComplete_AltBasDemandeToutesLesSuggestions()
+            Dim page = OuvrirLaDoc("autocomplete")
+            Dim maturite = Trouver("Maturite", page)
+
+            Cliquer(maturite)
+            Raccourci(VirtualKeyShort.ALT, VirtualKeyShort.DOWN)
+            TrouverAilleurs("Released", ControlType.ListItem)
+            Taper(VirtualKeyShort.UP)
+            Raccourci(VirtualKeyShort.ALT, VirtualKeyShort.UP)
+            AttendreQue(Function() maturite.Patterns.Value.Pattern.Value.Value = "Obsolete", "↑ puis Alt+↑ : la dernière, « Obsolete »")
+        End Sub
+
         ' Un élément d'une liste ouverte : sous le champ pour UI Automation, ou dans sa fenêtre à part.
         Private Function DansLaListe(champ As AutomationElement, nom As String, role As ControlType) As AutomationElement
             Return Attendre(Function() If(champ.FindFirstDescendant(Function(cf) cf.ByName(nom).And(cf.ByControlType(role))),
