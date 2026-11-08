@@ -134,7 +134,16 @@ Les évolutions notables de mkm-wpf, version par version. Le format suit
   - InputNumber : le point du pavé numérique en français, le curseur gardé après une
     flèche, l'arrondi comme l'affichage ; SelectButton : `AllowEmpty` tenu en choix
     multiple et au Ctrl+clic ; IdCard : une chaîne vide ne s'affiche plus ; Tree :
-    les enfants d'un nœud sont virtualisés.
+    les enfants d'un nœud sont virtualisés ;
+  - ToggleButton : arriver au clavier sur lui faisait tomber l'application (un jeton
+    « …radius », lu comme un CornerRadius, sur le RadiusX de son anneau) ; un test
+    vérifie désormais le type de chaque ressource des gabarits ;
+  - langue : les textes enrichis (`Run`, `Span`, `FlowDocument`) suivent le format
+    de Windows ; `InputNumber` suit ses réglages personnalisés ;
+  - Tag : le texte lisible est celui de mkm (blanc ou #111111, sa luminance) ;
+    Icon : sans taille, 16 px même étirée ; DatePicker : le survol du jour
+    d'aujourd'hui, et pas des jours bloqués ; l'importeur d'icônes ne réécrit que
+    sa section de `THIRD-PARTY-NOTICES.md`.
 
 - Le contrôle qualité des lots 5 à 9 :
   - `Menu` et `TieredMenu` : le survol prenait le focus (un champ le perdait) et

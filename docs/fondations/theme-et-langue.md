@@ -141,7 +141,11 @@ l'objet de configuration en code) se fixent avec le code.
   change pas ce format (décision technique du 07/11/2026) : Windows sépare
   déjà la langue d'affichage et le format régional, et une valeur saisie
   (`2,5` kg) ne doit pas changer de sens quand l'utilisateur passe à
-  l'anglais.
+  l'anglais. Les textes enrichis (`Run`, `Span`, `FlowDocument`) le suivent
+  aussi. Les contrôles de la bibliothèque (`InputNumber`, `DatePicker`, `T`)
+  suivent même les réglages que l'utilisateur a changés dans Windows (un point
+  décimal en français) ; une liaison de l'application (`StringFormat`), elle,
+  prend le format standard de la langue : WPF ne lit pas ces réglages.
 - **Les langues de la bibliothèque** : l'anglais et le français (validé).
 
 ### Qui choisit la langue

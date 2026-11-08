@@ -7,6 +7,7 @@ Imports System.Windows
 Imports System.Text.RegularExpressions
 Imports System.Windows.Controls
 Imports System.Windows.Media
+Imports System.Xml.Linq
 Imports Mkm.Wpf.Theming
 Imports NUnit.Framework
 
@@ -157,6 +158,127 @@ Namespace Mkm.Wpf.Tests
 
             Assert.That(absentes, [Is].Empty)
         End Sub
+
+        ''' <summary>
+        ''' Chaque ressource que nomme un gabarit est, dans chaque thème, du type de la propriété qui la reçoit : WPF ne le
+        ''' vérifie pas pour une ressource de gabarit, et la valeur fausse ne casse qu'au rendu (un jeton « …radius »,
+        ''' devenu un CornerRadius, sur le RadiusX d'un Rectangle : l'anneau du focus du ToggleButton faisait tomber
+        ''' l'application au premier Tab). Les attributs d'un élément et les Setter (sa cible : TargetName, ou le TargetType
+        ''' du style ou du gabarit) sont lus.
+        ''' </summary>
+        <Test>
+        Public Sub ChaqueRessourceDesGabarits_ALeTypeDeSaPropriete()
+            Dim bibliotheque = DossierDeLaBibliotheque()
+            If bibliotheque Is Nothing Then Assert.Ignore("les sources de Mkm.Wpf ne sont pas à côté des tests")
+
+            Dim ressources = Themes.All.Select(Function(t) New KeyValuePair(Of String, ResourceDictionary)(t.Name, ThemeResources.Build(t))).ToList()
+            Dim motif As New Regex("^\{DynamicResource (" & Regex.Escape(ThemeResources.Prefix) & "[A-Za-z0-9.]+)\}$")
+            Dim fautifs As New List(Of String)
+            Dim lus = 0
+
+            For Each fichier In Directory.GetFiles(bibliotheque, "*.xaml", SearchOption.AllDirectories).
+                Where(Function(f) Not f.Contains($"{Path.DirectorySeparatorChar}obj{Path.DirectorySeparatorChar}") AndAlso Not f.Contains($"{Path.DirectorySeparatorChar}bin{Path.DirectorySeparatorChar}"))
+                Dim document = XDocument.Load(fichier)
+                For Each element In document.Descendants()
+                    If element.Name.LocalName = "Setter" Then
+                        Dim valeur = element.Attribute("Value")
+                        Dim m = If(valeur Is Nothing, Nothing, motif.Match(valeur.Value))
+                        If m Is Nothing OrElse Not m.Success Then Continue For
+                        Dim cible = CibleDuSetter(element)
+                        If Verifier(cible, element.Attribute("Property").Value, element, m.Groups(1).Value, ressources, fichier, fautifs) Then lus += 1
+                        Continue For
+                    End If
+                    If element.Name.LocalName.Contains(".") Then Continue For
+                    For Each attribut In element.Attributes()
+                        Dim m = motif.Match(attribut.Value)
+                        If Not m.Success Then Continue For
+                        Dim nom = If(attribut.Name.Namespace = XNamespace.None, attribut.Name.LocalName, $"{element.GetPrefixOfNamespace(attribut.Name.Namespace)}:{attribut.Name.LocalName}")
+                        If Verifier(TypeDeLElement(element), nom, element, m.Groups(1).Value, ressources, fichier, fautifs) Then lus += 1
+                    Next
+                Next
+            Next
+
+            Assert.That(lus, [Is].GreaterThan(500), "les propriétés reçues ont été trouvées")
+            Assert.That(fautifs, [Is].Empty)
+        End Sub
+
+        ' Une propriété (« Background », « TextElement.Foreground », « local:FocusVisible.IsVisible ») d'un type : vrai si
+        ' elle est une propriété de dépendance connue, et la ressource vérifiée dans chaque thème.
+        Private Shared Function Verifier(proprietaire As Type, nom As String, contexte As XElement, cle As String,
+                                         ressources As List(Of KeyValuePair(Of String, ResourceDictionary)),
+                                         fichier As String, fautifs As List(Of String)) As Boolean
+            If proprietaire Is Nothing Then Return False
+            Dim nomCourt = nom
+            Dim deux = nom.LastIndexOf("."c)
+            If deux > 0 Then
+                proprietaire = TypeParNom(nom.Substring(0, deux), contexte)
+                nomCourt = nom.Substring(deux + 1)
+                If proprietaire Is Nothing Then Return False
+            End If
+            Dim champ = proprietaire.GetField(nomCourt & "Property", BindingFlags.Public Or BindingFlags.Static Or BindingFlags.FlattenHierarchy)
+            Dim propriete = TryCast(champ?.GetValue(Nothing), DependencyProperty)
+            If propriete Is Nothing Then Return False
+            For Each theme In ressources
+                If Not theme.Value.Contains(cle) Then Continue For
+                Dim valeur = theme.Value(cle)
+                If valeur IsNot Nothing AndAlso Not propriete.PropertyType.IsInstanceOfType(valeur) Then
+                    fautifs.Add($"{Path.GetFileName(fichier)} : {proprietaire.Name}.{nomCourt} ({propriete.PropertyType.Name}) reçoit {cle}, {valeur.GetType().Name} sous {theme.Key}")
+                End If
+            Next
+            Return True
+        End Function
+
+        ' La cible d'un Setter : l'élément nommé par TargetName dans son gabarit, sinon le TargetType du style ou du gabarit
+        ' qui le porte.
+        Private Shared Function CibleDuSetter(setter As XElement) As Type
+            Dim nomCible = setter.Attribute("TargetName")?.Value
+            If nomCible IsNot Nothing Then
+                Dim gabarit = setter.Ancestors().FirstOrDefault(Function(a) a.Name.LocalName = "ControlTemplate" OrElse a.Name.LocalName = "DataTemplate")
+                Dim nomme = gabarit?.Descendants().FirstOrDefault(Function(d) d.Attributes().Any(Function(a) a.Name.LocalName = "Name" AndAlso a.Value = nomCible))
+                Return If(nomme Is Nothing, Nothing, TypeDeLElement(nomme))
+            End If
+            Dim porteur = setter.Ancestors().FirstOrDefault(Function(a) a.Name.LocalName = "Style" OrElse a.Name.LocalName = "ControlTemplate")
+            Dim cible = porteur?.Attribute("TargetType")?.Value
+            If cible Is Nothing Then Return Nothing
+            Dim texte = cible.Trim()
+            If texte.StartsWith("{x:Type ", StringComparison.Ordinal) Then texte = texte.Substring(8).TrimEnd("}"c).Trim()
+            Return TypeParNom(texte, porteur)
+        End Function
+
+        Private Shared Function TypeDeLElement(element As XElement) As Type
+            Dim prefixe = element.GetPrefixOfNamespace(element.Name.Namespace)
+            Return TypeParNom(If(String.IsNullOrEmpty(prefixe), element.Name.LocalName, prefixe & ":" & element.Name.LocalName), element)
+        End Function
+
+        ' Un nom de type de XAML (« Border », « local:Button ») : dans WPF, ou parmi les contrôles de mkm.
+        Private Shared Function TypeParNom(nom As String, contexte As XElement) As Type
+            Dim prefixe = ""
+            Dim court = nom
+            Dim deuxPoints = nom.IndexOf(":"c)
+            If deuxPoints > 0 Then
+                prefixe = nom.Substring(0, deuxPoints)
+                court = nom.Substring(deuxPoints + 1)
+            End If
+            Dim espace = If(prefixe.Length = 0, contexte.GetDefaultNamespace(), contexte.GetNamespaceOfPrefix(prefixe))
+            If espace Is Nothing Then Return Nothing
+            If espace.NamespaceName.StartsWith("clr-namespace:Mkm.Wpf.Controls", StringComparison.Ordinal) Then
+                Return GetType(Mkm.Wpf.Controls.Button).Assembly.GetType("Mkm.Wpf.Controls." & court)
+            End If
+            If espace.NamespaceName <> "http://schemas.microsoft.com/winfx/2006/xaml/presentation" Then Return Nothing
+            Return TypesDeWpf().FirstOrDefault(Function(t) t.Name = court)
+        End Function
+
+        Private Shared _typesDeWpf As List(Of Type)
+
+        Private Shared Function TypesDeWpf() As List(Of Type)
+            If _typesDeWpf Is Nothing Then
+                _typesDeWpf = {GetType(FrameworkElement).Assembly, GetType(UIElement).Assembly, GetType(DependencyObject).Assembly}.
+                    SelectMany(Function(a) a.GetExportedTypes()).
+                    Where(Function(t) t.Namespace IsNot Nothing AndAlso t.Namespace.StartsWith("System.Windows", StringComparison.Ordinal)).
+                    ToList()
+            End If
+            Return _typesDeWpf
+        End Function
 
         ''' <summary>
         ''' Aucun chemin de liaison avec un préfixe (« (local:ActionBarItem.Icon) ») dans les gabarits : à l'exécution,

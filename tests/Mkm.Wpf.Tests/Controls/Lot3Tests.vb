@@ -37,7 +37,7 @@ Namespace Mkm.Wpf.Tests.Controls
             etiquette.Color = Brushes.White
 
             Assert.That(etiquette.Background, [Is].SameAs(Brushes.White))
-            Assert.That(etiquette.Foreground, [Is].SameAs(Brushes.Black), "du noir, lisible sur le blanc")
+            Assert.That(DirectCast(etiquette.Foreground, SolidColorBrush).Color, [Is].EqualTo(Color.FromRgb(&H11, &H11, &H11)), "le presque noir de mkm, lisible sur le blanc")
         End Sub
 
         <TestCase("#007DA3", "White")>
@@ -46,7 +46,7 @@ Namespace Mkm.Wpf.Tests.Controls
         Public Sub Tag_LeTexteLePlusLisible(fond As String, attendu As String)
             Dim pinceau = New SolidColorBrush(DirectCast(ColorConverter.ConvertFromString(fond), Color))
 
-            Assert.That(Tag.ReadableForeground(pinceau), [Is].SameAs(If(attendu = "White", Brushes.White, Brushes.Black)))
+            Assert.That(DirectCast(Tag.ReadableForeground(pinceau), SolidColorBrush).Color, [Is].EqualTo(If(attendu = "White", Colors.White, Color.FromRgb(&H11, &H11, &H11))))
         End Sub
 
         <Test>

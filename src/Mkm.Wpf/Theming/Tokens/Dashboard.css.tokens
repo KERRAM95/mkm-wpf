@@ -247,7 +247,7 @@ radiobutton.label.gap = 6px
 # et la bordure. L'anneau du focus (1 px à 1 px du bord) arrondi de 4 + 1 + 1 px.
 togglebutton.sm.height = 20px
 togglebutton.lg.height = 30px
-togglebutton.focus.ring.radius = 6px
+togglebutton.focus.ring.rounding = 6px
 
 # toolbar (preset dashboard/toolbar, sa feuille) : le bouton « … », le bouton « lite » d'icône seule, fait 26 px de haut.
 toolbar.overflow.button.height = 26px

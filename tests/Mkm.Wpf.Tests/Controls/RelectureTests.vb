@@ -121,6 +121,25 @@ Namespace Mkm.Wpf.Tests.Controls
         End Sub
 
         <Test>
+        Public Sub Icon_SansTaille_SeizePixelsMemeEtiree()
+            Dim icone As New Icon With {.Source = Icons.Add}
+            Dim case24 As New Grid With {.Width = 24, .Height = 24}
+            case24.Children.Add(icone)
+            Pret(case24)
+
+            Assert.That(icone.ActualWidth, [Is].EqualTo(16))
+            Assert.That(icone.ActualHeight, [Is].EqualTo(16))
+        End Sub
+
+        <Test>
+        Public Sub LesTextesEnrichis_ALaLangueDeWindows()
+            Dim attendue = Globalization.CultureInfo.CurrentCulture.IetfLanguageTag
+
+            Assert.That(New Documents.Run().Language.IetfLanguageTag, [Is].EqualTo(attendue).IgnoreCase)
+            Assert.That(New Documents.FlowDocument().Language.IetfLanguageTag, [Is].EqualTo(attendue).IgnoreCase)
+        End Sub
+
+        <Test>
         Public Sub TreeNode_SesEnfantsVirtualises()
             Dim arbre As New Tree()
             VirtualizingPanel.SetIsVirtualizing(arbre, True)

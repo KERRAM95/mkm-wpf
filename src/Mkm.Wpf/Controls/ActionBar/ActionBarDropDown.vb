@@ -145,6 +145,15 @@ Namespace Mkm.Wpf.Controls
 
         ''' <inheritdoc/>
         Protected Overrides Sub OnItemsChanged(e As NotifyCollectionChangedEventArgs)
+            ' Posée dès l'ajout : la liste fermée ne fabrique pas encore ses éléments.
+            If e.OldItems IsNot Nothing Then
+                For Each ancien In e.OldItems.OfType(Of DependencyObject)()
+                    ancien.ClearValue(IsInListProperty)
+                Next
+            End If
+            For Each element In Items.OfType(Of DependencyObject)()
+                SetIsInList(element, True)
+            Next
             MyBase.OnItemsChanged(e)
             MettreAJour()
         End Sub

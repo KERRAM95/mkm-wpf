@@ -310,7 +310,12 @@ Namespace Mkm.Wpf.Controls
             Ecrire()
         End Sub
 
+        ' La culture de la langue de l'élément ; celle de Windows elle-même (ses réglages personnalisés compris : un point
+        ' décimal choisi en français) quand la langue est celle de Windows, comme le DatePicker de WPF.
         Private Function Culture() As CultureInfo
+            If String.Equals(Language?.IetfLanguageTag, CultureInfo.CurrentCulture.IetfLanguageTag, StringComparison.OrdinalIgnoreCase) Then
+                Return CultureInfo.CurrentCulture
+            End If
             Try
                 Return Language.GetEquivalentCulture()
             Catch ex As InvalidOperationException

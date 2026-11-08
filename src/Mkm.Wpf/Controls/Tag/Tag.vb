@@ -103,17 +103,24 @@ Namespace Mkm.Wpf.Controls
             End Set
         End Property
 
+        ' Le presque noir du texte de mkm sur une couleur.
+        Private Shared ReadOnly PresqueNoir As Media.SolidColorBrush = Geler(New Media.SolidColorBrush(Media.Color.FromRgb(&H11, &H11, &H11)))
+
+        Private Shared Function Geler(pinceau As Media.SolidColorBrush) As Media.SolidColorBrush
+            pinceau.Freeze()
+            Return pinceau
+        End Function
+
         ''' <summary>
-        ''' Le noir ou le blanc, le plus lisible sur <paramref name="fond"/> (le <c>textOnColor</c> de mkm) ; rien si le
-        ''' fond n'est pas une couleur unie.
+        ''' Le blanc ou le presque noir (#111111), le plus lisible sur <paramref name="fond"/> : le <c>textOnColor</c> de
+        ''' mkm, porté tel quel ; rien si le fond n'est pas une couleur unie.
         ''' </summary>
         Public Shared Function ReadableForeground(fond As Media.Brush) As Media.Brush
             Dim uni = TryCast(fond, Media.SolidColorBrush)
             If uni Is Nothing Then Return Nothing
-            Dim c = uni.Color
-            Dim l = Luminance(c)
-            ' Le contraste du noir (l + 0,05) / 0,05 contre celui du blanc 1,05 / (l + 0,05).
-            Return If((l + 0.05) / 0.05 >= 1.05 / (l + 0.05), Media.Brushes.Black, Media.Brushes.White)
+            Dim l = Luminance(uni.Color)
+            ' Le contraste avec le blanc (1) contre celui avec #111111 (luminance 0,0056) ; à égalité, le blanc.
+            Return If(1.05 / (l + 0.05) >= (l + 0.05) / 0.0556, Media.Brushes.White, PresqueNoir)
         End Function
 
         Private Shared Function Luminance(c As Media.Color) As Double

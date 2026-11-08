@@ -45,8 +45,8 @@
                             </StackPanel>
                         </Border>
                         <Rectangle x:Name="Anneau" Margin="-2" Visibility="Collapsed"
-                                   RadiusX="{DynamicResource mkm.togglebutton.focus.ring.radius}"
-                                   RadiusY="{DynamicResource mkm.togglebutton.focus.ring.radius}"
+                                   RadiusX="{DynamicResource mkm.togglebutton.focus.ring.rounding}"
+                                   RadiusY="{DynamicResource mkm.togglebutton.focus.ring.rounding}"
                                    Stroke="{DynamicResource mkm.togglebutton.focus.ring.color}"
                                    StrokeThickness="{DynamicResource mkm.togglebutton.focus.ring.width}" />
                     </Grid>

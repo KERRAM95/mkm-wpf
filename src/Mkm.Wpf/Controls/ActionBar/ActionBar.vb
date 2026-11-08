@@ -318,13 +318,14 @@ Namespace Mkm.Wpf.Controls
                                                              String.Equals(s.Key, ActiveSection, StringComparison.Ordinal) AndAlso
                                                              s.Visibility <> Visibility.Collapsed)
             Dim repli = voulue Is Nothing
+            ' Seule une clé voulue (absente ou cachée) est gardée : sans clé, la première section donne la sienne.
             If repli Then
                 Dim actuelle = TryCast(SelectedItem, ActionBarSection)
                 If actuelle IsNot Nothing AndAlso sections.Contains(actuelle) AndAlso actuelle.Visibility <> Visibility.Collapsed Then Return
                 voulue = sections.FirstOrDefault(Function(s) s.Visibility <> Visibility.Collapsed)
             End If
             If voulue Is Nothing OrElse Equals(SelectedItem, voulue) Then Return
-            _parRepli = repli
+            _parRepli = repli AndAlso ActiveSection IsNot Nothing
             Try
                 SetCurrentValue(SelectedItemProperty, voulue)
             Finally

@@ -79,6 +79,15 @@ Namespace Mkm.Wpf.Controls
             Return New Size(Math.Min(DefaultSize, availableSize.Width), Math.Min(DefaultSize, availableSize.Height))
         End Function
 
+        ''' <summary>
+        ''' Sans taille donnée, l'icône garde ses 16 px même dans une place plus grande (étirée, elle s'y centre) : la règle
+        ''' vaut à l'arrangement comme à la mesure.
+        ''' </summary>
+        Protected Overrides Function ArrangeOverride(finalSize As Size) As Size
+            Return New Size(If(Double.IsNaN(Width), Math.Min(DefaultSize, finalSize.Width), finalSize.Width),
+                            If(Double.IsNaN(Height), Math.Min(DefaultSize, finalSize.Height), finalSize.Height))
+        End Function
+
         ''' <inheritdoc/>
         Protected Overrides Sub OnRender(drawingContext As DrawingContext)
             Dim cote = Math.Min(ActualWidth, ActualHeight)

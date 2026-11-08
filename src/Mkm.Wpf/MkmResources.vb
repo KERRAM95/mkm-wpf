@@ -2,6 +2,7 @@ Imports System.Globalization
 Imports System.Linq
 Imports System.Runtime.CompilerServices
 Imports System.Windows
+Imports System.Windows.Documents
 Imports System.Windows.Markup
 Imports System.Windows.Media
 Imports Mkm.Wpf.Localization
@@ -110,8 +111,12 @@ Namespace Mkm.Wpf
             If _reglagesAppliques Then Return
             _reglagesAppliques = True
 
-            Remplacer(FrameworkElement.LanguageProperty,
-                      New FrameworkPropertyMetadata(XmlLanguage.GetLanguage(CultureInfo.CurrentCulture.IetfLanguageTag)))
+            Dim langue = XmlLanguage.GetLanguage(CultureInfo.CurrentCulture.IetfLanguageTag)
+            Remplacer(FrameworkElement.LanguageProperty, New FrameworkPropertyMetadata(langue))
+            ' Les textes enrichis (Run, Span, Hyperlink, FlowDocument) ont leur propre défaut, « en-US » : un parent laissé à
+            ' son défaut ne leur transmet rien. Le leur aussi suit Windows.
+            Remplacer(FrameworkContentElement.LanguageProperty, New FrameworkPropertyMetadata(langue), GetType(TextElement))
+            Remplacer(FrameworkContentElement.LanguageProperty, New FrameworkPropertyMetadata(langue), GetType(FlowDocument))
             Remplacer(TextOptions.TextFormattingModeProperty,
                       New FrameworkPropertyMetadata(TextFormattingMode.Display,
                                                     FrameworkPropertyMetadataOptions.AffectsMeasure Or
@@ -119,9 +124,9 @@ Namespace Mkm.Wpf
                                                     FrameworkPropertyMetadataOptions.Inherits))
         End Sub
 
-        Private Shared Sub Remplacer(propriete As DependencyProperty, metadonnee As FrameworkPropertyMetadata)
+        Private Shared Sub Remplacer(propriete As DependencyProperty, metadonnee As FrameworkPropertyMetadata, Optional pour As Type = Nothing)
             Try
-                propriete.OverrideMetadata(GetType(FrameworkElement), metadonnee)
+                propriete.OverrideMetadata(If(pour, GetType(FrameworkElement)), metadonnee)
             Catch ex As InvalidOperationException
                 ' Un élément WPF existait déjà (concepteur XAML de Visual Studio) : WPF garde son défaut.
             Catch ex As ArgumentException

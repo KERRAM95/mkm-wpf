@@ -86,12 +86,11 @@ function importer(paquet) {
     writeFileSync(join(depot, 'src/Mkm.Wpf/Controls/Icon/InternalIcons.g.vb'), interne.join('\n'));
     console.log(`${internes.length} icônes internes`);
 
+    // Seule la section de Tabler, entre ses deux marqueurs, est réécrite : les avis des autres œuvres reprises (CLAUDE.md,
+    // « L'open source d'abord ») restent.
     const licence = readFileSync(join(paquet, 'LICENSE'), 'utf8').trim();
-    const avis = [
-        '# Avis de tiers',
-        '',
-        'mkm-wpf embarque des œuvres de tiers, chacune sous sa licence, reproduite ici.',
-        '',
+    const section = [
+        '<!-- début : Tabler Icons, écrit par outils/icones/importer-tabler.mjs -->',
         `## Tabler Icons (${manifeste.package} ${manifeste.version})`,
         '',
         'Les géométries de `src/Mkm.Wpf/Controls/Icon/Icons.g.vb` et `InternalIcons.g.vb`.',
@@ -99,9 +98,21 @@ function importer(paquet) {
         '```text',
         licence,
         '```',
-        ''
-    ];
-    writeFileSync(join(depot, 'THIRD-PARTY-NOTICES.md'), avis.join('\n'));
+        '<!-- fin : Tabler Icons -->'
+    ].join('\n');
+    const cheminDesAvis = join(depot, 'THIRD-PARTY-NOTICES.md');
+    const entete = '# Avis de tiers\n\nmkm-wpf embarque des œuvres de tiers, chacune sous sa licence, reproduite ici.\n';
+    const marquee = /<!-- début : Tabler Icons[\s\S]*?<!-- fin : Tabler Icons -->/;
+    let avis = existsSync(cheminDesAvis) ? readFileSync(cheminDesAvis, 'utf8') : entete;
+    if (marquee.test(avis)) {
+        avis = avis.replace(marquee, () => section);
+    } else if (/^## Tabler Icons/m.test(avis)) {
+        // Une section d'avant les marqueurs : jusqu'à la section suivante, ou la fin.
+        avis = avis.replace(/^## Tabler Icons[\s\S]*?(?=^## |$(?![\s\S]))/m, () => section + '\n');
+    } else {
+        avis = `${avis.trimEnd()}\n\n${section}\n`;
+    }
+    writeFileSync(cheminDesAvis, avis);
     console.log(`${proprietes.length} icônes`);
 }
 

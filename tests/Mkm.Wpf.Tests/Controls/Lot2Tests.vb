@@ -103,9 +103,13 @@ Namespace Mkm.Wpf.Tests.Controls
             voile.Blocked = True
 
             Assert.That(masque.Visibility, [Is].EqualTo(Visibility.Visible))
+            ' Une touche du champ voilé s'arrête ; une du voile (ou de ce qu'il montre) passe : Tab en sort, Alt+F4 ferme.
             Dim touche As New KeyEventArgs(Keyboard.PrimaryDevice, New FakeSource(), 0, Key.A) With {.RoutedEvent = Keyboard.PreviewKeyDownEvent}
-            voile.RaiseEvent(touche)
+            DirectCast(voile.Content, TextBox).RaiseEvent(touche)
             Assert.That(touche.Handled, [Is].True)
+            Dim tab As New KeyEventArgs(Keyboard.PrimaryDevice, New FakeSource(), 0, Key.Tab) With {.RoutedEvent = Keyboard.PreviewKeyDownEvent}
+            masque.RaiseEvent(tab)
+            Assert.That(tab.Handled, [Is].False)
         End Sub
 
         <Test>

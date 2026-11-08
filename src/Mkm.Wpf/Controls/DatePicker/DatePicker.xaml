@@ -41,14 +41,21 @@
                         <Trigger Property="IsInactive" Value="True">
                             <Setter Property="Foreground" Value="{DynamicResource mkm.text.muted.color}" />
                         </Trigger>
-                        <Trigger Property="IsMouseOver" Value="True">
-                            <Setter TargetName="Fond" Property="Background" Value="{DynamicResource mkm.datepicker.date.hover.background}" />
-                            <Setter Property="Foreground" Value="{DynamicResource mkm.datepicker.date.hover.color}" />
-                        </Trigger>
                         <Trigger Property="IsToday" Value="True">
                             <Setter TargetName="Fond" Property="Background" Value="{DynamicResource mkm.datepicker.today.background}" />
                             <Setter Property="Foreground" Value="{DynamicResource mkm.datepicker.today.color}" />
                         </Trigger>
+                        <!-- Le survol l'emporte sur le jour d'aujourd'hui, mais ni sur le jour choisi ni sur un jour bloqué
+                             (le :not(.p-datepicker-day-selected):not(.p-disabled):hover de mkm). -->
+                        <MultiTrigger>
+                            <MultiTrigger.Conditions>
+                                <Condition Property="IsMouseOver" Value="True" />
+                                <Condition Property="IsSelected" Value="False" />
+                                <Condition Property="IsBlackedOut" Value="False" />
+                            </MultiTrigger.Conditions>
+                            <Setter TargetName="Fond" Property="Background" Value="{DynamicResource mkm.datepicker.date.hover.background}" />
+                            <Setter Property="Foreground" Value="{DynamicResource mkm.datepicker.date.hover.color}" />
+                        </MultiTrigger>
                         <Trigger Property="IsSelected" Value="True">
                             <Setter TargetName="Fond" Property="Background" Value="{DynamicResource mkm.datepicker.date.selected.background}" />
                             <Setter Property="Foreground" Value="{DynamicResource mkm.datepicker.date.selected.color}" />
