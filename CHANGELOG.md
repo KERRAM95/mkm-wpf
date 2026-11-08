@@ -341,6 +341,10 @@ Les évolutions notables de mkm-wpf, version par version. Le format suit
   - Knob : en lecture seule, plus un arrêt de Tab ; son anneau à 1 px
     au-dehors. Dock : Début et Fin. CascadeSelect : ↑ ouvre la liste.
   - ActionBar : la liste d'une ActionBarDropDown a l'ombre du menu de mkm.
+  - Menu, TieredMenu : leurs éléments ont le retrait du menu de mkm (8 px à
+    droite), et non celui du menu contextuel. InputChips : abonnement faible
+    à la liste. ColorPicker : le carré des nuances net au bord. StateGraph :
+    les graisses de ses jetons.
   - InputOtp, ColorPicker, Terminal, Password : la langue n'est suivie que
     tant que le contrôle est chargé (l'abonnement à vie le gardait en
     mémoire).

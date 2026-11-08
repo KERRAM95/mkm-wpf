@@ -194,6 +194,7 @@ Namespace Mkm.Wpf.UiTests
             AttendreQue(Function() etat() = ExpandCollapseState.Expanded, "↓ ouvre le menu")
             Taper(VirtualKeyShort.ESCAPE)
             AttendreQue(Function() etat() = ExpandCollapseState.Collapsed, "Échap le referme")
+            AttendreQue(Function() AFocus(chevron), "le clavier revient au chevron")
         End Sub
 
         <Test>

@@ -40,7 +40,7 @@
                             BorderBrush="{DynamicResource mkm.colorpicker.panel.border.color}" BorderThickness="1"
                             CornerRadius="{DynamicResource mkm.colorpicker.panel.border.radius}">
                         <Canvas>
-                            <local:ZoneDeCouleur x:Name="PART_Selector" Style="{StaticResource mkm.ColorPicker.Partie}"
+                            <local:ZoneDeCouleur x:Name="PART_Selector" Style="{StaticResource mkm.ColorPicker.Partie}" UseLayoutRounding="True" SnapsToDevicePixels="True"
                                             Canvas.Left="8" Canvas.Top="8" Width="150" Height="150">
                                 <Grid ClipToBounds="False">
                                     <Rectangle Fill="{Binding HueBrush, RelativeSource={RelativeSource AncestorType={x:Type local:PanneauDeCouleur}}}" />

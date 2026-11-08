@@ -238,8 +238,9 @@ Namespace Mkm.Wpf.Controls
             Dim champ = DirectCast(d, InputChips)
             Dim avant = TryCast(e.OldValue, INotifyCollectionChanged)
             Dim apres = TryCast(e.NewValue, INotifyCollectionChanged)
-            If avant IsNot Nothing Then RemoveHandler avant.CollectionChanged, AddressOf champ.Valeurs_CollectionChanged
-            If apres IsNot Nothing Then AddHandler apres.CollectionChanged, AddressOf champ.Valeurs_CollectionChanged
+            ' Abonnement faible : une collection du modèle qui vit plus longtemps que le champ ne le retient pas.
+            If avant IsNot Nothing Then CollectionChangedEventManager.RemoveHandler(avant, AddressOf champ.Valeurs_CollectionChanged)
+            If apres IsNot Nothing Then CollectionChangedEventManager.AddHandler(apres, AddressOf champ.Valeurs_CollectionChanged)
             champ.Montrer()
         End Sub
 

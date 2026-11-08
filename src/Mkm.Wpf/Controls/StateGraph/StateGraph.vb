@@ -246,6 +246,11 @@ Namespace Mkm.Wpf.Controls
             Return If(TypeOf valeur Is Double, CDbl(valeur), defaut)
         End Function
 
+        Private Function Graisse(cle As String, defaut As FontWeight) As FontWeight
+            Dim valeur = Ressource(cle)
+            Return If(TypeOf valeur Is FontWeight, DirectCast(valeur, FontWeight), defaut)
+        End Function
+
         ' Blanc, #FFF ou #FFFFFF : cerné d'un trait gris, son nom en noir.
         Private Shared Function EstBlanc(pinceau As Brush) As Boolean
             Dim uni = TryCast(pinceau, SolidColorBrush)
@@ -381,7 +386,7 @@ Namespace Mkm.Wpf.Controls
                 .IsHitTestVisible = Pending Is Nothing, .Tag = a, .FocusVisualStyle = Nothing}
             Automation.AutomationProperties.SetName(nom, a.Label)
             Dim drapeau As New Run(If(avant, "» ", "«")) With {
-                .FontSize = Nombre("flag.font.size", 22), .FontWeight = FontWeights.Bold,
+                .FontSize = Nombre("flag.font.size", 22), .FontWeight = Graisse("flag.font.weight", FontWeights.Bold),
                 .Foreground = If(vise.Color Is Nothing OrElse EstBlanc(vise.Color), Pinceau("flag.blank.color"), vise.Color)}
             If avant Then
                 nom.Inlines.Add(drapeau)
@@ -451,6 +456,7 @@ Namespace Mkm.Wpf.Controls
             Dim texte As New TextBlock With {
                 .Text = e.Label, .HorizontalAlignment = HorizontalAlignment.Center, .VerticalAlignment = VerticalAlignment.Center,
                 .TextTrimming = TextTrimming.CharacterEllipsis, .FontSize = Nombre("state.font.size", 12),
+                .FontWeight = Graisse("state.font.weight", FontWeights.Normal),
                 .Foreground = Pinceau("state.color")}
             If blanc Then
                 texte.Foreground = Pinceau(If(place = "apres", "state.blank.after.color", "state.blank.color"))

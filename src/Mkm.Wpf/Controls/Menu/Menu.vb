@@ -102,6 +102,7 @@ Namespace Mkm.Wpf.Controls
         Protected Overrides Sub PrepareContainerForItemOverride(element As DependencyObject, item As Object)
             MyBase.PrepareContainerForItemOverride(element, item)
             Colonne.StylerLeTrait(element)
+            Colonne.Retrait(element, "mkm.menu.item.padding")
         End Sub
 
     End Class
@@ -223,6 +224,7 @@ Namespace Mkm.Wpf.Controls
         Protected Overrides Sub PrepareContainerForItemOverride(element As DependencyObject, item As Object)
             MyBase.PrepareContainerForItemOverride(element, item)
             Colonne.StylerLeTrait(element)
+            Colonne.Retrait(element, "mkm.tieredmenu.item.padding")
         End Sub
 
     End Class
@@ -230,6 +232,15 @@ Namespace Mkm.Wpf.Controls
     ' La colonne d'icône d'un menu posé dans la page : gardée si un élément de la liste (ou d'un groupe) a une icône ou
     ' se coche, comme à l'ouverture d'un menu contextuel (MenuIcons).
     Friend NotInheritable Class Colonne
+
+        ' Le retrait d'un élément du premier niveau d'un menu posé dans la page : celui du menu de mkm (menu.item.padding,
+        ' tieredmenu.item.padding : 8 px à droite), et non celui du menu contextuel ; sauf un retrait de l'application.
+        Friend Shared Sub Retrait(element As DependencyObject, cle As String)
+            Dim lien = TryCast(element, MenuItem)
+            If lien IsNot Nothing AndAlso lien.ReadLocalValue(Control.PaddingProperty) Is DependencyProperty.UnsetValue Then
+                lien.SetResourceReference(Control.PaddingProperty, cle)
+            End If
+        End Sub
 
         ' Un trait de menu (Separator) au style des menus de mkm, sauf un style posé par l'application.
         Friend Shared Sub StylerLeTrait(element As DependencyObject)
