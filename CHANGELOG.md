@@ -335,6 +335,9 @@ Les évolutions notables de mkm-wpf, version par version. Le format suit
     Début et Fin donnent le minimum et le maximum, s'ils sont fixés (mkm).
   - Registre de commandes : un raccourci ne se lance plus pendant la frappe
     dans un champ (Ctrl+N dans une zone de texte), comme mkm.
+  - DataTable : quadrillé, un cadre autour, comme mkm ; le message d'un
+    tableau vide centré dans sa ligne ; l'en-tête et le pied suivent la
+    taille (Small, Large) ; la poignée de redimensionnement au jeton (6 px).
   - InputOtp, ColorPicker, Terminal, Password : la langue n'est suivie que
     tant que le contrôle est chargé (l'abonnement à vie le gardait en
     mémoire).

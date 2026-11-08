@@ -19,7 +19,7 @@
 
     <!-- La poignée qui élargit une colonne, invisible, au bord de son titre. -->
     <Style x:Key="MkmDataTablePoignee" TargetType="{x:Type Thumb}">
-        <Setter Property="Width" Value="8" />
+        <Setter Property="Width" Value="{DynamicResource mkm.datatable.column.resizer.width}" />
         <Setter Property="Background" Value="Transparent" />
         <Setter Property="Cursor" Value="SizeWE" />
         <Setter Property="Template">
@@ -314,11 +314,14 @@
                                             <ScrollContentPresenter x:Name="PART_ScrollContentPresenter" Grid.Row="1" Grid.ColumnSpan="2"
                                                                     CanContentScroll="{TemplateBinding CanContentScroll}" />
                                             <!-- Une liste vide : son message, à la place des lignes. -->
-                                            <ContentPresenter x:Name="Vide" Grid.Row="1" Grid.ColumnSpan="2" Visibility="Collapsed"
-                                                              VerticalAlignment="Top" HorizontalAlignment="Left"
-                                                              Margin="{Binding CellPadding, RelativeSource={RelativeSource AncestorType={x:Type local:DataTable}}}"
-                                                              MinHeight="{DynamicResource mkm.datatable.row.height}"
-                                                              Content="{Binding EmptyMessage, RelativeSource={RelativeSource AncestorType={x:Type local:DataTable}}}" />
+                                            <!-- Centré dans la hauteur d'une ligne, comme la cellule de mkm (vertical-align: middle). -->
+                                            <Grid x:Name="Vide" Grid.Row="1" Grid.ColumnSpan="2" Visibility="Collapsed"
+                                                  VerticalAlignment="Top" HorizontalAlignment="Left"
+                                                  Margin="{Binding CellPadding, RelativeSource={RelativeSource AncestorType={x:Type local:DataTable}}}"
+                                                  MinHeight="{DynamicResource mkm.datatable.row.height}">
+                                                <ContentPresenter VerticalAlignment="Center"
+                                                                  Content="{Binding EmptyMessage, RelativeSource={RelativeSource AncestorType={x:Type local:DataTable}}}" />
+                                            </Grid>
                                             <ScrollBar x:Name="PART_VerticalScrollBar" Grid.Column="2" Grid.Row="1" Orientation="Vertical"
                                                        Maximum="{TemplateBinding ScrollableHeight}" ViewportSize="{TemplateBinding ViewportHeight}"
                                                        Visibility="{TemplateBinding ComputedVerticalScrollBarVisibility}"
@@ -368,6 +371,15 @@
                         <Trigger Property="Loading" Value="True">
                             <Setter TargetName="Voile" Property="Visibility" Value="Visible" />
                         </Trigger>
+                        <!-- Petit ou grand, l'en-tête et le pied suivent la taille, comme mkm. -->
+                        <Trigger Property="Size" Value="Small">
+                            <Setter TargetName="EnTete" Property="Padding" Value="{DynamicResource mkm.datatable.header.sm.padding}" />
+                            <Setter TargetName="Pied" Property="Padding" Value="{DynamicResource mkm.datatable.footer.sm.padding}" />
+                        </Trigger>
+                        <Trigger Property="Size" Value="Large">
+                            <Setter TargetName="EnTete" Property="Padding" Value="{DynamicResource mkm.datatable.header.lg.padding}" />
+                            <Setter TargetName="Pied" Property="Padding" Value="{DynamicResource mkm.datatable.footer.lg.padding}" />
+                        </Trigger>
                         <Trigger Property="IsEnabled" Value="False">
                             <Setter Property="Opacity" Value="{DynamicResource mkm.disabled.opacity}" />
                         </Trigger>
@@ -379,8 +391,11 @@
             <Trigger Property="Striped" Value="True">
                 <Setter Property="AlternationCount" Value="2" />
             </Trigger>
+            <!-- Quadrillé : un cadre autour, comme mkm (le trait de droite est celui de la dernière colonne). -->
             <Trigger Property="GridLines" Value="True">
                 <Setter Property="GridLinesVisibility" Value="All" />
+                <Setter Property="BorderThickness" Value="1,1,0,0" />
+                <Setter Property="BorderBrush" Value="{DynamicResource mkm.datatable.border.color}" />
             </Trigger>
             <Trigger Property="Size" Value="Small">
                 <Setter Property="RowHeight" Value="NaN" />
