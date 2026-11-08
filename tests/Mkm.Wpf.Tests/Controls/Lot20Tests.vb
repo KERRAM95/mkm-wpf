@@ -79,7 +79,12 @@ Namespace Mkm.Wpf.Tests.Controls
             Assert.That(etiquette.IsFloating, [Is].True, "un texte d'aide garde le libellé envolé")
             champ.Invalid = True
             Assert.That(etiquette.IsInvalid, [Is].True)
-            Assert.That(AutomationProperties.GetLabeledBy(champ), [Is].Not.Null, "le libellé nomme le champ")
+            Assert.That(AutomationProperties.GetName(champ), [Is].EqualTo("Référence"), "le libellé nomme le champ")
+            etiquette.Label = "Code"
+            Assert.That(AutomationProperties.GetName(champ), [Is].EqualTo("Code"), "et le suit")
+            AutomationProperties.SetName(champ, "Nom donné")
+            etiquette.Label = "Autre"
+            Assert.That(AutomationProperties.GetName(champ), [Is].EqualTo("Nom donné"), "un nom donné passe avant")
         End Sub
 
         <Test>

@@ -69,7 +69,7 @@
 
   <section titre="Accessibilité">
     <h3>Lecteur d'écran</h3>
-    <p>Le libellé nomme le champ (<c>AutomationProperties.LabeledBy</c>), comme l'attribut <c>for</c> d'un libellé chez
+    <p>Le libellé nomme le champ (son texte devient son <c>AutomationProperties.Name</c>), comme l'attribut <c>for</c> d'un libellé chez
       mkm ; un nom donné au champ passe avant.</p>
   </section>
 </page>

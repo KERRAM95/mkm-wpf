@@ -37,7 +37,7 @@ Namespace Mkm.Wpf.Controls
 
         ''' <summary>Le libellé.</summary>
         Public Shared ReadOnly LabelProperty As DependencyProperty = DependencyProperty.Register(
-            NameOf(Label), GetType(Object), GetType(FloatLabel), New FrameworkPropertyMetadata(Nothing))
+            NameOf(Label), GetType(Object), GetType(FloatLabel), New FrameworkPropertyMetadata(Nothing, AddressOf OnLabelChanged))
 
         ''' <summary>Où se pose le libellé envolé : au-dessus (par défaut), dans le champ, sur sa bordure.</summary>
         Public Shared ReadOnly VariantProperty As DependencyProperty = DependencyProperty.Register(
@@ -222,11 +222,23 @@ Namespace Mkm.Wpf.Controls
             End If
         End Sub
 
-        ' Le libellé nomme le champ pour les lecteurs d'écran, comme le « for » d'un label.
+        Private Shared Sub OnLabelChanged(d As DependencyObject, e As DependencyPropertyChangedEventArgs)
+            DirectCast(d, FloatLabel).Nommer()
+        End Sub
+
+        ' Le libellé nomme le champ pour les lecteurs d'écran, comme le « for » d'un label : le champ prend son texte pour
+        ' nom, sauf un nom qu'on lui a donné.
+        Private _nomPose As String
+
         Private Sub Nommer()
             Dim champ = TryCast(Content, UIElement)
-            If champ Is Nothing OrElse _libelle Is Nothing Then Return
-            If AutomationProperties.GetLabeledBy(champ) Is Nothing Then AutomationProperties.SetLabeledBy(champ, _libelle)
+            If champ Is Nothing Then Return
+            Dim texte = TryCast(Label, String)
+            Dim actuel = AutomationProperties.GetName(champ)
+            If String.IsNullOrEmpty(actuel) OrElse actuel = _nomPose Then
+                AutomationProperties.SetName(champ, If(texte, String.Empty))
+                _nomPose = texte
+            End If
         End Sub
 
     End Class

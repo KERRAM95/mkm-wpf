@@ -31,7 +31,8 @@
 - **FloatLabel** hérite de `ContentControl` : le champ est son contenu, quel
   qu'il soit ; il suit son texte, son choix, sa valeur, son texte d'aide et
   son refus (`Invalid`). `Label`, `Variant` (Over, In, On). Le libellé nomme
-  le champ (`LabeledBy`).
+  le champ (son texte devient son `AutomationProperties.Name`, sauf un nom
+  donné).
 - **IftaLabel** est un FloatLabel toujours envolé, dans le champ.
 - **ColorPicker** hérite de `Control` : `Value` (« ff0000 », comme mkm),
   `Color` (la `Color` de WPF), `Inline`, `IsDropDownOpen`, l'évènement
