@@ -70,9 +70,44 @@ Namespace Mkm.Wpf.Controls
         End Sub
 
         Private Shared Sub OnImageChanged(d As DependencyObject, e As DependencyPropertyChangedEventArgs)
+            Dim avatar = DirectCast(d, Avatar)
+            Dim ancienne = TryCast(e.OldValue, Imaging.BitmapSource)
+            If ancienne IsNot Nothing AndAlso Not ancienne.IsFrozen Then
+                RemoveHandler ancienne.DecodeFailed, AddressOf avatar.Image_Echec
+                RemoveHandler ancienne.DownloadFailed, AddressOf avatar.Image_Echec
+            End If
+            Dim nouvelle = TryCast(e.NewValue, Imaging.BitmapSource)
+            If nouvelle IsNot Nothing AndAlso Not nouvelle.IsFrozen Then
+                AddHandler nouvelle.DecodeFailed, AddressOf avatar.Image_Echec
+                AddHandler nouvelle.DownloadFailed, AddressOf avatar.Image_Echec
+            End If
             d.SetValue(HasImagePropertyKey, e.NewValue IsNot Nothing)
-            DirectCast(d, Avatar).PoserLImage()
+            avatar.PoserLImage()
         End Sub
+
+        ' Une image qui ne se charge pas : les initiales ou l'icône reprennent sa place, et ImageFailed le dit (l'error
+        ' de mkm).
+        Private Sub Image_Echec(sender As Object, e As ExceptionEventArgs)
+            SetValue(HasImagePropertyKey, False)
+            Me.RaiseEvent(New RoutedEventArgs(ImageFailedEvent, Me))
+        End Sub
+
+        ''' <summary>L'image n'a pas pu se charger : l'avatar montre ses initiales ou son icône à la place.</summary>
+        Public Shared ReadOnly ImageFailedEvent As RoutedEvent = EventManager.RegisterRoutedEvent(
+            NameOf(ImageFailed), RoutingStrategy.Bubble, GetType(RoutedEventHandler), GetType(Avatar))
+
+        ''' <summary>L'image n'a pas pu se charger : l'avatar montre ses initiales ou son icône à la place.</summary>
+        Public Custom Event ImageFailed As RoutedEventHandler
+            AddHandler(value As RoutedEventHandler)
+                [AddHandler](ImageFailedEvent, value)
+            End AddHandler
+            RemoveHandler(value As RoutedEventHandler)
+                [RemoveHandler](ImageFailedEvent, value)
+            End RemoveHandler
+            RaiseEvent(sender As Object, e As RoutedEventArgs)
+                Me.RaiseEvent(e)
+            End RaiseEvent
+        End Event
 
         ' Le carré et le rond de l'image, peints d'elle (voir PinceauDImage).
         Private Sub PoserLImage()

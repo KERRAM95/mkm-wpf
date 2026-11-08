@@ -48,9 +48,37 @@
                         <Trigger Property="Subtitle" Value="{x:Null}">
                             <Setter TargetName="SousTitre" Property="Visibility" Value="Collapsed" />
                         </Trigger>
+                        <!-- Vide (une chaîne liée vide) comme absent : la partie disparaît. -->
+                        <Trigger Property="Title" Value="">
+                            <Setter TargetName="Titre" Property="Visibility" Value="Collapsed" />
+                        </Trigger>
+                        <Trigger Property="Subtitle" Value="">
+                            <Setter TargetName="SousTitre" Property="Visibility" Value="Collapsed" />
+                        </Trigger>
                         <MultiTrigger>
                             <MultiTrigger.Conditions>
                                 <Condition Property="Title" Value="{x:Null}" />
+                                <Condition Property="Subtitle" Value="{x:Null}" />
+                            </MultiTrigger.Conditions>
+                            <Setter TargetName="Legende" Property="Visibility" Value="Collapsed" />
+                        </MultiTrigger>
+                        <MultiTrigger>
+                            <MultiTrigger.Conditions>
+                                <Condition Property="Title" Value="" />
+                                <Condition Property="Subtitle" Value="" />
+                            </MultiTrigger.Conditions>
+                            <Setter TargetName="Legende" Property="Visibility" Value="Collapsed" />
+                        </MultiTrigger>
+                        <MultiTrigger>
+                            <MultiTrigger.Conditions>
+                                <Condition Property="Title" Value="{x:Null}" />
+                                <Condition Property="Subtitle" Value="" />
+                            </MultiTrigger.Conditions>
+                            <Setter TargetName="Legende" Property="Visibility" Value="Collapsed" />
+                        </MultiTrigger>
+                        <MultiTrigger>
+                            <MultiTrigger.Conditions>
+                                <Condition Property="Title" Value="" />
                                 <Condition Property="Subtitle" Value="{x:Null}" />
                             </MultiTrigger.Conditions>
                             <Setter TargetName="Legende" Property="Visibility" Value="Collapsed" />

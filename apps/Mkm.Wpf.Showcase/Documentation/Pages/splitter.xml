@@ -49,12 +49,12 @@
   </section>
 
   <section titre="Imbriqué">
-    <p>Un panneau peut contenir un autre séparateur, dans l'autre sens.</p>
+    <p>Un panneau peut contenir un autre séparateur, dans l'autre sens ; imbriqué, il n'a pas de bordure, comme mkm.</p>
     <exemple etendu="oui"><![CDATA[
 <mkm:Splitter Height="200">
     <mkm:SplitterPanel Size="30" Padding="8"><TextBlock Text="Structure" /></mkm:SplitterPanel>
     <mkm:SplitterPanel Size="70">
-        <mkm:Splitter Orientation="Vertical" BorderThickness="0">
+        <mkm:Splitter Orientation="Vertical">
             <mkm:SplitterPanel Padding="8"><TextBlock Text="Plan" /></mkm:SplitterPanel>
             <mkm:SplitterPanel Size="35" Padding="8"><TextBlock Text="Propriétés" /></mkm:SplitterPanel>
         </mkm:Splitter>

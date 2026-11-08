@@ -317,6 +317,12 @@ Les évolutions notables de mkm-wpf, version par version. Le format suit
   - AutoComplete : une liste déroulante pour les lecteurs d'écran (le
     combobox de mkm), développée ou réduite ; la suggestion surlignée est
     annoncée.
+  - Avatar : une image qui ne se charge pas laisse la place aux initiales ou
+    à l'icône, et ImageFailed le dit (l'error de mkm).
+  - Card : un titre ou un sous-titre vides (liés à une chaîne vide)
+    disparaissent, comme la page le disait.
+  - Splitter : imbriqué dans un panneau d'un autre séparateur, sans bordure,
+    comme mkm.
   - InputOtp, ColorPicker, Terminal, Password : la langue n'est suivie que
     tant que le contrôle est chargé (l'abonnement à vie le gardait en
     mémoire).

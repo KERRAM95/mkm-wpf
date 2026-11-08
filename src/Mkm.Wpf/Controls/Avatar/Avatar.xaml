@@ -48,7 +48,7 @@
                         <MultiTrigger>
                             <MultiTrigger.Conditions>
                                 <Condition Property="Label" Value="{x:Null}" />
-                                <Condition Property="Image" Value="{x:Null}" />
+                                <Condition Property="HasImage" Value="False" />
                             </MultiTrigger.Conditions>
                             <Setter TargetName="Icone" Property="Visibility" Value="Visible" />
                         </MultiTrigger>
