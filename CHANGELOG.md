@@ -178,6 +178,11 @@ Les évolutions notables de mkm-wpf, version par version. Le format suit
   actions en ligne ou en arc autour d'un bouton rond) ; leurs jetons, leurs
   pages, leurs tests et leurs scénarios. `Dock` étant aussi une énumération
   de WPF, le code de mkm-wpf l'écrit en entier.
+- Le lot 23 (`docs/composants/listes-ordonnees-et-vues.md`) : `OrderList` (une
+  liste qu'on ordonne en place), `PickList` (deux listes, des éléments qui
+  passent de l'une à l'autre), `DataView` (des éléments par un gabarit, en
+  liste ou en grille, page par page) ; leurs jetons, leurs pages, leurs tests
+  et leurs scénarios.
 - Info-bulle et Popover : la page qui défile les referme, comme mkm.
 - Le zoom de toute l'interface (`docs/fondations/zoom.md`) :
   `MkmResources.Zoom` (80 à 200 %), `ZoomIn`, `ZoomOut`, `ResetZoom`,

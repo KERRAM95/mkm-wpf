@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="utf-8"?>
+<page titre="DataView" categorie="Données" types="DataView DataViewLayout" jetons="dataview">
+  <resume>Une vue de données : des éléments présentés par un gabarit, en liste ou en grille, avec un en-tête, un pied et,
+    au besoin, un paginateur.</resume>
+
+  <section titre="Import">
+    <code><![CDATA[
+<Window xmlns:mkm="urn:mkm-wpf">
+    <mkm:DataView ItemsSource="{Binding Pieces}" />
+</Window>
+]]></code>
+  </section>
+
+  <section titre="Basique">
+    <p><c>ItemTemplate</c> présente chaque élément ; <c>Paginator</c> pose un <lien page="paginator">Paginator</lien>
+      sous eux, <c>Rows</c> par page, <c>First</c> le premier montré. <c>Header</c> et <c>Footer</c> encadrent la vue.</p>
+    <exemple comportement="DataViewPieces"><![CDATA[
+<mkm:DataView x:Name="Pieces" Paginator="True" Rows="4" Header="Pièces du catalogue">
+    <mkm:DataView.ItemTemplate>
+        <DataTemplate>
+            <Border BorderBrush="#E5E7EB" BorderThickness="0,0,0,1" Padding="12,8">
+                <DockPanel>
+                    <mkm:Tag DockPanel.Dock="Right" Content="{Binding Statut}" VerticalAlignment="Center" />
+                    <StackPanel>
+                        <TextBlock Text="{Binding Nom}" FontWeight="SemiBold" />
+                        <TextBlock Text="{Binding Reference}" Foreground="#6B7280" />
+                    </StackPanel>
+                </DockPanel>
+            </Border>
+        </DataTemplate>
+    </mkm:DataView.ItemTemplate>
+</mkm:DataView>
+]]></exemple>
+  </section>
+
+  <section titre="Grille">
+    <p><c>Layout="Grid"</c> : <c>GridColumns</c> éléments par ligne, présentés par <c>GridItemTemplate</c> (sinon
+      <c>ItemTemplate</c>).</p>
+    <exemple comportement="DataViewPieces"><![CDATA[
+<mkm:DataView x:Name="Grille" Layout="Grid" GridColumns="4" Paginator="True" Rows="8">
+    <mkm:DataView.GridItemTemplate>
+        <DataTemplate>
+            <Border BorderBrush="#E5E7EB" BorderThickness="1" CornerRadius="4" Margin="4" Padding="12">
+                <StackPanel>
+                    <TextBlock Text="{Binding Nom}" FontWeight="SemiBold" />
+                    <TextBlock Text="{Binding Reference}" Foreground="#6B7280" Margin="0,0,0,8" />
+                    <mkm:Tag Content="{Binding Statut}" HorizontalAlignment="Left" />
+                </StackPanel>
+            </Border>
+        </DataTemplate>
+    </mkm:DataView.GridItemTemplate>
+</mkm:DataView>
+]]></exemple>
+  </section>
+
+  <section titre="Accessibilité">
+    <h3>Lecteur d'écran</h3>
+    <p>Narrateur dit la vue « liste », nommée par son en-tête ; ses éléments ; le paginateur, celui du Paginator.</p>
+  </section>
+</page>

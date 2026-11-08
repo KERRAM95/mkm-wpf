@@ -128,6 +128,38 @@ Namespace Mkm.Wpf.UiTests
             Assert.That(frise.FindAllChildren(Function(cf) cf.ByControlType(ControlType.ListItem)).Length, [Is].EqualTo(4))
         End Sub
 
+        <Test>
+        Public Sub OrderList_UnElementChoisiMonteToutEnHaut()
+            Dim page = OuvrirLaDoc("orderlist")
+            Dim liste = Trouver("Etapes", page)
+            Cliquer(TrouverParNom("Faire valider", ControlType.ListItem, liste))
+            Cliquer(TrouverParNom(T("aria.moveTop"), ControlType.Button, liste))
+            AttendreQue(Function() NomDe(liste.FindFirstDescendant(Function(cf) cf.ByControlType(ControlType.ListItem))) = "Faire valider",
+                        "« Faire valider » tout en haut")
+        End Sub
+
+        <Test>
+        Public Sub PickList_UnDoubleClicFaitPasserUnElement()
+            Dim page = OuvrirLaDoc("picklist")
+            Dim choix = Trouver("Diffusion", page)
+            Dim cible = Trouver("PART_Target", choix)
+            DoubleCliquer(TrouverParNom("Qualité", ControlType.ListItem, Trouver("PART_Source", choix)))
+            AttendreQue(Function() cible.FindFirstDescendant(Function(cf) cf.ByName("Qualité").And(cf.ByControlType(ControlType.ListItem))) IsNot Nothing,
+                        "« Qualité » dans la cible")
+            Cliquer(TrouverParNom(T("aria.moveAllToSource"), ControlType.Button, choix))
+            AttendreQue(Function() cible.FindFirstDescendant(Function(cf) cf.ByControlType(ControlType.ListItem)) Is Nothing, "la cible vidée")
+        End Sub
+
+        <Test>
+        Public Sub DataView_LePaginateurChangeDePage()
+            Dim page = OuvrirLaDoc("dataview")
+            Dim vue = Trouver("Pieces", page)
+            Trouver("PART_Paginator", vue)
+            Cliquer(TrouverParNom(T("aria.nextPage"), ControlType.Button, vue))
+            AttendreQue(Function() TexteDe(vue).Contains("Pignon"), "la deuxième page : « Pignon »")
+            Assert.That(TexteDe(vue).Contains("Bride"), [Is].False, "la première n'est plus montrée")
+        End Sub
+
     End Class
 
 End Namespace

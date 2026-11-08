@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="utf-8"?>
+<page titre="PickList" categorie="Données" types="PickList PickListMoveEventArgs" jetons="picklist">
+  <resume>Deux listes : une source et une cible ; des boutons font passer les éléments choisis, ou tous, de l'une à
+    l'autre.</resume>
+
+  <section titre="Import">
+    <code><![CDATA[
+<Window xmlns:mkm="urn:mkm-wpf">
+    <mkm:PickList Source="{Binding Disponibles}" Target="{Binding Choisis}" />
+</Window>
+]]></code>
+  </section>
+
+  <section titre="Basique">
+    <p><c>Source</c> et <c>Target</c> sont des listes modifiables ; chacune s'ordonne comme une
+      <lien page="orderlist">OrderList</lien> (<c>ShowSourceControls</c>, <c>ShowTargetControls</c>). Les boutons du
+      milieu font passer les éléments choisis, ou tous ; un double clic fait passer un élément. <c>MovedToTarget</c> et
+      <c>MovedToSource</c> le disent.</p>
+    <exemple comportement="ListesDEtapes"><![CDATA[
+<mkm:PickList x:Name="Diffusion" SourceHeader="Services" TargetHeader="Destinataires" Height="200" />
+]]></exemple>
+  </section>
+
+  <section titre="Accessibilité">
+    <h3>Lecteur d'écran</h3>
+    <p>Narrateur dit le PickList « groupe » ; ses boutons « Vers la cible », « Tout vers la cible », « Vers la source »,
+      « Tout vers la source » ; ses deux listes, nommées par leur en-tête.</p>
+    <h3>Clavier</h3>
+    <touches>
+      <touche nom="Tab">Passe d'une liste aux boutons, puis à l'autre liste.</touche>
+    </touches>
+  </section>
+</page>

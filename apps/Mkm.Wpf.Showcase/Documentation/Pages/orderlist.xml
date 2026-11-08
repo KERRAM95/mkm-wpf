@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="utf-8"?>
+<page titre="OrderList" categorie="Données" types="OrderList OrderListControlsPosition" jetons="orderlist">
+  <resume>Une liste à ordonner : à côté d'elle, des boutons qui montent ou descendent les éléments choisis, d'un rang ou
+    tout au bout.</resume>
+
+  <section titre="Import">
+    <code><![CDATA[
+<Window xmlns:mkm="urn:mkm-wpf">
+    <mkm:OrderList ItemsSource="{Binding Etapes}" />
+</Window>
+]]></code>
+  </section>
+
+  <section titre="Basique">
+    <p>La liste est un <lien page="listbox">Listbox</lien> ; <c>ItemsSource</c> est une liste modifiable (une
+      <c>ObservableCollection</c>), que les boutons ordonnent en place. Plusieurs éléments se choisissent (Ctrl, Maj) ;
+      <c>Reorder</c> dit que l'ordre a changé. <c>Header</c> pose un titre au-dessus.</p>
+    <exemple comportement="ListesDEtapes"><![CDATA[
+<mkm:OrderList x:Name="Etapes" Header="Étapes de diffusion" Width="320" HorizontalAlignment="Left" />
+]]></exemple>
+  </section>
+
+  <section titre="Accessibilité">
+    <h3>Lecteur d'écran</h3>
+    <p>Narrateur dit l'OrderList « groupe », nommé par son en-tête ; ses boutons « Monter », « Tout en haut »,
+      « Descendre », « Tout en bas » ; la liste, celle du Listbox.</p>
+    <h3>Clavier</h3>
+    <touches>
+      <touche nom="Tab">Passe des boutons à la liste.</touche>
+      <touche nom="Flèches">Dans la liste, passent d'un élément à l'autre ; Maj+flèche étend le choix.</touche>
+    </touches>
+  </section>
+</page>

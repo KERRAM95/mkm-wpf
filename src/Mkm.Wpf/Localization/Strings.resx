@@ -177,4 +177,28 @@
   <data name="aria.actions" xml:space="preserve">
     <value>Actions</value>
   </data>
+  <data name="aria.moveUp" xml:space="preserve">
+    <value>Move Up</value>
+  </data>
+  <data name="aria.moveTop" xml:space="preserve">
+    <value>Move Top</value>
+  </data>
+  <data name="aria.moveDown" xml:space="preserve">
+    <value>Move Down</value>
+  </data>
+  <data name="aria.moveBottom" xml:space="preserve">
+    <value>Move Bottom</value>
+  </data>
+  <data name="aria.moveToTarget" xml:space="preserve">
+    <value>Move to Target</value>
+  </data>
+  <data name="aria.moveAllToTarget" xml:space="preserve">
+    <value>Move All to Target</value>
+  </data>
+  <data name="aria.moveToSource" xml:space="preserve">
+    <value>Move to Source</value>
+  </data>
+  <data name="aria.moveAllToSource" xml:space="preserve">
+    <value>Move All to Source</value>
+  </data>
 </root>

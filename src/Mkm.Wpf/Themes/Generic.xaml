@@ -25,6 +25,7 @@
         <ResourceDictionary Source="/Mkm.Wpf;component/Controls/Chip/Chip.xaml" />
         <ResourceDictionary Source="/Mkm.Wpf;component/Controls/ColorPicker/ColorPicker.xaml" />
         <ResourceDictionary Source="/Mkm.Wpf;component/Controls/DataTable/DataTable.xaml" />
+        <ResourceDictionary Source="/Mkm.Wpf;component/Controls/DataView/DataView.xaml" />
         <ResourceDictionary Source="/Mkm.Wpf;component/Controls/DatePicker/DatePicker.xaml" />
         <ResourceDictionary Source="/Mkm.Wpf;component/Controls/Dialog/Dialog.xaml" />
         <ResourceDictionary Source="/Mkm.Wpf;component/Controls/Divider/Divider.xaml" />
@@ -50,10 +51,12 @@
         <ResourceDictionary Source="/Mkm.Wpf;component/Controls/Menubar/Menubar.xaml" />
         <ResourceDictionary Source="/Mkm.Wpf;component/Controls/Message/Message.xaml" />
         <ResourceDictionary Source="/Mkm.Wpf;component/Controls/MultiSelect/MultiSelect.xaml" />
+        <ResourceDictionary Source="/Mkm.Wpf;component/Controls/OrderList/OrderList.xaml" />
         <ResourceDictionary Source="/Mkm.Wpf;component/Controls/Paginator/Paginator.xaml" />
         <ResourceDictionary Source="/Mkm.Wpf;component/Controls/Panel/Panel.xaml" />
         <ResourceDictionary Source="/Mkm.Wpf;component/Controls/PanelMenu/PanelMenu.xaml" />
         <ResourceDictionary Source="/Mkm.Wpf;component/Controls/Password/Password.xaml" />
+        <ResourceDictionary Source="/Mkm.Wpf;component/Controls/PickList/PickList.xaml" />
         <ResourceDictionary Source="/Mkm.Wpf;component/Controls/Popover/Popover.xaml" />
         <ResourceDictionary Source="/Mkm.Wpf;component/Controls/ProgressBar/ProgressBar.xaml" />
         <ResourceDictionary Source="/Mkm.Wpf;component/Controls/ProgressSpinner/ProgressSpinner.xaml" />

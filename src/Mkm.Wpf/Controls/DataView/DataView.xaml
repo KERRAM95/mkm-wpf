@@ -1,0 +1,84 @@
+<!--
+    Le style de DataView, sur la vue de données de mkm (styles/dataview ; jetons de Nora en pixels, dans les deux
+    thèmes) : l'en-tête au fond du contenu, bordé d'un trait en bas, 9 px sur 12 de retrait ; les éléments, chacun par
+    son gabarit, l'un sous l'autre ou en grille ; le paginateur sous eux, un trait au-dessus ; le pied, un trait
+    au-dessus, 9 px sur 12. Sans éléments, « Aucun résultat ».
+-->
+<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+                    xmlns:local="clr-namespace:Mkm.Wpf.Controls"
+                    xmlns:loc="clr-namespace:Mkm.Wpf.Localization">
+
+    <ItemsPanelTemplate x:Key="mkm.DataView.Grille">
+        <UniformGrid Columns="{Binding GridColumns, RelativeSource={RelativeSource AncestorType={x:Type local:DataView}}}" />
+    </ItemsPanelTemplate>
+
+    <Style TargetType="{x:Type local:DataView}">
+        <Setter Property="FontFamily" Value="{DynamicResource mkm.font.family}" />
+        <Setter Property="FontSize" Value="{DynamicResource mkm.font.size}" />
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="{x:Type local:DataView}">
+                    <Border BorderBrush="{DynamicResource mkm.dataview.border.color}" BorderThickness="{DynamicResource mkm.dataview.all.border.width}"
+                            CornerRadius="{DynamicResource mkm.dataview.border.radius}" Padding="{DynamicResource mkm.dataview.padding}">
+                        <DockPanel>
+                            <Border x:Name="EnTete" DockPanel.Dock="Top" Background="{DynamicResource mkm.dataview.header.background}"
+                                    BorderBrush="{DynamicResource mkm.dataview.header.border.color}"
+                                    BorderThickness="{DynamicResource mkm.dataview.header.border.width}"
+                                    Padding="{DynamicResource mkm.dataview.header.padding}"
+                                    TextElement.Foreground="{DynamicResource mkm.dataview.header.color}">
+                                <ContentPresenter Content="{TemplateBinding Header}" />
+                            </Border>
+                            <Border x:Name="Pied" DockPanel.Dock="Bottom" Background="{DynamicResource mkm.dataview.footer.background}"
+                                    BorderBrush="{DynamicResource mkm.dataview.footer.border.color}"
+                                    BorderThickness="{DynamicResource mkm.dataview.footer.border.width}"
+                                    Padding="{DynamicResource mkm.dataview.footer.padding}"
+                                    TextElement.Foreground="{DynamicResource mkm.dataview.footer.color}">
+                                <ContentPresenter Content="{TemplateBinding Footer}" />
+                            </Border>
+                            <Border x:Name="Pages" DockPanel.Dock="Bottom" Visibility="Collapsed"
+                                    BorderBrush="{DynamicResource mkm.dataview.paginator.bottom.border.color}"
+                                    BorderThickness="{DynamicResource mkm.dataview.paginator.bottom.border.width}">
+                                <local:Paginator x:Name="PART_Paginator" Rows="{TemplateBinding Rows}" TotalRecords="{TemplateBinding TotalRecords}"
+                                                 First="{Binding First, RelativeSource={RelativeSource TemplatedParent}, Mode=TwoWay}" />
+                            </Border>
+                            <Grid Background="{DynamicResource mkm.dataview.content.background}"
+                                  TextElement.Foreground="{DynamicResource mkm.dataview.content.color}">
+                                <ItemsControl x:Name="Elements" Focusable="False" ItemsSource="{TemplateBinding PageItems}"
+                                              ItemTemplate="{TemplateBinding ItemTemplate}" />
+                                <TextBlock x:Name="Vide" Visibility="Collapsed" Margin="{DynamicResource mkm.dataview.header.padding}"
+                                           Text="{loc:T locale.emptyMessage}" />
+                            </Grid>
+                        </DockPanel>
+                    </Border>
+                    <ControlTemplate.Triggers>
+                        <Trigger Property="Header" Value="{x:Null}">
+                            <Setter TargetName="EnTete" Property="Visibility" Value="Collapsed" />
+                        </Trigger>
+                        <Trigger Property="Footer" Value="{x:Null}">
+                            <Setter TargetName="Pied" Property="Visibility" Value="Collapsed" />
+                        </Trigger>
+                        <Trigger Property="Paginator" Value="True">
+                            <Setter TargetName="Pages" Property="Visibility" Value="Visible" />
+                        </Trigger>
+                        <Trigger Property="IsEmpty" Value="True">
+                            <Setter TargetName="Vide" Property="Visibility" Value="Visible" />
+                            <Setter TargetName="Pages" Property="Visibility" Value="Collapsed" />
+                        </Trigger>
+                        <Trigger Property="Layout" Value="Grid">
+                            <Setter TargetName="Elements" Property="ItemsPanel" Value="{StaticResource mkm.DataView.Grille}" />
+                        </Trigger>
+                        <MultiDataTrigger>
+                            <MultiDataTrigger.Conditions>
+                                <Condition Binding="{Binding Layout, RelativeSource={RelativeSource Self}}" Value="Grid" />
+                                <Condition Binding="{Binding HasGridItemTemplate, RelativeSource={RelativeSource Self}}" Value="True" />
+                            </MultiDataTrigger.Conditions>
+                            <Setter TargetName="Elements" Property="ItemTemplate" Value="{Binding GridItemTemplate, RelativeSource={RelativeSource TemplatedParent}}" />
+                        </MultiDataTrigger>
+                    </ControlTemplate.Triggers>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+
+</ResourceDictionary>

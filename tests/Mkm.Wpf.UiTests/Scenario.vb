@@ -204,6 +204,13 @@ Namespace Mkm.Wpf.UiTests
             Wait.UntilInputIsProcessed()
         End Sub
 
+        ''' <summary>Un double clic au milieu de l'élément, montré d'abord.</summary>
+        Protected Shared Sub DoubleCliquer(element As AutomationElement)
+            Montrer(element)
+            Mouse.DoubleClick(Centre(element))
+            Wait.UntilInputIsProcessed()
+        End Sub
+
         ''' <summary>Pose la souris au milieu de l'élément, sans cliquer.</summary>
         Protected Shared Sub Survoler(element As AutomationElement)
             Montrer(element)

@@ -1028,6 +1028,34 @@ datatable.paginator.bottom.border.color = {datatable.border.color}
 datatable.paginator.bottom.border.width = 0 0 1px 0
 datatable.extend.row.height = 32px
 
+# dataview
+dataview.border.color = transparent
+dataview.border.width = 0
+dataview.border.radius = 0
+dataview.padding = 0
+dataview.header.background = {content.background}
+dataview.header.color = {content.color}
+dataview.header.border.color = {content.border.color}
+dataview.header.border.width = 0 0 1px 0
+dataview.header.padding = 9px 12px
+dataview.header.border.radius = 0
+dataview.content.background = {content.background}
+dataview.content.color = {content.color}
+dataview.content.border.color = transparent
+dataview.content.border.width = 0
+dataview.content.padding = 0
+dataview.content.border.radius = 0
+dataview.footer.background = {content.background}
+dataview.footer.color = {content.color}
+dataview.footer.border.color = {content.border.color}
+dataview.footer.border.width = 1px 0 0 0
+dataview.footer.padding = 9px 12px
+dataview.footer.border.radius = 0
+dataview.paginator.top.border.color = {content.border.color}
+dataview.paginator.top.border.width = 0 0 1px 0
+dataview.paginator.bottom.border.color = {content.border.color}
+dataview.paginator.bottom.border.width = 1px 0 0 0
+
 # datepicker
 datepicker.transition.duration = {transition.duration}
 datepicker.panel.background = {content.background}
@@ -1748,6 +1776,10 @@ multiselect.chip.border.radius = {border.radius.xs}
 multiselect.clear.icon.color = {form.field.icon.color}
 multiselect.empty.message.padding = {list.option.padding}
 
+# orderlist
+orderlist.gap = 13.5px
+orderlist.controls.gap = 6px
+
 # overlaybadge
 overlaybadge.outline.width = 2px
 overlaybadge.outline.color = {content.background}
@@ -1832,6 +1864,10 @@ password.content.gap = 6px
 password.strength.weak.background = {red.600}
 password.strength.medium.background = {yellow.600}
 password.strength.strong.background = {green.600}
+
+# picklist
+picklist.gap = 13.5px
+picklist.controls.gap = 6px
 
 # popover
 popover.background = {overlay.popover.background}
