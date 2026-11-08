@@ -28,7 +28,10 @@
     <touches>
       <touche nom="Flèche droite">Déplace la poignée d'un pas à droite.</touche>
       <touche nom="Flèche gauche">La déplace d'un pas à gauche.</touche>
-      <touche nom="Page haut">La déplace de dix pas.</touche>
+      <touche nom="Flèche haut">Comme la flèche droite.</touche>
+      <touche nom="Flèche bas">Comme la flèche gauche.</touche>
+      <touche nom="Page haut">La déplace de dix pas à droite.</touche>
+      <touche nom="Page bas">La déplace de dix pas à gauche.</touche>
       <touche nom="Début">La pose tout à gauche.</touche>
       <touche nom="Fin">La pose tout à droite.</touche>
     </touches>

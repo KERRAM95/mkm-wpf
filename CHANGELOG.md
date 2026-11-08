@@ -277,6 +277,13 @@ Les évolutions notables de mkm-wpf, version par version. Le format suit
     le survol et le clavier l'emportent sur le rouge, comme mkm ; un champ
     refusé le dit aux lecteurs d'écran (« Non valide », le aria-invalid de
     mkm), Select compris.
+  - MeterGroup : en colonne, la légende « Start » passe à gauche de la barre,
+    comme mkm ; les jauges ne sont suivies que tant que le groupe est chargé.
+  - Image : dans l'aperçu, les boutons espacés de 6 px, le clavier sur
+    Fermer à l'ouverture, le zoom de 50 à 150 % (boutons grisés aux bornes),
+    une petite image gardée à sa taille.
+  - ImageCompare : l'anneau du clavier autour de la poignée (et non de toute
+    la comparaison) ; la poignée suit ses jetons de survol.
   - InputOtp, ColorPicker, Terminal, Password : la langue n'est suivie que
     tant que le contrôle est chargé (l'abonnement à vie le gardait en
     mémoire).

@@ -11,7 +11,7 @@ Namespace Mkm.Wpf.Controls
     ''' visible.
     ''' <code>&lt;mkm:ProgressSpinner Width="32" Height="32" /&gt;</code>
     ''' </summary>
-    ''' <remarks>Il se nomme « En cours » pour l'accessibilité (rôle « progressbar » de mkm).</remarks>
+    ''' <remarks>Il se nomme « Chargement en cours » pour l'accessibilité (rôle « progressbar » de mkm).</remarks>
     Public Class ProgressSpinner
         Inherits Control
 

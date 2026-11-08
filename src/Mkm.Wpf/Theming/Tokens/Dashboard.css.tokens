@@ -484,6 +484,7 @@ picklist.controls.margin = 0 {picklist.gap} 0 {picklist.gap}
 metergroup.meters.end.margin = 0 0 {metergroup.gap} 0
 metergroup.meters.start.margin = {metergroup.gap} 0 0 0
 metergroup.meters.vertical.margin = 0 {metergroup.gap} 0 0
+metergroup.meters.vertical.start.margin = 0 0 0 {metergroup.gap}
 
 # organizationchart : le bouton qui replie un nœud, à cheval sur son bas (la moitié de sa taille dessous) ; son
 # chevron.

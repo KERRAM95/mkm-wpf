@@ -13,13 +13,25 @@
         <Setter Property="Width" Value="{DynamicResource mkm.imagecompare.handle.size}" />
         <Setter Property="Height" Value="{DynamicResource mkm.imagecompare.handle.size}" />
         <Setter Property="Cursor" Value="SizeWE" />
+        <Setter Property="Background" Value="{DynamicResource mkm.imagecompare.handle.background}" />
+        <Setter Property="BorderBrush" Value="{DynamicResource mkm.imagecompare.handle.border.color}" />
         <Setter Property="Template">
             <Setter.Value>
                 <ControlTemplate TargetType="{x:Type Thumb}">
-                    <Border Background="{DynamicResource mkm.imagecompare.handle.background}"
-                            BorderBrush="{DynamicResource mkm.imagecompare.handle.border.color}"
-                            BorderThickness="{DynamicResource mkm.imagecompare.handle.all.border.width}"
-                            CornerRadius="{DynamicResource mkm.imagecompare.handle.border.radius}" />
+                    <Grid>
+                        <Border Background="{TemplateBinding Background}" BorderBrush="{TemplateBinding BorderBrush}"
+                                BorderThickness="{DynamicResource mkm.imagecompare.handle.all.border.width}"
+                                CornerRadius="{DynamicResource mkm.imagecompare.handle.border.radius}" />
+                        <!-- L'anneau du clavier autour de la poignée, à 1 px au-dehors (:focus-visible de mkm). -->
+                        <Rectangle x:Name="Anneau" Margin="-2" Visibility="Collapsed" IsHitTestVisible="False" RadiusX="6" RadiusY="6"
+                                   Stroke="{DynamicResource mkm.imagecompare.handle.focus.ring.color}"
+                                   StrokeThickness="{DynamicResource mkm.imagecompare.handle.focus.ring.width}" />
+                    </Grid>
+                    <ControlTemplate.Triggers>
+                        <Trigger Property="local:FocusVisible.IsVisible" Value="True">
+                            <Setter TargetName="Anneau" Property="Visibility" Value="Visible" />
+                        </Trigger>
+                    </ControlTemplate.Triggers>
                 </ControlTemplate>
             </Setter.Value>
         </Setter>
@@ -27,6 +39,8 @@
             <Trigger Property="IsMouseOver" Value="True">
                 <Setter Property="Width" Value="{DynamicResource mkm.imagecompare.handle.hover.size}" />
                 <Setter Property="Height" Value="{DynamicResource mkm.imagecompare.handle.hover.size}" />
+                <Setter Property="Background" Value="{DynamicResource mkm.imagecompare.handle.hover.background}" />
+                <Setter Property="BorderBrush" Value="{DynamicResource mkm.imagecompare.handle.hover.border.color}" />
             </Trigger>
         </Style.Triggers>
     </Style>
@@ -39,10 +53,16 @@
                     <Grid Background="Transparent">
                         <Track x:Name="PART_Track" Margin="{DynamicResource mkm.imagecompare.track.margin}">
                             <Track.Thumb>
-                                <Thumb Style="{StaticResource mkm.ImageCompare.Poignee}" />
+                                <Thumb x:Name="Poignee" Style="{StaticResource mkm.ImageCompare.Poignee}" />
                             </Track.Thumb>
                         </Track>
                     </Grid>
+                    <ControlTemplate.Triggers>
+                        <!-- Le curseur a le clavier : sa poignée le montre. -->
+                        <Trigger Property="local:FocusVisible.IsVisible" Value="True">
+                            <Setter TargetName="Poignee" Property="local:FocusVisible.IsVisible" Value="True" />
+                        </Trigger>
+                    </ControlTemplate.Triggers>
                 </ControlTemplate>
             </Setter.Value>
         </Setter>
@@ -59,15 +79,7 @@
                         <Slider x:Name="Curseur" Style="{StaticResource mkm.ImageCompare.Curseur}" Minimum="0" Maximum="100"
                                 SmallChange="1" LargeChange="10" AutomationProperties.Name="{loc:T aria.compare}"
                                 Value="{Binding Value, RelativeSource={RelativeSource TemplatedParent}, Mode=TwoWay}" />
-                        <Rectangle x:Name="Anneau" Visibility="Collapsed" IsHitTestVisible="False"
-                                   Stroke="{DynamicResource mkm.imagecompare.handle.focus.ring.color}"
-                                   StrokeThickness="{DynamicResource mkm.imagecompare.handle.focus.ring.width}" />
                     </Grid>
-                    <ControlTemplate.Triggers>
-                        <Trigger SourceName="Curseur" Property="local:FocusVisible.IsVisible" Value="True">
-                            <Setter TargetName="Anneau" Property="Visibility" Value="Visible" />
-                        </Trigger>
-                    </ControlTemplate.Triggers>
                 </ControlTemplate>
             </Setter.Value>
         </Setter>

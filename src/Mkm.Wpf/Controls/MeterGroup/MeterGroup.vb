@@ -153,6 +153,12 @@ Namespace Mkm.Wpf.Controls
             FocusableProperty.OverrideMetadata(GetType(MeterGroup), New FrameworkPropertyMetadata(False))
         End Sub
 
+        ''' <summary>Un groupe de jauges vide.</summary>
+        Public Sub New()
+            AddHandler Loaded, Sub() Mesurer()
+            AddHandler Unloaded, Sub() Detacher()
+        End Sub
+
         ''' <summary>Le bas de l'étendue.</summary>
         Public Property Minimum As Double
             Get
@@ -233,12 +239,7 @@ Namespace Mkm.Wpf.Controls
 
         ' La part de chaque jauge, et un trait de sa couleur dans la barre.
         Friend Sub Mesurer()
-            For Each suivi In _suivis
-                For Each p In {MeterItem.ValueProperty, MeterItem.ColorProperty, MeterItem.LabelProperty}
-                    DependencyPropertyDescriptor.FromProperty(p, GetType(MeterItem)).RemoveValueChanged(suivi, AddressOf Jauge_Change)
-                Next
-            Next
-            _suivis.Clear()
+            Detacher()
             Dim etendue = Math.Max(Double.Epsilon, Maximum - Minimum)
             _barre?.Children.Clear()
             For Each jauge In Jauges
@@ -253,6 +254,17 @@ Namespace Mkm.Wpf.Controls
                     _barre.Children.Add(trait)
                 End If
             Next
+        End Sub
+
+        ' Les jauges ne sont suivies que tant que le groupe est chargé : l'abonnement (DependencyPropertyDescriptor) le
+        ' retiendrait en mémoire.
+        Private Sub Detacher()
+            For Each suivi In _suivis
+                For Each p In {MeterItem.ValueProperty, MeterItem.ColorProperty, MeterItem.LabelProperty}
+                    DependencyPropertyDescriptor.FromProperty(p, GetType(MeterItem)).RemoveValueChanged(suivi, AddressOf Jauge_Change)
+                Next
+            Next
+            _suivis.Clear()
         End Sub
 
         ''' <summary>Un groupe pour les lecteurs d'écran, nommé par <c>AutomationProperties.Name</c> : sa légende.</summary>

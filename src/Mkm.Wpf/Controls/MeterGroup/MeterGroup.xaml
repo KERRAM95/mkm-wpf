@@ -61,6 +61,15 @@
                             <Setter TargetName="Barre" Property="Margin" Value="{DynamicResource mkm.metergroup.meters.vertical.margin}" />
                             <Setter TargetName="PART_Meters" Property="Orientation" Value="Vertical" />
                         </Trigger>
+                        <!-- En colonne, la légende avant la barre : à sa gauche, comme mkm. -->
+                        <MultiTrigger>
+                            <MultiTrigger.Conditions>
+                                <Condition Property="Orientation" Value="Vertical" />
+                                <Condition Property="LabelPosition" Value="Start" />
+                            </MultiTrigger.Conditions>
+                            <Setter TargetName="Barre" Property="DockPanel.Dock" Value="Right" />
+                            <Setter TargetName="Barre" Property="Margin" Value="{DynamicResource mkm.metergroup.meters.vertical.start.margin}" />
+                        </MultiTrigger>
                         <Trigger Property="LabelOrientation" Value="Vertical">
                             <Setter Property="ItemsPanel" Value="{StaticResource mkm.MeterGroup.LegendeEnColonne}" />
                         </Trigger>

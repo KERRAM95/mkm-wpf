@@ -124,7 +124,8 @@ Namespace Mkm.Wpf.Controls
             SetResourceReference(BackgroundProperty, "mkm.image.preview.mask.background")
             Title = If(AutomationProperties.GetName(image), String.Empty)
 
-            Dim vue As New System.Windows.Controls.Image With {.Source = image.Source, .Stretch = Stretch.Uniform, .Margin = New Thickness(48),
+            ' Une petite image reste à sa taille (mkm : au plus l'écran), une grande se réduit pour tenir.
+            Dim vue As New System.Windows.Controls.Image With {.Source = image.Source, .Stretch = Stretch.Uniform, .StretchDirection = StretchDirection.DownOnly, .Margin = New Thickness(48),
                                                                .RenderTransformOrigin = New Point(0.5, 0.5)}
             Dim transformation As New TransformGroup()
             transformation.Children.Add(_rotation)
@@ -132,8 +133,10 @@ Namespace Mkm.Wpf.Controls
             vue.RenderTransform = transformation
             AutomationProperties.SetName(vue, Title)
 
-            Dim barre As New StackPanel With {.Orientation = Orientation.Horizontal, .HorizontalAlignment = HorizontalAlignment.Right,
-                                             .VerticalAlignment = VerticalAlignment.Top}
+            ' Les boutons à 6 px l'un de l'autre (image.toolbar.gap de mkm).
+            Dim barre As New GapStackPanel With {.Orientation = Orientation.Horizontal, .HorizontalAlignment = HorizontalAlignment.Right,
+                                                 .VerticalAlignment = VerticalAlignment.Top}
+            barre.SetResourceReference(GapStackPanel.GapProperty, "mkm.image.toolbar.gap")
             Dim cadre As New Border With {.Child = barre, .HorizontalAlignment = HorizontalAlignment.Right, .VerticalAlignment = VerticalAlignment.Top}
             cadre.SetResourceReference(Border.BackgroundProperty, "mkm.image.toolbar.background")
             cadre.SetResourceReference(Border.BorderBrushProperty, "mkm.image.toolbar.border.color")
@@ -143,9 +146,12 @@ Namespace Mkm.Wpf.Controls
             cadre.BorderThickness = New Thickness(1)
             barre.Children.Add(BoutonDAction(InternalIcons.Refresh, "aria.rotateRight", Sub() _rotation.Angle += 90))
             barre.Children.Add(BoutonDAction(InternalIcons.Undo, "aria.rotateLeft", Sub() _rotation.Angle -= 90))
-            barre.Children.Add(BoutonDAction(InternalIcons.SearchMinus, "aria.zoomOut", Sub() Echelle(-0.1)))
-            barre.Children.Add(BoutonDAction(InternalIcons.SearchPlus, "aria.zoomIn", Sub() Echelle(0.1)))
-            barre.Children.Add(BoutonDAction(InternalIcons.Times, "aria.close", AddressOf Close))
+            _reduire = BoutonDAction(InternalIcons.SearchMinus, "aria.zoomOut", Sub() Echelle(-0.1))
+            _agrandir = BoutonDAction(InternalIcons.SearchPlus, "aria.zoomIn", Sub() Echelle(0.1))
+            barre.Children.Add(_reduire)
+            barre.Children.Add(_agrandir)
+            Dim fermer = BoutonDAction(InternalIcons.Times, "aria.close", AddressOf Close)
+            barre.Children.Add(fermer)
 
             Dim grille As New Grid()
             grille.Children.Add(vue)
@@ -157,13 +163,20 @@ Namespace Mkm.Wpf.Controls
                                                        If e.OriginalSource Is grille Then Close()
                                                    End Sub
             grille.Background = Brushes.Transparent
-            AddHandler Loaded, Sub() barre.Children(0).Focus()
+            ' À l'ouverture, le clavier sur Fermer, comme mkm.
+            AddHandler Loaded, Sub() fermer.Focus()
         End Sub
 
+        Private _reduire As BoutonDApercu
+        Private _agrandir As BoutonDApercu
+
+        ' Le zoom de mkm : de 0,5 à 1,5 ; aux bornes, son bouton est grisé.
         Private Sub Echelle(pas As Double)
-            Dim valeur = Math.Max(0.5, Math.Min(3, _echelle.ScaleX + pas))
+            Dim valeur = Math.Round(Math.Max(0.5, Math.Min(1.5, _echelle.ScaleX + pas)), 2)
             _echelle.ScaleX = valeur
             _echelle.ScaleY = valeur
+            _reduire.IsEnabled = valeur > 0.5
+            _agrandir.IsEnabled = valeur < 1.5
         End Sub
 
         ' Un bouton de la barre : 36 px, l'icône de 18 px, claire sur le voile.
