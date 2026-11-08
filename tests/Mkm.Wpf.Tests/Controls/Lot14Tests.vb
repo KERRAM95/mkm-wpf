@@ -1,3 +1,4 @@
+Imports System.Collections.Generic
 Imports System.Linq
 Imports System.Windows
 Imports System.Windows.Automation.Peers
@@ -69,6 +70,30 @@ Namespace Mkm.Wpf.Tests.Controls
             Assert.That(euro.BorderThickness.Left, [Is].EqualTo(1))
             Assert.That(euro.BorderThickness.Right, [Is].EqualTo(0))
         End Sub
+
+        <Test>
+        Public Sub InputGroup_UnSelectPerdSesCoinsDuCoteDuVoisin()
+            Dim groupe As New InputGroup()
+            Dim cles As New InputGroupAddon With {.Content = "Maturité"}
+            Dim choix As New [Select]()
+            choix.Items.Add("In Work")
+            groupe.Items.Add(cles)
+            groupe.Items.Add(choix)
+            Pret(groupe)
+            Dim bordures = Descendants(choix).OfType(Of Border)().ToList()
+            Assert.That(bordures.Any(Function(b) b.CornerRadius.TopLeft > 0 OrElse b.CornerRadius.BottomLeft > 0), [Is].False, "à gauche, le voisin : pas de coins")
+            Assert.That(bordures.Any(Function(b) b.CornerRadius.TopRight > 0), [Is].True, "au bout du groupe, ses coins")
+        End Sub
+
+        Private Shared Iterator Function Descendants(element As DependencyObject) As IEnumerable(Of DependencyObject)
+            For i = 0 To System.Windows.Media.VisualTreeHelper.GetChildrenCount(element) - 1
+                Dim enfant = System.Windows.Media.VisualTreeHelper.GetChild(element, i)
+                Yield enfant
+                For Each petit In Descendants(enfant)
+                    Yield petit
+                Next
+            Next
+        End Function
 
         <Test>
         Public Sub InputGroup_LeChampPrendLaLargeurQueLaissentLesComplements()

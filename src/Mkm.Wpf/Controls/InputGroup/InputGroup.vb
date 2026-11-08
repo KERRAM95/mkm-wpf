@@ -1,3 +1,4 @@
+Imports System.Collections.Generic
 Imports System.ComponentModel
 Imports System.Linq
 Imports System.Windows
@@ -26,6 +27,19 @@ Namespace Mkm.Wpf.Controls
             DefaultStyleKeyProperty.OverrideMetadata(GetType(InputGroup), New FrameworkPropertyMetadata(GetType(InputGroup)))
             FocusableProperty.OverrideMetadata(GetType(InputGroup), New FrameworkPropertyMetadata(False))
         End Sub
+
+        ''' <summary>Un groupe vide ; une fois dessinés, les champs sans coins à eux sont équarris (Placer).</summary>
+        Public Sub New()
+            AddHandler Loaded, Sub() Dispatcher.BeginInvoke(Threading.DispatcherPriority.Loaded, New System.Action(AddressOf Placer))
+            ' Un champ pas encore dessiné (son gabarit, ou celui de ses champs, à venir) : de nouveau après la mise en page.
+            AddHandler LayoutUpdated, Sub()
+                                          If Not _aRefaire Then Return
+                                          _aRefaire = False
+                                          Placer()
+                                      End Sub
+        End Sub
+
+        Private _aRefaire As Boolean
 
         ''' <summary>Un groupe pour les lecteurs d'écran, nommé par <c>AutomationProperties.Name</c> : ses champs et ses boutons.</summary>
         Protected Overrides Function OnCreateAutomationPeer() As AutomationPeer
@@ -66,9 +80,49 @@ Namespace Mkm.Wpf.Controls
                         If(premier AndAlso dernier, "mkm.inputgroup.addon.border.radius",
                         If(premier, "mkm.inputgroup.first.corner.radius",
                         If(dernier, "mkm.inputgroup.last.corner.radius", "mkm.inputgroup.middle.corner.radius"))))
+                ElseIf TypeOf elements(i) Is Control Then
+                    ' Select, InputNumber, Password, DatePicker, IconField, FloatLabel : leurs coins sont dans leur gabarit ;
+                    ' ceux du côté d'un voisin passent à zéro, comme mkm (.p-inputgroup > .p-inputwrapper > .p-component).
+                    If Not Equarrir(DirectCast(elements(i), Control), gauche:=Not premier, droite:=Not dernier) Then _aRefaire = True
                 End If
             Next
         End Sub
+
+        ' Les coins d'origine d'une bordure équarrie, pour les lui rendre.
+        Private Shared ReadOnly CoinsDOrigineProperty As DependencyProperty = DependencyProperty.RegisterAttached(
+            "CoinsDOrigine", GetType(Object), GetType(InputGroup), New PropertyMetadata(Nothing))
+
+        ' Faux tant que l'élément n'a pas encore de dessin.
+        Private Shared Function Equarrir(element As Control, gauche As Boolean, droite As Boolean) As Boolean
+            element.ApplyTemplate()
+            If Media.VisualTreeHelper.GetChildrenCount(element) = 0 Then Return False
+            For Each bordure In Bordures(element)
+                Dim origine = bordure.GetValue(CoinsDOrigineProperty)
+                If origine Is Nothing Then
+                    origine = bordure.GetValue(Border.CornerRadiusProperty)
+                    bordure.SetValue(CoinsDOrigineProperty, origine)
+                End If
+                Dim c = DirectCast(origine, CornerRadius)
+                bordure.SetValue(Border.CornerRadiusProperty,
+                                 New CornerRadius(If(gauche, 0, c.TopLeft), If(droite, 0, c.TopRight), If(droite, 0, c.BottomRight), If(gauche, 0, c.BottomLeft)))
+            Next
+            Return True
+        End Function
+
+        ' Les bordures arrondies du dessin d'un élément (ses bordures et ses champs de mkm, à tout niveau).
+        Private Shared Iterator Function Bordures(element As DependencyObject) As IEnumerable(Of DependencyObject)
+            For i = 0 To Media.VisualTreeHelper.GetChildrenCount(element) - 1
+                Dim enfant = Media.VisualTreeHelper.GetChild(element, i)
+                Dim aDesCoins = TypeOf enfant Is Border OrElse APropreCoins(enfant)
+                If aDesCoins Then
+                    Dim c = DirectCast(If(enfant.GetValue(CoinsDOrigineProperty), enfant.GetValue(Border.CornerRadiusProperty)), CornerRadius)
+                    If c.TopLeft > 0 OrElse c.TopRight > 0 OrElse c.BottomRight > 0 OrElse c.BottomLeft > 0 Then Yield enfant
+                End If
+                For Each petit In Bordures(enfant)
+                    Yield petit
+                Next
+            Next
+        End Function
 
         ' Un champ, un bouton ou un complément de mkm qui ont leurs coins (CornerRadius, celui de Border).
         Private Shared Function APropreCoins(element As DependencyObject) As Boolean

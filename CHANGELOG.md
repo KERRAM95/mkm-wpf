@@ -300,6 +300,9 @@ Les évolutions notables de mkm-wpf, version par version. Le format suit
     à l'autre, comme mkm ; l'en-tête se dit développé ou réduit.
   - DataTable, TreeGrid : un titre triable prend le clavier (anneau du
     clavier) ; Entrée ou Espace le trient, comme mkm.
+  - InputGroup : Select, InputNumber, Password, DatePicker, IconField et
+    FloatLabel perdent aussi leurs coins du côté d'un voisin, comme mkm (ils
+    les gardaient, arrondis au milieu du groupe).
   - InputOtp, ColorPicker, Terminal, Password : la langue n'est suivie que
     tant que le contrôle est chargé (l'abonnement à vie le gardait en
     mémoire).
