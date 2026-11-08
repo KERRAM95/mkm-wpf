@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="utf-8"?>
+<page titre="Knob" categorie="Formulaire" types="Knob" jetons="knob">
+  <resume>Un bouton rotatif : une valeur entre deux bornes, sur un arc qu'on tourne à la souris ou au clavier, la valeur
+    écrite au milieu.</resume>
+
+  <section titre="Import">
+    <code><![CDATA[
+<Window xmlns:mkm="urn:mkm-wpf">
+    <mkm:Knob Value="40" />
+</Window>
+]]></code>
+  </section>
+
+  <section titre="Basique">
+    <p><c>Minimum</c> (0), <c>Maximum</c> (100) et <c>Value</c>. Un clic sur l'arc y porte la valeur ; tiré, le bouton
+      la suit.</p>
+    <exemple><![CDATA[
+<mkm:Knob x:Name="Avancement" Value="40" AutomationProperties.Name="Avancement" />
+]]></exemple>
+  </section>
+
+  <section titre="Pas, bornes et format">
+    <p><c>SmallChange</c> est le pas (<c>step</c> chez mkm) ; <c>ValueFormat</c> écrit la valeur (en XAML, une accolade
+      ouvrante se double : <c>"{}{0} %"</c>).</p>
+    <exemple><![CDATA[
+<StackPanel Orientation="Horizontal">
+    <mkm:Knob Minimum="-50" Maximum="50" Value="10" Margin="0,0,24,0" />
+    <mkm:Knob SmallChange="10" Value="40" ValueFormat="{}{0} %" />
+</StackPanel>
+]]></exemple>
+  </section>
+
+  <section titre="Taille et couleurs">
+    <p><c>Size</c> (100 par défaut), <c>StrokeWidth</c> (14 sur 100), <c>ValueColor</c>, <c>RangeColor</c> et
+      <c>Foreground</c> (le texte) ; <c>ShowValue="False"</c> retire la valeur.</p>
+    <exemple><![CDATA[
+<StackPanel Orientation="Horizontal">
+    <mkm:Knob Size="150" StrokeWidth="5" Value="60" Margin="0,0,24,0" />
+    <mkm:Knob Value="70" ValueColor="#16A34A" RangeColor="#DCFCE7" Foreground="#16A34A" ShowValue="False" />
+</StackPanel>
+]]></exemple>
+  </section>
+
+  <section titre="Lecture seule et désactivé">
+    <exemple><![CDATA[
+<StackPanel Orientation="Horizontal">
+    <mkm:Knob Value="50" IsReadOnly="True" Margin="0,0,24,0" />
+    <mkm:Knob Value="50" IsEnabled="False" />
+</StackPanel>
+]]></exemple>
+  </section>
+
+  <section titre="Accessibilité">
+    <h3>Lecteur d'écran</h3>
+    <p>Narrateur dit le Knob « curseur », avec sa valeur, nommé par <c>AutomationProperties.Name</c>.</p>
+    <h3>Clavier</h3>
+    <touches>
+      <touche nom="Flèche droite">Monte d'un pas.</touche>
+      <touche nom="Flèche haut">Monte d'un pas.</touche>
+      <touche nom="Flèche gauche">Descend d'un pas.</touche>
+      <touche nom="Flèche bas">Descend d'un pas.</touche>
+      <touche nom="Page haut">Monte de <c>LargeChange</c> (10).</touche>
+      <touche nom="Page bas">Descend de <c>LargeChange</c>.</touche>
+      <touche nom="Début">Au minimum.</touche>
+      <touche nom="Fin">Au maximum.</touche>
+    </touches>
+  </section>
+</page>

@@ -288,6 +288,54 @@ Namespace Mkm.Wpf.UiTests
             AttendreQue(Function() valeur() = "Cabine 2", "Entrée : « Cabine 2 »")
         End Sub
 
+        <Test>
+        Public Sub Rating_UnClicEtLesFlechesChangentLaNote()
+            Dim page = OuvrirLaDoc("rating")
+            Dim note = Trouver("Note", page)
+            Dim valeur = Function() note.Patterns.RangeValue.Pattern.Value.Value
+            Assert.That(valeur(), [Is].EqualTo(3))
+
+            ' La quatrième étoile : 3 étoiles de 12 et 3 écarts de 3, puis la moitié de 12, sur 72.
+            Montrer(note)
+            Dim cadre = note.BoundingRectangle
+            Mouse.Click(New System.Drawing.Point(cadre.Left + CInt(cadre.Width * 51 / 72), cadre.Top + cadre.Height \ 2))
+            AttendreQue(Function() valeur() = 4, "un clic sur la quatrième étoile : 4")
+            AttendreQue(Function() NomDe(Trouver("Note", page)) = "Qualité du plan", "nommée")
+            Taper(VirtualKeyShort.LEFT)
+            AttendreQue(Function() valeur() = 3, "← : 3")
+            Taper(VirtualKeyShort.DELETE)
+            AttendreQue(Function() valeur() = 0, "Suppr retire la note")
+        End Sub
+
+        <Test>
+        Public Sub Slider_LeClavierDeplaceLaPoignee()
+            Dim page = OuvrirLaDoc("slider")
+            Dim curseur = Trouver("Opacite", page)
+            Dim valeur = Function() curseur.Patterns.RangeValue.Pattern.Value.Value
+            Montrer(curseur)
+            curseur.Focus()
+            Taper(VirtualKeyShort.END)
+            AttendreQue(Function() valeur() = 100, "Fin : 100")
+            Taper(VirtualKeyShort.LEFT)
+            AttendreQue(Function() valeur() = 99, "← : 99")
+        End Sub
+
+        <Test>
+        Public Sub Knob_LeClavierEtLaSourisLeTournent()
+            Dim page = OuvrirLaDoc("knob")
+            Dim bouton = Trouver("Avancement", page)
+            Dim valeur = Function() bouton.Patterns.RangeValue.Pattern.Value.Value
+            Montrer(bouton)
+            ' Le haut de l'arc : la moitié.
+            Dim cadre = bouton.BoundingRectangle
+            Mouse.Click(New System.Drawing.Point(cadre.Left + cadre.Width \ 2, cadre.Top + cadre.Height \ 10))
+            AttendreQue(Function() Math.Abs(valeur() - 50) <= 1, "un clic en haut de l'arc : 50")
+            Taper(VirtualKeyShort.PRIOR)
+            AttendreQue(Function() Math.Abs(valeur() - 60) <= 1, "Page haut : 10 de plus")
+            Taper(VirtualKeyShort.HOME)
+            AttendreQue(Function() valeur() = 0, "Début : 0")
+        End Sub
+
     End Class
 
 End Namespace

@@ -149,6 +149,11 @@ Les évolutions notables de mkm-wpf, version par version. Le format suit
   `CascadeSelect` avec `CascadeSelectItem` (des listes qui s'ouvrent l'une à
   droite de l'autre) ; liés à des données ou écrits dans le XAML ; leurs
   jetons, leurs pages, leurs tests et leurs scénarios. La priorité 2 est faite.
+- Le lot 18 (`docs/composants/note-curseur-et-bouton-rotatif.md`) : `Rating`
+  (des étoiles, un clic sur la note la retire), `Slider` (le curseur de WPF
+  habillé comme mkm), `Knob` (un arc qu'on tourne, la valeur au milieu) ;
+  `Icon.Filled` (une icône pleine) ; leurs jetons, leurs pages, leurs tests et
+  leurs scénarios.
 - Info-bulle et Popover : la page qui défile les referme, comme mkm.
 - Le zoom de toute l'interface (`docs/fondations/zoom.md`) :
   `MkmResources.Zoom` (80 à 200 %), `ZoomIn`, `ZoomOut`, `ResetZoom`,

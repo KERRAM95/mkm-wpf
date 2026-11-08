@@ -407,3 +407,11 @@ treeselect.tree.max.height = 240px
 cascadeselect.label.padding = {cascadeselect.padding.y} {cascadeselect.padding.x}
 cascadeselect.overlay.window.padding = 0 2px 3px 2px
 cascadeselect.option.icon.margin = 6px 0 0 0
+
+# slider : la piste du Track dépasse de la moitié de la poignée (handle.width / 2) à chaque bout, pour que la poignée
+# se centre sur les bouts comme chez mkm ; la plage commence au bout visible ; en colonne, 100 px au moins.
+slider.track.horizontal.margin = 0 -8px 0 -8px
+slider.track.vertical.margin = -8px 0 -8px 0
+slider.range.horizontal.padding = 8px 0 0 0
+slider.range.vertical.padding = 0 0 0 8px
+slider.vertical.min.height = 100px

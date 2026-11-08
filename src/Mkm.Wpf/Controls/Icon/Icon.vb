@@ -38,6 +38,11 @@ Namespace Mkm.Wpf.Controls
             NameOf(StrokeThickness), GetType(Double), GetType(Icon),
             New FrameworkPropertyMetadata(1.5, FrameworkPropertyMetadataOptions.AffectsRender))
 
+        ''' <summary>Vrai pour une icône pleine : la géométrie remplie de la couleur du trait (l'étoile pleine de Rating).</summary>
+        Public Shared ReadOnly FilledProperty As DependencyProperty = DependencyProperty.Register(
+            NameOf(Filled), GetType(Boolean), GetType(Icon),
+            New FrameworkPropertyMetadata(False, FrameworkPropertyMetadataOptions.AffectsRender))
+
         Shared Sub New()
             ' Une icône ne prend pas le focus et laisse passer les clics à ce qui la porte.
             FocusableProperty.OverrideMetadata(GetType(Icon), New FrameworkPropertyMetadata(False))
@@ -74,6 +79,16 @@ Namespace Mkm.Wpf.Controls
             End Set
         End Property
 
+        ''' <summary>Vrai pour une icône pleine.</summary>
+        Public Property Filled As Boolean
+            Get
+                Return CBool(GetValue(FilledProperty))
+            End Get
+            Set(value As Boolean)
+                SetValue(FilledProperty, value)
+            End Set
+        End Property
+
         ''' <inheritdoc/>
         Protected Overrides Function MeasureOverride(availableSize As Size) As Size
             Return New Size(Math.Min(DefaultSize, availableSize.Width), Math.Min(DefaultSize, availableSize.Height))
@@ -106,7 +121,7 @@ Namespace Mkm.Wpf.Controls
                     .LineJoin = PenLineJoin.Round
                 }
                 drawingContext.PushTransform(New MatrixTransform(echelle, 0, 0, echelle, gauche, haut))
-                drawingContext.DrawGeometry(Nothing, trait, geometrie)
+                drawingContext.DrawGeometry(If(Filled, Foreground, Nothing), trait, geometrie)
                 drawingContext.Pop()
                 Return
             End If

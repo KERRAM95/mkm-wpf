@@ -37,6 +37,7 @@
         <ResourceDictionary Source="/Mkm.Wpf;component/Controls/InputGroup/InputGroup.xaml" />
         <ResourceDictionary Source="/Mkm.Wpf;component/Controls/InputNumber/InputNumber.xaml" />
         <ResourceDictionary Source="/Mkm.Wpf;component/Controls/InputText/InputText.xaml" />
+        <ResourceDictionary Source="/Mkm.Wpf;component/Controls/Knob/Knob.xaml" />
         <ResourceDictionary Source="/Mkm.Wpf;component/Controls/Listbox/Listbox.xaml" />
         <ResourceDictionary Source="/Mkm.Wpf;component/Controls/Menu/Menu.xaml" />
         <ResourceDictionary Source="/Mkm.Wpf;component/Controls/Message/Message.xaml" />
@@ -48,10 +49,12 @@
         <ResourceDictionary Source="/Mkm.Wpf;component/Controls/ProgressSpinner/ProgressSpinner.xaml" />
         <ResourceDictionary Source="/Mkm.Wpf;component/Controls/PropertyPanel/PropertyPanel.xaml" />
         <ResourceDictionary Source="/Mkm.Wpf;component/Controls/RadioButton/RadioButton.xaml" />
+        <ResourceDictionary Source="/Mkm.Wpf;component/Controls/Rating/Rating.xaml" />
         <ResourceDictionary Source="/Mkm.Wpf;component/Controls/ScrollPanel/ScrollPanel.xaml" />
         <ResourceDictionary Source="/Mkm.Wpf;component/Controls/Select/Select.xaml" />
         <ResourceDictionary Source="/Mkm.Wpf;component/Controls/SelectButton/SelectButton.xaml" />
         <ResourceDictionary Source="/Mkm.Wpf;component/Controls/Skeleton/Skeleton.xaml" />
+        <ResourceDictionary Source="/Mkm.Wpf;component/Controls/Slider/Slider.xaml" />
         <ResourceDictionary Source="/Mkm.Wpf;component/Controls/SplitButton/SplitButton.xaml" />
         <ResourceDictionary Source="/Mkm.Wpf;component/Controls/Splitter/Splitter.xaml" />
         <ResourceDictionary Source="/Mkm.Wpf;component/Controls/StateGraph/StateGraph.xaml" />

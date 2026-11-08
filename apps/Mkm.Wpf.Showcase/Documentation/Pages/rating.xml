@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="utf-8"?>
+<page titre="Rating" categorie="Formulaire" types="Rating" jetons="rating">
+  <resume>Une note en étoiles : un clic sur une étoile donne sa note, un clic sur la note la retire.</resume>
+
+  <section titre="Import">
+    <code><![CDATA[
+<Window xmlns:mkm="urn:mkm-wpf">
+    <mkm:Rating Value="3" />
+</Window>
+]]></code>
+  </section>
+
+  <section titre="Basique">
+    <p><c>Value</c> est la note, de 0 (aucune) au nombre d'étoiles ; elle se lie dans les deux sens, et
+      <c>ValueChanged</c> dit qu'elle change. Le survol colore l'étoile visée.</p>
+    <exemple><![CDATA[
+<StackPanel Orientation="Horizontal">
+    <mkm:Rating x:Name="Note" Value="3" AutomationProperties.Name="Qualité du plan" />
+    <TextBlock Margin="12,0,0,0" VerticalAlignment="Center"
+               Text="{Binding Value, ElementName=Note, StringFormat='Note : {0} sur 5'}" />
+</StackPanel>
+]]></exemple>
+  </section>
+
+  <section titre="Nombre d'étoiles">
+    <p><c>Stars</c> : 5 par défaut.</p>
+    <exemple><![CDATA[
+<mkm:Rating Stars="10" Value="7" />
+]]></exemple>
+  </section>
+
+  <section titre="Icônes">
+    <p><c>OnIcon</c> et <c>OffIcon</c> remplacent l'étoile pleine et l'étoile vide : une icône de <lien page="icones">mkm</lien>.</p>
+    <exemple><![CDATA[
+<mkm:Rating Value="2" OnIcon="{x:Static mkm:Icons.Check}" OffIcon="{x:Static mkm:Icons.Close}" />
+]]></exemple>
+  </section>
+
+  <section titre="Lecture seule et désactivé">
+    <p><c>IsReadOnly</c> montre la note sans qu'on la change ; <c>IsEnabled="False"</c> la grise.</p>
+    <exemple><![CDATA[
+<StackPanel Orientation="Horizontal">
+    <mkm:Rating Value="4" IsReadOnly="True" Margin="0,0,24,0" />
+    <mkm:Rating Value="2" IsEnabled="False" />
+</StackPanel>
+]]></exemple>
+  </section>
+
+  <section titre="Accessibilité">
+    <h3>Lecteur d'écran</h3>
+    <p>Narrateur dit la note « curseur », de 0 au nombre d'étoiles, nommée par <c>AutomationProperties.Name</c>.</p>
+    <h3>Clavier</h3>
+    <touches>
+      <touche nom="Flèche droite">Monte la note d'une étoile.</touche>
+      <touche nom="Flèche haut">Monte la note d'une étoile.</touche>
+      <touche nom="Flèche gauche">Baisse la note d'une étoile (pas sous une).</touche>
+      <touche nom="Flèche bas">Baisse la note d'une étoile (pas sous une).</touche>
+      <touche nom="Début">Une étoile.</touche>
+      <touche nom="Fin">Toutes les étoiles.</touche>
+      <touche nom="Suppr">Retire la note.</touche>
+    </touches>
+  </section>
+</page>

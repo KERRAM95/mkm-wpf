@@ -1353,6 +1353,18 @@ inputtext.lg.font.size = {form.field.lg.font.size}
 inputtext.lg.padding.x = {form.field.lg.padding.x}
 inputtext.lg.padding.y = {form.field.lg.padding.y}
 
+# knob
+knob.transition.duration = {transition.duration}
+knob.focus.ring.width = {focus.ring.width}
+knob.focus.ring.style = {focus.ring.style}
+knob.focus.ring.color = {focus.ring.color}
+knob.focus.ring.offset = {focus.ring.offset}
+knob.focus.ring.shadow = {focus.ring.shadow}
+knob.value.background = {primary.color}
+knob.text.color = {text.muted.color}
+knob.text.font.size = 15.6px
+knob.range.background = {surface.300}
+
 # listbox
 listbox.background = {form.field.background}
 listbox.disabled.background = {form.field.disabled.background}
@@ -1715,6 +1727,19 @@ radiobutton.icon.disabled.color = {form.field.disabled.color}
 radiobutton.icon.sm.size = 6px
 radiobutton.icon.lg.size = 12px
 
+# rating
+rating.gap = 3px
+rating.transition.duration = {transition.duration}
+rating.focus.ring.width = {focus.ring.width}
+rating.focus.ring.style = {focus.ring.style}
+rating.focus.ring.color = {focus.ring.color}
+rating.focus.ring.offset = {focus.ring.offset}
+rating.focus.ring.shadow = {focus.ring.shadow}
+rating.icon.size = 12px
+rating.icon.color = {text.muted.color}
+rating.icon.hover.color = {primary.color}
+rating.icon.active.color = {primary.color}
+
 # scrollpanel
 scrollpanel.transition.duration = {transition.duration}
 scrollpanel.bar.size = 9px
@@ -1794,6 +1819,29 @@ selectbutton.invalid.border.color = {form.field.invalid.border.color}
 skeleton.border.radius = {content.border.radius}
 skeleton.background = {surface.300}
 skeleton.animation.background = rgba(255,255,255,0.4)
+
+# slider
+slider.transition.duration = {transition.duration}
+slider.track.border.radius = {content.border.radius}
+slider.track.size = 3px
+slider.track.background = {surface.300}
+slider.range.background = {primary.color}
+slider.handle.width = 16px
+slider.handle.height = 16px
+slider.handle.border.radius = 50%
+slider.handle.background = {primary.color}
+slider.handle.hover.background = {primary.color}
+slider.handle.content.border.radius = 50%
+slider.handle.content.background = {primary.color}
+slider.handle.content.hover.background = {primary.color}
+slider.handle.content.width = 12px
+slider.handle.content.height = 12px
+slider.handle.content.shadow = none
+slider.handle.focus.ring.width = {focus.ring.width}
+slider.handle.focus.ring.style = {focus.ring.style}
+slider.handle.focus.ring.color = {focus.ring.color}
+slider.handle.focus.ring.offset = {focus.ring.offset}
+slider.handle.focus.ring.shadow = {focus.ring.shadow}
 
 # splitbutton
 splitbutton.border.radius = {form.field.border.radius}
