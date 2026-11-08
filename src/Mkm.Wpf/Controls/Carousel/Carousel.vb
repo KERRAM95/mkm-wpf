@@ -342,8 +342,16 @@ Namespace Mkm.Wpf.Controls
             End If
         End Sub
 
+        ''' <summary>
+        ''' Les flèches confiées à un autre contrôle (la bande de vignettes d'une Galleria : ses flèches changent l'image
+        ''' montrée, comme mkm) : -1 ou +1 lui sont passés, au lieu de changer de page.
+        ''' </summary>
+        Friend Property FlechesDeleguees As System.Action(Of Integer)
+
         Private Sub Bouton_Click(sender As Object, e As RoutedEventArgs)
-            If e.OriginalSource Is _precedent Then
+            If FlechesDeleguees IsNot Nothing AndAlso (e.OriginalSource Is _precedent OrElse e.OriginalSource Is _suivant) Then
+                FlechesDeleguees.Invoke(If(e.OriginalSource Is _precedent, -1, 1))
+            ElseIf e.OriginalSource Is _precedent Then
                 Previous()
             ElseIf e.OriginalSource Is _suivant Then
                 [Next]()

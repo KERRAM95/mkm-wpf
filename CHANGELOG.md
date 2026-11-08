@@ -309,6 +309,8 @@ Les évolutions notables de mkm-wpf, version par version. Le format suit
     visibilité des commandes (une commande cachée à la création paraît quand
     la vue ou le contexte changent) et leurs traits avec elles, comme la page
     le disait ; un sous-menu devient une liste de l'ActionBar.
+  - Galleria : les flèches des vignettes changent l'image montrée, comme
+    mkm ; une navigation de l'utilisateur arrête la lecture automatique.
   - InputOtp, ColorPicker, Terminal, Password : la langue n'est suivie que
     tant que le contrôle est chargé (l'abonnement à vie le gardait en
     mémoire).

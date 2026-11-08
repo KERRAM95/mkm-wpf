@@ -277,6 +277,14 @@ Namespace Mkm.Wpf.Controls
         Public Overrides Sub OnApplyTemplate()
             MyBase.OnApplyTemplate()
             _vignettes = TryCast(GetTemplateChild("PART_Thumbnails"), Carousel)
+            ' Les flèches de la bande changent l'image montrée (la bande suit), comme mkm ; une action de l'utilisateur
+            ' arrête la lecture automatique.
+            If _vignettes IsNot Nothing Then
+                _vignettes.FlechesDeleguees = Sub(sens)
+                                                  ArreterLaLecture()
+                                                  If sens < 0 Then Previous() Else [Next]()
+                                              End Sub
+            End If
             _precedent = TryCast(GetTemplateChild("PART_Previous"), ButtonBase)
             _suivant = TryCast(GetTemplateChild("PART_Next"), ButtonBase)
             _indicateurs = TryCast(GetTemplateChild("PART_Indicators"), ItemsControl)
@@ -287,8 +295,9 @@ Namespace Mkm.Wpf.Controls
             Dim galerie = DirectCast(d, Galleria)
             Dim avant = TryCast(e.OldValue, INotifyCollectionChanged)
             Dim apres = TryCast(e.NewValue, INotifyCollectionChanged)
-            If avant IsNot Nothing Then RemoveHandler avant.CollectionChanged, AddressOf galerie.Elements_CollectionChanged
-            If apres IsNot Nothing Then AddHandler apres.CollectionChanged, AddressOf galerie.Elements_CollectionChanged
+            ' Abonnement faible : une liste qui vit plus longtemps que la galerie ne la retient pas.
+            If avant IsNot Nothing Then CollectionChangedEventManager.RemoveHandler(avant, AddressOf galerie.Elements_CollectionChanged)
+            If apres IsNot Nothing Then CollectionChangedEventManager.AddHandler(apres, AddressOf galerie.Elements_CollectionChanged)
             galerie.Relire()
         End Sub
 
@@ -376,6 +385,9 @@ Namespace Mkm.Wpf.Controls
         Private Sub Bouton_Click(sender As Object, e As RoutedEventArgs)
             Dim source = TryCast(e.OriginalSource, FrameworkElement)
             If source Is Nothing Then Return
+            ' Une navigation de l'utilisateur arrête la lecture automatique (stopSlideShow de mkm).
+            If source Is _precedent OrElse source Is _suivant OrElse TypeOf source Is BoutonDeVignette OrElse
+               (_indicateurs IsNot Nothing AndAlso _indicateurs.IsAncestorOf(source)) Then ArreterLaLecture()
             If source Is _precedent Then
                 Previous()
             ElseIf source Is _suivant Then
@@ -405,6 +417,10 @@ Namespace Mkm.Wpf.Controls
 
         Private Shared Sub OnAutoPlayChanged(d As DependencyObject, e As DependencyPropertyChangedEventArgs)
             DirectCast(d, Galleria).Demarrer()
+        End Sub
+
+        Private Sub ArreterLaLecture()
+            _minuteur?.Stop()
         End Sub
 
         Private Sub Demarrer()
