@@ -68,6 +68,7 @@ Namespace Mkm.Wpf.UiTests
             entree.Select()
             Dim contenu = Trouver("page-" & id)
             Wait.UntilInputIsProcessed()
+            Vitrine.AttendreQuElleSoitLibre()
             Return contenu
         End Function
 
@@ -159,7 +160,9 @@ Namespace Mkm.Wpf.UiTests
                                                                  Optional delaiMax As TimeSpan? = Nothing) As TElement
             Dim chrono = Stopwatch.StartNew()
             Dim limite = If(delaiMax, Delai)
+            Dim essais = 0
             Do
+                essais += 1
                 Dim trouve As TElement = Nothing
                 Try
                     trouve = chercher()
@@ -167,7 +170,8 @@ Namespace Mkm.Wpf.UiTests
                     ' L'élément peut disparaître pendant qu'on le lit : on recommence.
                 End Try
                 If trouve IsNot Nothing Then Return trouve
-                If chrono.Elapsed > limite Then Assert.Fail($"Introuvable après {limite.TotalSeconds:0} s : {quoi}.")
+                ' Un essai lent (le premier parcours d'une grande page) ne suffit pas à conclure : au moins deux.
+                If chrono.Elapsed > limite AndAlso essais >= 2 Then Assert.Fail($"Introuvable après {limite.TotalSeconds:0} s : {quoi}.")
                 Thread.Sleep(100)
             Loop
         End Function
@@ -176,7 +180,9 @@ Namespace Mkm.Wpf.UiTests
         Protected Shared Sub AttendreQue(condition As Func(Of Boolean), quoi As String, Optional delaiMax As TimeSpan? = Nothing)
             Dim chrono = Stopwatch.StartNew()
             Dim limite = If(delaiMax, Delai)
+            Dim essais = 0
             Do
+                essais += 1
                 Dim vrai = False
                 Try
                     vrai = condition()
@@ -184,7 +190,7 @@ Namespace Mkm.Wpf.UiTests
                     ' Un état intermédiaire illisible : on recommence.
                 End Try
                 If vrai Then Return
-                If chrono.Elapsed > limite Then Assert.Fail($"Pas vrai après {limite.TotalSeconds:0} s : {quoi}.")
+                If chrono.Elapsed > limite AndAlso essais >= 2 Then Assert.Fail($"Pas vrai après {limite.TotalSeconds:0} s : {quoi}.")
                 Thread.Sleep(100)
             Loop
         End Sub

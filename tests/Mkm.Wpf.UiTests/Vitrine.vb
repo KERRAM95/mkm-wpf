@@ -121,6 +121,22 @@ Namespace Mkm.Wpf.UiTests
             If _fenetre Is Nothing Then Throw New InvalidOperationException("La fenêtre de la vitrine ne s'est pas ouverte.")
             _fenetre.SetForeground()
             Wait.UntilInputIsProcessed()
+            ' Le premier scénario ouvrait sa page pendant que la vitrine finissait de démarrer (une machine plus lente que
+            ' la CI : « Initiales » introuvable sur la page Avatar). On attend qu'elle soit libre et sa première page là.
+            AttendreQuElleSoitLibre()
+            Dim chrono = Stopwatch.StartNew()
+            While _fenetre.FindFirstDescendant(Function(cf) cf.ByAutomationId("page-introduction")) Is Nothing AndAlso chrono.Elapsed < TimeSpan.FromSeconds(30)
+                Threading.Thread.Sleep(200)
+            End While
+        End Sub
+
+        ''' <summary>Attend que la vitrine ait traité ce qu'elle a en attente (sa file de messages vide).</summary>
+        Public Shared Sub AttendreQuElleSoitLibre()
+            Try
+                _application?.WaitWhileBusy(TimeSpan.FromSeconds(30))
+            Catch ex As Exception
+                TestContext.Progress.WriteLine($"Vitrine occupée : {ex.Message}")
+            End Try
         End Sub
 
         ''' <summary>Ferme la vitrine (de force si elle ne se ferme pas).</summary>
