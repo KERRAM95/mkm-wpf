@@ -345,6 +345,8 @@ Les évolutions notables de mkm-wpf, version par version. Le format suit
     droite), et non celui du menu contextuel. InputChips : abonnement faible
     à la liste. ColorPicker : le carré des nuances net au bord. StateGraph :
     les graisses de ses jetons.
+  - Button, Message, ToastMessage : une couleur que l'application donne par
+    DynamicResource n'est plus écrasée quand la gravité ou la forme changent.
   - InputOtp, ColorPicker, Terminal, Password : la langue n'est suivie que
     tant que le contrôle est chargé (l'abonnement à vie le gardait en
     mémoire).

@@ -109,6 +109,15 @@ Namespace Mkm.Wpf.Tests.Controls
         End Sub
 
         <Test>
+        Public Sub Button_UnDynamicResourceDeLApplicationLEmporteSurLaGravite()
+            Dim bouton As New BoutonDeMkm With {.Content = "Ouvrir"}
+            bouton.SetResourceReference(Control.BackgroundProperty, ThemeResources.Prefix & "surface.0")
+            bouton.Severity = ButtonSeverity.Danger
+            Pret(bouton)
+            Assert.That(bouton.Background, [Is].SameAs(Ressource("surface.0")), "la ressource choisie par l'application reste")
+        End Sub
+
+        <Test>
         Public Sub Message_UneValeurDeLApplicationLEmporteSurLaGravite()
             Dim message As New Message With {.Padding = New Thickness(0)}
             message.Severity = MessageSeverity.Warn
