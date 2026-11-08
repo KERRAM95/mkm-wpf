@@ -44,7 +44,7 @@ Namespace Mkm.Wpf.Controls
         ''' <summary>Son image (une photo), qui remplit l'avatar.</summary>
         Public Shared ReadOnly ImageProperty As DependencyProperty = DependencyProperty.Register(
             NameOf(Image), GetType(ImageSource), GetType(Avatar),
-            New FrameworkPropertyMetadata(Nothing, Sub(d, e) d.SetValue(HasImagePropertyKey, e.NewValue IsNot Nothing)))
+            New FrameworkPropertyMetadata(Nothing, AddressOf OnImageChanged))
 
         Private Shared ReadOnly HasImagePropertyKey As DependencyPropertyKey = DependencyProperty.RegisterReadOnly(
             NameOf(HasImage), GetType(Boolean), GetType(Avatar), New FrameworkPropertyMetadata(False))
@@ -67,6 +67,25 @@ Namespace Mkm.Wpf.Controls
         Shared Sub New()
             DefaultStyleKeyProperty.OverrideMetadata(GetType(Avatar), New FrameworkPropertyMetadata(GetType(Avatar)))
             FocusableProperty.OverrideMetadata(GetType(Avatar), New FrameworkPropertyMetadata(False))
+        End Sub
+
+        Private Shared Sub OnImageChanged(d As DependencyObject, e As DependencyPropertyChangedEventArgs)
+            d.SetValue(HasImagePropertyKey, e.NewValue IsNot Nothing)
+            DirectCast(d, Avatar).PoserLImage()
+        End Sub
+
+        ' Le carré et le rond de l'image, peints d'elle (voir PinceauDImage).
+        Private Sub PoserLImage()
+            For Each nom In {"ImageCarree", "ImageRonde"}
+                Dim partie = GetTemplateChild(nom)
+                If partie IsNot Nothing Then PinceauDImage.Poser(partie, Image)
+            Next
+        End Sub
+
+        ''' <inheritdoc/>
+        Public Overrides Sub OnApplyTemplate()
+            MyBase.OnApplyTemplate()
+            PoserLImage()
         End Sub
 
         ''' <summary>Le texte de l'avatar : des initiales.</summary>

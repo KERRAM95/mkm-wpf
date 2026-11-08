@@ -89,6 +89,13 @@ Namespace Mkm.Wpf.Controls
 
         Private Shared Sub OnImageChanged(d As DependencyObject, e As DependencyPropertyChangedEventArgs)
             d.SetValue(HasImagePropertyKey, e.NewValue IsNot Nothing)
+            DirectCast(d, Chip).PoserLaPhoto()
+        End Sub
+
+        ' La photo ronde, peinte de l'image (voir PinceauDImage).
+        Private Sub PoserLaPhoto()
+            Dim photo = GetTemplateChild("Photo")
+            If photo IsNot Nothing Then PinceauDImage.Poser(photo, Image)
         End Sub
 
         ''' <summary>Vrai pour une puce retirable.</summary>
@@ -121,6 +128,7 @@ Namespace Mkm.Wpf.Controls
                 RemoveHandler _croix.KeyDown, AddressOf Croix_KeyDown
             End If
             MyBase.OnApplyTemplate()
+            PoserLaPhoto()
             _croix = TryCast(GetTemplateChild("PART_Remove"), ButtonBase)
             If _croix IsNot Nothing Then
                 AddHandler _croix.Click, AddressOf Croix_Click

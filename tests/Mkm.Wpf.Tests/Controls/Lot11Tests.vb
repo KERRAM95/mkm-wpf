@@ -80,6 +80,15 @@ Namespace Mkm.Wpf.Tests.Controls
             Dim rond = Pret(New Avatar With {.Image = photo, .Shape = AvatarShape.Circle})
             Assert.That(Partie(Of Shapes.Ellipse)(rond, "ImageRonde").Visibility, [Is].EqualTo(Visibility.Visible))
             Assert.That(Partie(Of Border)(rond, "ImageCarree").Visibility, [Is].EqualTo(Visibility.Collapsed))
+            Dim pinceau = TryCast(Partie(Of Shapes.Ellipse)(rond, "ImageRonde").Fill, Media.ImageBrush)
+            Assert.That(pinceau?.ImageSource, [Is].SameAs(photo), "le rond peint de l'image")
+            Assert.That(pinceau.Stretch, [Is].EqualTo(Media.Stretch.UniformToFill))
+
+            rond.Image = Nothing
+            Assert.That(Partie(Of Shapes.Ellipse)(rond, "ImageRonde").Fill, [Is].Null, "l'image retirée")
+
+            Dim puce = Pret(New Chip With {.Content = "Walter", .Image = photo})
+            Assert.That(TryCast(Partie(Of Shapes.Ellipse)(puce, "Photo").Fill, Media.ImageBrush)?.ImageSource, [Is].SameAs(photo), "la photo de la puce")
         End Sub
 
         <Test>

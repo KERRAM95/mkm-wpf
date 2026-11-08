@@ -52,11 +52,7 @@
                         <local:GapStackPanel Orientation="Horizontal" Gap="{DynamicResource mkm.chip.gap}">
                             <Ellipse x:Name="Photo" Visibility="Collapsed" VerticalAlignment="Center"
                                      Margin="{DynamicResource mkm.chip.image.margin}"
-                                     Width="{DynamicResource mkm.chip.image.width}" Height="{DynamicResource mkm.chip.image.height}">
-                                <Ellipse.Fill>
-                                    <ImageBrush Stretch="UniformToFill" ImageSource="{Binding Image, RelativeSource={RelativeSource TemplatedParent}}" />
-                                </Ellipse.Fill>
-                            </Ellipse>
+                                     Width="{DynamicResource mkm.chip.image.width}" Height="{DynamicResource mkm.chip.image.height}" />
                             <local:Icon x:Name="Icone" VerticalAlignment="Center" Source="{TemplateBinding Icon}"
                                         Width="{DynamicResource mkm.chip.icon.size}" Height="{DynamicResource mkm.chip.icon.size}"
                                         Foreground="{DynamicResource mkm.chip.icon.color}" />

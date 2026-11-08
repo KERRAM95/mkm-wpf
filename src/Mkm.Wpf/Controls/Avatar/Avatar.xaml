@@ -28,17 +28,9 @@
                                 BorderBrush="{TemplateBinding BorderBrush}" BorderThickness="{TemplateBinding BorderThickness}" />
                         <Ellipse x:Name="Rond" Visibility="Collapsed" Fill="{TemplateBinding Background}"
                                  Stroke="{TemplateBinding BorderBrush}" StrokeThickness="0" />
-                        <!-- L'image, aux mêmes contours : une Border (carrée) ou une Ellipse (ronde) peinte de l'image. -->
-                        <Border x:Name="ImageCarree" Visibility="Collapsed" CornerRadius="{DynamicResource mkm.avatar.border.radius}">
-                            <Border.Background>
-                                <ImageBrush Stretch="UniformToFill" ImageSource="{Binding Image, RelativeSource={RelativeSource TemplatedParent}}" />
-                            </Border.Background>
-                        </Border>
-                        <Ellipse x:Name="ImageRonde" Visibility="Collapsed">
-                            <Ellipse.Fill>
-                                <ImageBrush Stretch="UniformToFill" ImageSource="{Binding Image, RelativeSource={RelativeSource TemplatedParent}}" />
-                            </Ellipse.Fill>
-                        </Ellipse>
+                        <!-- L'image, aux mêmes contours : une Border (carrée) ou une Ellipse (ronde) peinte de l'image (par le code). -->
+                        <Border x:Name="ImageCarree" Visibility="Collapsed" CornerRadius="{DynamicResource mkm.avatar.border.radius}" />
+                        <Ellipse x:Name="ImageRonde" Visibility="Collapsed" />
                         <local:Icon x:Name="Icone" Visibility="Collapsed" HorizontalAlignment="Center" VerticalAlignment="Center"
                                     Source="{TemplateBinding Icon}"
                                     Width="{DynamicResource mkm.avatar.icon.size}" Height="{DynamicResource mkm.avatar.icon.size}" />
