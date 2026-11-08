@@ -99,4 +99,7 @@
   <data name="aria.filter" xml:space="preserve">
     <value>Filtrer</value>
   </data>
+  <data name="aria.showSuggestions" xml:space="preserve">
+    <value>Afficher les suggestions</value>
+  </data>
 </root>

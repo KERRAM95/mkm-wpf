@@ -146,6 +146,15 @@ Namespace Mkm.Wpf.Tests.Controls
             Assert.That(depli.ExpandCollapseState, [Is].EqualTo(System.Windows.Automation.ExpandCollapseState.Collapsed))
         End Sub
 
+        <Test>
+        Public Sub MultiSelect_UneOptionEcriteChoisieLEstDesLeDepart()
+            Dim liste As New MultiSelect()
+            liste.Items.Add(New ListBoxItem With {.Content = "Plans", .IsSelected = True})
+            liste.Items.Add(New ListBoxItem With {.Content = "Pièces"})
+            Pret(liste)
+            Assert.That(liste.SelectionText, [Is].EqualTo("Plans"), "sa liste fermée n'a pas encore créé ses options")
+        End Sub
+
         ' ---- AutoComplete ----
 
         <Test>

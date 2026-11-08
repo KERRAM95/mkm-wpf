@@ -113,7 +113,8 @@
                             </Grid>
                         </Border>
                         <Button x:Name="PART_DropDown" Grid.Column="1" Visibility="Collapsed"
-                                Style="{StaticResource mkm.AutoComplete.Bouton}" />
+                                Style="{StaticResource mkm.AutoComplete.Bouton}"
+                                AutomationProperties.Name="{loc:T aria.showSuggestions}" />
                         <Popup x:Name="PART_Popup" Grid.ColumnSpan="2" AllowsTransparency="True" Focusable="False" StaysOpen="False"
                                Placement="Bottom" PlacementTarget="{Binding ElementName=Racine}" PopupAnimation="None"
                                VerticalOffset="{DynamicResource mkm.anchor.gutter}"

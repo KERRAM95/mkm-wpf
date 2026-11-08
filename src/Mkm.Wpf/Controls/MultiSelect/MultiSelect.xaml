@@ -26,6 +26,8 @@
 
     <!-- Une option : sa case, cochée quand elle est choisie, et son texte. -->
     <Style x:Key="mkm.MultiSelect.Option" TargetType="{x:Type ListBoxItem}">
+        <!-- Le clavier reste au champ : l'option sous le clavier est marquée (MultiSelect.IsOptionFocused). -->
+        <Setter Property="Focusable" Value="False" />
         <Setter Property="Padding" Value="{DynamicResource mkm.multiselect.option.padding}" />
         <Setter Property="Foreground" Value="{DynamicResource mkm.multiselect.option.color}" />
         <Setter Property="Background" Value="Transparent" />
@@ -50,7 +52,7 @@
                             <Setter Property="Background" Value="{DynamicResource mkm.multiselect.option.focus.background}" />
                             <Setter Property="Foreground" Value="{DynamicResource mkm.multiselect.option.focus.color}" />
                         </Trigger>
-                        <Trigger Property="IsKeyboardFocused" Value="True">
+                        <Trigger Property="local:MultiSelect.IsOptionFocused" Value="True">
                             <Setter Property="Background" Value="{DynamicResource mkm.multiselect.option.focus.background}" />
                             <Setter Property="Foreground" Value="{DynamicResource mkm.multiselect.option.focus.color}" />
                         </Trigger>
@@ -61,7 +63,7 @@
                         <MultiTrigger>
                             <MultiTrigger.Conditions>
                                 <Condition Property="IsSelected" Value="True" />
-                                <Condition Property="IsKeyboardFocused" Value="True" />
+                                <Condition Property="local:MultiSelect.IsOptionFocused" Value="True" />
                             </MultiTrigger.Conditions>
                             <Setter Property="Background" Value="{DynamicResource mkm.multiselect.option.selected.focus.background}" />
                             <Setter Property="Foreground" Value="{DynamicResource mkm.multiselect.option.selected.focus.color}" />
@@ -149,7 +151,7 @@
                                         TextElement.Foreground="{DynamicResource mkm.multiselect.overlay.color}">
                                     <DockPanel>
                                         <DockPanel x:Name="EnTete" DockPanel.Dock="Top" Margin="{DynamicResource mkm.multiselect.list.header.padding}">
-                                            <local:Checkbox x:Name="PART_ToggleAll" DockPanel.Dock="Left" VerticalAlignment="Center"
+                                            <local:Checkbox x:Name="PART_ToggleAll" DockPanel.Dock="Left" VerticalAlignment="Center" Focusable="False"
                                                             Margin="{DynamicResource mkm.multiselect.option.checkbox.margin}"
                                                             AutomationProperties.Name="{loc:T aria.selectAll}" />
                                             <local:IconField x:Name="Filtre" Visibility="Collapsed" Icon="{x:Static local:InternalIcons.Search}" IconPosition="Right">

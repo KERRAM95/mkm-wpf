@@ -30,7 +30,7 @@ Namespace Mkm.Wpf.Controls
     ''' </summary>
     <TemplatePart(Name:="PART_Popup", Type:=GetType(Popup))>
     <TemplatePart(Name:="PART_Field", Type:=GetType(ButtonBase))>
-    <TemplatePart(Name:="PART_ToggleAll", Type:=GetType(ToggleButton))>
+    <TemplatePart(Name:="PART_ToggleAll", Type:=GetType(System.Windows.Controls.Primitives.ToggleButton))>
     Public Class MultiSelect
         Inherits Listbox
 
@@ -61,6 +61,25 @@ Namespace Mkm.Wpf.Controls
         ''' <summary>Ce que le champ montre : les textes des choix, ou « n éléments sélectionnés » ; vide sans choix.</summary>
         Public Shared ReadOnly SelectionTextProperty As DependencyProperty = SelectionTextPropertyKey.DependencyProperty
 
+        ''' <summary>
+        ''' Vrai sur l'option sous le clavier, quand la liste est ouverte : grisée comme au survol. Le clavier reste au
+        ''' champ ; ↓ ↑ Début Fin déplacent cette option, Espace et Entrée l'ajoutent ou la retirent.
+        ''' </summary>
+        Public Shared ReadOnly IsOptionFocusedProperty As DependencyProperty = DependencyProperty.RegisterAttached(
+            "IsOptionFocused", GetType(Boolean), GetType(MultiSelect), New FrameworkPropertyMetadata(False))
+
+        ''' <summary>Vrai sur l'option sous le clavier.</summary>
+        Public Shared Function GetIsOptionFocused(element As DependencyObject) As Boolean
+            If element Is Nothing Then Throw New ArgumentNullException(NameOf(element))
+            Return CBool(element.GetValue(IsOptionFocusedProperty))
+        End Function
+
+        ''' <summary>Réservé à la bibliothèque, qui déplace l'option sous le clavier.</summary>
+        Public Shared Sub SetIsOptionFocused(element As DependencyObject, value As Boolean)
+            If element Is Nothing Then Throw New ArgumentNullException(NameOf(element))
+            element.SetValue(IsOptionFocusedProperty, value)
+        End Sub
+
         Private Shared ReadOnly HasSelectionPropertyKey As DependencyPropertyKey = DependencyProperty.RegisterReadOnly(
             NameOf(HasSelection), GetType(Boolean), GetType(MultiSelect), New FrameworkPropertyMetadata(False))
         ''' <summary>Vrai quand au moins une option est choisie.</summary>
@@ -70,8 +89,11 @@ Namespace Mkm.Wpf.Controls
         Private ReadOnly _pucesLues As ReadOnlyObservableCollection(Of String)
         Private _rangeeDePuces As ItemsControl
         Private _popup As Popup
-        Private _toutCocher As ToggleButton
+        Private _toutCocher As System.Windows.Controls.Primitives.ToggleButton
+        ' L'option sous le clavier (focusedOptionIndex de mkm) : le clavier, lui, reste au champ.
+        Private _indice As Integer = -1
         Private _champ As ButtonBase
+        Private _filtreDuGabarit As TextBox
         ' Le moment où un clic sur le champ a fermé la liste : le Click de ce même clic ne doit pas la rouvrir.
         Private _fermeeSurLeChamp As Date = Date.MinValue
         Private ReadOnly _fermeture As FermetureAuDefilement
@@ -168,9 +190,10 @@ Namespace Mkm.Wpf.Controls
             If _champ IsNot Nothing Then RemoveHandler _champ.Click, AddressOf Champ_Click
             MyBase.OnApplyTemplate()
             _champ = TryCast(GetTemplateChild("PART_Field"), ButtonBase)
+            _filtreDuGabarit = TryCast(GetTemplateChild("PART_Filter"), TextBox)
             If _champ IsNot Nothing Then AddHandler _champ.Click, AddressOf Champ_Click
             _popup = TryCast(GetTemplateChild("PART_Popup"), Popup)
-            _toutCocher = TryCast(GetTemplateChild("PART_ToggleAll"), ToggleButton)
+            _toutCocher = TryCast(GetTemplateChild("PART_ToggleAll"), System.Windows.Controls.Primitives.ToggleButton)
             _rangeeDePuces = TryCast(GetTemplateChild("Puces"), ItemsControl)
             If _toutCocher IsNot Nothing Then AddHandler _toutCocher.Click, AddressOf ToutCocher_Click
             If _popup IsNot Nothing Then AddHandler _popup.Closed, AddressOf Popup_Closed
@@ -238,23 +261,63 @@ Namespace Mkm.Wpf.Controls
             Dim liste = DirectCast(d, MultiSelect)
             If CBool(e.NewValue) Then
                 liste._fermeture.Ecouter()
-                ' Le clavier passe à l'option choisie, sinon à la première, comme mkm.
-                liste.Dispatcher.BeginInvoke(DispatcherPriority.Input, New System.Action(AddressOf liste.EntrerDansLaListe))
+                ' L'option sous le clavier : la première choisie, sinon la première, comme mkm.
+                liste._indice = If(liste.SelectedItems.Count > 0, liste.Items.IndexOf(liste.SelectedItems(0)), 0)
+                liste.Dispatcher.BeginInvoke(DispatcherPriority.Loaded, New System.Action(Sub() liste.Surligner(liste._indice)))
             Else
                 liste._fermeture.Cesser()
+                liste.Surligner(-1)
             End If
             TryCast(UIElementAutomationPeer.FromElement(liste), PairDeMultiSelect)?.Annoncer(Not CBool(e.NewValue), CBool(e.NewValue))
         End Sub
 
-        Private Sub EntrerDansLaListe()
-            If Not IsDropDownOpen OrElse Items.Count = 0 Then Return
-            Dim indice = If(SelectedIndex >= 0, Items.IndexOf(SelectedItems(0)), 0)
-            Dim option0 = TryCast(ItemContainerGenerator.ContainerFromIndex(Math.Max(0, indice)), ListBoxItem)
-            If option0 Is Nothing Then
-                UpdateLayout()
-                option0 = TryCast(ItemContainerGenerator.ContainerFromIndex(Math.Max(0, indice)), ListBoxItem)
-            End If
-            option0?.Focus()
+        ' Déplace l'option sous le clavier, et la montre ; -1 : aucune.
+        Private Sub Surligner(indice As Integer)
+            For i = 0 To Items.Count - 1
+                Dim conteneur = ItemContainerGenerator.ContainerFromIndex(i)
+                If conteneur IsNot Nothing Then conteneur.ClearValue(IsOptionFocusedProperty)
+            Next
+            _indice = If(Items.Count = 0, -1, Math.Min(indice, Items.Count - 1))
+            If _indice < 0 OrElse Not IsDropDownOpen Then Return
+            ScrollIntoView(Items(_indice))
+            ItemContainerGenerator.ContainerFromIndex(_indice)?.SetValue(IsOptionFocusedProperty, True)
+        End Sub
+
+        ' Ajoute ou retire l'option.
+        Private Sub Basculer(choix As Object)
+            If SelectedItems.Contains(choix) Then SelectedItems.Remove(choix) Else SelectedItems.Add(choix)
+        End Sub
+
+        ' Un clic sur une option l'ajoute ou la retire ; le clavier reste au champ.
+        Protected Overrides Sub OnPreviewMouseLeftButtonUp(e As MouseButtonEventArgs)
+            MyBase.OnPreviewMouseLeftButtonUp(e)
+            Dim conteneur = TryCast(ContainerFromElement(Me, TryCast(e.OriginalSource, DependencyObject)), ListBoxItem)
+            If conteneur Is Nothing OrElse Not conteneur.IsEnabled Then Return
+            Dim choix = ItemContainerGenerator.ItemFromContainer(conteneur)
+            Basculer(choix)
+            Surligner(Items.IndexOf(choix))
+            e.Handled = True
+        End Sub
+
+        ' Une option ne prend pas le clic à la souris : le MultiSelect la bascule au relâché.
+        Protected Overrides Sub OnPreviewMouseLeftButtonDown(e As MouseButtonEventArgs)
+            MyBase.OnPreviewMouseLeftButtonDown(e)
+            If TypeOf ContainerFromElement(Me, TryCast(e.OriginalSource, DependencyObject)) Is ListBoxItem Then e.Handled = True
+        End Sub
+
+        ' Dans le filtre : ↓ ↑ déplacent l'option sous le clavier, Entrée la bascule ; le texte garde le reste.
+        Friend Overrides Sub ToucheDuFiltre(e As KeyEventArgs)
+            Select Case e.Key
+                Case Key.Down
+                    Surligner(Math.Min(Items.Count - 1, _indice + 1))
+                    e.Handled = True
+                Case Key.Up
+                    Surligner(Math.Max(0, _indice - 1))
+                    e.Handled = True
+                Case Key.Enter
+                    If _indice >= 0 AndAlso _indice < Items.Count Then Basculer(Items(_indice))
+                    e.Handled = True
+            End Select
         End Sub
 
         ' Un clic sur le champ ouvre ou ferme la liste.
@@ -272,8 +335,9 @@ Namespace Mkm.Wpf.Controls
         End Sub
 
         ''' <summary>
-        ''' Fermée, ↓, Alt+↓, Entrée et Espace ouvrent la liste ; ouverte, Échap et Tab la ferment. Les flèches et Espace
-        ''' dans la liste sont ceux d'un ListBox à choix multiples : Espace ajoute ou retire l'option.
+        ''' Fermée, ↓, Alt+↓, Entrée et Espace ouvrent la liste ; ouverte, ↓ ↑ Début Fin déplacent l'option sous le
+        ''' clavier, Espace et Entrée l'ajoutent ou la retirent, Ctrl+A choisit tout ou retire tout, Échap et Tab la
+        ''' ferment (comme mkm : le clavier reste au champ).
         ''' </summary>
         Protected Overrides Sub OnKeyDown(e As KeyEventArgs)
             Dim touche = If(e.Key = Key.System, e.SystemKey, e.Key)
@@ -286,6 +350,41 @@ Namespace Mkm.Wpf.Controls
                 End If
                 Return
             End If
+            ' Dans le filtre, les touches écrivent : seules Échap et Tab y ferment la liste (↓ ↑ Entrée : ToucheDuFiltre).
+            Dim nombre = Items.Count
+            If e.OriginalSource Is _filtreDuGabarit Then touche = If(touche = Key.Escape OrElse touche = Key.Tab, touche, Key.None)
+            Select Case touche
+                Case Key.Down
+                    If Keyboard.Modifiers <> ModifierKeys.Alt Then
+                        Surligner(Math.Min(nombre - 1, _indice + 1))
+                        e.Handled = True
+                        Return
+                    End If
+                Case Key.Up
+                    If Keyboard.Modifiers <> ModifierKeys.Alt Then
+                        Surligner(Math.Max(0, _indice - 1))
+                        e.Handled = True
+                        Return
+                    End If
+                Case Key.Home
+                    Surligner(0)
+                    e.Handled = True
+                    Return
+                Case Key.End
+                    Surligner(nombre - 1)
+                    e.Handled = True
+                    Return
+                Case Key.Space, Key.Enter
+                    If _indice >= 0 AndAlso _indice < nombre Then Basculer(Items(_indice))
+                    e.Handled = True
+                    Return
+                Case Key.A
+                    If Keyboard.Modifiers = ModifierKeys.Control Then
+                        ToutCocher_Click(Me, e)
+                        e.Handled = True
+                        Return
+                    End If
+            End Select
             If touche = Key.Escape OrElse touche = Key.Tab OrElse (touche = Key.Up AndAlso Keyboard.Modifiers = ModifierKeys.Alt) Then
                 SetCurrentValue(IsDropDownOpenProperty, False)
                 Focus()
@@ -296,7 +395,6 @@ Namespace Mkm.Wpf.Controls
                 e.Handled = True
                 Return
             End If
-            MyBase.OnKeyDown(e)
         End Sub
 
         ''' <summary>Une liste déroulante pour les lecteurs d'écran : son texte, développée ou réduite, ses options cochées.</summary>

@@ -65,8 +65,11 @@ s'applique (le SelectButton écrit désormais `System.Windows.Controls.ListBox`)
   d'un ListBox de WPF n'expose que ses options) ; ↓ dans le filtre entre dans
   la liste.
 - MultiSelect : une liste déroulante (ComboBox) qui dit son texte (Value) et
-  se dit développée ou réduite ; ↓, Entrée, Espace ouvrent ; Échap et Tab
-  ferment ; la case de tête se nomme « Tout sélectionner ».
+  se dit développée ou réduite ; comme mkm, le clavier reste au champ : ↓ ↑
+  Début Fin déplacent l'option sous le clavier, Espace et Entrée l'ajoutent ou
+  la retirent, Ctrl+A choisit tout ; Échap et Tab ferment ; la case de tête se
+  nomme « Tout sélectionner ». Le clavier qui entrait dans la liste, une
+  fenêtre à part, la refermait.
 - AutoComplete : un champ de texte ; le clavier reste au champ pendant que ↓ ↑
   parcourent les suggestions.
 - IconField et InputGroup : l'icône et les compléments ne se lisent pas comme

@@ -172,6 +172,17 @@ Namespace Mkm.Wpf.Controls
         ''' <inheritdoc/>
         Protected Overrides Sub OnItemsChanged(e As Specialized.NotifyCollectionChangedEventArgs)
             MyBase.OnItemsChanged(e)
+            ' Une option écrite choisie (IsSelected="True") l'est dès son arrivée : la liste d'un MultiSelect, dans sa
+            ' fenêtre fermée, ne crée ses options qu'à l'ouverture.
+            If e.NewItems IsNot Nothing Then
+                For Each choisie In e.NewItems.OfType(Of ListBoxItem)().Where(Function(o) o.IsSelected)
+                    If SelectionMode = SelectionMode.Single Then
+                        SetCurrentValue(SelectedItemProperty, choisie)
+                    ElseIf Not SelectedItems.Contains(choisie) Then
+                        SelectedItems.Add(choisie)
+                    End If
+                Next
+            End If
             MettreAJourLeVide()
         End Sub
 
@@ -236,6 +247,11 @@ Namespace Mkm.Wpf.Controls
 
         ' ↓ dans le filtre passe aux options, comme mkm.
         Private Sub Filtre_PreviewKeyDown(sender As Object, e As KeyEventArgs)
+            ToucheDuFiltre(e)
+        End Sub
+
+        ' ↓ dans le filtre : le clavier passe à l'option choisie, sinon à la première.
+        Friend Overridable Sub ToucheDuFiltre(e As KeyEventArgs)
             If e.Key <> Key.Down OrElse Items.Count = 0 Then Return
             Dim indice = If(SelectedIndex >= 0, SelectedIndex, 0)
             TryCast(ItemContainerGenerator.ContainerFromIndex(indice), ListBoxItem)?.Focus()

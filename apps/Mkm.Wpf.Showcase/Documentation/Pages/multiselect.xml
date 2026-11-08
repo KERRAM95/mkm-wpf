@@ -85,11 +85,17 @@
       son texte d'aide ; sa valeur est le texte du champ, et il se dit « développé » ou « réduit ». Ses options sont des
       éléments de liste, sélectionnés ou non ; la case de tête se nomme « Tout sélectionner ».</p>
     <h3>Clavier</h3>
+    <p>Comme dans mkm, le clavier reste au champ : une option de la liste ouverte est « sous le clavier », grisée comme
+      au survol.</p>
     <touches>
-      <touche nom="Flèche bas">Ouvre la liste, le clavier sur le premier choix ; ouverte, passe à l'option suivante.</touche>
-      <touche nom="Entrée">Ouvre la liste.</touche>
+      <touche nom="Flèche bas">Ouvre la liste, sur le premier choix ; ouverte, passe à l'option suivante.</touche>
+      <touche nom="Flèche haut">Passe à l'option précédente.</touche>
+      <touche nom="Début">Passe à la première option.</touche>
+      <touche nom="Fin">Passe à la dernière option.</touche>
       <touche nom="Espace">Ouvre la liste ; ouverte, ajoute ou retire l'option.</touche>
-      <touche nom="Échap">Referme la liste ; le clavier revient au champ.</touche>
+      <touche nom="Entrée">Ouvre la liste ; ouverte, ajoute ou retire l'option.</touche>
+      <touche nom="Ctrl+A">Choisit toutes les options, ou les retire toutes.</touche>
+      <touche nom="Échap">Referme la liste.</touche>
       <touche nom="Tab">Referme la liste et passe à l'élément suivant.</touche>
     </touches>
   </section>
