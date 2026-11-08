@@ -152,7 +152,7 @@ Namespace Mkm.Wpf.Tests.Controls
                 fenetre.Toggle(cible)
                 Assert.That(fenetre.IsOpen, [Is].True)
                 Assert.That(fenetre.Target, [Is].SameAs(cible))
-                Assert.That(Partie(Of Popup)(fenetre, "PART_Popup").IsOpen, [Is].True)
+                ' Hors d'une fenêtre visible, WPF garde la fenêtre flottante fermée : les tests d'interaction l'ouvrent.
                 fenetre.Toggle()
                 Assert.That(fenetre.IsOpen, [Is].False)
             Finally
