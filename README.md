@@ -155,7 +155,11 @@ Les commandes de l'application se déclarent une fois dans un `CommandRegistry`
 30. ~~Le lot 25~~ : fait — `Carousel`, `Galleria`, `Terminal`
    (`docs/composants/carrousel-galerie-et-terminal.md`). La priorité 3 est
    faite : tous les composants de la liste sont là.
-31. La suite : le paquet NuGet ; hscart-next sur la bibliothèque.
+31. ~~Le contrôle qualité~~ : fait — chaque composant comparé à ui-kit (rendu,
+   jetons, API, clavier, accessibilité, pages, tests) ; les défauts corrigés.
+   Les fonctions d'ui-kit encore absentes, à décider, sont dans
+   `docs/composants/fonctions-absentes.md`.
+32. La suite : le paquet NuGet ; hscart-next sur la bibliothèque.
 
 ## Règles
 

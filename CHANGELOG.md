@@ -199,7 +199,9 @@ Les évolutions notables de mkm-wpf, version par version. Le format suit
   scénarios. La priorité 3 est faite.
 - PickList : un double clic rend la souris avant de faire passer l'élément
   (le clic suivant se perdait).
-- Contrôle qualité, comparaison à ui-kit composant par composant :
+- Contrôle qualité, comparaison à ui-kit composant par composant ; les
+  fonctions d'ui-kit encore absentes sont dans
+  `docs/composants/fonctions-absentes.md` :
   - Inplace : le texte suit la couleur de la page (il était noir, du style de
     Windows) ; un contenu sans rien de focalisable garde le clavier, pour
     qu'Échap rende le texte.
