@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="utf-8"?>
+<page titre="ConfirmDialog" categorie="Superposition" types="ConfirmDialog" jetons="confirmdialog">
+  <resume>Une demande de confirmation : une question, une icône devant elle, et deux boutons, Non puis Oui. Elle s'ouvre
+    d'une ligne de code et rend la réponse.</resume>
+
+  <section titre="Import">
+    <p>ConfirmDialog est un <lien page="dialog">Dialog</lien> : une fenêtre modale. On l'ouvre en VB, sans XAML.</p>
+    <code langage="vb"><![CDATA[
+Imports Mkm.Wpf.Controls
+
+If ConfirmDialog.Confirm(Me, "Mettre à jour le cartouche ?", "Mise à jour", Icons.Warning) Then
+    ' …
+End If
+]]></code>
+  </section>
+
+  <section titre="Basique">
+    <p><c>Confirm</c> ouvre la demande sur sa fenêtre propriétaire : la question, le titre, l'icône. Il rend vrai si
+      l'utilisateur accepte (Oui, ou Entrée), faux s'il refuse, ferme la fenêtre ou appuie sur Échap.</p>
+    <exemple comportement="ConfirmationSimple"><![CDATA[
+<StackPanel>
+    <mkm:Button x:Name="Demander" Content="Mettre à jour le cartouche…" HorizontalAlignment="Center" />
+    <TextBlock x:Name="Reponse" Margin="0,8,0,0" HorizontalAlignment="Center"
+               Foreground="{DynamicResource mkm.text.muted.color}" Text="Aucune réponse encore" />
+</StackPanel>
+]]></exemple>
+  </section>
+
+  <section titre="Libellés et gravités">
+    <p>Les boutons disent Oui et Non par défaut, dans la langue choisie, et sont tous deux principaux, comme chez mkm.
+      <c>AcceptLabel</c> et <c>RejectLabel</c> les renomment, <c>AcceptSeverity</c> et <c>RejectSeverity</c> leur
+      donnent une gravité ; <c>MessageIcon</c> change l'icône. Une demande ainsi réglée s'ouvre par
+      <c>ShowDialog</c>.</p>
+    <exemple comportement="ConfirmationPersonnalisee"><![CDATA[
+<StackPanel>
+    <mkm:Button x:Name="Supprimer" Content="Supprimer la note…" Severity="Danger" HorizontalAlignment="Center" />
+    <TextBlock x:Name="ReponseSuppression" Margin="0,8,0,0" HorizontalAlignment="Center"
+               Foreground="{DynamicResource mkm.text.muted.color}" Text="Aucune réponse encore" />
+</StackPanel>
+]]></exemple>
+  </section>
+
+  <section titre="Accessibilité">
+    <h3>Lecteur d'écran</h3>
+    <p>La demande est une fenêtre modale : Narrateur la dit « boîte de dialogue », nommée par son titre, puis lit la
+      question. À l'ouverture, le clavier est sur Oui, et les deux boutons sont nommés par leur libellé.</p>
+    <h3>Clavier</h3>
+    <touches>
+      <touche nom="Tab">Passe d'un bouton à l'autre.</touche>
+      <touche nom="Entrée">Lance le bouton qui a le clavier : Oui, à l'ouverture.</touche>
+      <touche nom="Espace">Lance le bouton qui a le clavier.</touche>
+      <touche nom="Échap">Refuse la demande.</touche>
+    </touches>
+  </section>
+</page>

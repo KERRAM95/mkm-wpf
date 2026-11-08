@@ -38,12 +38,12 @@ Namespace Mkm.Wpf.Showcase.Documentation
             BorderBrush = Bord
             BorderThickness = New Thickness(1)
             CornerRadius = New CornerRadius(6)
-            Margin = New Thickness(0, 8, 0, 0)
+            Margin = New Thickness(0, 8, 0, 12)
 
             Dim entete As New DockPanel With {.Margin = New Thickness(12, 4, 4, 0)}
             Dim copier As New Mkm.Wpf.Controls.Button With {
                 .Icon = Icons.Copy, .Variant = ButtonVariant.Text, .Severity = ButtonSeverity.Secondary,
-                .ToolTip = "Copier le code", .Padding = New Thickness(6)}
+                .ToolTip = "Copier le code", .Width = 28, .Height = 28}
             AddHandler copier.Click, Sub()
                                          Try
                                              Clipboard.SetText(_code)

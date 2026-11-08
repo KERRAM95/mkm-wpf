@@ -1,0 +1,102 @@
+<?xml version="1.0" encoding="utf-8"?>
+<page titre="Select" categorie="Formulaire" types="Select" jetons="select">
+  <resume>Une liste déroulante : un champ qui montre le choix actuel, et une liste qui s'ouvre dessous pour en
+    choisir un autre.</resume>
+
+  <section titre="Import">
+    <p>« Select » est un mot réservé de VB : la classe s'écrit <c>[Select]</c> en VB, <c>mkm:Select</c> en XAML.</p>
+    <code><![CDATA[
+<Window xmlns:mkm="urn:mkm-wpf">
+    <mkm:Select />
+</Window>
+]]></code>
+  </section>
+
+  <section titre="Basique">
+    <p>Select est un <c>ComboBox</c> de WPF : ses choix sont ses éléments (<c>ComboBoxItem</c>), ou une liste donnée
+      par <c>ItemsSource</c> ; <c>SelectedItem</c> est le choix actuel. <c>Placeholder</c> montre un texte gris tant
+      que rien n'est choisi.</p>
+    <exemple><![CDATA[
+<mkm:Select x:Name="Maturite" Width="240" Placeholder="Choisir une maturité">
+    <ComboBoxItem Content="Private" />
+    <ComboBoxItem Content="In Work" />
+    <ComboBoxItem Content="Frozen" />
+    <ComboBoxItem Content="Released" />
+</mkm:Select>
+]]></exemple>
+  </section>
+
+  <section titre="Choix de départ">
+    <p><c>SelectedIndex</c> ou <c>SelectedItem</c> donnent le choix de départ.</p>
+    <exemple><![CDATA[
+<mkm:Select Width="240" SelectedIndex="1">
+    <ComboBoxItem Content="Private" />
+    <ComboBoxItem Content="In Work" />
+    <ComboBoxItem Content="Frozen" />
+</mkm:Select>
+]]></exemple>
+  </section>
+
+  <section titre="Éditable">
+    <p><c>IsEditable</c> : l'utilisateur écrit aussi une valeur hors de la liste ; <c>Text</c> la donne.</p>
+    <exemple><![CDATA[
+<mkm:Select x:Name="Echelle" Width="240" IsEditable="True" Text="1:3">
+    <ComboBoxItem Content="1:1" />
+    <ComboBoxItem Content="1:2" />
+    <ComboBoxItem Content="1:5" />
+    <ComboBoxItem Content="1:10" />
+</mkm:Select>
+]]></exemple>
+  </section>
+
+  <section titre="Longue liste">
+    <p>La liste est virtualisée : seules les lignes visibles existent. Une liste de milliers de valeurs s'ouvre ainsi
+      aussitôt, et se parcourt en tapant le début d'une valeur.</p>
+    <exemple comportement="SelectLongueListe"><![CDATA[
+<mkm:Select x:Name="Longue" Width="240" Placeholder="Choisir une référence" />
+]]></exemple>
+  </section>
+
+  <section titre="Invalide">
+    <p><c>Invalid</c> borde le champ de la couleur des erreurs, quand le choix est refusé ou manque.</p>
+    <exemple><![CDATA[
+<mkm:Select Width="240" Invalid="True" Placeholder="Choisir une maturité">
+    <ComboBoxItem Content="Private" />
+</mkm:Select>
+]]></exemple>
+  </section>
+
+  <section titre="Grisé">
+    <exemple><![CDATA[
+<mkm:Select Width="240" IsEnabled="False" SelectedIndex="0">
+    <ComboBoxItem Content="Released" />
+</mkm:Select>
+]]></exemple>
+  </section>
+
+  <section titre="Accessibilité">
+    <h3>Lecteur d'écran</h3>
+    <p>Narrateur dit la liste « zone de liste déroulante », ouverte ou fermée, suivie de son nom et du choix actuel ;
+      dans la liste ouverte, chaque choix est un « élément de liste ». Son nom vient de
+      <c>AutomationProperties.Name</c> ou de <c>AutomationProperties.LabeledBy</c> ; sans eux, de son texte
+      d'aide.</p>
+    <code><![CDATA[
+<TextBlock x:Name="LibelleMaturite" Text="Maturité" />
+<mkm:Select AutomationProperties.LabeledBy="{Binding ElementName=LibelleMaturite}" />
+]]></code>
+    <h3>Clavier, la liste fermée</h3>
+    <touches>
+      <touche nom="Tab">Amène le clavier sur la liste, ou au contrôle suivant.</touche>
+      <touche nom="↓ ou ↑">Choisit le choix suivant ou précédent, sans ouvrir la liste.</touche>
+      <touche nom="Alt+↓ ou F4">Ouvre la liste.</touche>
+      <touche nom="Une lettre">Choisit le premier choix qui commence par elle.</touche>
+    </touches>
+    <h3>Clavier, la liste ouverte</h3>
+    <touches>
+      <touche nom="↓ ou ↑">Passe au choix suivant ou précédent.</touche>
+      <touche nom="Début ou Fin">Passe au premier ou au dernier choix.</touche>
+      <touche nom="Entrée">Choisit et ferme la liste.</touche>
+      <touche nom="Échap">Ferme la liste.</touche>
+    </touches>
+  </section>
+</page>

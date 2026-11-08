@@ -85,12 +85,12 @@ Namespace Mkm.Wpf.Showcase.Documentation
             For Each p In type.GetProperties(Publics).OrderBy(Function(x) x.Name)
                 If p.GetIndexParameters().Length > 0 Then Continue For
                 Dim dp = Dependance(type, p.Name)
-                Dim lecture = If(p.CanWrite AndAlso p.GetSetMethod() IsNot Nothing, "", " (lecture seule)")
+                Dim lecture = If(p.CanWrite AndAlso p.GetSetMethod() IsNot Nothing, "", "Lecture seule. ")
                 api.Proprietes.Add(New MembreDApi With {
                     .Nom = p.Name,
-                    .Type = NomLisible(p.PropertyType) & lecture,
+                    .Type = NomLisible(p.PropertyType),
                     .Defaut = If(dp Is Nothing, "", Valeur(dp.GetMetadata(type).DefaultValue)),
-                    .Description = Sommaire(Commentaire($"P:{type.FullName}.{p.Name}"))})
+                    .Description = lecture & Sommaire(Commentaire($"P:{type.FullName}.{p.Name}"))})
             Next
             For Each p In type.GetProperties(Partages).OrderBy(Function(x) x.Name)
                 api.Proprietes.Add(New MembreDApi With {
@@ -250,6 +250,8 @@ Namespace Mkm.Wpf.Showcase.Documentation
                             nom = Regex.Replace(nom, "\(.*\)$", "")
                             texte.Append(nom.Substring(nom.LastIndexOf("."c) + 1))
                         End If
+                    Case "code", "example"
+                        ' Un exemple de code : sa place est dans les fonctionnalités, pas dans le résumé.
                     Case "paramref", "typeparamref"
                         texte.Append(CStr(e.Attribute("name")))
                     Case "para"

@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="utf-8"?>
+<page titre="StateGraph" categorie="Données" types="StateGraph StateGraphState StateGraphTransition StateGraphAction StateGraphActionEventArgs" jetons="stategraph">
+  <resume>Le cycle de vie d'un objet, comme dans 3DEXPERIENCE : ses états à la suite, l'état courant en couleur, les
+    transitions possibles en flèches, et les actions qu'on peut lancer depuis l'état courant.</resume>
+
+  <section titre="Import">
+    <p>Le graphe se décrit par trois collections, remplies par l'application : <c>States</c> (des
+      <c>StateGraphState</c>), <c>Transitions</c> (des <c>StateGraphTransition</c>) et <c>Actions</c> (des
+      <c>StateGraphAction</c>). <c>Current</c> donne la clé de l'état courant.</p>
+    <code><![CDATA[
+<Window xmlns:mkm="urn:mkm-wpf">
+    <mkm:StateGraph x:Name="Cycle" Current="inwork" />
+</Window>
+]]></code>
+  </section>
+
+  <section titre="Basique">
+    <p>Chaque état a une clé (<c>Id</c>), un nom (<c>Label</c>) et sa couleur de maturité (<c>Color</c>, et
+      <c>PaleColor</c> pour un état encore à venir). Ces couleurs sont la politique de l'application : le thème ne les
+      donne pas. Le code VB remplit le graphe.</p>
+    <exemple comportement="CycleDeVie"><![CDATA[
+<mkm:StateGraph x:Name="Cycle" Current="inwork" />
+]]></exemple>
+  </section>
+
+  <section titre="Actions">
+    <p>Les actions offertes depuis l'état courant : chacune trace une flèche vers l'état visé (<c>To</c>), avec son nom
+      (<c>Label</c>), qui se clique. Survolé, ou au clavier, le nom épaissit sa flèche. L'évènement
+      <c>ActionClick</c> dit l'action choisie ; <c>InvokeAction</c> en lance une par le code.</p>
+    <exemple comportement="CycleDeVie"><![CDATA[
+<StackPanel>
+    <mkm:StateGraph x:Name="CycleAvecActions" Current="inwork" Tag="actions" />
+    <TextBlock x:Name="Journal" Margin="0,12,0,0" HorizontalAlignment="Center"
+               Foreground="{DynamicResource mkm.text.muted.color}" Text="Cliquez le nom d'une action" />
+</StackPanel>
+]]></exemple>
+  </section>
+
+  <section titre="Action en cours">
+    <p><c>Pending</c> donne l'état visé par une action en cours (le temps que le serveur réponde) : il attend, et les
+      noms des actions ne se cliquent plus. L'application le remet à rien quand l'action a abouti, et change
+      <c>Current</c>.</p>
+    <exemple comportement="CycleDeVie"><![CDATA[
+<mkm:StateGraph Current="inwork" Pending="frozen" Tag="actions" />
+]]></exemple>
+  </section>
+
+  <section titre="Info-bulles des états">
+    <p>Survolé, un état montre son info-bulle (<c>ToolTip</c>) ; sans elle, son nom. Dans l'exemple de base, l'état
+      « En cours » a la sienne.</p>
+  </section>
+
+  <section titre="Accessibilité">
+    <h3>Lecteur d'écran</h3>
+    <p>Le graphe est un groupe. Le dessin des états et des flèches n'est que décor ; chaque nom d'action est un bouton
+      nommé par son libellé, que Narrateur lance comme un clic. Pendant une action en cours, les boutons sont grisés.</p>
+    <h3>Clavier</h3>
+    <touches>
+      <touche nom="Tab">Amène le clavier sur le nom d'une action, puis sur le suivant ; sa flèche s'épaissit.</touche>
+      <touche nom="Entrée">Lance l'action qui a le clavier.</touche>
+      <touche nom="Espace">Lance l'action qui a le clavier.</touche>
+    </touches>
+  </section>
+</page>

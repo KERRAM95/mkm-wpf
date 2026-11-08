@@ -10,6 +10,7 @@ Imports System.Windows.Media
 Imports System.Xml.Linq
 Imports Mkm.Wpf.Controls
 Imports Mkm.Wpf.Theming
+Imports Mkm.Wpf.Showcase.Documentation.Mise
 
 Namespace Mkm.Wpf.Showcase.Documentation
 
@@ -67,7 +68,7 @@ Namespace Mkm.Wpf.Showcase.Documentation
                     contenu.Children.Add(OngletTheme())
                 End If
             Else
-                _onglets = New Tabs With {.Margin = New Thickness(0, 20, 0, 0)}
+                _onglets = New Tabs With {.Margin = New Thickness(0, 20, 0, 0), .Variant = TabsVariant.Strip}
                 _onglets.Items.Add(New Tab With {.Header = "Fonctionnalités", .Content = fonctionnalites})
                 _onglets.Items.Add(New Tab With {.Header = "API", .Content = OngletApi()})
                 _onglets.Items.Add(New Tab With {.Header = "Thème", .Content = OngletTheme()})
@@ -196,7 +197,11 @@ Namespace Mkm.Wpf.Showcase.Documentation
         Private Function Exemple(xml As XElement) As FrameworkElement
             Dim pile As New StackPanel With {.Margin = New Thickness(0, 4, 0, 12)}
             Dim xaml = BlocDeCode.Desindenter(xml.Value)
-            Dim cadre As New Border With {.BorderThickness = New Thickness(1), .CornerRadius = New CornerRadius(6), .Padding = New Thickness(24)}
+            ' Son identifiant : celui de sa section, suivi de son rang s'il y en a plusieurs (« exemple-sections-2 »).
+            Dim section = CStr(xml.Parent.Attribute("titre"))
+            Dim rang = xml.ElementsBeforeSelf("exemple").Count()
+            Dim cadre As New CadreDExemple With {.Section = section, .BorderThickness = New Thickness(1), .CornerRadius = New CornerRadius(6), .Padding = New Thickness(24)}
+            AutomationProperties.SetAutomationId(cadre, "exemple-" & CadreDExemple.Identifiant(section) & If(rang = 0, "", "-" & (rang + 1).ToString()))
             Jeton(cadre, Border.BorderBrushProperty, "content.border.color")
             Jeton(cadre, Border.BackgroundProperty, "content.background")
             Dim comportement = CStr(xml.Attribute("comportement"))
@@ -282,7 +287,8 @@ Namespace Mkm.Wpf.Showcase.Documentation
             End If
             Dim entetes = {"Jeton"}.Concat(lesThemes.Select(Function(t) t.Name)).ToArray()
             Dim largeurs = {Part(2)}.Concat(lesThemes.Select(Function(t) Part(1))).ToArray()
-            pile.Children.Add(Tableau(entetes, chemins.Select(Function(c) {c}.Concat(lesThemes.Select(Function(t) If(t.Resolve(c), ""))).ToArray()), largeurs))
+            pile.Children.Add(Tableau(entetes, chemins.Select(Function(c) {c}.Concat(lesThemes.Select(Function(t) If(t.Resolve(c), ""))).ToArray()), largeurs,
+                                      toutEnCode:=True, pastilles:=True))
             Return pile
         End Function
 

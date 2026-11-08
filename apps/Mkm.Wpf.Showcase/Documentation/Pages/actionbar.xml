@@ -1,0 +1,177 @@
+<?xml version="1.0" encoding="utf-8"?>
+<page titre="ActionBar" categorie="Menu" types="ActionBar ActionBarSection ActionBarButton ActionBarToggleButton ActionBarDropDown ActionBarSeparator ActionBarItem" jetons="actionbar">
+  <resume>La barre de commandes du bas de la fenêtre, celle de 3DEXPERIENCE : des sections choisies par des
+    onglets, des commandes en icônes, des commandes fixes en tête de chaque section. Elle se replie, montre ou cache
+    ses libellés, et défile quand la place manque.</resume>
+
+  <section titre="Import">
+    <code><![CDATA[
+<Window xmlns:mkm="urn:mkm-wpf">
+    <Grid>
+        <!-- Le contenu de la fenêtre ; la barre se pose en bas, centrée. -->
+        <mkm:ActionBar ActiveSection="edition">
+            <mkm:ActionBarSection Key="edition" Header="Édition"> … </mkm:ActionBarSection>
+        </mkm:ActionBar>
+    </Grid>
+</Window>
+]]></code>
+  </section>
+
+  <section titre="Basique">
+    <p>La barre contient ses sections (<c>ActionBarSection</c>), qui contiennent leurs commandes
+      (<c>ActionBarButton</c> : <c>Label</c>, <c>Icon</c>, <c>Click</c> ou <c>Command</c>). Elle se pose en bas de son
+      conteneur, centrée. Un seul gestionnaire de <c>ButtonBase.Click</c>, posé sur la barre, reçoit toutes ses
+      commandes.</p>
+    <exemple comportement="ActionBarJournal" etendu="oui"><![CDATA[
+<Grid Height="150">
+    <TextBlock x:Name="Journal" Foreground="{DynamicResource mkm.text.muted.color}" Text="Lancez une commande." />
+    <mkm:ActionBar x:Name="Barre" ActiveSection="edition">
+        <mkm:ActionBarSection Key="edition" Header="Édition">
+            <mkm:ActionBarButton Label="Ajouter" Icon="{x:Static mkm:Icons.Add}" />
+            <mkm:ActionBarButton Label="Copier" Icon="{x:Static mkm:Icons.Copy}" />
+            <mkm:ActionBarButton Label="Supprimer" Icon="{x:Static mkm:Icons.Delete}" />
+        </mkm:ActionBarSection>
+    </mkm:ActionBar>
+</Grid>
+]]></exemple>
+  </section>
+
+  <section titre="Sections">
+    <p>Plusieurs sections : leurs onglets paraissent dans l'en-tête de la barre. <c>Key</c> nomme chaque section,
+      <c>Header</c> est le texte de son onglet ; <c>ActiveSection</c> est la clé de la section montrée, et se lie dans
+      les deux sens.</p>
+    <exemple comportement="ActionBarJournal" etendu="oui"><![CDATA[
+<Grid Height="150">
+    <TextBlock x:Name="Journal" Foreground="{DynamicResource mkm.text.muted.color}" Text="Choisissez une section." />
+    <mkm:ActionBar x:Name="Barre" ActiveSection="edition">
+        <mkm:ActionBarSection Key="edition" Header="Édition">
+            <mkm:ActionBarButton Label="Ajouter" Icon="{x:Static mkm:Icons.Add}" />
+            <mkm:ActionBarButton Label="Copier" Icon="{x:Static mkm:Icons.Copy}" />
+        </mkm:ActionBarSection>
+        <mkm:ActionBarSection Key="vue" Header="Vue">
+            <mkm:ActionBarButton Label="Actualiser" Icon="{x:Static mkm:Icons.Refresh}" />
+            <mkm:ActionBarButton Label="Paramètres" Icon="{x:Static mkm:Icons.Settings}" />
+        </mkm:ActionBarSection>
+        <mkm:ActionBarSection Key="outils" Header="Outils">
+            <mkm:ActionBarButton Label="Rechercher" Icon="{x:Static mkm:Icons.Search}" />
+            <mkm:ActionBarButton Label="Filtrer" Icon="{x:Static mkm:Icons.Filter}" />
+            <mkm:ActionBarButton Label="Trier" Icon="{x:Static mkm:Icons.Sort}" />
+            <mkm:ActionBarSeparator />
+            <mkm:ActionBarButton Label="Importer" Icon="{x:Static mkm:Icons.Import}" />
+            <mkm:ActionBarButton Label="Exporter" Icon="{x:Static mkm:Icons.Export}" />
+        </mkm:ActionBarSection>
+    </mkm:ActionBar>
+</Grid>
+]]></exemple>
+  </section>
+
+  <section titre="Commandes fixes">
+    <p><c>FixedItems</c> : des commandes en tête de la rangée, quelle que soit la section montrée (Enregistrer, par
+      exemple).</p>
+    <exemple comportement="ActionBarJournal" etendu="oui"><![CDATA[
+<Grid Height="150">
+    <TextBlock x:Name="Journal" Foreground="{DynamicResource mkm.text.muted.color}" Text="Lancez une commande." />
+    <mkm:ActionBar x:Name="Barre" ActiveSection="edition">
+        <mkm:ActionBar.FixedItems>
+            <mkm:ActionBarButton Label="Enregistrer" Icon="{x:Static mkm:Icons.Download}" />
+        </mkm:ActionBar.FixedItems>
+        <mkm:ActionBarSection Key="edition" Header="Édition">
+            <mkm:ActionBarButton Label="Ajouter" Icon="{x:Static mkm:Icons.Add}" />
+            <mkm:ActionBarButton Label="Copier" Icon="{x:Static mkm:Icons.Copy}" />
+        </mkm:ActionBarSection>
+    </mkm:ActionBar>
+</Grid>
+]]></exemple>
+  </section>
+
+  <section titre="Bascule, liste et séparateur">
+    <p><c>ActionBarToggleButton</c> s'enfonce et se relâche (<c>IsChecked</c>). <c>ActionBarDropDown</c> montre une
+      commande et sa flèche : la flèche ouvre la liste de ses commandes, et la commande choisie devient celle que la
+      barre montre (<c>ShownItem</c>). <c>ActionBarSeparator</c> trace un trait entre deux groupes.</p>
+    <exemple comportement="ActionBarJournal" etendu="oui"><![CDATA[
+<Grid Height="190">
+    <TextBlock x:Name="Journal" Foreground="{DynamicResource mkm.text.muted.color}" Text="Ouvrez la liste du zoom." />
+    <mkm:ActionBar x:Name="Barre" ActiveSection="vue">
+        <mkm:ActionBarSection Key="vue" Header="Vue">
+            <mkm:ActionBarToggleButton Label="Verrouiller" Icon="{x:Static mkm:Icons.Locked}" />
+            <mkm:ActionBarSeparator />
+            <mkm:ActionBarDropDown>
+                <mkm:ActionBarButton Label="Zoom avant" Icon="{x:Static mkm:Icons.ZoomIn}" />
+                <mkm:ActionBarButton Label="Zoom arrière" Icon="{x:Static mkm:Icons.ZoomOut}" />
+                <mkm:ActionBarButton Label="Ajuster" Icon="{x:Static mkm:Icons.Fit}" />
+            </mkm:ActionBarDropDown>
+        </mkm:ActionBarSection>
+    </mkm:ActionBar>
+</Grid>
+]]></exemple>
+  </section>
+
+  <section titre="Libellés">
+    <p><c>ShowLabels</c> montre le libellé de chaque commande sous son icône. L'utilisateur les montre ou les cache
+      aussi par un clic droit sur la barre.</p>
+    <exemple etendu="oui"><![CDATA[
+<Grid Height="150">
+    <mkm:ActionBar ActiveSection="edition" ShowLabels="True">
+        <mkm:ActionBarSection Key="edition" Header="Édition">
+            <mkm:ActionBarButton Label="Ajouter" Icon="{x:Static mkm:Icons.Add}" />
+            <mkm:ActionBarButton Label="Copier" Icon="{x:Static mkm:Icons.Copy}" />
+            <mkm:ActionBarButton Label="Supprimer" Icon="{x:Static mkm:Icons.Delete}" />
+        </mkm:ActionBarSection>
+    </mkm:ActionBar>
+</Grid>
+]]></exemple>
+  </section>
+
+  <section titre="Grisé et indice">
+    <p>Une commande grisée (<c>IsEnabled="False"</c>, ou le <c>CanExecute</c> de sa <c>Command</c>) ne se lance pas.
+      <c>Hint</c> dit pourquoi, ou ce que fait la commande : il paraît dans son info-bulle.</p>
+    <exemple etendu="oui"><![CDATA[
+<Grid Height="150">
+    <mkm:ActionBar ActiveSection="edition">
+        <mkm:ActionBarSection Key="edition" Header="Édition">
+            <mkm:ActionBarButton Label="Ajouter" Icon="{x:Static mkm:Icons.Add}" Hint="Ajoute une note au plan" />
+            <mkm:ActionBarButton Label="Supprimer" Icon="{x:Static mkm:Icons.Delete}"
+                                 Hint="Sélectionnez d'abord un élément" IsEnabled="False" />
+        </mkm:ActionBarSection>
+    </mkm:ActionBar>
+</Grid>
+]]></exemple>
+  </section>
+
+  <section titre="Repliée">
+    <p>Le bouton de l'en-tête replie la barre : seul son en-tête reste. <c>IsCollapsed</c> dit si elle l'est, et se
+      lie dans les deux sens.</p>
+    <exemple etendu="oui"><![CDATA[
+<Grid Height="110">
+    <mkm:ActionBar ActiveSection="edition" IsCollapsed="True">
+        <mkm:ActionBarSection Key="edition" Header="Édition">
+            <mkm:ActionBarButton Label="Ajouter" Icon="{x:Static mkm:Icons.Add}" />
+        </mkm:ActionBarSection>
+        <mkm:ActionBarSection Key="vue" Header="Vue">
+            <mkm:ActionBarButton Label="Actualiser" Icon="{x:Static mkm:Icons.Refresh}" />
+        </mkm:ActionBarSection>
+    </mkm:ActionBar>
+</Grid>
+]]></exemple>
+  </section>
+
+  <section titre="Accessibilité">
+    <h3>Lecteur d'écran</h3>
+    <p>Narrateur dit la barre « barre d'outils ». Chaque section est un onglet, qu'il dit choisi ou non. Chaque
+      commande est un bouton nommé par son <c>Label</c>, son <c>Hint</c> en texte d'aide ; une bascule se dit enfoncée
+      ou non. La flèche d'une liste se nomme « Plus de commandes », le bouton de repli « Masquer les commandes » ou
+      « Afficher les commandes ».</p>
+    <h3>Clavier</h3>
+    <p>Toute la rangée n'est qu'un arrêt de tabulation : la dernière commande qui a eu le clavier.</p>
+    <touches>
+      <touche nom="Tab">Passe des onglets au bouton de repli, puis à la rangée des commandes.</touche>
+      <touche nom="Flèches gauche et droite">Passent d'un onglet, ou d'une commande, à son voisin.</touche>
+      <touche nom="Début">Va à la première commande de la rangée.</touche>
+      <touche nom="Fin">Va à la dernière commande de la rangée.</touche>
+      <touche nom="Entrée">Lance la commande, ou montre la section de l'onglet, qui a le clavier.</touche>
+      <touche nom="Espace">Lance la commande, ou montre la section de l'onglet, qui a le clavier.</touche>
+      <touche nom="Flèches haut et bas">Sur une liste, l'ouvrent, le clavier sur sa première commande.</touche>
+      <touche nom="Échap">Ferme la liste ouverte et rend le clavier à sa commande.</touche>
+    </touches>
+  </section>
+</page>

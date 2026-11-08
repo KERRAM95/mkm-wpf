@@ -22,7 +22,7 @@
     <p><c>OnLabel</c> et <c>OffLabel</c> donnent le libellé enfoncé et relâché, <c>OnIcon</c> et <c>OffIcon</c>
       l'icône. Sans <c>OffIcon</c>, l'icône reste la même.</p>
     <exemple><![CDATA[
-<mkm:ToggleButton OnLabel="Verrouillé" OffLabel="Déverrouillé"
+<mkm:ToggleButton x:Name="Verrou" OnLabel="Verrouillé" OffLabel="Déverrouillé"
                   OnIcon="{x:Static mkm:Icons.Locked}" OffIcon="{x:Static mkm:Icons.Unlocked}" />
 ]]></exemple>
   </section>

@@ -12,6 +12,16 @@ Namespace Mkm.Wpf.Controls
     Public Class GapStackPanel
         Inherits Panel
 
+        ''' <summary>
+        ''' Un groupe pour les lecteurs d'écran quand la pile est une région « vivante » (<c>AutomationProperties.LiveSetting</c>,
+        ''' comme le contenu d'un EmptyContent) : sans pair, son annonce ne partait pas. Sinon, une simple mise en page,
+        ''' invisible pour eux.
+        ''' </summary>
+        Protected Overrides Function OnCreateAutomationPeer() As System.Windows.Automation.Peers.AutomationPeer
+            If System.Windows.Automation.AutomationProperties.GetLiveSetting(Me) = System.Windows.Automation.AutomationLiveSetting.Off Then Return Nothing
+            Return New PairDeConteneur(Me, System.Windows.Automation.Peers.AutomationControlType.Group)
+        End Function
+
         ''' <summary>L'écart entre deux éléments visibles.</summary>
         Public Shared ReadOnly GapProperty As DependencyProperty = DependencyProperty.Register(
             NameOf(Gap), GetType(Double), GetType(GapStackPanel),

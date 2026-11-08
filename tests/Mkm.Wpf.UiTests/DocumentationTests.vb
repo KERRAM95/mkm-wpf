@@ -60,8 +60,9 @@ Namespace Mkm.Wpf.UiTests
         Public Sub UnLienMeneASaPage()
             Dim contenu = OuvrirLaDoc("button")
 
-            Cliquer(TrouverParNom("Icônes", ControlType.Hyperlink, contenu))
-            Trouver("page-icones")
+            ' Le lien du texte d'Import (le sommaire a aussi des liens, vers les sections de la page).
+            Cliquer(TrouverParNom("Installation", ControlType.Hyperlink, contenu))
+            Trouver("page-installation")
         End Sub
 
         <Test>

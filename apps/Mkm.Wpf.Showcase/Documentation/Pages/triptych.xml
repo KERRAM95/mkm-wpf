@@ -1,0 +1,107 @@
+<?xml version="1.0" encoding="utf-8"?>
+<page titre="Triptych" categorie="Panneau" types="Triptych TriptychSide TriptychGutter" jetons="triptych">
+  <resume>La mise en page des applications 3DEXPERIENCE : un panneau à gauche (l'accueil, la structure), le
+    contenu principal au milieu, un panneau à droite (les propriétés). Les panneaux de côté s'ouvrent, se ferment,
+    s'élargissent par leur poignée ; dans une fenêtre étroite, ils recouvrent le contenu.</resume>
+
+  <section titre="Import">
+    <code><![CDATA[
+<Window xmlns:mkm="urn:mkm-wpf">
+    <mkm:Triptych LeftVisible="True" RightVisible="True">
+        <mkm:Triptych.Left> … </mkm:Triptych.Left>
+        <!-- Le contenu principal. -->
+        <mkm:Triptych.Right> … </mkm:Triptych.Right>
+    </mkm:Triptych>
+</Window>
+]]></code>
+  </section>
+
+  <section titre="Basique">
+    <p><c>Left</c> et <c>Right</c> sont les contenus des panneaux de côté, le contenu du Triptych est le panneau
+      principal. <c>LeftVisible</c> et <c>RightVisible</c> ouvrent les panneaux ; <c>LeftSize</c> et
+      <c>RightSize</c> donnent leur largeur, en pixels. Une poignée, sur le bord d'un panneau ouvert, l'élargit.</p>
+    <exemple etendu="oui"><![CDATA[
+<Border BorderThickness="1" BorderBrush="{DynamicResource mkm.content.border.color}" Height="300">
+    <mkm:Triptych x:Name="Disposition" LeftVisible="True" LeftSize="200" RightVisible="True" RightSize="220">
+        <mkm:Triptych.Left>
+            <StackPanel Margin="12,10">
+                <TextBlock FontWeight="Bold" Text="Structure" />
+                <TextBlock Margin="0,8,0,0" Text="HS-ASM-001" />
+            </StackPanel>
+        </mkm:Triptych.Left>
+        <TextBlock Margin="16" TextWrapping="Wrap" Text="Le contenu principal : le plan ouvert." />
+        <mkm:Triptych.Right>
+            <StackPanel Margin="12,10">
+                <TextBlock FontWeight="Bold" Text="Propriétés" />
+                <TextBlock Margin="0,8,0,0" TextWrapping="Wrap" Text="Tirez la poignée du bord pour élargir ce panneau." />
+            </StackPanel>
+        </mkm:Triptych.Right>
+    </mkm:Triptych>
+</Border>
+]]></exemple>
+  </section>
+
+  <section titre="Languette et bande">
+    <p><c>ShowLeftToggle</c> pose une languette en haut à gauche du contenu : elle ouvre le panneau de gauche, le
+      replie en une bande (<c>LeftCollapsed</c>, de <c>LeftCollapsedSize</c> pixels) et le déplie.
+      <c>ShowRightCloseIcon</c> et <c>ShowLeftCloseIcon</c> ajoutent une croix qui ferme le panneau. Le panneau d'accueil
+      (<lien page="welcomepanel">WelcomePanel</lien>) s'y replie en ne gardant que ses icônes.</p>
+    <exemple etendu="oui"><![CDATA[
+<Border BorderThickness="1" BorderBrush="{DynamicResource mkm.content.border.color}" Height="300">
+    <mkm:Triptych LeftVisible="True" LeftSize="220" RightVisible="True" RightSize="220"
+                  ShowLeftToggle="True" ShowRightCloseIcon="True">
+        <mkm:Triptych.Left>
+            <mkm:WelcomePanel Title="HS CART" Description="Plans et cartouches" Selection="recents">
+                <mkm:WelcomePanelSection Header="Plans">
+                    <mkm:WelcomePanelItem Key="recents" Icon="{x:Static mkm:Icons.History}" Content="Récents" />
+                    <mkm:WelcomePanelItem Key="tous" Icon="{x:Static mkm:Icons.Drawings}" Content="Tous les plans" />
+                </mkm:WelcomePanelSection>
+            </mkm:WelcomePanel>
+        </mkm:Triptych.Left>
+        <TextBlock Margin="40,16,16,16" TextWrapping="Wrap" Text="La languette, en haut à gauche, replie le panneau d'accueil en une bande." />
+        <mkm:Triptych.Right>
+            <TextBlock Margin="12,10" TextWrapping="Wrap" Text="Sa croix ferme ce panneau." />
+        </mkm:Triptych.Right>
+    </mkm:Triptych>
+</Border>
+]]></exemple>
+  </section>
+
+  <section titre="Tailles et poignées">
+    <p><c>LeftMinSize</c> et <c>RightMinSize</c> sont les largeurs sous lesquelles la poignée ne réduit pas un
+      panneau ; le contenu principal garde toujours de la place. <c>LeftResizable</c> et <c>RightResizable</c> à faux
+      ôtent la poignée. <c>Step</c> est le pas d'une flèche du clavier sur une poignée. <c>ResizeEnd</c> est levé à la
+      fin d'un glissement.</p>
+    <code><![CDATA[
+<mkm:Triptych LeftVisible="True" LeftSize="300" LeftMinSize="200" RightVisible="True" RightResizable="False" Step="20" />
+]]></code>
+  </section>
+
+  <section titre="Fenêtre étroite">
+    <p>Sous <c>Breakpoint</c> pixels de large, un panneau de côté ouvert recouvre le contenu
+      (<c>OverlaySize</c> de la largeur), un voile dessous ; un seul à la fois. Un clic sur le voile
+      (<c>Dismissable</c>) ou Échap (<c>CloseOnEscape</c>) le ferme. <c>IsOverlay</c> dit si la mise en page est
+      dans ce mode, et <c>ModeChange</c> est levé quand elle y entre ou en sort. <c>Modal</c> voile le reste quand le
+      panneau de droite est ouvert.</p>
+    <p>En VB, <c>Show</c>, <c>Hide</c> et <c>Toggle</c> ouvrent, ferment ou basculent un panneau (<c>TriptychSide</c>).</p>
+    <code langage="vb"><![CDATA[
+Disposition.Show(TriptychSide.Right)
+]]></code>
+  </section>
+
+  <section titre="Accessibilité">
+    <h3>Lecteur d'écran</h3>
+    <p>Le Triptych est un volet qui contient ses trois panneaux. La languette se nomme « Afficher ou masquer le
+      panneau », la croix d'un panneau « Fermer », chaque poignée « Redimensionner le panneau ». Quand un panneau
+      recouvre le contenu, le clavier y entre, et revient à ce qui l'a ouvert quand il se ferme.</p>
+    <h3>Clavier</h3>
+    <touches>
+      <touche nom="Tab">Amène le clavier sur la languette, les poignées et le contenu des panneaux ouverts.</touche>
+      <touche nom="Flèche gauche">Sur une poignée, la déplace vers la gauche de Step pixels.</touche>
+      <touche nom="Flèche droite">Sur une poignée, la déplace vers la droite de Step pixels.</touche>
+      <touche nom="Début">Donne au panneau sa largeur minimale.</touche>
+      <touche nom="Fin">Donne au panneau sa largeur maximale.</touche>
+      <touche nom="Échap">Ferme le panneau qui recouvre le contenu.</touche>
+    </touches>
+  </section>
+</page>

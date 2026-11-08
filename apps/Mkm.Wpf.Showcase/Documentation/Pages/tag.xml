@@ -1,0 +1,69 @@
+<?xml version="1.0" encoding="utf-8"?>
+<page titre="Tag" categorie="Divers" types="Tag TagSeverity" jetons="tag">
+  <resume>Une étiquette : un mot court sur un fond de couleur, qui classe ou qualifie une donnée (un état, une
+    portée, une maturité). Celle de la grille de 3DEXPERIENCE : 18 px de haut, à angles droits.</resume>
+
+  <section titre="Import">
+    <code><![CDATA[
+<Window xmlns:mkm="urn:mkm-wpf">
+    <mkm:Tag Content="À jour" Severity="Success" />
+</Window>
+]]></code>
+  </section>
+
+  <section titre="Basique">
+    <p>Le texte est le contenu de l'étiquette (<c>Content</c>).</p>
+    <exemple><![CDATA[
+<mkm:Tag x:Name="Portee" Content="Utilisateur" />
+]]></exemple>
+  </section>
+
+  <section titre="Gravité">
+    <p><c>Severity</c> donne la couleur : le texte blanc sur la couleur de la gravité, assombrie pour rester
+      lisible.</p>
+    <exemple><![CDATA[
+<mkm:Tag Content="Primary" />
+<mkm:Tag Content="Secondary" Severity="Secondary" />
+<mkm:Tag Content="Success" Severity="Success" />
+<mkm:Tag Content="Info" Severity="Info" />
+<mkm:Tag Content="Warn" Severity="Warn" />
+<mkm:Tag Content="Danger" Severity="Danger" />
+<mkm:Tag Content="Contrast" Severity="Contrast" />
+]]></exemple>
+  </section>
+
+  <section titre="Icône">
+    <p><c>Icon</c> pose une icône de 12 px devant le texte.</p>
+    <exemple><![CDATA[
+<mkm:Tag Content="À jour" Severity="Success" Icon="{x:Static mkm:Icons.Check}" />
+<mkm:Tag Content="Bloqué" Severity="Danger" Icon="{x:Static mkm:Icons.Blocked}" />
+]]></exemple>
+  </section>
+
+  <section titre="Arrondie">
+    <p><c>Rounded</c> arrondit les bouts de l'étiquette.</p>
+    <exemple><![CDATA[
+<mkm:Tag Content="Nouveau" Rounded="True" />
+<mkm:Tag Content="3 révisions" Severity="Secondary" Rounded="True" />
+]]></exemple>
+  </section>
+
+  <section titre="Couleur de l'application">
+    <p>Une couleur qui vient d'ailleurs, celle d'une maturité par exemple, se pose par <c>Color</c> : elle l'emporte
+      sur la gravité, et le texte prend le blanc ou le presque noir, le plus lisible dessus. Les couleurs de maturité
+      sont la politique de l'application, pas celles de la bibliothèque.</p>
+    <exemple><![CDATA[
+<mkm:Tag Content="En cours" Color="#007DA3" />
+<mkm:Tag Content="Validé" Color="#018308" />
+<mkm:Tag Content="Obsolète" Color="White" />
+]]></exemple>
+  </section>
+
+  <section titre="Accessibilité">
+    <h3>Lecteur d'écran</h3>
+    <p>L'étiquette n'a pas de rôle à elle : Narrateur lit son texte, comme un texte. Sa couleur ne se lit pas : le
+      texte doit dire seul ce qu'il faut savoir (« Validé », non un simple point vert).</p>
+    <h3>Clavier</h3>
+    <p>L'étiquette ne prend pas le clavier : elle n'a rien à actionner.</p>
+  </section>
+</page>

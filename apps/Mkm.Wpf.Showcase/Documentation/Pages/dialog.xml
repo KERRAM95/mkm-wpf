@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="utf-8"?>
+<page titre="Dialog" categorie="Superposition" types="Dialog" jetons="dialog">
+  <resume>Une fenêtre de dialogue, comme celle de 3DEXPERIENCE : une barre de titre et sa croix, le contenu, un pied
+    où les boutons se rangent à droite. C'est une vraie fenêtre de Windows, modale ou non.</resume>
+
+  <section titre="Import">
+    <p>Dialog hérite de la <c>Window</c> de WPF : il s'écrit comme une fenêtre (un fichier XAML à lui, ou du code VB), et
+      s'ouvre par <c>ShowDialog</c>, modal, ou <c>Show</c>. <c>Footer</c> reçoit ses boutons.</p>
+    <code><![CDATA[
+<mkm:Dialog x:Class="MonApplication.Renommer"
+            xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+            xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+            xmlns:mkm="urn:mkm-wpf"
+            Title="Renommer le plan">
+    <mkm:InputText Text="{Binding Nom}" Width="280" />
+    <mkm:Dialog.Footer>
+        <StackPanel Orientation="Horizontal">
+            <mkm:Button Content="Annuler" Severity="Secondary" IsCancel="True" />
+            <mkm:Button Content="Renommer" IsDefault="True" Click="Renommer_Click" />
+        </StackPanel>
+    </mkm:Dialog.Footer>
+</mkm:Dialog>
+]]></code>
+  </section>
+
+  <section titre="Basique">
+    <p>Le dialogue prend la taille de son contenu et s'ouvre au milieu de sa fenêtre propriétaire (<c>Owner</c>).
+      <c>ShowDialog</c> le rend modal : la fenêtre propriétaire attend sa réponse, <c>DialogResult</c>. Le bouton
+      <c>IsDefault</c> répond à Entrée, le bouton <c>IsCancel</c> à Échap.</p>
+    <exemple comportement="DialogueRenommer"><![CDATA[
+<StackPanel>
+    <mkm:Button x:Name="Renommer" Content="Renommer…" HorizontalAlignment="Center" />
+    <TextBlock x:Name="Resultat" Margin="0,8,0,0" HorizontalAlignment="Center"
+               Foreground="{DynamicResource mkm.text.muted.color}" Text="Aucune réponse encore" />
+</StackPanel>
+]]></exemple>
+  </section>
+
+  <section titre="Étirable">
+    <p><c>ResizeMode="CanResize"</c> donne la poignée du coin, qui étire le dialogue ; avec
+      <c>SizeToContent="Manual"</c>, il garde la taille donnée. Un titre trop long pour sa barre se coupe.</p>
+    <exemple comportement="DialogueEtirable"><![CDATA[
+<mkm:Button x:Name="Etirable" Content="Étirable, titre long" Severity="Secondary" />
+]]></exemple>
+  </section>
+
+  <section titre="Fermeture et déplacement">
+    <p>Par défaut, la croix ferme le dialogue (<c>Closable</c>), Échap aussi (<c>CloseOnEscape</c>), et l'on déplace le
+      dialogue en tirant sa barre de titre (<c>Draggable</c>). Chacun se retire, pour un dialogue qui exige une
+      réponse.</p>
+    <code><![CDATA[
+<mkm:Dialog Title="Synchronisation" Closable="False" CloseOnEscape="False" Draggable="False" />
+]]></code>
+  </section>
+
+  <section titre="Accessibilité">
+    <h3>Lecteur d'écran</h3>
+    <p>Le dialogue est une fenêtre : Narrateur la dit « boîte de dialogue », nommée par son titre (<c>Title</c>), et
+      lit son contenu. Modal, il garde le clavier tant qu'il est ouvert. Sa croix est un bouton nommé « Fermer ».</p>
+    <h3>Clavier</h3>
+    <touches>
+      <touche nom="Tab">Passe à l'élément suivant du dialogue ; du dernier, revient au premier.</touche>
+      <touche nom="Maj + Tab">Passe à l'élément précédent du dialogue.</touche>
+      <touche nom="Entrée">Lance le bouton qui a le clavier ; ailleurs, le bouton IsDefault.</touche>
+      <touche nom="Échap">Ferme le dialogue, comme le bouton IsCancel (si CloseOnEscape).</touche>
+    </touches>
+  </section>
+</page>

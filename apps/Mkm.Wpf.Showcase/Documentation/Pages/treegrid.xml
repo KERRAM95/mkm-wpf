@@ -1,0 +1,109 @@
+<?xml version="1.0" encoding="utf-8"?>
+<page titre="TreeGrid" categorie="Données" types="TreeGrid TreeGridColumn TreeGridCell TreeGridRowInfo" jetons="treegrid">
+  <resume>Une grille arborescente : les nœuds dépliés d'un arbre, en lignes, et leurs propriétés en colonnes. C'est la
+    DataGridView de 3DEXPERIENCE, pour la structure d'un produit.</resume>
+
+  <section titre="Import">
+    <p>TreeGrid hérite de <lien page="datatable">DataTable</lien> : ses colonnes, son tri, sa sélection, ses lignes
+      zébrées et son quadrillage. Une de ses colonnes, la <c>TreeGridColumn</c>, porte l'arbre.</p>
+    <code><![CDATA[
+<Window xmlns:mkm="urn:mkm-wpf">
+    <mkm:TreeGrid Nodes="{Binding Racines}" ChildrenPath="Enfants" />
+</Window>
+]]></code>
+  </section>
+
+  <section titre="Basique">
+    <p>Les lignes viennent de <c>Nodes</c>, les racines de l'arbre, et non d'<c>ItemsSource</c>. <c>ChildrenPath</c>
+      nomme la propriété qui donne les enfants d'un nœud (« Children » par défaut). La <c>TreeGridColumn</c> montre les
+      traits de l'arbre, la case qui déplie (+ et −), l'icône (<c>IconBinding</c>) et le libellé du nœud.</p>
+    <exemple comportement="StructureDeProduit" etendu="oui"><![CDATA[
+<mkm:TreeGrid x:Name="Produit" Height="300" ChildrenPath="Enfants">
+    <mkm:TreeGrid.Columns>
+        <mkm:TreeGridColumn Header="Nom" Binding="{Binding Nom}" IconBinding="{Binding Icone}" SortMemberPath="Nom" Width="2*" />
+        <DataGridTextColumn Header="Révision" Binding="{Binding Revision}" Width="80" />
+        <DataGridTextColumn Header="Maturité" Binding="{Binding Maturite}" Width="*" />
+        <DataGridTextColumn Header="Propriétaire" Binding="{Binding Proprietaire}" Width="*" />
+    </mkm:TreeGrid.Columns>
+</mkm:TreeGrid>
+]]></exemple>
+  </section>
+
+  <section titre="Déplier et replier">
+    <p>Un clic sur la case + ou − déplie ou replie un nœud. En VB, <c>Expand</c>, <c>Collapse</c> et <c>Toggle</c> le
+      font pour un nœud, <c>ExpandAll</c> et <c>CollapseAll</c> pour tout l'arbre ; <c>IsExpanded</c> dit s'il est
+      déplié. Un nœud replié puis déplié retrouve ses enfants comme il les avait laissés.</p>
+    <exemple comportement="StructureDeProduit" etendu="oui"><![CDATA[
+<StackPanel Orientation="Horizontal" Margin="0,0,0,12">
+    <mkm:Button x:Name="ToutDeplier" Content="Tout déplier" Icon="{x:Static mkm:Icons.ExpandAll}" Severity="Secondary" Margin="0,0,8,0" />
+    <mkm:Button x:Name="ToutReplier" Content="Tout replier" Icon="{x:Static mkm:Icons.CollapseAll}" Severity="Secondary" />
+</StackPanel>
+<mkm:TreeGrid Height="300" ChildrenPath="Enfants">
+    <mkm:TreeGrid.Columns>
+        <mkm:TreeGridColumn Header="Nom" Binding="{Binding Nom}" IconBinding="{Binding Icone}" Width="2*" />
+        <DataGridTextColumn Header="Révision" Binding="{Binding Revision}" Width="80" />
+        <DataGridTextColumn Header="Maturité" Binding="{Binding Maturite}" Width="*" />
+    </mkm:TreeGrid.Columns>
+</mkm:TreeGrid>
+]]></exemple>
+  </section>
+
+  <section titre="Tri">
+    <p>Un clic sur un titre trie les nœuds à l'intérieur de leurs frères : un enfant reste sous son parent. La colonne
+      de l'arbre se trie par son <c>SortMemberPath</c>.</p>
+    <exemple comportement="StructureDeProduit" etendu="oui"><![CDATA[
+<mkm:TreeGrid Height="300" ChildrenPath="Enfants">
+    <mkm:TreeGrid.Columns>
+        <mkm:TreeGridColumn Header="Nom" Binding="{Binding Nom}" IconBinding="{Binding Icone}" SortMemberPath="Nom" Width="2*" />
+        <DataGridTextColumn Header="Révision" Binding="{Binding Revision}" Width="80" />
+        <DataGridTextColumn Header="Maturité" Binding="{Binding Maturite}" Width="*" />
+    </mkm:TreeGrid.Columns>
+</mkm:TreeGrid>
+]]></exemple>
+  </section>
+
+  <section titre="Lignes zébrées et quadrillage">
+    <p>Comme le DataTable : <c>Striped</c>, <c>GridLines</c> et <c>Size</c>.</p>
+    <exemple comportement="StructureDeProduit" etendu="oui"><![CDATA[
+<mkm:TreeGrid Height="260" ChildrenPath="Enfants" Striped="True" GridLines="True" Size="Small">
+    <mkm:TreeGrid.Columns>
+        <mkm:TreeGridColumn Header="Nom" Binding="{Binding Nom}" IconBinding="{Binding Icone}" Width="2*" />
+        <DataGridTextColumn Header="Révision" Binding="{Binding Revision}" Width="80" />
+        <DataGridTextColumn Header="Maturité" Binding="{Binding Maturite}" Width="*" />
+    </mkm:TreeGrid.Columns>
+</mkm:TreeGrid>
+]]></exemple>
+  </section>
+
+  <section titre="Sélection">
+    <p>Comme dans le DataTable, on choisit une ou plusieurs lignes (<c>SelectionMode</c>), et <c>SelectedItem</c> donne
+      le nœud choisi. Quand l'arbre change (un enfant ajouté ou retiré d'une collection qui le signale), les lignes se
+      refont et la sélection est gardée.</p>
+    <exemple comportement="StructureDeProduit" etendu="oui"><![CDATA[
+<mkm:TreeGrid Height="260" ChildrenPath="Enfants" SelectionMode="Extended">
+    <mkm:TreeGrid.Columns>
+        <mkm:TreeGridColumn Header="Nom" Binding="{Binding Nom}" IconBinding="{Binding Icone}" Width="2*" />
+        <DataGridTextColumn Header="Maturité" Binding="{Binding Maturite}" Width="*" />
+    </mkm:TreeGrid.Columns>
+</mkm:TreeGrid>
+]]></exemple>
+  </section>
+
+  <section titre="Accessibilité">
+    <h3>Lecteur d'écran</h3>
+    <p>C'est un tableau pour Narrateur, comme le <lien page="datatable">DataTable</lien> : il lit les titres des
+      colonnes et chaque cellule avec le titre de sa colonne. La case qui déplie un nœud est un bouton nommé « Déplier »
+      ou « Replier » selon son état.</p>
+    <h3>Clavier</h3>
+    <touches>
+      <touche nom="Tab">Amène le clavier dans la grille, puis hors de la grille.</touche>
+      <touche nom="Flèche bas, flèche haut">Passent à la ligne suivante ou précédente ; la sélection suit.</touche>
+      <touche nom="Flèche droite">Déplie le nœud replié, puis descend à son premier enfant.</touche>
+      <touche nom="Flèche gauche">Replie le nœud déplié, puis remonte à son parent.</touche>
+      <touche nom="Début, Fin">Vont à la première ou à la dernière cellule ; avec Ctrl, de la grille.</touche>
+      <touche nom="Page préc., Page suiv.">Montent ou descendent d'une page.</touche>
+      <touche nom="Maj + flèches">Étendent la sélection, en sélection multiple.</touche>
+      <touche nom="Ctrl + A">Choisit toutes les lignes, en sélection multiple.</touche>
+    </touches>
+  </section>
+</page>

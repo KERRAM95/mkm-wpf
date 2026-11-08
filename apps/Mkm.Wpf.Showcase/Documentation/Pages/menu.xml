@@ -1,0 +1,99 @@
+<?xml version="1.0" encoding="utf-8"?>
+<page titre="Menu" categorie="Menu" types="Menu MenuGroup" jetons="menu">
+  <resume>Un menu posé dans la page, toujours ouvert : la liste des commandes d'un panneau, regroupées sous des
+    libellés et séparées de traits.</resume>
+
+  <section titre="Import">
+    <p>En VB, <c>Menu</c> porte le nom du menu de WPF : qualifier (<c>Mkm.Wpf.Controls.Menu</c>) là où les deux
+      espaces de noms sont importés. Ses éléments sont des <c>MenuItem</c> de WPF.</p>
+    <code><![CDATA[
+<Window xmlns:mkm="urn:mkm-wpf">
+    <mkm:Menu>
+        <MenuItem Header="Ouvrir" Icon="{x:Static mkm:Icons.Open}" />
+    </mkm:Menu>
+</Window>
+]]></code>
+  </section>
+
+  <section titre="Basique">
+    <p>Chaque élément est un <c>MenuItem</c> : son <c>Header</c>, son <c>Icon</c>, son raccourci
+      (<c>InputGestureText</c>), son <c>Click</c> ou sa <c>Command</c>. <c>Separator</c> trace un trait.</p>
+    <exemple comportement="MenuJournal"><![CDATA[
+<mkm:Menu x:Name="MenuPose" VerticalAlignment="Top">
+    <MenuItem Header="Ouvrir" Icon="{x:Static mkm:Icons.Open}" InputGestureText="Ctrl+O" />
+    <MenuItem Header="Exporter" Icon="{x:Static mkm:Icons.Export}" />
+    <Separator />
+    <MenuItem Header="Paramètres" Icon="{x:Static mkm:Icons.Settings}" />
+</mkm:Menu>
+<TextBlock x:Name="Journal" Width="200" TextWrapping="Wrap" VerticalAlignment="Top"
+           Foreground="{DynamicResource mkm.text.muted.color}" Text="Choisissez un élément." />
+]]></exemple>
+  </section>
+
+  <section titre="Groupes">
+    <p><c>MenuGroup</c> range des éléments sous un libellé gras (<c>Header</c>), dans le menu même : le libellé n'ouvre
+      rien. Un élément grisé (<c>IsEnabled="False"</c>) reste lisible, mais ne se choisit pas.</p>
+    <exemple comportement="MenuJournal"><![CDATA[
+<mkm:Menu VerticalAlignment="Top">
+    <mkm:MenuGroup Header="Plan">
+        <MenuItem Header="Ouvrir" Icon="{x:Static mkm:Icons.Open}" InputGestureText="Ctrl+O" />
+        <MenuItem Header="Exporter" Icon="{x:Static mkm:Icons.Export}" />
+    </mkm:MenuGroup>
+    <mkm:MenuGroup Header="Notes">
+        <MenuItem Header="Ajouter une note" Icon="{x:Static mkm:Icons.Add}" InputGestureText="Ctrl+N" />
+        <MenuItem Header="Supprimer" IsEnabled="False" />
+    </mkm:MenuGroup>
+</mkm:Menu>
+<TextBlock x:Name="Journal" Width="200" TextWrapping="Wrap" VerticalAlignment="Top"
+           Foreground="{DynamicResource mkm.text.muted.color}" Text="Choisissez un élément." />
+]]></exemple>
+  </section>
+
+  <section titre="Sans icônes">
+    <p>Un menu dont aucun élément n'a d'icône n'a pas de colonne d'icône : les libellés commencent au bord. Dès qu'un
+      élément en a une, tous gardent la colonne.</p>
+    <exemple><![CDATA[
+<mkm:Menu VerticalAlignment="Top">
+    <MenuItem Header="Copier" InputGestureText="Ctrl+C" />
+    <MenuItem Header="Renommer" />
+    <MenuItem Header="Supprimer" />
+</mkm:Menu>
+]]></exemple>
+  </section>
+
+  <section titre="Début et fin">
+    <p><c>Start</c> et <c>End</c> reçoivent un contenu au-dessus et au-dessous de la liste : un titre, un bouton.</p>
+    <exemple><![CDATA[
+<mkm:Menu VerticalAlignment="Top">
+    <mkm:Menu.Start>
+        <TextBlock Margin="12,8" FontWeight="Bold" Text="HS CART" />
+    </mkm:Menu.Start>
+    <MenuItem Header="Ouvrir" Icon="{x:Static mkm:Icons.Open}" />
+    <MenuItem Header="Paramètres" Icon="{x:Static mkm:Icons.Settings}" />
+    <mkm:Menu.End>
+        <TextBlock Margin="12,8" Foreground="{DynamicResource mkm.text.muted.color}" Text="Version 1.0" />
+    </mkm:Menu.End>
+</mkm:Menu>
+]]></exemple>
+  </section>
+
+  <section titre="Depuis un bouton">
+    <p>Le menu qui s'ouvre d'un bouton est un <lien page="contextmenu">ContextMenu</lien> de WPF, qui a déjà le style
+      de mkm.</p>
+  </section>
+
+  <section titre="Accessibilité">
+    <h3>Lecteur d'écran</h3>
+    <p>Narrateur dit « menu », puis chaque élément de menu, nommé par son en-tête, avec son raccourci ; un élément
+      grisé se dit indisponible. Le libellé d'un groupe est un texte, qui n'ouvre rien. Le survol ne prend pas le
+      clavier : celui qui tapait dans un champ le garde.</p>
+    <h3>Clavier</h3>
+    <touches>
+      <touche nom="Tab">Amène le clavier sur un élément du menu, ou le fait sortir du menu.</touche>
+      <touche nom="Flèche bas">Passe à l'élément suivant.</touche>
+      <touche nom="Flèche haut">Passe à l'élément précédent.</touche>
+      <touche nom="Entrée">Choisit l'élément qui a le clavier.</touche>
+      <touche nom="Espace">Choisit l'élément qui a le clavier.</touche>
+    </touches>
+  </section>
+</page>

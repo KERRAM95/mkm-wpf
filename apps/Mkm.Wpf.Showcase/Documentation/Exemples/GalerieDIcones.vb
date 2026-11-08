@@ -15,8 +15,8 @@ Namespace Mkm.Wpf.Showcase.Documentation.Exemples
         Friend Shared Sub Preparer(exemple As FrameworkElement)
             Dim galerie = DirectCast(exemple.FindName("Galerie"), WrapPanel)
             Dim filtre = DirectCast(exemple.FindName("Filtre"), InputText)
-            Dim icones = GetType(Icons).GetFields(BindingFlags.Public Or BindingFlags.Static).
-                Where(Function(f) GetType(Geometry).IsAssignableFrom(f.FieldType)).OrderBy(Function(f) f.Name).ToList()
+            Dim icones = GetType(Icons).GetProperties(BindingFlags.Public Or BindingFlags.Static).
+                Where(Function(p) GetType(Geometry).IsAssignableFrom(p.PropertyType)).OrderBy(Function(p) p.Name).ToList()
             For Each icone In icones
                 galerie.Children.Add(Tuile(icone.Name, DirectCast(icone.GetValue(Nothing), Geometry)))
             Next

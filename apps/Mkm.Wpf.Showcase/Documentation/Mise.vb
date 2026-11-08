@@ -96,29 +96,32 @@ Namespace Mkm.Wpf.Showcase.Documentation
     End Class
 
     ''' <summary>Les briques de la mise en page de la documentation : titres, paragraphes, tableaux, aux couleurs du thème.</summary>
-    Friend Module Mise
+    Friend NotInheritable Class Mise
+
+        Private Sub New()
+        End Sub
 
         ''' <summary>Pose sur un élément la couleur d'un jeton du thème (<c>DynamicResource</c>).</summary>
-        Friend Sub Jeton(element As FrameworkElement, propriete As DependencyProperty, chemin As String)
+        Friend Shared Sub Jeton(element As FrameworkElement, propriete As DependencyProperty, chemin As String)
             element.SetResourceReference(propriete, ThemeResources.Prefix & chemin)
         End Sub
 
         ''' <summary>Un titre, de la taille donnée.</summary>
-        Friend Function Titre(texte As String, taille As Double, Optional marge As Thickness = Nothing) As TextBlock
+        Friend Shared Function Titre(texte As String, taille As Double, Optional marge As Thickness = Nothing) As TextBlock
             Dim t As New TextBlock With {.Text = texte, .FontSize = taille, .FontWeight = FontWeights.SemiBold,
                                          .TextWrapping = TextWrapping.Wrap, .Margin = marge}
             Return t
         End Function
 
         ''' <summary>Un texte qui passe à la ligne, gris comme un texte d'aide si <paramref name="discret"/>.</summary>
-        Friend Function Texte(contenu As String, Optional discret As Boolean = False, Optional marge As Thickness = Nothing) As TextBlock
+        Friend Shared Function Texte(contenu As String, Optional discret As Boolean = False, Optional marge As Thickness = Nothing) As TextBlock
             Dim t As New TextBlock With {.Text = contenu, .TextWrapping = TextWrapping.Wrap, .Margin = marge, .LineHeight = 21}
             If discret Then Jeton(t, TextBlock.ForegroundProperty, "text.muted.color")
             Return t
         End Function
 
         ''' <summary>Un mot de code dans une phrase : à chasse fixe, sur un fond pâle.</summary>
-        Friend Function MotDeCode(texte As String) As Run
+        Friend Shared Function MotDeCode(texte As String) As Run
             Dim r As New Run(texte) With {.FontFamily = New FontFamily("Consolas, Courier New")}
             r.SetResourceReference(TextElement.BackgroundProperty, ThemeResources.Prefix & "content.hover.background")
             r.SetResourceReference(TextElement.ForegroundProperty, ThemeResources.Prefix & "primary.color")
@@ -129,8 +132,9 @@ Namespace Mkm.Wpf.Showcase.Documentation
         ''' Un tableau comme ceux d'ui-kit : un en-tête en gras sur un filet, une ligne par entrée, la première colonne en
         ''' code si <paramref name="premiereEnCode"/>.
         ''' </summary>
-        Friend Function Tableau(entetes As String(), lignes As IEnumerable(Of String()), largeurs As GridLength(),
-                                Optional premiereEnCode As Boolean = True) As FrameworkElement
+        Friend Shared Function Tableau(entetes As String(), lignes As IEnumerable(Of String()), largeurs As GridLength(),
+                                Optional premiereEnCode As Boolean = True, Optional toutEnCode As Boolean = False,
+                                Optional pastilles As Boolean = False) As FrameworkElement
             Dim grille As New Grid With {.Margin = New Thickness(0, 4, 0, 16)}
             For Each l In largeurs
                 grille.ColumnDefinitions.Add(New ColumnDefinition With {.Width = l})
@@ -147,10 +151,23 @@ Namespace Mkm.Wpf.Showcase.Documentation
                                   ElseIf c = 0 AndAlso premiereEnCode Then
                                       t.FontFamily = New FontFamily("Consolas, Courier New")
                                       Jeton(t, TextBlock.ForegroundProperty, "primary.color")
-                                  ElseIf c > 0 AndAlso c < cellules.Length - 1 AndAlso premiereEnCode Then
+                                  ElseIf c > 0 AndAlso (toutEnCode OrElse (c < cellules.Length - 1 AndAlso premiereEnCode)) Then
                                       t.FontFamily = New FontFamily("Consolas, Courier New")
                                   End If
-                                  bord.Child = t
+                                  Dim couleur As Color
+                                  If pastilles AndAlso Not entete AndAlso c > 0 AndAlso ThemeResources.TryParseColor(cellules(c), couleur) Then
+                                      ' Une pastille de la couleur devant sa valeur.
+                                      Dim rangee As New StackPanel With {.Orientation = Orientation.Horizontal}
+                                      Dim pastille As New Border With {.Width = 14, .Height = 14, .CornerRadius = New CornerRadius(3), .Margin = New Thickness(0, 0, 6, 0),
+                                                                       .Background = New SolidColorBrush(couleur), .BorderThickness = New Thickness(1),
+                                                                       .VerticalAlignment = VerticalAlignment.Top}
+                                      Jeton(pastille, Border.BorderBrushProperty, "content.border.color")
+                                      rangee.Children.Add(pastille)
+                                      rangee.Children.Add(t)
+                                      bord.Child = rangee
+                                  Else
+                                      bord.Child = t
+                                  End If
                                   Grid.SetRow(bord, rang)
                                   Grid.SetColumn(bord, c)
                                   grille.Children.Add(bord)
@@ -165,10 +182,10 @@ Namespace Mkm.Wpf.Showcase.Documentation
         End Function
 
         ''' <summary>Une largeur de colonne proportionnelle.</summary>
-        Friend Function Part(n As Double) As GridLength
+        Friend Shared Function Part(n As Double) As GridLength
             Return New GridLength(n, GridUnitType.Star)
         End Function
 
-    End Module
+    End Class
 
 End Namespace

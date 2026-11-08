@@ -1,0 +1,103 @@
+<?xml version="1.0" encoding="utf-8"?>
+<page titre="WelcomePanel" categorie="Panneau" types="WelcomePanel WelcomePanelSection WelcomePanelItem WelcomePanelSeparator" jetons="welcomepanel">
+  <resume>Le panneau d'accueil de 3DEXPERIENCE, à gauche de l'application : son titre, puis des rubriques
+    d'entrées ; l'entrée choisie montre sa page. Replié, il ne garde que ses icônes.</resume>
+
+  <section titre="Import">
+    <code><![CDATA[
+<Window xmlns:mkm="urn:mkm-wpf">
+    <mkm:WelcomePanel Title="HS CART" Selection="recents">
+        <mkm:WelcomePanelSection Header="Plans">
+            <mkm:WelcomePanelItem Key="recents" Icon="{x:Static mkm:Icons.History}" Content="Récents" />
+        </mkm:WelcomePanelSection>
+    </mkm:WelcomePanel>
+</Window>
+]]></code>
+  </section>
+
+  <section titre="Basique">
+    <p><c>Title</c> et <c>Description</c> font l'en-tête ; <c>Header</c> le remplace par un autre contenu. Les
+      rubriques (<c>WelcomePanelSection</c>, sous leur <c>Header</c>) rangent les entrées (<c>WelcomePanelItem</c> :
+      <c>Key</c>, <c>Icon</c>, son libellé en contenu), séparées au besoin d'un trait (<c>WelcomePanelSeparator</c>).
+      <c>Selection</c> est la clé de l'entrée choisie ; <c>ItemClick</c> est levé à chaque entrée choisie.</p>
+    <exemple comportement="WelcomePanelJournal"><![CDATA[
+<Border Width="240" Height="300" BorderThickness="1" BorderBrush="{DynamicResource mkm.content.border.color}">
+    <mkm:WelcomePanel x:Name="Accueil" Title="HS CART" Description="Plans et cartouches" Selection="recents">
+        <mkm:WelcomePanelSection Header="Plans">
+            <mkm:WelcomePanelItem Key="recents" Icon="{x:Static mkm:Icons.History}" Content="Récents" />
+            <mkm:WelcomePanelItem Key="tous" Icon="{x:Static mkm:Icons.Drawings}" Content="Tous les plans" />
+            <mkm:WelcomePanelItem Key="articles" Icon="{x:Static mkm:Icons.Documents}" Content="Articles" />
+        </mkm:WelcomePanelSection>
+        <mkm:WelcomePanelSeparator />
+        <mkm:WelcomePanelSection>
+            <mkm:WelcomePanelItem Key="reglages" Icon="{x:Static mkm:Icons.Settings}" Content="Paramètres" />
+        </mkm:WelcomePanelSection>
+    </mkm:WelcomePanel>
+</Border>
+<TextBlock x:Name="Journal" Width="240" TextWrapping="Wrap" Foreground="{DynamicResource mkm.text.muted.color}" Text="Choisissez une entrée." />
+]]></exemple>
+  </section>
+
+  <section titre="Entrées d'action">
+    <p>Une entrée qui lance une action sans devenir la choisie (synchroniser, ouvrir une fenêtre) a
+      <c>Selectable="False"</c> : elle lève <c>Click</c> et <c>ItemClick</c>, mais la sélection ne bouge pas. Une
+      entrée sans <c>Key</c> se comporte de même. <c>Command</c> lie une entrée à une commande.</p>
+    <exemple><![CDATA[
+<Border Width="240" Height="200" BorderThickness="1" BorderBrush="{DynamicResource mkm.content.border.color}">
+    <mkm:WelcomePanel Selection="tous">
+        <mkm:WelcomePanelSection Header="Plans">
+            <mkm:WelcomePanelItem Key="tous" Icon="{x:Static mkm:Icons.Drawings}" Content="Tous les plans" />
+            <mkm:WelcomePanelItem Key="sync" Selectable="False" Icon="{x:Static mkm:Icons.Refresh}" Content="Synchroniser" />
+        </mkm:WelcomePanelSection>
+    </mkm:WelcomePanel>
+</Border>
+]]></exemple>
+  </section>
+
+  <section titre="Replié">
+    <p><c>IsCollapsed</c> replie le panneau : il ne garde que les icônes, et le libellé de chaque entrée passe dans son
+      info-bulle. <c>Toggle</c> le replie ou le déplie.</p>
+    <exemple><![CDATA[
+<Border Height="200" BorderThickness="1" BorderBrush="{DynamicResource mkm.content.border.color}">
+    <mkm:WelcomePanel Selection="tous" IsCollapsed="True">
+        <mkm:WelcomePanelSection Header="Plans">
+            <mkm:WelcomePanelItem Key="recents" Icon="{x:Static mkm:Icons.History}" Content="Récents" />
+            <mkm:WelcomePanelItem Key="tous" Icon="{x:Static mkm:Icons.Drawings}" Content="Tous les plans" />
+        </mkm:WelcomePanelSection>
+    </mkm:WelcomePanel>
+</Border>
+]]></exemple>
+  </section>
+
+  <section titre="Grisé">
+    <p>Une entrée grisée (<c>IsEnabled="False"</c>) ne se choisit plus ; le clavier la saute.</p>
+    <exemple><![CDATA[
+<Border Width="240" Height="200" BorderThickness="1" BorderBrush="{DynamicResource mkm.content.border.color}">
+    <mkm:WelcomePanel Selection="tous">
+        <mkm:WelcomePanelSection Header="Plans">
+            <mkm:WelcomePanelItem Key="tous" Icon="{x:Static mkm:Icons.Drawings}" Content="Tous les plans" />
+            <mkm:WelcomePanelItem Key="off" Icon="{x:Static mkm:Icons.Blocked}" Content="Archivés" IsEnabled="False" />
+        </mkm:WelcomePanelSection>
+    </mkm:WelcomePanel>
+</Border>
+]]></exemple>
+  </section>
+
+  <section titre="Accessibilité">
+    <h3>Lecteur d'écran</h3>
+    <p>Chaque entrée est un bouton nommé par son libellé, que Narrateur dit aussi « sélectionné » quand c'est l'entrée
+      choisie ; replié, le panneau garde le nom de chaque entrée. Une entrée d'action ne se dit jamais sélectionnée.</p>
+    <h3>Clavier</h3>
+    <p>Le panneau n'est qu'un arrêt de tabulation : l'entrée choisie, ou la première, prend le clavier ; les flèches le
+      déplacent d'une rubrique à l'autre, en sautant les entrées grisées.</p>
+    <touches>
+      <touche nom="Tab">Amène le clavier dans le panneau, ou l'en fait sortir.</touche>
+      <touche nom="Flèche bas">Passe à l'entrée suivante.</touche>
+      <touche nom="Flèche haut">Passe à l'entrée précédente.</touche>
+      <touche nom="Début">Passe à la première entrée.</touche>
+      <touche nom="Fin">Passe à la dernière entrée.</touche>
+      <touche nom="Entrée">Choisit l'entrée qui a le clavier.</touche>
+      <touche nom="Espace">Choisit l'entrée qui a le clavier.</touche>
+    </touches>
+  </section>
+</page>

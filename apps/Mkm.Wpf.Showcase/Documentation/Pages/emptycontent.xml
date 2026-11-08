@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="utf-8"?>
+<page titre="EmptyContent" categorie="Divers" types="EmptyContent EmptyContentItem EmptyContentSize" jetons="emptycontent">
+  <resume>L'écran vide : ce que montre un panneau, une grille ou une liste qui n'a rien à montrer. Une icône, un titre,
+    un message, puis les façons de le remplir et les actions qui le font.</resume>
+
+  <section titre="Import">
+    <code><![CDATA[
+<Window xmlns:mkm="urn:mkm-wpf">
+    <mkm:EmptyContent Title="Aucun plan ouvert" />
+</Window>
+]]></code>
+  </section>
+
+  <section titre="Basique">
+    <p>Un bloc centré, de 420 px au plus : l'icône grise (<c>Icon</c>), le titre en gras (<c>Title</c>) et le message
+      gris (<c>Message</c>, un texte ou un élément).</p>
+    <exemple><![CDATA[
+<mkm:EmptyContent Icon="{x:Static mkm:Icons.Documents}" Title="Aucun plan ouvert"
+                  Message="Ouvrez un plan dans CATIA pour remplir son cartouche." />
+]]></exemple>
+  </section>
+
+  <section titre="Possibilités">
+    <p>Les éléments de l'écran vide, des <c>EmptyContentItem</c>, disent comment le remplir : chacun son icône dans une
+      pastille ronde, puis son texte, séparés d'un « ou ». <c>ItemsSource</c> les donne aussi : un texte y devient une
+      possibilité sans icône.</p>
+    <exemple><![CDATA[
+<mkm:EmptyContent Icon="{x:Static mkm:Icons.Documents}" Title="Aucun plan ouvert"
+                  Message="Ouvrez un plan dans CATIA pour remplir son cartouche.">
+    <mkm:EmptyContentItem Icon="{x:Static mkm:Icons.Open}" Content="Ouvrez un plan existant" />
+    <mkm:EmptyContentItem Icon="{x:Static mkm:Icons.Add}" Content="Créez-en un à partir d'un modèle" />
+</mkm:EmptyContent>
+]]></exemple>
+  </section>
+
+  <section titre="Actions">
+    <p><c>Actions</c> se pose sous le bloc : un bouton, ou plusieurs dans un panneau.</p>
+    <exemple><![CDATA[
+<mkm:EmptyContent x:Name="Vide" Icon="{x:Static mkm:Icons.Documents}" Title="Aucun plan ouvert"
+                  Message="Ouvrez un plan dans CATIA pour remplir son cartouche.">
+    <mkm:EmptyContent.Actions>
+        <StackPanel Orientation="Horizontal">
+            <mkm:Button Content="Ouvrir" Icon="{x:Static mkm:Icons.Open}" Margin="0,0,8,0" />
+            <mkm:Button Content="Nouveau" Icon="{x:Static mkm:Icons.Add}" Severity="Secondary" />
+        </StackPanel>
+    </mkm:EmptyContent.Actions>
+</mkm:EmptyContent>
+]]></exemple>
+  </section>
+
+  <section titre="Taille">
+    <p><c>Size="Small"</c> : une icône de 24 px, un titre de 14 px, un message de 12 px, pour un panneau étroit. Les
+      possibilités suivent la taille de leur écran vide.</p>
+    <exemple><![CDATA[
+<mkm:EmptyContent Size="Small" Width="260" Icon="{x:Static mkm:Icons.Search}" Title="Aucun résultat"
+                  Message="Aucune variable ne contient ce texte.">
+    <mkm:EmptyContentItem Icon="{x:Static mkm:Icons.Filter}" Content="Retirez un filtre" />
+</mkm:EmptyContent>
+]]></exemple>
+  </section>
+
+  <section titre="Accessibilité">
+    <h3>Lecteur d'écran</h3>
+    <p>Le titre, le message et les possibilités sont une région « vivante », polie : Narrateur les lit quand ils
+      changent, sans couper ce qu'il disait. L'icône n'est qu'un décor. Les actions restent hors de cette région : elles
+      ne sont pas annoncées, mais se trouvent dans l'ordre de la touche Tab.</p>
+    <h3>Clavier</h3>
+    <p>L'écran vide n'a pas de commande à lui ; les boutons de ses actions suivent l'ordre de la touche Tab.</p>
+  </section>
+</page>

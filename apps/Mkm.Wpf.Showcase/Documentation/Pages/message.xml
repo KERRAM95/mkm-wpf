@@ -1,0 +1,84 @@
+<?xml version="1.0" encoding="utf-8"?>
+<page titre="Message" categorie="Messages" types="Message MessageSeverity MessageVariant MessageSize" jetons="message">
+  <resume>Un message dans la page : une information, une réussite, un avertissement ou une erreur, sur le fond pâle de
+    sa gravité, avec son icône. Il peut se fermer par sa croix ou seul, au bout de sa vie.</resume>
+
+  <section titre="Import">
+    <code><![CDATA[
+<Window xmlns:mkm="urn:mkm-wpf">
+    <mkm:Message Severity="Warn" Content="Le cartouche n'est pas à jour." />
+</Window>
+]]></code>
+  </section>
+
+  <section titre="Basique">
+    <p>Le texte est le contenu du message (<c>Content</c>) ; il passe à la ligne s'il est long.</p>
+    <exemple etendu="oui"><![CDATA[
+<mkm:Message Content="Le plan est ouvert en lecture seule." />
+]]></exemple>
+  </section>
+
+  <section titre="Gravité">
+    <p><c>Severity</c> donne la couleur : <c>Info</c> (par défaut), <c>Success</c>, <c>Warn</c>, <c>Error</c>,
+      <c>Secondary</c> ou <c>Contrast</c>.</p>
+    <exemple etendu="oui"><![CDATA[
+<mkm:Message Severity="Info" Content="Le plan est ouvert en lecture seule." Margin="0,0,0,8" />
+<mkm:Message Severity="Success" Content="Le cartouche est à jour." Margin="0,0,0,8" />
+<mkm:Message Severity="Warn" Content="Le cartouche n'est pas à jour." Margin="0,0,0,8" />
+<mkm:Message Severity="Error" Content="Le plan n'a pas pu être enregistré." Margin="0,0,0,8" />
+<mkm:Message Severity="Secondary" Content="Un message secondaire." Margin="0,0,0,8" />
+<mkm:Message Severity="Contrast" Content="Un message contrasté." />
+]]></exemple>
+  </section>
+
+  <section titre="Icône">
+    <p><c>Icon</c> pose une icône devant le texte, de la couleur de la gravité.</p>
+    <exemple etendu="oui"><![CDATA[
+<mkm:Message Severity="Info" Icon="{x:Static mkm:Icons.Info}" Content="Le plan est ouvert en lecture seule." Margin="0,0,0,8" />
+<mkm:Message Severity="Success" Icon="{x:Static mkm:Icons.Success}" Content="Le cartouche est à jour." Margin="0,0,0,8" />
+<mkm:Message Severity="Warn" Icon="{x:Static mkm:Icons.Warning}" Content="Le cartouche n'est pas à jour." Margin="0,0,0,8" />
+<mkm:Message Severity="Error" Icon="{x:Static mkm:Icons.Error}" Content="Le plan n'a pas pu être enregistré." />
+]]></exemple>
+  </section>
+
+  <section titre="Contour et simple">
+    <p><c>Variant="Outlined"</c> : bordé de la couleur de la gravité, sans fond. <c>Variant="Simple"</c> : ni fond, ni
+      bord, ni retrait, le texte seul de la couleur de la gravité, comme le message d'erreur d'un champ.</p>
+    <exemple etendu="oui"><![CDATA[
+<mkm:Message Severity="Warn" Variant="Outlined" Icon="{x:Static mkm:Icons.Warning}" Content="Le cartouche n'est pas à jour." Margin="0,0,0,8" />
+<mkm:Message Severity="Error" Variant="Simple" Icon="{x:Static mkm:Icons.Error}" Content="La référence est obligatoire." />
+]]></exemple>
+  </section>
+
+  <section titre="Tailles">
+    <p><c>Size</c> : <c>Small</c>, <c>Normal</c> (par défaut) ou <c>Large</c>.</p>
+    <exemple etendu="oui"><![CDATA[
+<mkm:Message Size="Small" Icon="{x:Static mkm:Icons.Info}" Content="Small" Margin="0,0,0,8" />
+<mkm:Message Icon="{x:Static mkm:Icons.Info}" Content="Normal" Margin="0,0,0,8" />
+<mkm:Message Size="Large" Icon="{x:Static mkm:Icons.Info}" Content="Large" />
+]]></exemple>
+  </section>
+
+  <section titre="Fermeture et durée de vie">
+    <p><c>Closable</c> ajoute la croix qui ferme le message ; <c>Life</c> le ferme seul au bout du temps donné
+      (jamais par défaut). Fermé, le message est caché : le rendre visible le fait reparaître.</p>
+    <exemple comportement="MessageEphemere" etendu="oui"><![CDATA[
+<mkm:Message x:Name="Ephemere" Severity="Success" Closable="True" Life="0:0:5"
+             Icon="{x:Static mkm:Icons.Success}" Content="Le cartouche est à jour. Ce message se ferme dans 5 secondes." />
+<mkm:Button x:Name="Remontrer" Content="Le remontrer" Severity="Secondary" HorizontalAlignment="Left" Margin="0,12,0,0" />
+]]></exemple>
+  </section>
+
+  <section titre="Accessibilité">
+    <h3>Lecteur d'écran</h3>
+    <p>Le message est une région « vivante » : Narrateur l'annonce dès qu'il paraît, sans que le clavier le rejoigne
+      (<c>AutomationProperties.LiveSetting</c> à <c>Assertive</c>, comme le rôle <c>alert</c> de mkm). Sa croix est un
+      bouton nommé « Fermer ».</p>
+    <h3>Clavier</h3>
+    <touches>
+      <touche nom="Tab">Amène le clavier sur la croix du message.</touche>
+      <touche nom="Entrée">Ferme le message, sa croix ayant le clavier.</touche>
+      <touche nom="Espace">Ferme le message, sa croix ayant le clavier.</touche>
+    </touches>
+  </section>
+</page>

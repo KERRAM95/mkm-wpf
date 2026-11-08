@@ -111,6 +111,16 @@ Les évolutions notables de mkm-wpf, version par version. Le format suit
   (clé `internal` du manifeste).
 - La vitrine : les pages Attente et aide, Texte date et confirmation, Fiche de
   propriétés, Arbre et menu.
+- La documentation, sur le modèle d'ui-kit : la vitrine devient une page par
+  composant, rangée par catégorie (Pour commencer, Formulaire, Bouton, Données,
+  Panneau, Superposition, Menu, Messages, Divers), avec une recherche. Chaque
+  page a trois onglets : Fonctionnalités (une section par usage, l'exemple
+  vivant et le XAML qui le produit, coloré et à copier, le code VB de son
+  comportement ; l'accessibilité), API (propriétés, valeurs par défaut,
+  évènements, méthodes, tirés du code et de ses commentaires) et Thème (les
+  jetons du composant dans chaque thème). Les pages générales : Introduction,
+  Installation, Thème, Langue, Icônes (la galerie de toutes les icônes). Les
+  pages denses de la vitrine, plusieurs composants chacune, disparaissent.
 - Les tests d'interaction `Mkm.Wpf.UiTests` (FlaUI) : la vitrine lancée en mode
   `--tests`, puis pilotée à la souris et au clavier comme par un utilisateur ;
   chaque page s'ouvre sans erreur, chaque commande a un nom pour les lecteurs

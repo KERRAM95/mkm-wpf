@@ -1,0 +1,83 @@
+<?xml version="1.0" encoding="utf-8"?>
+<page titre="Tabs" categorie="Panneau" types="Tabs Tab TabsVariant" jetons="tabs">
+  <resume>Des onglets : un seul contenu à la fois, choisi par son onglet. Deux dessins, ceux de 3DEXPERIENCE : le
+    groupe de boutons au milieu d'une barre, et les onglets soulignés des facettes d'un panneau.</resume>
+
+  <section titre="Import">
+    <code><![CDATA[
+<Window xmlns:mkm="urn:mkm-wpf">
+    <mkm:Tabs>
+        <mkm:Tab Header="Cartouche"> … </mkm:Tab>
+        <mkm:Tab Header="Notes"> … </mkm:Tab>
+    </mkm:Tabs>
+</Window>
+]]></code>
+  </section>
+
+  <section titre="Basique">
+    <p><c>Tabs</c> est un <c>TabControl</c> de WPF, <c>Tab</c> un <c>TabItem</c> : l'en-tête de l'onglet est son
+      <c>Header</c>, son contenu ce qu'il montre une fois choisi. <c>SelectedIndex</c> ou <c>SelectedItem</c> disent
+      l'onglet choisi.</p>
+    <exemple><![CDATA[
+<mkm:Tabs x:Name="Onglets" Width="480" Height="140">
+    <mkm:Tab Header="Cartouche">
+        <TextBlock Text="Le cartouche du plan : référence, désignation, échelle." TextWrapping="Wrap" />
+    </mkm:Tab>
+    <mkm:Tab Header="Notes">
+        <TextBlock Text="Casser les angles vifs. Tolérances ISO 2768-mK." TextWrapping="Wrap" />
+    </mkm:Tab>
+    <mkm:Tab Header="Historique">
+        <TextBlock Text="Révision A : création." TextWrapping="Wrap" />
+    </mkm:Tab>
+</mkm:Tabs>
+]]></exemple>
+  </section>
+
+  <section titre="Facettes">
+    <p><c>Variant="Strip"</c> : les onglets soulignés des facettes d'un panneau, sans cadre, chacun avec son icône
+      (<c>Icon</c>). C'est le dessin des facettes d'une <lien page="idcard">IdCard</lien>.</p>
+    <exemple><![CDATA[
+<mkm:Tabs Variant="Strip" Width="480" Height="140">
+    <mkm:Tab Header="Propriétés" Icon="{x:Static mkm:Icons.Properties}">
+        <TextBlock Text="Les propriétés du plan." />
+    </mkm:Tab>
+    <mkm:Tab Header="Relations" Icon="{x:Static mkm:Icons.Structure}">
+        <TextBlock Text="Les articles que le plan décrit." />
+    </mkm:Tab>
+    <mkm:Tab Header="Historique" Icon="{x:Static mkm:Icons.History}">
+        <TextBlock Text="Les révisions du plan." />
+    </mkm:Tab>
+</mkm:Tabs>
+]]></exemple>
+  </section>
+
+  <section titre="Grisé">
+    <p>Un onglet grisé (<c>IsEnabled="False"</c>) ne se choisit plus, ni à la souris ni au clavier.</p>
+    <exemple><![CDATA[
+<mkm:Tabs Width="480" Height="120">
+    <mkm:Tab Header="Cartouche">
+        <TextBlock Text="Le cartouche du plan." />
+    </mkm:Tab>
+    <mkm:Tab Header="Nomenclature" IsEnabled="False">
+        <TextBlock Text="Réservée aux plans d'ensemble." />
+    </mkm:Tab>
+</mkm:Tabs>
+]]></exemple>
+  </section>
+
+  <section titre="Accessibilité">
+    <h3>Lecteur d'écran</h3>
+    <p>Ce sont les onglets de WPF : Narrateur dit la liste d'onglets, puis chaque onglet, nommé par son en-tête, et
+      s'il est choisi. Un onglet d'icône seule se nomme par <c>AutomationProperties.Name</c>.</p>
+    <h3>Clavier</h3>
+    <touches>
+      <touche nom="Tab">Amène le clavier sur l'onglet choisi, puis dans son contenu.</touche>
+      <touche nom="Flèche droite">Choisit l'onglet suivant.</touche>
+      <touche nom="Flèche gauche">Choisit l'onglet précédent.</touche>
+      <touche nom="Début">Choisit le premier onglet.</touche>
+      <touche nom="Fin">Choisit le dernier onglet.</touche>
+      <touche nom="Ctrl+Tab">Choisit l'onglet suivant, d'où que soit le clavier dans les onglets.</touche>
+      <touche nom="Ctrl+Maj+Tab">Choisit l'onglet précédent.</touche>
+    </touches>
+  </section>
+</page>

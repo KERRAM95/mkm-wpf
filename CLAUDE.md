@@ -46,8 +46,9 @@ ou reste dans l'application.
 | Dossier                 | Projet             | Rôle                                                                     |
 | ----------------------- | ------------------ | ------------------------------------------------------------------------ |
 | `src/Mkm.Wpf`           | `Mkm.Wpf`          | les contrôles et leurs styles par défaut (`Themes/Generic.xaml`), la configuration (`MkmResources`) et la langue (`Localization`) |
-| `apps/Mkm.Wpf.Showcase` | `Mkm.Wpf.Showcase` | la vitrine : une page par composant                                      |
+| `apps/Mkm.Wpf.Showcase` | `Mkm.Wpf.Showcase` | la documentation : une page par composant, comme ui-kit                  |
 | `tests/Mkm.Wpf.Tests`   | `Mkm.Wpf.Tests`    | les tests (NUnit), dont les règles communes à tous les contrôles         |
+| `tests/Mkm.Wpf.UiTests` | `Mkm.Wpf.UiTests` | les tests d'interaction (FlaUI) : la vitrine pilotée comme par un utilisateur |
 | `docs/fondations`       | aucun              | ce dont tous les composants dépendent : thème et langue                  |
 | `docs/composants`       | aucun              | une fiche par composant : l'état de l'art et le choix, avant le code     |
 | `outils`                | aucun              | le hook Git, la compilation sous Linux                                   |
@@ -211,10 +212,31 @@ dont le gabarit vit dans un style par défaut.
   `AutomationPeer` quand celui du contrôle de base ne suffit pas.
 - Performance : animations par `Storyboard`, jamais de boucle avec
   `Thread.Sleep` ; listes virtualisées.
-- Avec le contrôle : sa page dans la vitrine
-  (`apps/Mkm.Wpf.Showcase/Pages/<Nom>Page.xaml`), sa fiche, ses tests de
-  comportement, une ligne dans `CHANGELOG.md`. Les règles communes
-  (`ConventionsTests`) s'appliquent d'elles-mêmes.
+- Avec le contrôle : sa page de documentation, sa fiche, ses tests de
+  comportement, ses scénarios d'interaction, une ligne dans `CHANGELOG.md`. Les
+  règles communes (`ConventionsTests`) s'appliquent d'elles-mêmes.
+
+### Sa page de documentation
+
+La vitrine est la documentation de mkm-wpf, sur le modèle d'ui-kit : une page
+par composant, `apps/Mkm.Wpf.Showcase/Documentation/Pages/<id>.xml`.
+
+- Ses attributs : `titre`, `categorie` (celle d'ui-kit : Formulaire, Bouton,
+  Données, Panneau, Superposition, Menu, Messages, Divers), `types` (les types
+  dont l'onglet API donne les membres) et `jetons` (les préfixes des jetons de
+  l'onglet Thème).
+- Ses sections, dans l'ordre d'ui-kit : Import, Basique, une par usage
+  (Gravité, Tailles, Invalide, Grisé…), Accessibilité (lecteur d'écran,
+  clavier). Chacune : un texte court (`<p>`, `<c>` pour le code,
+  `<lien page="…">`), puis l'exemple vivant (`<exemple>`), dont le XAML est
+  aussi le code montré : on ne les écrit qu'une fois.
+- Un exemple qui a besoin de code (données, évènements) nomme son comportement
+  (`comportement="<Nom>"`) : `Documentation/Exemples/<Nom>.vb`, dont la partie
+  entre `#Region "Exemple"` et `#End Region` est montrée sous le XAML.
+- Les onglets API et Thème s'écrivent seuls, depuis le code et ses
+  commentaires : un commentaire `''' <summary>` manquant y fait un trou.
+- `DocumentationTests` ouvre chaque page : un exemple qui ne se lit pas, un
+  onglet qui plante ou une commande sans nom fait échouer la CI.
 
 Les noms de l'API (classes, propriétés, événements) sont en anglais, comme
 WPF et comme mkm. Les commentaires, la documentation et la vitrine sont en

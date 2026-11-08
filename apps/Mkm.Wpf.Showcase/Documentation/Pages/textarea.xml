@@ -1,0 +1,72 @@
+<?xml version="1.0" encoding="utf-8"?>
+<page titre="Textarea" categorie="Formulaire" types="Textarea" jetons="textarea">
+  <resume>Une zone de texte de plusieurs lignes, bordée comme le champ d'une ligne : le texte passe à la ligne, et la
+    touche Entrée en commence une nouvelle.</resume>
+
+  <section titre="Import">
+    <code><![CDATA[
+<Window xmlns:mkm="urn:mkm-wpf">
+    <mkm:Textarea Rows="4" Text="Casser les angles vifs." />
+</Window>
+]]></code>
+  </section>
+
+  <section titre="Basique">
+    <p>Textarea est un <c>TextBox</c> de WPF de plusieurs lignes : <c>Text</c> se lie à la propriété d'un modèle.
+      Deux lignes de haut par défaut, comme en HTML ; au-delà, une barre de défilement.</p>
+    <exemple><![CDATA[
+<mkm:Textarea x:Name="Notes" Width="280" Text="Casser les angles vifs." />
+]]></exemple>
+  </section>
+
+  <section titre="Lignes">
+    <p><c>Rows</c> donne le nombre de lignes visibles.</p>
+    <exemple><![CDATA[
+<mkm:Textarea Width="280" Rows="4" Placeholder="Notes du plan" />
+]]></exemple>
+  </section>
+
+  <section titre="Grandit avec son texte">
+    <p><c>AutoResize</c> : la zone grandit avec son texte au lieu de défiler. Tapez plusieurs lignes pour la voir
+      s'agrandir.</p>
+    <exemple><![CDATA[
+<mkm:Textarea x:Name="Croissante" Width="280" AutoResize="True" Text="Casser les angles vifs." />
+]]></exemple>
+  </section>
+
+  <section titre="Texte d'aide">
+    <p><c>Placeholder</c> montre un texte gris tant que la zone est vide.</p>
+    <exemple><![CDATA[
+<mkm:Textarea Width="280" Rows="3" Placeholder="Notes du plan" />
+]]></exemple>
+  </section>
+
+  <section titre="Invalide">
+    <p><c>Invalid</c> borde la zone de la couleur des erreurs, quand sa valeur est refusée.</p>
+    <exemple><![CDATA[
+<mkm:Textarea Width="280" Invalid="True" Placeholder="Notes du plan" />
+]]></exemple>
+  </section>
+
+  <section titre="Grisé">
+    <exemple><![CDATA[
+<mkm:Textarea Width="280" IsEnabled="False" Text="Casser les angles vifs." />
+]]></exemple>
+  </section>
+
+  <section titre="Accessibilité">
+    <h3>Lecteur d'écran</h3>
+    <p>Narrateur dit la zone « modifier », suivie de son nom et de son texte. Son nom vient de
+      <c>AutomationProperties.Name</c> ou de <c>AutomationProperties.LabeledBy</c> ; sans eux, de son texte d'aide.</p>
+    <code><![CDATA[
+<TextBlock x:Name="LibelleNotes" Text="Notes" />
+<mkm:Textarea Rows="3" AutomationProperties.LabeledBy="{Binding ElementName=LibelleNotes}" />
+]]></code>
+    <h3>Clavier</h3>
+    <touches>
+      <touche nom="Tab">Amène le clavier dans la zone, ou au contrôle suivant.</touche>
+      <touche nom="Entrée">Commence une ligne nouvelle.</touche>
+      <touche nom="Ctrl+Z">Annule la dernière saisie.</touche>
+    </touches>
+  </section>
+</page>

@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="utf-8"?>
+<page titre="ProgressBar" categorie="Divers" types="ProgressBar" jetons="progressbar">
+  <resume>Une barre de progression : un trait de 6 px aux bouts ronds, rempli de la couleur principale à mesure que le
+    travail avance. Sans valeur connue, deux traits la parcourent sans fin.</resume>
+
+  <section titre="Import">
+    <p>En VB, à côté de celle de WPF, la barre de mkm s'écrit <c>Mkm.Wpf.Controls.ProgressBar</c>.</p>
+    <code><![CDATA[
+<Window xmlns:mkm="urn:mkm-wpf">
+    <mkm:ProgressBar Value="40" />
+</Window>
+]]></code>
+  </section>
+
+  <section titre="Basique">
+    <p>ProgressBar est la barre de WPF : <c>Value</c> entre <c>Minimum</c> et <c>Maximum</c> (0 et 100 par défaut).
+      Elle avance en une seconde vers sa valeur. Trop fine pour porter son pourcentage, elle le laisse au texte qui
+      l'accompagne.</p>
+    <exemple><![CDATA[
+<mkm:ProgressBar x:Name="Barre" Width="320" Value="40" />
+]]></exemple>
+  </section>
+
+  <section titre="Dynamique">
+    <p>La valeur change avec le travail : liez-la à la propriété d'un modèle, ou posez-la depuis le code.</p>
+    <exemple comportement="ProgressBarAvancer"><![CDATA[
+<StackPanel Orientation="Horizontal">
+    <mkm:ProgressBar x:Name="Avancement" Width="280" Value="40" VerticalAlignment="Center" />
+    <TextBlock x:Name="Pourcentage" Text="40 %" Margin="12,0" VerticalAlignment="Center" />
+    <mkm:Button x:Name="Avancer" Content="Avancer de 25 %" Severity="Secondary" />
+</StackPanel>
+]]></exemple>
+  </section>
+
+  <section titre="Indéterminée">
+    <p><c>IsIndeterminate</c> : quand on ne sait pas combien de temps durera le travail, deux traits parcourent la
+      barre sans fin.</p>
+    <exemple><![CDATA[
+<mkm:ProgressBar Width="320" IsIndeterminate="True" />
+]]></exemple>
+  </section>
+
+  <section titre="Accessibilité">
+    <h3>Lecteur d'écran</h3>
+    <p>Narrateur dit la barre « barre de progression » et sa valeur. Nommez-la par ce qui avance, avec
+      <c>AutomationProperties.Name</c> ou <c>AutomationProperties.LabeledBy</c>.</p>
+    <code><![CDATA[
+<mkm:ProgressBar Value="40" AutomationProperties.Name="Synchronisation des plans" />
+]]></code>
+    <h3>Clavier</h3>
+    <p>La barre ne prend pas le clavier : elle n'a rien à actionner.</p>
+  </section>
+</page>

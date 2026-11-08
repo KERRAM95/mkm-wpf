@@ -1,12 +1,17 @@
 # mkm-wpf
 
 Bibliothèque de composants WPF en VB.NET, déclinaison bureau de **mkm**
-(`ui-kit`) : contrôles, thèmes, icônes et commandes réutilisables, avec une
-vitrine. Neutre, indépendante de toute application.
+(`ui-kit`) : contrôles, thèmes, icônes et commandes réutilisables, avec leur
+documentation. Neutre, indépendante de toute application.
 
 **État :** les fondations (langue et thème, changeables à chaud), les icônes
-de mkm et le premier composant, l'ActionBar. La version 0.1.0 est en
-préparation.
+de mkm et 36 composants, chacun avec sa page de documentation, ses tests et
+ses scénarios d'interaction. La version 0.1.0 est en préparation.
+
+**La documentation** est l'application `Mkm.Wpf.Showcase`, sur le modèle de
+celle d'ui-kit : une page par composant, rangée par catégorie. Chaque page
+donne les usages du composant (un exemple vivant, et le XAML qui le produit, à
+copier), son accessibilité, son API (tirée du code) et ses jetons de thème.
 
 ## Prérequis
 
@@ -21,7 +26,7 @@ préparation.
     cd mkm-wpf
     git config core.hooksPath outils/hooks
 
-Ouvrir `Mkm.Wpf.sln`, puis F5 : la vitrine `Mkm.Wpf.Showcase` est le projet
+Ouvrir `Mkm.Wpf.sln`, puis F5 : la documentation `Mkm.Wpf.Showcase` est le projet
 de démarrage (le premier de la solution). Si Visual Studio en garde un autre,
 clic droit sur `Mkm.Wpf.Showcase`, « Définir en tant que projet de démarrage ».
 En ligne de commande :
@@ -38,8 +43,9 @@ En ligne de commande :
     ├── src/Mkm.Wpf/                la bibliothèque : contrôles et styles par défaut
     │   ├── AssemblyInfo.vb         ThemeInfo, xmlns XAML (urn:mkm-wpf)
     │   └── Themes/Generic.xaml     la fusion des styles de chaque contrôle
-    ├── apps/Mkm.Wpf.Showcase/      la vitrine
+    ├── apps/Mkm.Wpf.Showcase/      la documentation : une page par composant (Documentation/Pages)
     ├── tests/Mkm.Wpf.Tests/        les tests (NUnit)
+    ├── tests/Mkm.Wpf.UiTests/      les tests d'interaction (FlaUI) : la documentation pilotée comme par un utilisateur
     ├── docs/composants/            une fiche par composant, écrite avant le code
     ├── docs/fondations/            le thème, la langue, le registre des commandes
     ├── outils/                     hook Git, compilation sous Linux

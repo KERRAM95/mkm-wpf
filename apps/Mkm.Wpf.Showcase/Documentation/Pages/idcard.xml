@@ -1,0 +1,96 @@
+<?xml version="1.0" encoding="utf-8"?>
+<page titre="IdCard" categorie="Panneau" types="IdCard IdCardSize" jetons="idcard">
+  <resume>La carte d'identité d'un objet, celle de 3DEXPERIENCE : sa vignette, son titre et sa révision, ses
+    boutons, et dessous ses détails (propriétaire, type, maturité). Ses facettes viennent sous elle.</resume>
+
+  <section titre="Import">
+    <code><![CDATA[
+<Window xmlns:mkm="urn:mkm-wpf">
+    <mkm:IdCard Title="Plan d'ensemble" Revision="A" Owner="M. Kerram" Type="Plan" Maturity="En cours" />
+</Window>
+]]></code>
+  </section>
+
+  <section titre="Basique">
+    <p><c>Title</c>, <c>Revision</c>, <c>Owner</c>, <c>Type</c> et <c>Maturity</c> sont des textes ;
+      <c>Thumbnail</c> et <c>TypeIcon</c> une icône ou une image. <c>Details</c> ajoute d'autres détails, des textes
+      ou des éléments.</p>
+    <exemple><![CDATA[
+<mkm:IdCard Width="520" Title="Plan d'ensemble HS-00042" Revision="A" Owner="M. Kerram"
+            Type="Plan" TypeIcon="{x:Static mkm:Icons.Drawings}" Thumbnail="{x:Static mkm:Icons.Drawings}"
+            Maturity="En cours">
+    <mkm:IdCard.Details>
+        <sys:String>HS-00042</sys:String>
+        <TextBlock Text="Modifié il y a 2 jours" />
+    </mkm:IdCard.Details>
+</mkm:IdCard>
+]]></exemple>
+  </section>
+
+  <section titre="Maturité">
+    <p>La couleur d'une maturité est la politique de l'application, non du thème : <c>MaturityColor</c> la donne, et
+      le texte prend le noir ou le blanc, le plus lisible. Sans couleur, la maturité est une étiquette grise.</p>
+    <exemple><![CDATA[
+<mkm:IdCard Width="520" Title="Carter" Revision="B" Owner="M. Kerram" Type="Article"
+            Thumbnail="{x:Static mkm:Icons.Document}" Maturity="Validé" MaturityColor="#018308" />
+]]></exemple>
+  </section>
+
+  <section titre="Facettes">
+    <p>Ce que la carte contient (son <c>Content</c>) vient sous elle : le plus souvent ses facettes, des
+      <lien page="tabs">Tabs</lien> soulignés.</p>
+    <exemple><![CDATA[
+<mkm:IdCard Width="520" Title="Plan d'ensemble HS-00042" Revision="A" Owner="M. Kerram" Type="Plan"
+            Thumbnail="{x:Static mkm:Icons.Drawings}" Maturity="En cours" MaturityColor="#007DA3">
+    <mkm:Tabs Variant="Strip" Height="90">
+        <mkm:Tab Header="Propriétés" Icon="{x:Static mkm:Icons.Properties}">
+            <TextBlock Text="Les propriétés du plan." />
+        </mkm:Tab>
+        <mkm:Tab Header="Relations" Icon="{x:Static mkm:Icons.Structure}">
+            <TextBlock Text="Les articles que le plan décrit." />
+        </mkm:Tab>
+    </mkm:Tabs>
+</mkm:IdCard>
+]]></exemple>
+  </section>
+
+  <section titre="Replier et fermer">
+    <p>Son bouton de repli (<c>Collapsible</c>, vrai par défaut) la réduit à son titre ; <c>IsCollapsed</c> dit si
+      elle l'est. <c>Closable</c> ajoute une croix, qui lève <c>Close</c> : l'application retire la carte.
+      <c>Actions</c> ajoute d'autres boutons à côté.</p>
+    <exemple comportement="IdCardFermer" etendu="oui"><![CDATA[
+<mkm:IdCard x:Name="Carte" Width="520" HorizontalAlignment="Left" Title="Plan d'ensemble HS-00042" Revision="A"
+            Owner="M. Kerram" Type="Plan" Thumbnail="{x:Static mkm:Icons.Drawings}" Maturity="En cours" Closable="True">
+    <mkm:IdCard.Actions>
+        <mkm:Button Variant="Text" Severity="Secondary" Icon="{x:Static mkm:Icons.Refresh}" Padding="4"
+                    Width="24" Height="24" ToolTip="Actualiser" />
+    </mkm:IdCard.Actions>
+</mkm:IdCard>
+<TextBlock x:Name="Journal" Margin="0,12,0,0" Foreground="{DynamicResource mkm.text.muted.color}" Text="Cliquez la croix de la carte." />
+]]></exemple>
+  </section>
+
+  <section titre="Taille">
+    <p><c>Size="Small"</c> : un titre de 14 px au lieu de 16, pour un panneau étroit. Repliée au départ
+      (<c>IsCollapsed="True"</c>), la carte ne montre que sa ligne de titre.</p>
+    <exemple><![CDATA[
+<mkm:IdCard Width="520" Size="Small" Title="Carter" Revision="B" Owner="M. Kerram" Type="Article" Maturity="Validé" />
+<mkm:IdCard Width="520" IsCollapsed="True" Title="Plan d'ensemble HS-00042" Revision="A"
+            Thumbnail="{x:Static mkm:Icons.Drawings}" Owner="M. Kerram" Maturity="Validé" MaturityColor="#018308" />
+]]></exemple>
+  </section>
+
+  <section titre="Accessibilité">
+    <h3>Lecteur d'écran</h3>
+    <p>La carte est un groupe nommé par son titre. Son bouton de repli se nomme « Replier », ou « Déplier » quand elle
+      est repliée ; sa croix, « Fermer ». La vignette et l'icône du type sont des dessins, que le lecteur d'écran ne
+      lit pas. Les facettes sont des onglets.</p>
+    <h3>Clavier</h3>
+    <touches>
+      <touche nom="Tab">Amène le clavier sur le bouton de repli, la croix, les boutons ajoutés, puis les facettes.</touche>
+      <touche nom="Entrée">Lance le bouton qui a le clavier.</touche>
+      <touche nom="Espace">Lance le bouton qui a le clavier.</touche>
+      <touche nom="Flèches gauche et droite">Choisissent la facette précédente ou suivante.</touche>
+    </touches>
+  </section>
+</page>

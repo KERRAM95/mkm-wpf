@@ -1,0 +1,188 @@
+<?xml version="1.0" encoding="utf-8"?>
+<page titre="DataTable" categorie="Données" types="DataTable DataTableSize" jetons="datatable">
+  <resume>Un tableau de données : des objets en lignes, leurs propriétés en colonnes, triables d'un clic sur un titre.
+    C'est la grille de 3DEXPERIENCE, bâtie sur le DataGrid de WPF.</resume>
+
+  <section titre="Import">
+    <p>DataTable hérite du <c>DataGrid</c> de WPF : ses colonnes (<c>DataGridTextColumn</c>,
+      <c>DataGridCheckBoxColumn</c>, <c>DataGridTemplateColumn</c>), le tri, la sélection, le redimensionnement et le
+      déplacement des colonnes, l'édition et la virtualisation sont ceux de WPF.</p>
+    <code><![CDATA[
+<Window xmlns:mkm="urn:mkm-wpf">
+    <mkm:DataTable ItemsSource="{Binding Variables}" AutoGenerateColumns="False" />
+</Window>
+]]></code>
+  </section>
+
+  <section titre="Basique">
+    <p>Les lignes viennent d'<c>ItemsSource</c> : une collection d'objets. Chaque colonne lie une de leurs propriétés
+      (<c>Binding</c>) ; <c>Width="2*"</c> partage la largeur entre les colonnes. Le code VB donne les lignes.</p>
+    <exemple comportement="TableauDeVariables" etendu="oui"><![CDATA[
+<mkm:DataTable x:Name="Variables" Height="230" AutoGenerateColumns="False" IsReadOnly="True">
+    <mkm:DataTable.Columns>
+        <DataGridTextColumn Header="Nom" Binding="{Binding Nom}" Width="2*" />
+        <DataGridTextColumn Header="Valeur" Binding="{Binding Valeur}" Width="3*" />
+        <DataGridTextColumn Header="Portée" Binding="{Binding Portee}" Width="*" />
+    </mkm:DataTable.Columns>
+</mkm:DataTable>
+]]></exemple>
+  </section>
+
+  <section titre="En-tête et pied">
+    <p><c>Header</c> se montre au-dessus du tableau (un titre, une recherche, des commandes), <c>Footer</c> dessous (un
+      total), chacun dans une bande bordée de gris.</p>
+    <exemple comportement="TableauDeVariables" etendu="oui"><![CDATA[
+<mkm:DataTable Height="260" AutoGenerateColumns="False" IsReadOnly="True">
+    <mkm:DataTable.Header>
+        <DockPanel>
+            <mkm:InputText DockPanel.Dock="Right" Width="180" Placeholder="Rechercher" />
+            <TextBlock VerticalAlignment="Center" FontWeight="Bold" Text="Variables d'environnement" />
+        </DockPanel>
+    </mkm:DataTable.Header>
+    <mkm:DataTable.Columns>
+        <DataGridTextColumn Header="Nom" Binding="{Binding Nom}" Width="2*" />
+        <DataGridTextColumn Header="Valeur" Binding="{Binding Valeur}" Width="3*" />
+    </mkm:DataTable.Columns>
+    <mkm:DataTable.Footer>
+        <TextBlock Text="8 variables" />
+    </mkm:DataTable.Footer>
+</mkm:DataTable>
+]]></exemple>
+  </section>
+
+  <section titre="Tri">
+    <p>Un clic sur le titre d'une colonne la trie, un second clic inverse l'ordre ; Maj et clic ajoute une colonne au
+      tri. <c>CanUserSort="False"</c> fige une colonne, <c>CanUserSortColumns="False"</c> tout le tableau. Une colonne
+      de gabarit se trie par <c>SortMemberPath</c>.</p>
+    <exemple comportement="TableauDeVariables" etendu="oui"><![CDATA[
+<mkm:DataTable Height="230" AutoGenerateColumns="False" IsReadOnly="True">
+    <mkm:DataTable.Columns>
+        <DataGridTextColumn Header="Nom" Binding="{Binding Nom}" Width="2*" />
+        <DataGridTextColumn Header="Modifiée" Binding="{Binding Modifiee, StringFormat=d}" Width="*" />
+        <DataGridTextColumn Header="Valeur (non triable)" Binding="{Binding Valeur}" Width="3*" CanUserSort="False" />
+    </mkm:DataTable.Columns>
+</mkm:DataTable>
+]]></exemple>
+  </section>
+
+  <section titre="Lignes zébrées et quadrillage">
+    <p><c>Striped</c> donne un fond pâle à une ligne sur deux ; <c>GridLines</c> trace le quadrillage des cellules.</p>
+    <exemple comportement="TableauDeVariables" etendu="oui"><![CDATA[
+<mkm:DataTable Height="230" AutoGenerateColumns="False" IsReadOnly="True" Striped="True" GridLines="True">
+    <mkm:DataTable.Columns>
+        <DataGridTextColumn Header="Nom" Binding="{Binding Nom}" Width="2*" />
+        <DataGridTextColumn Header="Valeur" Binding="{Binding Valeur}" Width="3*" />
+        <DataGridTextColumn Header="Portée" Binding="{Binding Portee}" Width="*" />
+    </mkm:DataTable.Columns>
+</mkm:DataTable>
+]]></exemple>
+  </section>
+
+  <section titre="Taille">
+    <p><c>Size</c> règle la hauteur des lignes : <c>Small</c> pour un tableau serré, <c>Normal</c> (32 px, par défaut),
+      <c>Large</c> pour un tableau aéré.</p>
+    <exemple comportement="TableauDeVariables" etendu="oui"><![CDATA[
+<mkm:DataTable Height="180" AutoGenerateColumns="False" IsReadOnly="True" Size="Small">
+    <mkm:DataTable.Columns>
+        <DataGridTextColumn Header="Nom" Binding="{Binding Nom}" Width="2*" />
+        <DataGridTextColumn Header="Valeur" Binding="{Binding Valeur}" Width="3*" />
+    </mkm:DataTable.Columns>
+</mkm:DataTable>
+<mkm:DataTable Height="230" Margin="0,16,0,0" AutoGenerateColumns="False" IsReadOnly="True" Size="Large">
+    <mkm:DataTable.Columns>
+        <DataGridTextColumn Header="Nom" Binding="{Binding Nom}" Width="2*" />
+        <DataGridTextColumn Header="Valeur" Binding="{Binding Valeur}" Width="3*" />
+    </mkm:DataTable.Columns>
+</mkm:DataTable>
+]]></exemple>
+  </section>
+
+  <section titre="Cases et gabarits de cellule">
+    <p>Une <c>DataGridCheckBoxColumn</c> prend la case de mkm, en lecture comme en modification, si l'application ne lui
+      donne pas son propre style. Une <c>DataGridTemplateColumn</c> montre ce qu'on veut dans la cellule, ici une
+      étiquette (<lien page="tag">Tag</lien>).</p>
+    <exemple comportement="TableauDeVariables" etendu="oui"><![CDATA[
+<mkm:DataTable Height="230" AutoGenerateColumns="False" IsReadOnly="True">
+    <mkm:DataTable.Columns>
+        <DataGridTextColumn Header="Nom" Binding="{Binding Nom}" Width="2*" />
+        <DataGridTemplateColumn Header="Portée" Width="*" SortMemberPath="Portee">
+            <DataGridTemplateColumn.CellTemplate>
+                <DataTemplate>
+                    <mkm:Tag Content="{Binding Portee}" Severity="Secondary" />
+                </DataTemplate>
+            </DataGridTemplateColumn.CellTemplate>
+        </DataGridTemplateColumn>
+        <DataGridCheckBoxColumn Header="Active" Binding="{Binding Active}" Width="60" />
+    </mkm:DataTable.Columns>
+</mkm:DataTable>
+]]></exemple>
+  </section>
+
+  <section titre="Sélection">
+    <p>Par défaut, on choisit plusieurs lignes : Ctrl et clic en ajoute une, Maj et clic une plage.
+      <c>SelectionMode="Single"</c> n'en laisse choisir qu'une ; <c>SelectedItem</c> et <c>SelectedItems</c> donnent le
+      choix.</p>
+    <exemple comportement="TableauDeVariables" etendu="oui"><![CDATA[
+<mkm:DataTable Height="230" AutoGenerateColumns="False" IsReadOnly="True" SelectionMode="Single">
+    <mkm:DataTable.Columns>
+        <DataGridTextColumn Header="Nom" Binding="{Binding Nom}" Width="2*" />
+        <DataGridTextColumn Header="Valeur" Binding="{Binding Valeur}" Width="3*" />
+    </mkm:DataTable.Columns>
+</mkm:DataTable>
+]]></exemple>
+  </section>
+
+  <section titre="Tableau vide">
+    <p>Sans ligne, le tableau montre <c>EmptyMessage</c> à la place : un texte, ou un élément comme un
+      <lien page="emptycontent">EmptyContent</lien>. Il n'en montre aucun par défaut, comme mkm.</p>
+    <exemple etendu="oui"><![CDATA[
+<mkm:DataTable Height="110" AutoGenerateColumns="False" EmptyMessage="Aucune variable d'environnement.">
+    <mkm:DataTable.Columns>
+        <DataGridTextColumn Header="Nom" Width="2*" />
+        <DataGridTextColumn Header="Valeur" Width="3*" />
+    </mkm:DataTable.Columns>
+</mkm:DataTable>
+]]></exemple>
+  </section>
+
+  <section titre="Chargement">
+    <p><c>Loading</c> couvre le tableau d'un voile et d'un chargeur le temps que les données arrivent : on ne peut plus
+      ni cliquer ni choisir dessous.</p>
+    <exemple comportement="TableauEnChargement" etendu="oui"><![CDATA[
+<mkm:DataTable x:Name="Chargement" Height="230" AutoGenerateColumns="False" IsReadOnly="True">
+    <mkm:DataTable.Header>
+        <DockPanel>
+            <mkm:Button x:Name="Charger" DockPanel.Dock="Right" Content="Recharger" Severity="Secondary" />
+            <TextBlock VerticalAlignment="Center" FontWeight="Bold" Text="Variables d'environnement" />
+        </DockPanel>
+    </mkm:DataTable.Header>
+    <mkm:DataTable.Columns>
+        <DataGridTextColumn Header="Nom" Binding="{Binding Nom}" Width="2*" />
+        <DataGridTextColumn Header="Valeur" Binding="{Binding Valeur}" Width="3*" />
+    </mkm:DataTable.Columns>
+</mkm:DataTable>
+]]></exemple>
+  </section>
+
+  <section titre="Accessibilité">
+    <h3>Lecteur d'écran</h3>
+    <p>C'est le tableau de WPF : Narrateur le dit « tableau », avec son nombre de lignes et de colonnes ; il lit les
+      titres des colonnes, et chaque cellule avec le titre de sa colonne. Une ligne choisie se dit choisie. La case d'une
+      colonne de cases se nomme par le titre de sa colonne. Nommez le tableau par
+      <c>AutomationProperties.Name</c> quand le texte qui le précède ne suffit pas.</p>
+    <code><![CDATA[
+<mkm:DataTable AutomationProperties.Name="Variables d'environnement" />
+]]></code>
+    <h3>Clavier</h3>
+    <touches>
+      <touche nom="Tab">Amène le clavier dans le tableau, sur la cellule courante, puis hors du tableau.</touche>
+      <touche nom="Flèches">Passent d'une cellule à sa voisine ; la ligne suit.</touche>
+      <touche nom="Début, Fin">Vont à la première ou à la dernière cellule de la ligne ; avec Ctrl, du tableau.</touche>
+      <touche nom="Page préc., Page suiv.">Montent ou descendent d'une page.</touche>
+      <touche nom="Maj + flèches">Étendent la sélection, en sélection multiple.</touche>
+      <touche nom="Ctrl + A">Choisit toutes les lignes, en sélection multiple.</touche>
+      <touche nom="F2">Modifie la cellule, dans un tableau modifiable.</touche>
+      <touche nom="Échap">Annule la modification en cours.</touche>
+    </touches>
+  </section>
+</page>

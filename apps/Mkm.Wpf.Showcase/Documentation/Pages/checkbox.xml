@@ -1,0 +1,73 @@
+<?xml version="1.0" encoding="utf-8"?>
+<page titre="Checkbox" categorie="Formulaire" types="Checkbox" jetons="checkbox">
+  <resume>Une case à cocher : un choix oui ou non, que l'utilisateur coche ou décoche d'un clic ou de la touche
+    Espace. Son libellé fait partie d'elle.</resume>
+
+  <section titre="Import">
+    <p>En VB, « Checkbox » et « CheckBox » sont un même nom : qualifiez <c>Mkm.Wpf.Controls.Checkbox</c> là où les
+      espaces de noms de mkm et de WPF sont tous deux importés.</p>
+    <code><![CDATA[
+<Window xmlns:mkm="urn:mkm-wpf">
+    <mkm:Checkbox Content="Affecter toutes les planches" />
+</Window>
+]]></code>
+  </section>
+
+  <section titre="Basique">
+    <p><c>IsChecked</c> dit si la case est cochée ; il change à chaque clic et se lie à la propriété d'un modèle. Le
+      libellé est le contenu de la case (<c>Content</c>) : un clic sur lui coche aussi.</p>
+    <exemple><![CDATA[
+<mkm:Checkbox x:Name="Toutes" Content="Affecter toutes les planches" />
+]]></exemple>
+  </section>
+
+  <section titre="Groupe">
+    <p>Plusieurs cases forment un groupe de choix indépendants : chacune garde son état.</p>
+    <exemple><![CDATA[
+<StackPanel>
+    <mkm:Checkbox Content="Cartouche" IsChecked="True" Margin="0,0,0,8" />
+    <mkm:Checkbox Content="Nomenclature" Margin="0,0,0,8" />
+    <mkm:Checkbox Content="Notes de soudure" />
+</StackPanel>
+]]></exemple>
+  </section>
+
+  <section titre="Indéterminé">
+    <p><c>IsThreeState</c> ajoute un troisième état, ni coché ni décoché (<c>IsChecked</c> vaut <c>Nothing</c>) :
+      celui d'une case qui résume un groupe dont une partie seulement est cochée.</p>
+    <exemple><![CDATA[
+<mkm:Checkbox Content="Toutes les feuilles" IsThreeState="True" IsChecked="{x:Null}" />
+]]></exemple>
+  </section>
+
+  <section titre="Invalide">
+    <p><c>Invalid</c> donne à la case la couleur des erreurs, quand elle doit être cochée et ne l'est pas.</p>
+    <exemple><![CDATA[
+<mkm:Checkbox Content="J'ai relu le cartouche" Invalid="True" />
+]]></exemple>
+  </section>
+
+  <section titre="Grisé">
+    <p><c>IsEnabled="False"</c> : la case garde ses couleurs, à moitié transparente, et ne se coche plus.</p>
+    <exemple><![CDATA[
+<mkm:Checkbox Content="Décochée" IsEnabled="False" />
+<mkm:Checkbox Content="Cochée" IsEnabled="False" IsChecked="True" />
+]]></exemple>
+  </section>
+
+  <section titre="Accessibilité">
+    <h3>Lecteur d'écran</h3>
+    <p>Checkbox est la case à cocher de WPF : Narrateur la dit « case à cocher », cochée, décochée ou partiellement
+      cochée, suivie de son nom. Son nom est son libellé ; sans libellé, donnez-lui
+      <c>AutomationProperties.Name</c>, ou <c>AutomationProperties.LabeledBy</c> vers le texte qui la décrit.</p>
+    <code><![CDATA[
+<TextBlock x:Name="LibelleSynchro" Text="Synchroniser avec 3DEXPERIENCE" />
+<mkm:Checkbox AutomationProperties.LabeledBy="{Binding ElementName=LibelleSynchro}" />
+]]></code>
+    <h3>Clavier</h3>
+    <touches>
+      <touche nom="Tab">Amène le clavier sur la case ; l'anneau du focus ne paraît qu'au clavier.</touche>
+      <touche nom="Espace">Coche ou décoche la case.</touche>
+    </touches>
+  </section>
+</page>

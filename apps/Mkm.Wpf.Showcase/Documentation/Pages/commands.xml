@@ -1,0 +1,92 @@
+<?xml version="1.0" encoding="utf-8"?>
+<page titre="CommandRegistry" categorie="Menu" types="CommandRegistry CommandDefinition RegisteredCommand CommandSubmenu CommandKind CommandExecutedEventArgs">
+  <resume>Le registre des commandes : une application déclare chaque commande une fois (libellé, icône, raccourci,
+    état grisé ou coché, action), puis ses menus, ses barres et ses raccourcis la nomment par sa clé. La commande a
+    partout le même nom, la même allure et le même état.</resume>
+
+  <section titre="Import">
+    <p>Le registre est dans l'espace de noms <c>Mkm.Wpf.Commands</c>, et se bâtit en VB.</p>
+    <code langage="vb"><![CDATA[
+Imports Mkm.Wpf.Commands
+Imports Mkm.Wpf.Controls
+]]></code>
+  </section>
+
+  <section titre="Menu et barre">
+    <p>Chaque commande est une <c>CommandDefinition</c> : <c>Id</c>, <c>Label</c>, <c>Icon</c>, <c>Shortcut</c>,
+      <c>Execute</c>. Une disposition est une liste de clés, <c>CommandRegistry.Separator</c> (« - ») pour un trait :
+      <c>CreateMenuItems</c> en fait les éléments d'un menu, <c>CreateToolbarItems</c> ceux d'une
+      <lien page="toolbar">Toolbar</lien>. Le menu et la barre ci-dessous sont faits des mêmes commandes : cochez
+      « Verrouiller » dans l'un, l'autre le suit. Ctrl+N, Ctrl+Maj+C et Ctrl+L les lancent aussi, le clavier dans
+      l'exemple.</p>
+    <exemple comportement="CommandesRegistre"><![CDATA[
+<mkm:Menu x:Name="MenuDuRegistre" VerticalAlignment="Top" />
+<StackPanel VerticalAlignment="Top">
+    <mkm:Toolbar x:Name="BarreDuRegistre" HorizontalAlignment="Left" />
+    <TextBlock x:Name="Journal" Margin="0,8,0,0" Foreground="{DynamicResource mkm.text.muted.color}" Text="Lancez une commande." />
+</StackPanel>
+]]></exemple>
+  </section>
+
+  <section titre="Cases et choix">
+    <p><c>Kind="Check"</c> fait une case : chaque lancement l'inverse, et <c>CheckedLabel</c>, <c>CheckedIcon</c>,
+      <c>CheckedToolTip</c> donnent son allure cochée. <c>Kind="Radio"</c> fait un choix : il se coche et décoche les
+      autres de son <c>Group</c>. <c>Checked</c> donne l'état de départ ; <c>IsChecked</c>, une fonction du contexte,
+      le tire de l'application. <c>SetChecked</c> le change.</p>
+    <code langage="vb"><![CDATA[
+Dim commandes As New CommandRegistry(
+    New CommandDefinition With {.Id = "verrouiller", .Kind = CommandKind.Check, .Label = "Verrouiller",
+                                .CheckedLabel = "Verrouillé", .Icon = Icons.Unlocked, .CheckedIcon = Icons.Locked},
+    New CommandDefinition With {.Id = "vue-plan", .Kind = CommandKind.Radio, .Group = "vue", .Label = "Plan", .Checked = True},
+    New CommandDefinition With {.Id = "vue-article", .Kind = CommandKind.Radio, .Group = "vue", .Label = "Article"})
+]]></code>
+  </section>
+
+  <section titre="Grisée, cachée, contexte">
+    <p><c>IsEnabled</c> et <c>IsVisible</c> sont des fonctions du contexte : la commande se grise ou se cache selon lui.
+      Le contexte est le <c>CommandParameter</c> de l'élément, ou celui du registre (<c>Context</c>). <c>Views</c>
+      limite la commande à certaines vues ; <c>View</c> dit la vue courante. Changer <c>Context</c> ou <c>View</c>, ou
+      appeler <c>Refresh</c>, remet à jour tous les éléments. Une commande cachée ne laisse pas de trait seul.</p>
+    <code langage="vb"><![CDATA[
+New CommandDefinition With {.Id = "supprimer", .Label = "Supprimer", .Icon = Icons.Delete,
+                            .IsEnabled = Function(contexte) contexte IsNot Nothing,
+                            .Execute = Sub(e) Supprimer(e.Context)}
+
+commandes.Context = PlanChoisi
+]]></code>
+  </section>
+
+  <section titre="Sous-menus">
+    <p>Une disposition peut contenir un <c>CommandSubmenu</c> : son <c>Label</c>, son <c>Icon</c> et ses
+      <c>Items</c>, une autre disposition. <c>DefaultCommand</c> est la commande que lance le sous-menu lui-même (la
+      commande partagée d'une liste de l'<lien page="actionbar">ActionBar</lien>).</p>
+    <code langage="vb"><![CDATA[
+Dim exporter As New CommandSubmenu With {.Label = "Exporter", .Icon = Icons.Export, .Items = {"pdf", "dxf"}}
+Menu.ItemsSource = commandes.CreateMenuItems({"ajouter", "copier", CommandRegistry.Separator, exporter})
+]]></code>
+  </section>
+
+  <section titre="ActionBar et raccourcis">
+    <p><c>CreateActionBarItems</c> fait les commandes d'une section de l'ActionBar (une case ou un choix y devient une
+      bascule). <c>BindShortcuts</c> pose les raccourcis sur un élément : actifs quand le clavier est en lui, un champ
+      de saisie gardant ses propres touches.</p>
+    <code langage="vb"><![CDATA[
+For Each commande In commandes.CreateActionBarItems({"enregistrer", CommandRegistry.Separator, "verrouiller"})
+    Edition.Items.Add(commande)
+Next
+commandes.BindShortcuts(Me)
+]]></code>
+  </section>
+
+  <section titre="Accessibilité">
+    <h3>Lecteur d'écran</h3>
+    <p>Le registre fabrique des éléments ordinaires : des éléments de menu, des boutons de barre, des commandes
+      d'ActionBar, nommés par le libellé de leur commande. Une case est un élément de menu qui se coche, que Narrateur
+      dit coché ou non ; son raccourci est écrit à droite de l'élément.</p>
+    <h3>Clavier</h3>
+    <touches>
+      <touche nom="Raccourci de la commande">La lance, si elle est visible et active, quand le clavier est dans
+        l'élément de <c>BindShortcuts</c>.</touche>
+    </touches>
+  </section>
+</page>

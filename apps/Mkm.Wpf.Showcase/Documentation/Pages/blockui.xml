@@ -1,0 +1,81 @@
+<?xml version="1.0" encoding="utf-8"?>
+<page titre="BlockUI" categorie="Divers" types="BlockUI" jetons="blockui mask">
+  <resume>Un voile d'attente : il couvre une partie de la fenêtre pendant qu'elle se met à jour, et arrête la souris et
+    le clavier dessous. Au milieu, ce qu'on veut : un chargeur, un texte.</resume>
+
+  <section titre="Import">
+    <p>BlockUI entoure ce qu'il bloque, son contenu. <c>Blocked</c> pose le voile.</p>
+    <code><![CDATA[
+<Window xmlns:mkm="urn:mkm-wpf">
+    <mkm:BlockUI Blocked="{Binding EnCours}">
+        <!-- Le contenu à bloquer. -->
+    </mkm:BlockUI>
+</Window>
+]]></code>
+  </section>
+
+  <section titre="Basique">
+    <p>Le voile paraît en fondu, aux coins du contenu. Le contenu garde son apparence : il n'est pas grisé, seulement
+      hors d'atteinte. Le bouton de l'exemple bloque le groupe trois secondes : essayez d'écrire dans un champ.</p>
+    <exemple comportement="BlocageTemporaire"><![CDATA[
+<StackPanel Width="360">
+    <mkm:BlockUI x:Name="Voile">
+        <mkm:Fieldset Header="Plan">
+            <StackPanel>
+                <mkm:InputText x:Name="ChampVoile" Text="HS-00042" Margin="0,0,0,8" />
+                <mkm:InputText Text="Carter de pompe" />
+            </StackPanel>
+        </mkm:Fieldset>
+    </mkm:BlockUI>
+    <mkm:Button x:Name="Bloquer" Content="Bloquer 3 secondes" HorizontalAlignment="Left" Margin="0,8,0,0" />
+</StackPanel>
+]]></exemple>
+  </section>
+
+  <section titre="Le contenu du voile">
+    <p><c>Overlay</c> se montre au milieu du voile : un <lien page="progressspinner">ProgressSpinner</lien>, un texte qui
+      dit ce qui se passe.</p>
+    <exemple><![CDATA[
+<mkm:BlockUI Width="360" Blocked="True">
+    <mkm:BlockUI.Overlay>
+        <StackPanel>
+            <mkm:ProgressSpinner Width="40" Height="40" Stroke="{DynamicResource mkm.mask.color}" />
+            <TextBlock Margin="0,8,0,0" HorizontalAlignment="Center" Text="Mise à jour du cartouche…" />
+        </StackPanel>
+    </mkm:BlockUI.Overlay>
+    <mkm:Fieldset Header="Plan">
+        <StackPanel>
+            <mkm:InputText Text="HS-00042" Margin="0,0,0,8" />
+            <mkm:InputText Text="Carter de pompe" />
+        </StackPanel>
+    </mkm:Fieldset>
+</mkm:BlockUI>
+]]></exemple>
+  </section>
+
+  <section titre="Toute la fenêtre">
+    <p>Posé à la racine de la fenêtre, le voile la bloque toute, le temps d'un traitement long.</p>
+    <code><![CDATA[
+<Window xmlns:mkm="urn:mkm-wpf">
+    <mkm:BlockUI Blocked="{Binding Synchronisation}">
+        <mkm:BlockUI.Overlay>
+            <mkm:ProgressSpinner Width="40" Height="40" />
+        </mkm:BlockUI.Overlay>
+        <DockPanel>
+            <!-- Tout le contenu de la fenêtre. -->
+        </DockPanel>
+    </mkm:BlockUI>
+</Window>
+]]></code>
+  </section>
+
+  <section titre="Accessibilité">
+    <h3>Lecteur d'écran</h3>
+    <p>BlockUI est un groupe qui contient son contenu et son voile. Le chargeur posé dans <c>Overlay</c> se dit
+      « Chargement en cours » ; un texte à côté dit ce qui se passe.</p>
+    <h3>Clavier</h3>
+    <p>BlockUI n'a pas de commande à lui. Pendant le voile, le clavier ne peut pas entrer dans le contenu : la touche Tab
+      passe par-dessus, comme la souris, ce que mkm ne fait pas. Une application de bureau ne doit pas laisser saisir sous
+      un voile.</p>
+  </section>
+</page>

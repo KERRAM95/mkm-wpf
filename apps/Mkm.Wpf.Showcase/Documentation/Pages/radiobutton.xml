@@ -1,0 +1,72 @@
+<?xml version="1.0" encoding="utf-8"?>
+<page titre="RadioButton" categorie="Formulaire" types="RadioButton RadioButtonSize" jetons="radiobutton">
+  <resume>Un bouton radio : un seul choix parmi plusieurs. Choisir un bouton du groupe retire le choix des autres.</resume>
+
+  <section titre="Import">
+    <p>En VB, le RadioButton de mkm cache celui de WPF : qualifiez <c>Mkm.Wpf.Controls.RadioButton</c> là où les deux
+      espaces de noms sont importés.</p>
+    <code><![CDATA[
+<Window xmlns:mkm="urn:mkm-wpf">
+    <mkm:RadioButton GroupName="vue" Content="Plan" />
+</Window>
+]]></code>
+  </section>
+
+  <section titre="Groupe">
+    <p>Les boutons de même <c>GroupName</c> forment un groupe : un seul y est choisi. Sans <c>GroupName</c>, ce sont les
+      boutons d'un même panneau. Le libellé est le contenu du bouton (<c>Content</c>) ; <c>IsChecked</c> dit s'il est
+      choisi.</p>
+    <exemple><![CDATA[
+<StackPanel Orientation="Horizontal">
+    <mkm:RadioButton x:Name="RadioPlan" GroupName="vue" Content="Plan" IsChecked="True" Margin="0,0,16,0" />
+    <mkm:RadioButton x:Name="RadioArticle" GroupName="vue" Content="Article" Margin="0,0,16,0" />
+    <mkm:RadioButton GroupName="vue" Content="Les deux" />
+</StackPanel>
+]]></exemple>
+  </section>
+
+  <section titre="Tailles">
+    <p><c>Size</c> : <c>Small</c> (un rond de 12 px), <c>Normal</c> (15 px, par défaut) ou <c>Large</c> (18 px).</p>
+    <exemple><![CDATA[
+<StackPanel Orientation="Horizontal">
+    <mkm:RadioButton GroupName="taille" Size="Small" Content="Small" Margin="0,0,16,0" />
+    <mkm:RadioButton GroupName="taille" Content="Normal" IsChecked="True" Margin="0,0,16,0" />
+    <mkm:RadioButton GroupName="taille" Size="Large" Content="Large" />
+</StackPanel>
+]]></exemple>
+  </section>
+
+  <section titre="Invalide">
+    <p><c>Invalid</c> donne au rond la couleur des erreurs, quand un choix est obligatoire et manque.</p>
+    <exemple><![CDATA[
+<StackPanel Orientation="Horizontal">
+    <mkm:RadioButton GroupName="refuse" Content="Plan" Invalid="True" Margin="0,0,16,0" />
+    <mkm:RadioButton GroupName="refuse" Content="Article" Invalid="True" />
+</StackPanel>
+]]></exemple>
+  </section>
+
+  <section titre="Grisé">
+    <exemple><![CDATA[
+<StackPanel Orientation="Horizontal">
+    <mkm:RadioButton GroupName="grise" Content="Choisi" IsChecked="True" IsEnabled="False" Margin="0,0,16,0" />
+    <mkm:RadioButton GroupName="grise" Content="Non choisi" IsEnabled="False" />
+</StackPanel>
+]]></exemple>
+  </section>
+
+  <section titre="Accessibilité">
+    <h3>Lecteur d'écran</h3>
+    <p>RadioButton est le bouton radio de WPF : Narrateur le dit « case d'option », choisie ou non, suivie de son nom,
+      son libellé. Nommez aussi le groupe : posez les boutons dans un <c>Fieldset</c> ou un <c>GroupBox</c> dont
+      l'en-tête dit la question.</p>
+    <h3>Clavier</h3>
+    <p>Comme dans mkm et dans Windows, les flèches passent d'un bouton à l'autre du groupe et le choisissent.</p>
+    <touches>
+      <touche nom="Tab">Amène le clavier sur le groupe, ou sur le suivant.</touche>
+      <touche nom="Espace">Choisit le bouton qui a le clavier.</touche>
+      <touche nom="→ ou ↓">Choisit le bouton suivant du groupe ; après le dernier, le premier.</touche>
+      <touche nom="← ou ↑">Choisit le bouton précédent du groupe ; avant le premier, le dernier.</touche>
+    </touches>
+  </section>
+</page>

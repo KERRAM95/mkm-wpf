@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="utf-8"?>
+<page titre="ProgressSpinner" categorie="Divers" types="ProgressSpinner" jetons="progressspinner">
+  <resume>Un chargeur : un arc de la couleur principale qui tourne et s'allonge, le temps d'un travail dont on ne
+    connaît pas la durée. Il ne tourne que visible.</resume>
+
+  <section titre="Import">
+    <code><![CDATA[
+<Window xmlns:mkm="urn:mkm-wpf">
+    <mkm:ProgressSpinner />
+</Window>
+]]></code>
+  </section>
+
+  <section titre="Basique">
+    <p>Le chargeur fait 100 px par défaut, comme celui de mkm.</p>
+    <exemple><![CDATA[
+<mkm:ProgressSpinner x:Name="Chargeur" />
+]]></exemple>
+  </section>
+
+  <section titre="Tailles">
+    <p><c>Width</c> et <c>Height</c> donnent sa taille ; <c>StrokeWidth</c> l'épaisseur de son trait, sur une grille
+      de 50 (2 par défaut) : un petit chargeur gagne à un trait plus épais.</p>
+    <exemple><![CDATA[
+<mkm:ProgressSpinner Width="40" Height="40" VerticalAlignment="Center" />
+<mkm:ProgressSpinner Width="24" Height="24" StrokeWidth="4" VerticalAlignment="Center" />
+]]></exemple>
+  </section>
+
+  <section titre="Personnalisé">
+    <p><c>Stroke</c> change la couleur de l'arc, <c>AnimationDuration</c> la durée d'un tour (2 s par défaut).</p>
+    <exemple><![CDATA[
+<mkm:ProgressSpinner Width="60" Height="60" StrokeWidth="6" Stroke="{DynamicResource mkm.text.muted.color}" AnimationDuration="0:0:1" />
+]]></exemple>
+  </section>
+
+  <section titre="Accessibilité">
+    <h3>Lecteur d'écran</h3>
+    <p>Narrateur dit le chargeur « barre de progression », sans valeur, comme le rôle <c>progressbar</c> de mkm ; il se
+      nomme « Chargement en cours ». <c>AutomationProperties.Name</c> dit ce qui se charge.</p>
+    <code><![CDATA[
+<mkm:ProgressSpinner Width="32" Height="32" AutomationProperties.Name="Chargement des plans" />
+]]></code>
+    <h3>Clavier</h3>
+    <p>Le chargeur ne prend pas le clavier : il n'a rien à actionner.</p>
+  </section>
+</page>
