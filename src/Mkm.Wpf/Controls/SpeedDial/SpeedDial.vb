@@ -87,6 +87,12 @@ Namespace Mkm.Wpf.Controls
 
         Public Sub New()
             [AddHandler](ButtonBase.ClickEvent, New RoutedEventHandler(AddressOf Action_Click))
+            ' Ouvert dès le XAML (sans fenêtre encore), le clic dehors est écouté au chargement ; déchargé, il ne
+            ' l'est plus (la fenêtre retiendrait le contrôle).
+            AddHandler Loaded, Sub()
+                                   If IsOpen Then Ecouter()
+                               End Sub
+            AddHandler Unloaded, Sub() Cesser()
         End Sub
 
         ''' <summary>Vrai quand les actions sont déployées.</summary>

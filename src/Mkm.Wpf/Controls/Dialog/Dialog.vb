@@ -130,7 +130,41 @@ Namespace Mkm.Wpf.Controls
             If croix IsNot Nothing Then AddHandler croix.Click, Sub() Close()
 
             Dim poignee = TryCast(GetTemplateChild(PartResizeGrip), Thumb)
-            If poignee IsNot Nothing Then AddHandler poignee.DragDelta, AddressOf Etirer
+            If poignee IsNot Nothing Then
+                AddHandler poignee.DragDelta, AddressOf Etirer
+                AddHandler poignee.KeyDown, AddressOf Poignee_KeyDown
+            End If
+            _croix = TryCast(GetTemplateChild(PartCloseButton), ButtonBase)
+        End Sub
+
+        Private _croix As ButtonBase
+
+        ' Au clavier, la poignée étire de 10 px par flèche, de 1 px avec Maj, comme mkm.
+        Private Sub Poignee_KeyDown(sender As Object, e As KeyEventArgs)
+            Dim pas = If((Keyboard.Modifiers And ModifierKeys.Shift) = ModifierKeys.Shift, 1.0, 10.0)
+            Dim dx = 0.0, dy = 0.0
+            Select Case e.Key
+                Case Key.Left : dx = -pas
+                Case Key.Right : dx = pas
+                Case Key.Up : dy = -pas
+                Case Key.Down : dy = pas
+                Case Else : Return
+            End Select
+            Etirer(sender, New DragDeltaEventArgs(dx, dy))
+            e.Handled = True
+        End Sub
+
+        ''' <summary>
+        ''' À l'ouverture, le clavier entre dans le dialogue : sur l'élément que l'application a désigné
+        ''' (FocusManager.FocusedElement, l'autofocus de mkm), sinon sur la croix, sinon sur le premier élément.
+        ''' </summary>
+        Protected Overrides Sub OnContentRendered(e As EventArgs)
+            MyBase.OnContentRendered(e)
+            If IsKeyboardFocusWithin Then Return
+            Dim designe = TryCast(FocusManager.GetFocusedElement(Me), UIElement)
+            If designe IsNot Nothing AndAlso designe.Focus() Then Return
+            If _croix IsNot Nothing AndAlso _croix.IsVisible AndAlso _croix.Focus() Then Return
+            MoveFocus(New TraversalRequest(FocusNavigationDirection.First))
         End Sub
 
         ''' <inheritdoc/>

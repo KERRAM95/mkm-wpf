@@ -120,6 +120,9 @@
   <data name="aria.invalid" xml:space="preserve">
     <value>Invalid</value>
   </data>
+  <data name="aria.resizeDialog" xml:space="preserve">
+    <value>Resize dialog</value>
+  </data>
   <data name="aria.page" xml:space="preserve">
     <value>Page {0}</value>
   </data>

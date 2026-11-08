@@ -284,6 +284,11 @@ Les évolutions notables de mkm-wpf, version par version. Le format suit
     une petite image gardée à sa taille.
   - ImageCompare : l'anneau du clavier autour de la poignée (et non de toute
     la comparaison) ; la poignée suit ses jetons de survol.
+  - SpeedDial : le bouton fait 24 px et ses actions 20 px, comme mkm (30 et
+    24) ; ouvert dès le XAML, un clic dehors le replie aussi.
+  - Dialog : la poignée d'étirement prend le clavier (flèches, Maj), se nomme
+    et montre l'anneau ; à l'ouverture, le clavier entre dans le dialogue
+    (l'élément désigné, sinon la croix).
   - InputOtp, ColorPicker, Terminal, Password : la langue n'est suivie que
     tant que le contrôle est chargé (l'abonnement à vie le gardait en
     mémoire).

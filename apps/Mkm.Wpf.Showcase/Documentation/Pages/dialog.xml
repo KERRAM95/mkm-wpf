@@ -56,13 +56,16 @@
   <section titre="Accessibilité">
     <h3>Lecteur d'écran</h3>
     <p>Le dialogue est une fenêtre : Narrateur la dit « boîte de dialogue », nommée par son titre (<c>Title</c>), et
-      lit son contenu. Modal, il garde le clavier tant qu'il est ouvert. Sa croix est un bouton nommé « Fermer ».</p>
+      lit son contenu. Modal, il garde le clavier tant qu'il est ouvert. Sa croix est un bouton nommé « Fermer » ; sa
+      poignée d'étirement, « Redimensionner le dialogue ». À l'ouverture, le clavier va à l'élément désigné par
+      <c>FocusManager.FocusedElement</c> (l'autofocus de mkm), sinon à la croix.</p>
     <h3>Clavier</h3>
     <touches>
       <touche nom="Tab">Passe à l'élément suivant du dialogue ; du dernier, revient au premier.</touche>
       <touche nom="Maj + Tab">Passe à l'élément précédent du dialogue.</touche>
       <touche nom="Entrée">Lance le bouton qui a le clavier ; ailleurs, le bouton IsDefault.</touche>
       <touche nom="Échap">Ferme le dialogue, comme le bouton IsCancel (si CloseOnEscape).</touche>
+      <touche nom="Flèches">Sur la poignée d'étirement, élargit ou rétrécit le dialogue de 10 px (1 px avec Maj).</touche>
     </touches>
   </section>
 </page>

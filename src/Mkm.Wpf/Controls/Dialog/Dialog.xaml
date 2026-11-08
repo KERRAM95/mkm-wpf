@@ -130,24 +130,32 @@
                                     <ContentPresenter TextBlock.LineHeight="{DynamicResource mkm.dialog.content.line.height}" />
                                 </Border>
                             </DockPanel>
+                            <!-- La poignée prend le clavier (flèches : 10 px, Maj : 1 px) et se nomme, comme le separator de mkm. -->
                             <Thumb x:Name="PART_ResizeGrip" HorizontalAlignment="Right" VerticalAlignment="Bottom"
-                                   Visibility="Collapsed" Cursor="SizeNWSE"
+                                   Visibility="Collapsed" Cursor="SizeNWSE" Focusable="True" FocusVisualStyle="{x:Null}"
+                                   AutomationProperties.Name="{loc:T aria.resizeDialog}"
                                    Margin="{DynamicResource mkm.dialog.resize.handle.margin}"
                                    Width="{DynamicResource mkm.dialog.resize.handle.box.size}"
                                    Height="{DynamicResource mkm.dialog.resize.handle.box.size}">
                                 <Thumb.Template>
                                     <ControlTemplate TargetType="{x:Type Thumb}">
-                                        <Border Background="Transparent">
+                                        <Grid Background="Transparent">
                                             <Border x:Name="Equerre" HorizontalAlignment="Left" VerticalAlignment="Top"
                                                     BorderThickness="0,0,2,2"
                                                     Margin="{DynamicResource mkm.dialog.resize.handle.mark.margin}"
                                                     Width="{DynamicResource mkm.dialog.resize.handle.mark.size}"
                                                     Height="{DynamicResource mkm.dialog.resize.handle.mark.size}"
                                                     BorderBrush="{DynamicResource mkm.dialog.resize.handle.color}" />
-                                        </Border>
+                                            <Rectangle x:Name="Anneau" Visibility="Collapsed" IsHitTestVisible="False" RadiusX="2" RadiusY="2"
+                                                       Stroke="{DynamicResource mkm.dialog.resize.handle.focus.ring.color}"
+                                                       StrokeThickness="{DynamicResource mkm.dialog.resize.handle.focus.ring.width}" />
+                                        </Grid>
                                         <ControlTemplate.Triggers>
                                             <Trigger Property="IsMouseOver" Value="True">
                                                 <Setter TargetName="Equerre" Property="BorderBrush" Value="{DynamicResource mkm.dialog.resize.handle.hover.color}" />
+                                            </Trigger>
+                                            <Trigger Property="local:FocusVisible.IsVisible" Value="True">
+                                                <Setter TargetName="Anneau" Property="Visibility" Value="Visible" />
                                             </Trigger>
                                         </ControlTemplate.Triggers>
                                     </ControlTemplate>

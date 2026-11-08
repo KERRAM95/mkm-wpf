@@ -467,8 +467,10 @@ buttongroup.last.corner.radius = 0 {button.border.radius} {button.border.radius}
 # dock : l'anneau du focus en épaisseur.
 dock.item.ring.border.width = {dock.item.focus.ring.width} {dock.item.focus.ring.width}
 
-# speeddial : le bouton rond de 2,5 rem (le bouton « rounded » de mkm, sans taille à lui).
-speeddial.button.size = 30px
+# speeddial : le bouton rond, de la taille d'un bouton d'icône seule (le bouton « rounded » de mkm, 24 px) ;
+# ses actions, petites (actionButtonProps size small de mkm, 20 px).
+speeddial.button.size = {button.icon.only.width}
+speeddial.action.size = {button.sm.icon.only.width}
 
 # dataview : la bordure du cadre en épaisseur.
 dataview.all.border.width = {dataview.border.width} {dataview.border.width}
