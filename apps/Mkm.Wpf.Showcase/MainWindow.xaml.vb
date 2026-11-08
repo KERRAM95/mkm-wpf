@@ -1,3 +1,4 @@
+Imports System
 Imports System.Collections.Generic
 Imports System.Globalization
 Imports System.Linq
@@ -12,7 +13,7 @@ Namespace Mkm.Wpf.Showcase
 
     ''' <summary>
     ''' La fenêtre de la documentation : le menu des pages à gauche, rangées par catégorie comme dans ui-kit, avec sa
-    ''' recherche ; la page choisie à droite ; le thème et la langue dans la barre du haut.
+    ''' recherche ; la page choisie à droite ; le thème, la langue et le zoom dans la barre du haut.
     ''' </summary>
     Partial Public Class MainWindow
 
@@ -31,7 +32,27 @@ Namespace Mkm.Wpf.Showcase
             AddHandler Liens.Demande, AddressOf Ouvrir
 
             ChoixDuTheme.SelectedItem = Themes.Find(MkmResources.Current.Theme)
+            For Each palier In MkmResources.ZoomLevels
+                ChoixDuZoom.Items.Add(New ComboBoxItem With {.Content = palier.ToString("P0", CultureInfo.GetCultureInfo("fr-FR")), .Tag = palier})
+            Next
+            MontrerLeZoom()
+            AddHandler MkmResources.Current.ZoomChanged, AddressOf Zoom_Change
             Composants.SelectedIndex = 0
+        End Sub
+
+        ' Le palier du zoom actuel dans la liste (un zoom hors des paliers, du réglage de Windows : aucun).
+        Private Sub MontrerLeZoom()
+            Dim actuel = MkmResources.Current.Zoom
+            ChoixDuZoom.SelectedItem = ChoixDuZoom.Items.OfType(Of ComboBoxItem)().FirstOrDefault(Function(i) Math.Abs(CDbl(i.Tag) - actuel) < 0.001)
+        End Sub
+
+        Private Sub Zoom_Change(sender As Object, e As EventArgs)
+            MontrerLeZoom()
+        End Sub
+
+        Private Sub ChoixDuZoom_SelectionChanged(sender As Object, e As SelectionChangedEventArgs)
+            Dim choix = TryCast(ChoixDuZoom.SelectedItem, ComboBoxItem)
+            If choix IsNot Nothing Then MkmResources.Current.Zoom = CDbl(choix.Tag)
         End Sub
 
         ''' <summary>Les entrées du menu, dans l'ordre.</summary>
@@ -73,6 +94,7 @@ Namespace Mkm.Wpf.Showcase
 
         Protected Overrides Sub OnClosed(e As EventArgs)
             RemoveHandler Liens.Demande, AddressOf Ouvrir
+            RemoveHandler MkmResources.Current.ZoomChanged, AddressOf Zoom_Change
             MyBase.OnClosed(e)
         End Sub
 

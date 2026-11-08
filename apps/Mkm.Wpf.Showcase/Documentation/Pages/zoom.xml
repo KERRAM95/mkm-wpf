@@ -1,0 +1,87 @@
+<?xml version="1.0" encoding="utf-8"?>
+<page titre="Zoom" categorie="Pour commencer" types="MkmResources">
+  <resume>Agrandir toute l'interface, de 80 à 200 %, pour une vue fatiguée ou un écran lointain : texte, icônes, bordures
+    et marges grandissent ensemble et restent nets, dans chaque fenêtre, ses dialogues, ses listes et ses menus.</resume>
+
+  <section titre="Essayer">
+    <p>La barre du haut de cette documentation change le zoom, comme <c>Ctrl +</c>, <c>Ctrl −</c> et <c>Ctrl + 0</c> dans
+      n'importe quelle fenêtre. Ces boutons le font en VB : tout ce qui est ouvert suit, aussitôt.</p>
+    <exemple comportement="ZoomBoutons" etendu="oui"><![CDATA[
+<StackPanel Orientation="Horizontal">
+    <mkm:Button x:Name="Reduire" Content="Réduire" Icon="{x:Static mkm:Icons.ZoomOut}" Severity="Secondary" Margin="0,0,8,0" />
+    <mkm:Button x:Name="Agrandir" Content="Agrandir" Icon="{x:Static mkm:Icons.ZoomIn}" Margin="0,0,8,0" />
+    <mkm:Button x:Name="Retablir" Content="100 %" Variant="Text" Margin="0,0,16,0" />
+    <TextBlock x:Name="Journal" VerticalAlignment="Center" Foreground="{DynamicResource mkm.text.muted.color}" />
+</StackPanel>
+]]></exemple>
+  </section>
+
+  <section titre="Choisir le zoom">
+    <p><c>MkmResources.Current.Zoom</c> est le zoom : 1 pour 100 %, de <c>MinZoom</c> (0,8) à <c>MaxZoom</c> (2). Il se
+      pose au démarrage, dans <c>App.xaml</c> ou en VB, et se change à tout moment. <c>ZoomIn()</c> et <c>ZoomOut()</c>
+      passent au palier suivant ou précédent (<c>ZoomLevels</c> : 80, 90, 100, 110, 125, 150, 175 et 200 %),
+      <c>ResetZoom()</c> revient à 100 %.</p>
+    <code><![CDATA[
+<mkm:MkmResources Theme="Dashboard" Language="fr" Zoom="1.25" />
+]]></code>
+    <code langage="vb"><![CDATA[
+MkmResources.Current.Zoom = 1.5
+MkmResources.Current.ZoomIn()
+]]></code>
+  </section>
+
+  <section titre="Les raccourcis">
+    <p>Dans chaque fenêtre de l'application, sans rien écrire :</p>
+    <touches>
+      <touche nom="Ctrl +">Le palier suivant (aussi Ctrl + = et le + du pavé numérique).</touche>
+      <touche nom="Ctrl −">Le palier précédent (le − du pavé numérique aussi ; sur un clavier AZERTY, la touche 6).</touche>
+      <touche nom="Ctrl + 0">Revient à 100 %.</touche>
+      <touche nom="Ctrl + molette">Agrandit vers le haut, réduit vers le bas.</touche>
+    </touches>
+    <p>Une bulle « 125 % » paraît une seconde au milieu de la fenêtre, et Narrateur l'annonce ;
+      <c>ZoomIndicator = False</c> la retire. <c>ZoomShortcuts = False</c> retire les raccourcis. Un élément qui garde
+      Ctrl + molette pour lui (une visionneuse de plans qui zoome son dessin) pose
+      <c>mkm:MkmResources.HandlesZoomWheel="True"</c> : au-dessus de lui, la molette lui revient.</p>
+  </section>
+
+  <section titre="Partir du réglage de Windows et le garder">
+    <p>Une personne malvoyante a souvent déjà agrandi le texte de Windows (Paramètres › Accessibilité › Taille du
+      texte) : <c>MkmResources.WindowsTextScale</c> le donne, de 1 à 2,25. L'application en part au premier lancement,
+      puis garde le choix de l'utilisateur, qu'elle enregistre quand il change (<c>ZoomChanged</c>) :</p>
+    <code langage="vb"><![CDATA[
+' Au démarrage : le zoom choisi par l'utilisateur, sinon la taille du texte de Windows.
+MkmResources.Current.Zoom = If(My.Settings.Zoom > 0, My.Settings.Zoom, MkmResources.WindowsTextScale)
+AddHandler MkmResources.Current.ZoomChanged, Sub() My.Settings.Zoom = MkmResources.Current.Zoom
+]]></code>
+  </section>
+
+  <section titre="Net sur chaque écran">
+    <p>WPF dessine en vecteurs : agrandies, les icônes et les bordures restent nettes. Au-dessus ou au-dessous de 100 %,
+      le texte se dessine dans le mode qui reste net (<c>Ideal</c>) ; à 100 %, dans celui qui l'est le plus à sa taille
+      (<c>Display</c>). Seules les photos (un avatar) s'adoucissent un peu.</p>
+    <p>Une fenêtre déplacée vers un écran réglé à une autre échelle de Windows (un portable et un grand écran) reste
+      nette si l'application le déclare dans son manifeste (<c>app.manifest</c>, déclaré par
+      <c>&lt;ApplicationManifest&gt;</c> dans le projet), comme cette documentation :</p>
+    <code><![CDATA[
+<application xmlns="urn:schemas-microsoft-com:asm.v3">
+  <windowsSettings>
+    <dpiAware xmlns="http://schemas.microsoft.com/SMI/2005/WindowsSettings">true/pm</dpiAware>
+    <dpiAwareness xmlns="http://schemas.microsoft.com/SMI/2016/WindowsSettings">PerMonitorV2, PerMonitor</dpiAwareness>
+  </windowsSettings>
+</application>
+]]></code>
+  </section>
+
+  <section titre="La place qui reste">
+    <p>Comme le zoom d'un navigateur, il ne change pas la taille des fenêtres : à 200 %, une fenêtre de 1 000 px en
+      montre autant qu'une de 500 px à 100 %. Les composants s'y font : la <lien page="toolbar">Toolbar</lien> et
+      l'<lien page="actionbar">ActionBar</lien> rangent dans leur menu « … » ce qui ne tient plus, le
+      <lien page="triptych">Triptych</lien> replie ses panneaux, une page défile. Une application prévoit une fenêtre
+      qui défile et des panneaux qui se replient.</p>
+  </section>
+
+  <section titre="Accessibilité">
+    <p>Le zoom ne change rien pour Narrateur, qui lit les mêmes noms et les mêmes rôles ; la Loupe de Windows s'y ajoute
+      sans gêne. Les raccourcis sont ceux des navigateurs et d'Office : un utilisateur les connaît.</p>
+  </section>
+</page>

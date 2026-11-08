@@ -4,7 +4,7 @@ Bibliothèque de composants WPF en VB.NET, déclinaison bureau de **mkm**
 (`ui-kit`) : contrôles, thèmes, icônes et commandes réutilisables, avec leur
 documentation. Neutre, indépendante de toute application.
 
-**État :** les fondations (langue et thème, changeables à chaud), les icônes
+**État :** les fondations (langue, thème et zoom, changeables à chaud), les icônes
 de mkm et 58 composants, chacun avec sa page de documentation, ses tests et
 ses scénarios d'interaction. La version 0.1.0 est en préparation.
 
@@ -47,7 +47,7 @@ En ligne de commande :
     ├── tests/Mkm.Wpf.Tests/        les tests (NUnit)
     ├── tests/Mkm.Wpf.UiTests/      les tests d'interaction (FlaUI) : la documentation pilotée comme par un utilisateur
     ├── docs/composants/            une fiche par composant, écrite avant le code
-    ├── docs/fondations/            le thème, la langue, le registre des commandes
+    ├── docs/fondations/            le thème, la langue, le zoom, le registre des commandes
     ├── outils/                     hook Git, compilation sous Linux
     ├── Directory.Build.props       propriétés communes (net48, Option Strict…)
     ├── Directory.Packages.props    versions des paquets NuGet

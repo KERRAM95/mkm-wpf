@@ -49,6 +49,9 @@ Namespace Mkm.Wpf.Showcase
                 Dim j = Array.IndexOf(e.Args, "--tests")
                 ModeTests.Demarrer(Me, If(j + 1 < e.Args.Length, e.Args(j + 1), Nothing))
             Else
+                ' Le zoom part de la taille du texte réglée dans Windows (Accessibilité) : une application le ferait au
+                ' premier lancement, puis garderait le choix de l'utilisateur. Les tests et les captures restent à 100 %.
+                MkmResources.Current.Zoom = MkmResources.WindowsTextScale
                 ' La fenêtre de la vitrine (pas de StartupUri : le mode captures n'en ouvre pas).
                 Dim fenetre As New MainWindow()
                 fenetre.Show()

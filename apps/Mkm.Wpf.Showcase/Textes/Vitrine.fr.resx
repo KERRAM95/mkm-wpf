@@ -21,4 +21,7 @@
   <data name="showcase.theme" xml:space="preserve">
     <value>Thème</value>
   </data>
+  <data name="showcase.zoom" xml:space="preserve">
+    <value>Zoom</value>
+  </data>
 </root>

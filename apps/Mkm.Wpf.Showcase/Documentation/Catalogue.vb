@@ -101,7 +101,7 @@ Namespace Mkm.Wpf.Showcase.Documentation
                 End Using
             Next
             ' « Pour commencer » garde l'ordre de lecture (Introduction d'abord) ; les composants, l'ordre alphabétique.
-            Dim ordreDeLecture = {"introduction", "installation", "theme", "langue", "icones"}
+            Dim ordreDeLecture = {"introduction", "installation", "theme", "langue", "zoom", "icones"}
             Return pages.OrderBy(Function(p) Array.IndexOf(Categories, p.Categorie)).
                          ThenBy(Function(p) If(Array.IndexOf(ordreDeLecture, p.Id) < 0, Integer.MaxValue, Array.IndexOf(ordreDeLecture, p.Id))).
                          ThenBy(Function(p) p.Titre, StringComparer.OrdinalIgnoreCase).ToList()

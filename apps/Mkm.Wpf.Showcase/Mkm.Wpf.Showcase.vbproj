@@ -3,6 +3,8 @@
   <PropertyGroup>
     <OutputType>WinExe</OutputType>
     <UseWPF>true</UseWPF>
+    <!-- Nette sur chaque écran, à l'échelle de chacun (PerMonitorV2) : voir la page Zoom de la documentation. -->
+    <ApplicationManifest>app.manifest</ApplicationManifest>
     <!-- Vide : chaque fichier ecrit son espace de noms en entier, x:Class compris. -->
     <RootNamespace></RootNamespace>
     <IsPackable>false</IsPackable>

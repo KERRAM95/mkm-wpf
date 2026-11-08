@@ -134,6 +134,12 @@ Les évolutions notables de mkm-wpf, version par version. Le format suit
   l'application, bouton accolé), `IconField`, `InputGroup` et
   `InputGroupAddon` ; `Chip` gagne `CornerRadius` ; leurs jetons, leurs pages,
   leurs tests et leurs scénarios. La priorité 1 est faite.
+- Le zoom de toute l'interface (`docs/fondations/zoom.md`) :
+  `MkmResources.Zoom` (80 à 200 %), `ZoomIn`, `ZoomOut`, `ResetZoom`,
+  `ZoomChanged` ; chaque fenêtre, ses dialogues et ses fenêtres flottantes
+  suivent, nets ; Ctrl +, Ctrl −, Ctrl + 0, Ctrl+molette et une bulle annoncée ;
+  `WindowsTextScale` pour partir du réglage de Windows. La vitrine a son choix
+  du zoom, une page Zoom, et déclare l'échelle de chaque écran (PerMonitorV2).
 - Corrigé : la légende repliable du `Fieldset` héritait du ToggleButton de mkm
   (12 px, non grasse, hauteur coupée) ; un test de convention l'empêche
   désormais.

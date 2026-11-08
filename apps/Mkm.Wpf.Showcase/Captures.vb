@@ -19,7 +19,7 @@ Namespace Mkm.Wpf.Showcase
 
     ''' <summary>
     ''' Les captures de la vitrine (<c>Mkm.Wpf.Showcase.exe --captures &lt;dossier&gt;</c>) : chaque page dans
-    ''' chaque thème, en entier, puis la fenêtre, des notifications et un dialogue, en PNG à leur taille
+    ''' chaque thème, en entier, puis la fenêtre, des notifications et un dialogue, et la fenêtre zoomée (150 et 200 %), en PNG à leur taille
     ''' réelle (96 ppp). La CI Windows les publie : on voit le rendu sans poste Windows.
     ''' </summary>
     Friend NotInheritable Class Captures
@@ -69,6 +69,45 @@ Namespace Mkm.Wpf.Showcase
                 Essayer($"{theme.Name}/fenetre", Sub() Fenetre(theme.Name))
                 Essayer($"{theme.Name}/scènes", Sub() Scenes(theme.Name))
             Next
+            ' Le zoom (MkmResources.Zoom) à 150 et 200 % : la fenêtre de la vitrine sur chaque page, et deux dialogues,
+            ' pour voir que tout reste net et utilisable dans la place qui reste.
+            MkmResources.Current.Theme = Themes.Dashboard.Name
+            For Each facteur In {1.5, 2.0}
+                Dim dossier = $"{Themes.Dashboard.Name}-{facteur * 100:0}"
+                MkmResources.Current.Zoom = facteur
+                Try
+                    Essayer($"{dossier}/fenetre", Sub() FenetreZoomee(dossier))
+                Finally
+                    MkmResources.Current.ResetZoom()
+                End Try
+            Next
+        End Sub
+
+        ' La fenêtre entière (le zoom met à l'échelle sa racine, au-dessus de son contenu) sur chaque page, puis deux
+        ' dialogues, qui suivent le zoom eux aussi.
+        Private Sub FenetreZoomee(dossier As String)
+            Dim fenetre As New MainWindow With {.WindowStartupLocation = WindowStartupLocation.Manual, .Left = 0, .Top = 0, .ShowActivated = False}
+            fenetre.Show()
+            Try
+                For i = 0 To fenetre.Composants.Items.Count - 1
+                    fenetre.Composants.SelectedIndex = i
+                    Attendre(300)
+                    Enregistrer(fenetre, $"{dossier}/fenetre-{i + 1}.png")
+                Next
+            Finally
+                fenetre.Close()
+            End Try
+            Dialogue(dossier, "confirmation", New ConfirmDialog With {
+                .Title = "Mise à jour",
+                .Message = "Mettre à jour le cartouche du plan avec les valeurs de 3DEXPERIENCE ?",
+                .MessageIcon = Icons.Warning})
+            Dim contenu As New StackPanel()
+            contenu.Children.Add(New TextBlock With {.Text = "Nouveau nom", .Margin = New Thickness(0, 0, 0, 4)})
+            contenu.Children.Add(New InputText With {.Text = "HS-00042", .Width = 280})
+            Dim pied As New StackPanel With {.Orientation = Orientation.Horizontal}
+            pied.Children.Add(New Mkm.Wpf.Controls.Button With {.Content = "Annuler", .Severity = ButtonSeverity.Secondary})
+            pied.Children.Add(New Mkm.Wpf.Controls.Button With {.Content = "Renommer"})
+            Dialogue(dossier, "dialogue", New Dialog With {.Title = "Renommer le plan", .Content = contenu, .Footer = pied})
         End Sub
 
         ' Ce qui ne paraît pas sur une page seule : ce qui s'ouvre dans une fenêtre flottante (le calendrier, un menu,
