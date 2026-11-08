@@ -52,7 +52,8 @@
     <h3>Clavier</h3>
     <touches>
       <touche nom="Flèche droite">Monte la note d'une étoile.</touche>
-      <touche nom="Flèche haut">Monte la note d'une étoile.</touche>
+      <touche nom="Flèche haut">Monte la note d'une étoile (comme un curseur de WPF ; chez mkm, ↑ va à l'étoile
+        précédente).</touche>
       <touche nom="Flèche gauche">Baisse la note d'une étoile (pas sous une).</touche>
       <touche nom="Flèche bas">Baisse la note d'une étoile (pas sous une).</touche>
       <touche nom="Début">Une étoile.</touche>

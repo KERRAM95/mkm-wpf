@@ -72,7 +72,8 @@
     <h3>Clavier</h3>
     <touches>
       <touche nom="Tab">Amène le clavier sur l'onglet choisi, puis dans son contenu.</touche>
-      <touche nom="Flèche droite">Choisit l'onglet suivant.</touche>
+      <touche nom="Flèche droite">Choisit l'onglet suivant (comme le TabControl de WPF ; mkm ne fait que déplacer le focus,
+        Entrée ou Espace choisissent).</touche>
       <touche nom="Flèche gauche">Choisit l'onglet précédent.</touche>
       <touche nom="Début">Choisit le premier onglet.</touche>
       <touche nom="Fin">Choisit le dernier onglet.</touche>

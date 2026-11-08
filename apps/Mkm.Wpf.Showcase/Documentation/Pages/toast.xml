@@ -19,8 +19,10 @@
   </section>
 
   <section titre="Basique">
-    <p><c>Add</c> ajoute une notification : sa gravité, son titre, son détail et sa durée de vie. Elle paraît en
-      relief une seconde, puis s'efface en fondu à la fin de sa vie.</p>
+    <p><c>Add</c> ajoute une notification : sa gravité, son titre, son détail et sa durée de vie. Avec
+      <c>HighlightDuration="0:0:1"</c> et <c>FadeOutDuration="0:0:1"</c> (comme ici), elle paraît en relief une seconde,
+      puis s'efface en fondu à la fin de sa vie ; sans eux, ni relief ni fondu. Sous le pointeur, sa vie est suspendue
+      (mkm ne le fait que si l'application le demande).</p>
     <exemple comportement="ToastBasique"><![CDATA[
 <mkm:Button x:Name="Notifier" Content="Ouvrir le plan" />
 ]]></exemple>

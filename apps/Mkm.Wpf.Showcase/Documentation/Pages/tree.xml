@@ -118,7 +118,8 @@
     <h3>Clavier</h3>
     <touches>
       <touche nom="Tab">Amène le clavier sur le nœud choisi, puis hors de l'arbre.</touche>
-      <touche nom="Flèche bas, flèche haut">Passent au nœud suivant ou précédent, et le choisissent.</touche>
+      <touche nom="Flèche bas, flèche haut">Passent au nœud suivant ou précédent, et le choisissent (comme le TreeView
+        de WPF ; mkm ne fait que déplacer le focus, Entrée choisit).</touche>
       <touche nom="Flèche droite">Déplie le nœud replié, sinon passe à son premier enfant.</touche>
       <touche nom="Flèche gauche">Replie le nœud déplié, sinon remonte à son parent.</touche>
       <touche nom="Début, Fin">Vont au premier ou au dernier nœud visible.</touche>

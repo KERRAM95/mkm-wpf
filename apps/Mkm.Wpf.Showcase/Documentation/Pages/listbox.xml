@@ -89,8 +89,9 @@
       liste », sélectionné ou non. Le champ du filtre se nomme « Filtrer ».</p>
     <h3>Clavier</h3>
     <touches>
-      <touche nom="Flèche bas">Passe à l'option suivante ; dans le filtre, entre dans la liste.</touche>
-      <touche nom="Flèche haut">Passe à l'option précédente.</touche>
+      <touche nom="Flèche bas">Passe à l'option suivante et la choisit (comme la ListBox de WPF ; mkm ne fait que déplacer
+        le focus) ; dans le filtre, entre dans la liste.</touche>
+      <touche nom="Flèche haut">Passe à l'option précédente et la choisit.</touche>
       <touche nom="Début">Passe à la première option.</touche>
       <touche nom="Fin">Passe à la dernière option.</touche>
       <touche nom="Espace">Choisit l'option ; à choix multiples, l'ajoute ou la retire.</touche>

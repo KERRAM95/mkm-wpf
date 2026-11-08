@@ -26,7 +26,9 @@
   </section>
 
   <section titre="Expression">
-    <p>Tout autre filtre est une expression régulière que chaque caractère doit satisfaire.</p>
+    <p>Tout autre filtre est une expression régulière que chaque caractère doit satisfaire. Le mode « mot entier » de mkm
+      (<c>validateOnly</c>, qui teste tout le texte) n'est pas repris : pour un format complet, voyez
+      <lien page="inputmask">InputMask</lien>.</p>
     <exemple><![CDATA[
 <mkm:InputText mkm:KeyFilter.Pattern="[A-Z0-9-]" Placeholder="Référence (A-Z, 0-9, -)" Width="260" HorizontalAlignment="Left" />
 ]]></exemple>
