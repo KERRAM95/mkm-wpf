@@ -52,6 +52,8 @@
     <touches>
       <touche nom="Flèche droite">Monte d'un pas (<c>SmallChange</c>).</touche>
       <touche nom="Flèche gauche">Descend d'un pas.</touche>
+      <touche nom="Flèche haut">Monte d'un pas.</touche>
+      <touche nom="Flèche bas">Descend d'un pas.</touche>
       <touche nom="Page haut">Monte de <c>LargeChange</c>.</touche>
       <touche nom="Page bas">Descend de <c>LargeChange</c>.</touche>
       <touche nom="Début">Au minimum.</touche>

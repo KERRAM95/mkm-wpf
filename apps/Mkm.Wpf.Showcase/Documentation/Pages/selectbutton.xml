@@ -72,11 +72,20 @@
   </section>
 
   <section titre="Grisé">
+    <p><c>IsEnabled="False"</c> grise le groupe : le choix y paraît au repos, comme mkm. Sur un
+      <c>SelectButtonItem</c>, il grise cette seule option.</p>
     <exemple><![CDATA[
-<mkm:SelectButton IsEnabled="False" SelectedIndex="1">
-    <mkm:SelectButtonItem Content="Plan" />
-    <mkm:SelectButtonItem Content="Article" />
-</mkm:SelectButton>
+<StackPanel>
+    <mkm:SelectButton IsEnabled="False" SelectedIndex="1" Margin="0,0,0,12">
+        <mkm:SelectButtonItem Content="Plan" />
+        <mkm:SelectButtonItem Content="Article" />
+    </mkm:SelectButton>
+    <mkm:SelectButton SelectedIndex="0">
+        <mkm:SelectButtonItem Content="Plan" />
+        <mkm:SelectButtonItem Content="Article" IsEnabled="False" />
+        <mkm:SelectButtonItem Content="Document" />
+    </mkm:SelectButton>
+</StackPanel>
 ]]></exemple>
   </section>
 

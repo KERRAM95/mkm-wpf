@@ -89,7 +89,7 @@
       au survol.</p>
     <touches>
       <touche nom="Flèche bas">Ouvre la liste, sur le premier choix ; ouverte, passe à l'option suivante.</touche>
-      <touche nom="Flèche haut">Passe à l'option précédente.</touche>
+      <touche nom="Flèche haut">Ouvre la liste ; ouverte, passe à l'option précédente.</touche>
       <touche nom="Début">Passe à la première option.</touche>
       <touche nom="Fin">Passe à la dernière option.</touche>
       <touche nom="Espace">Ouvre la liste ; ouverte, ajoute ou retire l'option.</touche>

@@ -391,8 +391,8 @@ Namespace Mkm.Wpf.UiTests
             Dim page = OuvrirLaDoc("keyfilter")
             Dim quantite = Trouver("Quantite", page)
             Cliquer(quantite)
-            Ecrire("12a-3")
-            AttendreQue(Function() quantite.Patterns.Value.Pattern.Value.Value = "123", "pint : « 123 »")
+            Ecrire("12a- 3")
+            AttendreQue(Function() quantite.Patterns.Value.Pattern.Value.Value = "123", "pint : « 123 », l'espace refusé aussi")
         End Sub
 
         <Test>

@@ -76,10 +76,18 @@ Namespace Mkm.Wpf.Controls
             Dim champ = TryCast(d, UIElement)
             If champ Is Nothing Then Return
             RemoveHandler champ.PreviewTextInput, AddressOf Frappe
+            RemoveHandler champ.PreviewKeyDown, AddressOf Espace
             DataObject.RemovePastingHandler(champ, AddressOf Collage)
             If String.IsNullOrEmpty(CStr(e.NewValue)) Then Return
             AddHandler champ.PreviewTextInput, AddressOf Frappe
+            AddHandler champ.PreviewKeyDown, AddressOf Espace
             DataObject.AddPastingHandler(champ, AddressOf Collage)
+        End Sub
+
+        ' L'Espace : le TextBox de WPF l'écrit par une commande, sans PreviewTextInput ; il passe donc ici au filtre.
+        Private Shared Sub Espace(sender As Object, e As KeyEventArgs)
+            If e.Key = Key.Space AndAlso Keyboard.Modifiers = ModifierKeys.None AndAlso
+               Not Accepte(GetPattern(DirectCast(sender, DependencyObject)), " ") Then e.Handled = True
         End Sub
 
         Private Shared Sub Frappe(sender As Object, e As TextCompositionEventArgs)

@@ -229,6 +229,7 @@
                         <Trigger Property="IsEnabled" Value="False">
                             <Setter Property="Background" Value="{DynamicResource mkm.multiselect.disabled.background}" />
                             <Setter TargetName="Libelle" Property="Foreground" Value="{DynamicResource mkm.multiselect.disabled.color}" />
+                            <Setter TargetName="Aide" Property="Foreground" Value="{DynamicResource mkm.multiselect.disabled.color}" />
                         </Trigger>
                     </ControlTemplate.Triggers>
                 </ControlTemplate>

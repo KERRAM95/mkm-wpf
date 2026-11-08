@@ -25,6 +25,8 @@ Namespace Mkm.Wpf.Controls
             ' Le pas de mkm (step) : 1 ; celui de WPF est 0,1. Page haut et bas : 10.
             SmallChangeProperty.OverrideMetadata(GetType(Slider), New FrameworkPropertyMetadata(1.0))
             LargeChangeProperty.OverrideMetadata(GetType(Slider), New FrameworkPropertyMetadata(10.0))
+            ' À la souris aussi, une valeur entière (mkm arrondit au pas) : la poignée s'arrête sur les graduations de 1.
+            IsSnapToTickEnabledProperty.OverrideMetadata(GetType(Slider), New FrameworkPropertyMetadata(True))
         End Sub
 
         ''' <summary>Un curseur pour les lecteurs d'écran, avec sa valeur ; sa piste et sa poignée ne sont que son dessin.</summary>

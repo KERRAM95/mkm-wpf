@@ -234,6 +234,20 @@ Les évolutions notables de mkm-wpf, version par version. Le format suit
     Entrée (mkm) ; un élément qui se coche n'a que sa coche, sans icône ;
     le menu contextuel fait 90 px au moins, ombre non comprise.
   - PanelMenu : les éléments d'un panneau gardent leur retrait de 12 px.
+  - Knob : le pas par défaut est 1 (il était de 0,1) ; Slider : une valeur
+    entière à la souris aussi.
+  - KeyFilter : l'Espace passe enfin au filtre (WPF l'écrit sans
+    PreviewTextInput).
+  - SelectButton : l'anneau du focus ne paraît qu'au clavier (il paraissait
+    après un clic) ; grisé, le choix paraît au repos, comme mkm ; une option
+    grisée seule est pâlie ; refusé, le trait rouge est au-dehors.
+  - ToggleButton : grisé et enfoncé, il paraît au repos ; ToggleSwitch :
+    grisé et activé, il garde sa bordure.
+  - Select, MultiSelect, TreeSelect : grisés, leur texte (et le texte
+    d'aide) prend la couleur grisée de mkm.
+  - MultiSelect : ↑ ouvre la liste ; la case de tête n'est cochée que si
+    toutes les options montrées sont choisies (elle l'était à tort avec un
+    filtre). Rating : l'anneau du clavier à 1 px de l'étoile.
   - InputOtp, ColorPicker, Terminal, Password : la langue n'est suivie que
     tant que le contrôle est chargé (l'abonnement à vie le gardait en
     mémoire).

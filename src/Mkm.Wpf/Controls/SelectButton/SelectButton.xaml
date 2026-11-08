@@ -23,7 +23,8 @@
                 <ControlTemplate TargetType="{x:Type local:SelectButton}">
                     <Grid>
                         <StackPanel IsItemsHost="True" Orientation="Horizontal" />
-                        <Border x:Name="Erreur" Visibility="Collapsed" BorderThickness="1"
+                        <!-- Refusé : un trait rouge autour du groupe, au-dehors (outline de mkm). -->
+                        <Border x:Name="Erreur" Visibility="Collapsed" BorderThickness="1" Margin="-1"
                                 BorderBrush="{DynamicResource mkm.selectbutton.invalid.border.color}"
                                 CornerRadius="{DynamicResource mkm.selectbutton.border.radius}" IsHitTestVisible="False" />
                     </Grid>
@@ -113,15 +114,28 @@
                             <Setter TargetName="Recouvre" Property="Visibility" Value="Visible" />
                             <Setter Property="Panel.ZIndex" Value="1" />
                         </MultiTrigger>
-                        <!-- Au clavier (le focus sans le pointeur dessus), l'anneau du focus, devant ses voisins. -->
-                        <MultiTrigger>
-                            <MultiTrigger.Conditions>
-                                <Condition Property="IsKeyboardFocused" Value="True" />
-                                <Condition Property="IsMouseOver" Value="False" />
-                            </MultiTrigger.Conditions>
+                        <!-- Grisé (le groupe, ou cette option), il paraît au repos, comme mkm : la règle :disabled de
+                             mkm vient après celle du choix. -->
+                        <Trigger Property="IsEnabled" Value="False">
+                            <Setter Property="Background" Value="{DynamicResource mkm.togglebutton.disabled.background}" />
+                            <Setter Property="BorderBrush" Value="{DynamicResource mkm.togglebutton.disabled.border.color}" />
+                            <Setter Property="Foreground" Value="{DynamicResource mkm.togglebutton.disabled.color}" />
+                            <Setter TargetName="Icone" Property="Foreground" Value="{DynamicResource mkm.togglebutton.icon.disabled.color}" />
+                            <Setter TargetName="Recouvre" Property="Visibility" Value="Collapsed" />
+                        </Trigger>
+                        <!-- Une option grisée seule (optionDisabled de mkm) : pâlie ; le groupe grisé l'est déjà. -->
+                        <MultiDataTrigger>
+                            <MultiDataTrigger.Conditions>
+                                <Condition Binding="{Binding IsEnabled, RelativeSource={RelativeSource Self}}" Value="False" />
+                                <Condition Binding="{Binding IsEnabled, RelativeSource={RelativeSource AncestorType={x:Type local:SelectButton}}}" Value="True" />
+                            </MultiDataTrigger.Conditions>
+                            <Setter TargetName="Fond" Property="Opacity" Value="{DynamicResource mkm.disabled.opacity}" />
+                        </MultiDataTrigger>
+                        <!-- Au clavier seulement (FocusVisible), l'anneau du focus, devant ses voisins. -->
+                        <Trigger Property="local:FocusVisible.IsVisible" Value="True">
                             <Setter TargetName="Anneau" Property="Visibility" Value="Visible" />
                             <Setter Property="Panel.ZIndex" Value="2" />
-                        </MultiTrigger>
+                        </Trigger>
                     </ControlTemplate.Triggers>
                 </ControlTemplate>
             </Setter.Value>

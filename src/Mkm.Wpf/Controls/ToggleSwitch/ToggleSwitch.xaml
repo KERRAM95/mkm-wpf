@@ -78,7 +78,6 @@
                         <Trigger Property="IsEnabled" Value="False">
                             <Setter Property="Cursor" Value="Arrow" />
                             <Setter TargetName="Piste" Property="Background" Value="{DynamicResource mkm.toggleswitch.disabled.background}" />
-                            <Setter TargetName="Piste" Property="BorderBrush" Value="{DynamicResource mkm.toggleswitch.border.color}" />
                             <Setter TargetName="Poignee" Property="Fill" Value="{DynamicResource mkm.toggleswitch.handle.disabled.background}" />
                             <Setter TargetName="Libelle" Property="TextElement.Foreground" Value="{DynamicResource mkm.form.field.disabled.color}" />
                         </Trigger>

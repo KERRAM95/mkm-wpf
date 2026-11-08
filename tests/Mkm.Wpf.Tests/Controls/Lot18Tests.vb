@@ -110,6 +110,14 @@ Namespace Mkm.Wpf.Tests.Controls
         End Sub
 
         <Test>
+        Public Sub Knob_LePasParDefautEstUn()
+            Dim bouton = Pret(New Knob With {.Value = 40})
+            Assert.That(bouton.SmallChange, [Is].EqualTo(1), "le step de mkm, pas le 0,1 de RangeBase")
+            Dim curseur = Pret(New Global.Mkm.Wpf.Controls.Slider())
+            Assert.That(curseur.IsSnapToTickEnabled, [Is].True, "une valeur entière à la souris aussi")
+        End Sub
+
+        <Test>
         Public Sub Knob_UnCurseurPourLesLecteursDEcran()
             Dim bouton = Pret(New Knob With {.Value = 40})
             Dim pair = UIElementAutomationPeer.CreatePeerForElement(bouton)

@@ -232,7 +232,8 @@ Namespace Mkm.Wpf.Controls
             For Each c In choix
                 _puces.Add(TexteDe(c))
             Next
-            If _toutCocher IsNot Nothing Then _toutCocher.IsChecked = Items.Count > 0 AndAlso choix.Count >= Items.Count
+            ' La case de tête : cochée quand toutes les options montrées (filtrées) sont choisies, la règle de son clic.
+            If _toutCocher IsNot Nothing Then _toutCocher.IsChecked = Items.Count > 0 AndAlso Items.Cast(Of Object)().All(Function(o) SelectedItems.Contains(o))
         End Sub
 
         ' La croix d'une puce retire son choix.
@@ -342,10 +343,9 @@ Namespace Mkm.Wpf.Controls
         Protected Overrides Sub OnKeyDown(e As KeyEventArgs)
             Dim touche = If(e.Key = Key.System, e.SystemKey, e.Key)
             If Not IsDropDownOpen Then
-                If touche = Key.Down OrElse touche = Key.Enter OrElse touche = Key.Space OrElse touche = Key.F4 Then
+                ' ↑ ouvre aussi, comme mkm.
+                If touche = Key.Down OrElse touche = Key.Up OrElse touche = Key.Enter OrElse touche = Key.Space OrElse touche = Key.F4 Then
                     SetCurrentValue(IsDropDownOpenProperty, True)
-                    e.Handled = True
-                ElseIf touche = Key.Up Then
                     e.Handled = True
                 End If
                 Return

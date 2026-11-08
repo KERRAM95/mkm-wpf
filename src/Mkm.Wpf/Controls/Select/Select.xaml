@@ -238,9 +238,11 @@
                             <Setter TargetName="Bouton" Property="BorderBrush" Value="{DynamicResource mkm.select.invalid.border.color}" />
                             <Setter TargetName="Aide" Property="Foreground" Value="{DynamicResource mkm.select.invalid.placeholder.color}" />
                         </Trigger>
-                        <!-- Grisée : à moitié transparente, bordée du gris pâle. -->
+                        <!-- Grisée : à moitié transparente, bordée du gris pâle, son texte gris (select.disabled.color). -->
                         <Trigger Property="IsEnabled" Value="False">
                             <Setter TargetName="Racine" Property="Opacity" Value="{DynamicResource mkm.disabled.opacity}" />
+                            <Setter TargetName="ContentSite" Property="TextElement.Foreground" Value="{DynamicResource mkm.select.disabled.color}" />
+                            <Setter TargetName="Aide" Property="Foreground" Value="{DynamicResource mkm.select.disabled.color}" />
                             <Setter Property="BorderBrush" Value="{DynamicResource mkm.select.disabled.border.color}" />
                             <Setter TargetName="Bouton" Property="BorderBrush" Value="{DynamicResource mkm.select.disabled.border.color}" />
                         </Trigger>

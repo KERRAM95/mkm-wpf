@@ -3,8 +3,8 @@
     24 px de haut (4 + 14 + 4 et la bordure), 12 px de retrait de chaque côté, des coins de 4 px, un libellé de 12 px en
     graisse normale, une icône grise à 6 px de lui. Au repos blanc, bordé du gris du bouton secondaire ; survolé (relâché),
     gris clair ; enfoncé, le fond bleu pâle de la sélection, le texte et l'icône foncés, la bordure de la couleur
-    principale ; refusé, la bordure d'erreur ; au clavier, l'anneau du focus, 1 px à 1 px du bord ; grisé, à moitié
-    transparent. Petit : 2 px sur 8 ; grand : 6 px sur 16, un libellé de 14 px.
+    principale ; refusé, la bordure d'erreur ; au clavier, l'anneau du focus, 1 px à 1 px du bord ; grisé, au repos
+    (enfoncé compris) et à moitié transparent. Petit : 2 px sur 8 ; grand : 6 px sur 16, un libellé de 14 px.
 -->
 <ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
                     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
@@ -90,10 +90,15 @@
                             <Setter Property="Padding" Value="{DynamicResource mkm.togglebutton.lg.padding}" />
                             <Setter Property="FontSize" Value="{DynamicResource mkm.togglebutton.lg.font.size}" />
                         </Trigger>
-                        <!-- Grisé, il garde ses couleurs, enfoncé compris, à moitié transparent (la feuille de mkm). -->
+                        <!-- Grisé, il paraît au repos, enfoncé compris (la règle :disabled de mkm vient après celle de
+                             l'état enfoncé), à moitié transparent. -->
                         <Trigger Property="IsEnabled" Value="False">
                             <Setter Property="Cursor" Value="Arrow" />
                             <Setter Property="Opacity" Value="{DynamicResource mkm.disabled.opacity}" />
+                            <Setter Property="Background" Value="{DynamicResource mkm.togglebutton.disabled.background}" />
+                            <Setter Property="BorderBrush" Value="{DynamicResource mkm.togglebutton.disabled.border.color}" />
+                            <Setter Property="Foreground" Value="{DynamicResource mkm.togglebutton.disabled.color}" />
+                            <Setter TargetName="Icone" Property="Foreground" Value="{DynamicResource mkm.togglebutton.icon.disabled.color}" />
                         </Trigger>
                     </ControlTemplate.Triggers>
                 </ControlTemplate>

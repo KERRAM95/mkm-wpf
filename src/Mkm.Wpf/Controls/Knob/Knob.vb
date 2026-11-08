@@ -65,6 +65,8 @@ Namespace Mkm.Wpf.Controls
             FocusableProperty.OverrideMetadata(GetType(Knob), New FrameworkPropertyMetadata(True))
             MaximumProperty.OverrideMetadata(GetType(Knob), New FrameworkPropertyMetadata(100.0))
             LargeChangeProperty.OverrideMetadata(GetType(Knob), New FrameworkPropertyMetadata(10.0))
+            ' Le pas de mkm (step) : 1 ; celui de RangeBase est 0,1.
+            SmallChangeProperty.OverrideMetadata(GetType(Knob), New FrameworkPropertyMetadata(1.0))
         End Sub
 
         ''' <summary>Le côté du bouton, en pixels.</summary>

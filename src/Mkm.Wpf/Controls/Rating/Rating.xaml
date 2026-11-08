@@ -17,7 +17,7 @@
                         <local:Icon Source="{TemplateBinding Icon}" Filled="{TemplateBinding Filled}"
                                     Foreground="{TemplateBinding Foreground}"
                                     Width="{DynamicResource mkm.rating.icon.size}" Height="{DynamicResource mkm.rating.icon.size}" />
-                        <Ellipse x:Name="Anneau" Visibility="Collapsed" Margin="-3" IsHitTestVisible="False"
+                        <Ellipse x:Name="Anneau" Visibility="Collapsed" Margin="-2" IsHitTestVisible="False"
                                  Stroke="{DynamicResource mkm.rating.focus.ring.color}"
                                  StrokeThickness="{DynamicResource mkm.rating.focus.ring.width}" />
                     </Grid>
