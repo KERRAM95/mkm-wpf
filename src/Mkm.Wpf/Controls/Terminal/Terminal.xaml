@@ -1,6 +1,6 @@
 <!--
     Le style de Terminal, sur le terminal de mkm (styles/terminal ; jetons de Nora en pixels, dans les deux thèmes) : le
-    cadre des champs (fond, bordure, coins), 216 px de haut, 6 px sur 7 de retrait, la police à chasse fixe ; le message
+    cadre des champs (fond, bordure, coins), 216 px de haut, 6 px sur 7 de retrait, la police du thème (celle de la page chez mkm) ; le message
     d'accueil, puis chaque commande (l'invite, à 3 px, la commande) et sa réponse, à 2 px ; en bas, l'invite et la
     saisie, sans cadre. Il défile.
 -->
@@ -30,7 +30,7 @@
         <Setter Property="BorderThickness" Value="1" />
         <Setter Property="Padding" Value="{DynamicResource mkm.terminal.padding}" />
         <Setter Property="Height" Value="{DynamicResource mkm.terminal.height}" />
-        <Setter Property="FontFamily" Value="Consolas" />
+        <Setter Property="FontFamily" Value="{DynamicResource mkm.font.family}" />
         <Setter Property="FontSize" Value="{DynamicResource mkm.font.size}" />
         <Setter Property="Cursor" Value="IBeam" />
         <Setter Property="Template">
@@ -42,7 +42,7 @@
                                       VerticalScrollBarVisibility="Auto" HorizontalScrollBarVisibility="Disabled">
                             <StackPanel>
                                 <TextBlock x:Name="Accueil" Text="{TemplateBinding WelcomeMessage}" TextWrapping="Wrap" />
-                                <ItemsControl Focusable="False" ItemsSource="{Binding Entries, RelativeSource={RelativeSource TemplatedParent}}">
+                                <ItemsControl x:Name="PART_History" Focusable="False" ItemsSource="{Binding Entries, RelativeSource={RelativeSource TemplatedParent}}">
                                     <ItemsControl.ItemTemplate>
                                         <DataTemplate>
                                             <StackPanel Margin="{DynamicResource mkm.terminal.command.response.margin}">
@@ -50,7 +50,9 @@
                                                     <TextBlock Text="{Binding Prompt}" />
                                                     <TextBlock Text="{Binding Command}" />
                                                 </local:GapStackPanel>
-                                                <TextBlock Text="{Binding Response}" TextWrapping="Wrap" />
+                                                <!-- Chaque réponse, une région vivante (aria-live="polite" de mkm). -->
+                                                <local:TexteAnnonce x:Name="Reponse" Text="{Binding Response}" TextWrapping="Wrap"
+                                                                    AutomationProperties.LiveSetting="Polite" />
                                             </StackPanel>
                                         </DataTemplate>
                                     </ItemsControl.ItemTemplate>

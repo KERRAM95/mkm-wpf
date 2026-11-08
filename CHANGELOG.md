@@ -199,6 +199,19 @@ Les évolutions notables de mkm-wpf, version par version. Le format suit
   scénarios. La priorité 3 est faite.
 - PickList : un double clic rend la souris avant de faire passer l'élément
   (le clic suivant se perdait).
+- Contrôle qualité, comparaison à ui-kit composant par composant :
+  - Inplace : le texte suit la couleur de la page (il était noir, du style de
+    Windows) ; un contenu sans rien de focalisable garde le clavier, pour
+    qu'Échap rende le texte.
+  - OverlayBadge : le contour de 2 px est au-dehors de la pastille, comme
+    mkm (la pastille faisait 14 px au lieu de 18, le point 2 au lieu de 6).
+  - EmptyContent : une vraie région vivante (titre et message annoncés quand
+    ils changent) ; l'exemple espace ses actions de 6 px, comme mkm.
+  - Terminal : chaque réponse est annoncée aux lecteurs d'écran ; la police
+    du thème, comme mkm.
+  - InputOtp, ColorPicker, Terminal, Password : la langue n'est suivie que
+    tant que le contrôle est chargé (l'abonnement à vie le gardait en
+    mémoire).
 - Avatar et Chip : leur image est peinte par le code ; liée dans le gabarit,
   elle faisait écrire à WPF une erreur de liaison (sans effet visible).
 - Galleria : une vignette pâlie s'éclaire sous la souris, comme mkm.

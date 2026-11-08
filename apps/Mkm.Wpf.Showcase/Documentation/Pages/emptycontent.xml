@@ -34,15 +34,16 @@
   </section>
 
   <section titre="Actions">
-    <p><c>Actions</c> se pose sous le bloc : un bouton, ou plusieurs dans un panneau.</p>
+    <p><c>Actions</c> se pose sous le bloc : un bouton, ou plusieurs dans un panneau ; un <c>GapStackPanel</c> sur
+      <c>mkm.emptycontent.actions.gap</c> les espace comme mkm (6 px).</p>
     <exemple><![CDATA[
 <mkm:EmptyContent x:Name="Vide" Icon="{x:Static mkm:Icons.Documents}" Title="Aucun plan ouvert"
                   Message="Ouvrez un plan dans CATIA pour remplir son cartouche.">
     <mkm:EmptyContent.Actions>
-        <StackPanel Orientation="Horizontal">
-            <mkm:Button Content="Ouvrir" Icon="{x:Static mkm:Icons.Open}" Margin="0,0,8,0" />
+        <mkm:GapStackPanel Orientation="Horizontal" Gap="{DynamicResource mkm.emptycontent.actions.gap}">
+            <mkm:Button Content="Ouvrir" Icon="{x:Static mkm:Icons.Open}" />
             <mkm:Button Content="Nouveau" Icon="{x:Static mkm:Icons.Add}" Severity="Secondary" />
-        </StackPanel>
+        </mkm:GapStackPanel>
     </mkm:EmptyContent.Actions>
 </mkm:EmptyContent>
 ]]></exemple>
@@ -61,9 +62,9 @@
 
   <section titre="Accessibilité">
     <h3>Lecteur d'écran</h3>
-    <p>Le titre, le message et les possibilités sont une région « vivante », polie : Narrateur les lit quand ils
-      changent, sans couper ce qu'il disait. L'icône n'est qu'un décor. Les actions restent hors de cette région : elles
-      ne sont pas annoncées, mais se trouvent dans l'ordre de la touche Tab.</p>
+    <p>L'écran vide est une région « vivante », polie, nommée par son titre et son message : quand ils changent, ou
+      ses possibilités, Narrateur les lit sans couper ce qu'il disait. L'icône n'est qu'un décor. Les actions ne sont
+      pas annoncées, mais se trouvent dans l'ordre de la touche Tab.</p>
     <h3>Clavier</h3>
     <p>L'écran vide n'a pas de commande à lui ; les boutons de ses actions suivent l'ordre de la touche Tab.</p>
   </section>

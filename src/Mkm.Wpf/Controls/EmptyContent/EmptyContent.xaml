@@ -3,7 +3,8 @@
     centré, 24 px autour, de 420 px au plus ; une icône grise de 32 px, un titre de 16 px semi-gras, un message de 14 px
     gris, 8 px entre eux ; les possibilités, 16 px entre elles : une pastille ronde de 48 px de la couleur principale
     pâlie, son icône de 22 px, puis le message, 10 px dessous ; entre deux, « ou » (12 px semi-gras, gris) entre deux
-    traits de 32 px. Les actions 16 px sous le bloc, 6 px entre elles. Petit : 24, 14, 12 px, une pastille de 36 px.
+    traits de 32 px. Les actions 16 px sous le bloc (6 px entre elles : un GapStackPanel sur
+    mkm.emptycontent.actions.gap, comme dans l'exemple de la vitrine). Petit : 24, 14, 12 px, une pastille de 36 px.
 -->
 <ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
                     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
@@ -73,6 +74,7 @@
     </Style>
 
     <Style TargetType="{x:Type local:EmptyContent}">
+        <Setter Property="AutomationProperties.LiveSetting" Value="Polite" />
         <Setter Property="Background" Value="{DynamicResource mkm.emptycontent.background}" />
         <Setter Property="Foreground" Value="{DynamicResource mkm.emptycontent.color}" />
         <Setter Property="Padding" Value="{DynamicResource mkm.emptycontent.padding}" />
@@ -91,10 +93,8 @@
                     <Border Background="{TemplateBinding Background}" Padding="{TemplateBinding Padding}">
                         <local:GapStackPanel HorizontalAlignment="Center" VerticalAlignment="Center"
                                              Gap="{DynamicResource mkm.emptycontent.gap}">
-                            <!-- Ce qui est annoncé aux lecteurs d'écran : l'icône, le titre, le message, les possibilités. -->
                             <local:GapStackPanel x:Name="Contenu" Gap="{DynamicResource mkm.emptycontent.content.gap}"
-                                                 MaxWidth="{DynamicResource mkm.emptycontent.content.max.width}"
-                                                 AutomationProperties.LiveSetting="Polite">
+                                                 MaxWidth="{DynamicResource mkm.emptycontent.content.max.width}">
                                 <local:Icon x:Name="Icone" Source="{TemplateBinding Icon}" HorizontalAlignment="Center"
                                             Width="{DynamicResource mkm.emptycontent.icon.size}"
                                             Height="{DynamicResource mkm.emptycontent.icon.size}"

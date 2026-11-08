@@ -7,7 +7,9 @@
                     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
                     xmlns:local="clr-namespace:Mkm.Wpf.Controls">
 
+    <!-- Sans le style du thème de Windows (son texte noir) : le texte suit la couleur de la page, comme mkm. -->
     <Style x:Key="mkm.Inplace.Texte" TargetType="{x:Type Button}">
+        <Setter Property="OverridesDefaultStyle" Value="True" />
         <Setter Property="FocusVisualStyle" Value="{x:Null}" />
         <Setter Property="Cursor" Value="Hand" />
         <Setter Property="HorizontalAlignment" Value="Left" />

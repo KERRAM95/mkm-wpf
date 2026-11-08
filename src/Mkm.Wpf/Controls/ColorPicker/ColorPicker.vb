@@ -76,7 +76,17 @@ Namespace Mkm.Wpf.Controls
         Public Sub New()
             _panneau = New PanneauDeCouleur(Me)
             AddLogicalChild(_panneau)
-            AddHandler Localizer.Current.LanguageChanged, Sub() Nommer()
+            ' La langue suivie tant que le contrôle est chargé (un abonnement à vie le garderait en mémoire).
+            AddHandler Loaded, Sub()
+                                   RemoveHandler Localizer.Current.LanguageChanged, AddressOf Langue_Changee
+                                   AddHandler Localizer.Current.LanguageChanged, AddressOf Langue_Changee
+                                   Langue_Changee(Me, System.EventArgs.Empty)
+                               End Sub
+            AddHandler Unloaded, Sub() RemoveHandler Localizer.Current.LanguageChanged, AddressOf Langue_Changee
+        End Sub
+
+        Private Sub Langue_Changee(sender As Object, e As System.EventArgs)
+            Nommer()
         End Sub
 
         ''' <summary>La couleur, en hexadécimal sans dièse.</summary>

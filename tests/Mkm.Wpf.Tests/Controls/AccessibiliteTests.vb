@@ -100,6 +100,9 @@ Namespace Mkm.Wpf.Tests.Controls
             vide.Actions = New BoutonDeMkm With {.Content = "Ouvrir"}
             Pret(vide)
             Assert.That(NomsDesBoutons(vide), Does.Contain("Ouvrir"), "les actions d'un écran vide")
+            vide.Message = "Ouvrez un plan."
+            Assert.That(PairDe(vide).GetName(), [Is].EqualTo("Aucun plan. Ouvrez un plan."), "la région vivante dit son titre et son message")
+            Assert.That(System.Windows.Automation.AutomationProperties.GetLiveSetting(vide), [Is].EqualTo(System.Windows.Automation.AutomationLiveSetting.Polite))
 
             Dim menu As New MenuDeMkm()
             menu.Items.Add(New MenuItem With {.Header = "Ouvrir"})

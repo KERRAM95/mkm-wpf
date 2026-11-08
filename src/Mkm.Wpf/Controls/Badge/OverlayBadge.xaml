@@ -1,6 +1,6 @@
 <!--
     Le style d'OverlayBadge, sur la pastille posée de mkm (styles/overlaybadge ; preset dashboard, ara) : la pastille
-    centrée sur le coin haut-droit de son contenu, cernée de 2 px du fond de la page (overlaybadge.outline).
+    centrée sur le coin haut-droit de son contenu, cernée, au-dehors, de 2 px du fond de la page (overlaybadge.outline).
 -->
 <ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
                     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
@@ -14,10 +14,12 @@
                 <ControlTemplate TargetType="{x:Type local:OverlayBadge}">
                     <local:CoinDePastille>
                         <ContentPresenter />
-                        <local:Badge x:Name="Pastille" Margin="0"
-                                     Value="{TemplateBinding Value}" Severity="{TemplateBinding Severity}" Size="{TemplateBinding Size}"
-                                     BorderThickness="{DynamicResource mkm.overlaybadge.border.width}"
-                                     BorderBrush="{DynamicResource mkm.overlaybadge.outline.color}" />
+                        <!-- Le contour, hors de la pastille (outline de mkm) : elle garde sa taille, 18 px, et le point ses 6 px. -->
+                        <Border x:Name="Contour" Background="{DynamicResource mkm.overlaybadge.outline.color}"
+                                Padding="{DynamicResource mkm.overlaybadge.border.width}" CornerRadius="999">
+                            <local:Badge x:Name="Pastille" Margin="0"
+                                         Value="{TemplateBinding Value}" Severity="{TemplateBinding Severity}" Size="{TemplateBinding Size}" />
+                        </Border>
                     </local:CoinDePastille>
                 </ControlTemplate>
             </Setter.Value>

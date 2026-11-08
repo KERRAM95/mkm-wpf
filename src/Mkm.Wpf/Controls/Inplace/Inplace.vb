@@ -84,8 +84,14 @@ Namespace Mkm.Wpf.Controls
                     If actif Then
                         TryCast(place.Content, UIElement)?.Focus()
                         If Not place.IsKeyboardFocusWithin Then TryCast(place.Content, UIElement)?.MoveFocus(New TraversalRequest(FocusNavigationDirection.First))
-                    ElseIf avaitLeClavier Then
-                        place._affichage?.Focus()
+                        ' Un contenu sans rien de focalisable (un texte) : l'Inplace garde le clavier, pour qu'Échap le rende.
+                        If Not place.IsKeyboardFocusWithin AndAlso avaitLeClavier Then
+                            place.Focusable = True
+                            place.Focus()
+                        End If
+                    Else
+                        place.ClearValue(FocusableProperty)
+                        If avaitLeClavier Then place._affichage?.Focus()
                     End If
                 End Sub))
         End Sub

@@ -91,7 +91,17 @@ Namespace Mkm.Wpf.Controls
 
         Public Sub New()
             Entries = New ReadOnlyObservableCollection(Of TerminalEntry)(_historique)
-            AddHandler Localizer.Current.LanguageChanged, Sub() Nommer()
+            ' La langue suivie tant que le contrôle est chargé (un abonnement à vie le garderait en mémoire).
+            AddHandler Loaded, Sub()
+                                   RemoveHandler Localizer.Current.LanguageChanged, AddressOf Langue_Changee
+                                   AddHandler Localizer.Current.LanguageChanged, AddressOf Langue_Changee
+                                   Langue_Changee(Me, System.EventArgs.Empty)
+                               End Sub
+            AddHandler Unloaded, Sub() RemoveHandler Localizer.Current.LanguageChanged, AddressOf Langue_Changee
+        End Sub
+
+        Private Sub Langue_Changee(sender As Object, e As System.EventArgs)
+            Nommer()
         End Sub
 
         ''' <summary>Le message d'accueil.</summary>
@@ -165,7 +175,10 @@ Namespace Mkm.Wpf.Controls
             _historique.Add(ligne)
             Dim e As New TerminalCommandEventArgs(CommandEnteredEvent, Me, texte)
             Me.RaiseEvent(e)
-            If e.Response IsNot Nothing Then ligne.Response = e.Response
+            If e.Response IsNot Nothing Then
+                ligne.Response = e.Response
+                Annoncer(ligne)
+            End If
             Defiler()
         End Sub
 
@@ -174,6 +187,7 @@ Namespace Mkm.Wpf.Controls
             For i = _historique.Count - 1 To 0 Step -1
                 If _historique(i).Response Is Nothing Then
                     _historique(i).Response = reponse
+                    Annoncer(_historique(i))
                     Exit For
                 End If
             Next
@@ -183,6 +197,19 @@ Namespace Mkm.Wpf.Controls
         ''' <summary>Vide l'historique.</summary>
         Public Sub Clear()
             _historique.Clear()
+        End Sub
+
+        ' Une réponse posée se dit aux lecteurs d'écran, une fois écrite dans l'historique.
+        Private Sub Annoncer(ligne As TerminalEntry)
+            Dispatcher.BeginInvoke(Threading.DispatcherPriority.Loaded, New System.Action(
+                Sub()
+                    Dim historique = TryCast(GetTemplateChild("PART_History"), ItemsControl)
+                    Dim conteneur = TryCast(historique?.ItemContainerGenerator.ContainerFromItem(ligne), ContentPresenter)
+                    If conteneur Is Nothing OrElse conteneur.ContentTemplate Is Nothing Then Return
+                    Dim texte = TryCast(conteneur.ContentTemplate.FindName("Reponse", conteneur), UIElement)
+                    If texte Is Nothing Then Return
+                    UIElementAutomationPeer.CreatePeerForElement(texte)?.RaiseAutomationEvent(AutomationEvents.LiveRegionChanged)
+                End Sub))
         End Sub
 
         Private Sub Defiler()

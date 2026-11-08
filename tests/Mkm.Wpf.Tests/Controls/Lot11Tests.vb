@@ -51,7 +51,9 @@ Namespace Mkm.Wpf.Tests.Controls
             Assert.That(pose.ActualWidth, [Is].EqualTo(100), "la pastille ne prend pas de place")
             Assert.That(coin.X, [Is].EqualTo(100 - pastille.ActualWidth / 2).Within(0.5))
             Assert.That(coin.Y, [Is].EqualTo(-pastille.ActualHeight / 2).Within(0.5))
-            Assert.That(pastille.BorderThickness.Left, [Is].EqualTo(2), "cernée du fond de la page")
+            Assert.That(pastille.ActualHeight, [Is].EqualTo(18), "sa taille entière : le contour est au-dehors")
+            Assert.That(pastille.BorderThickness.Left, [Is].EqualTo(0))
+            Assert.That(Partie(Of Border)(pose, "Contour").Padding.Left, [Is].EqualTo(2), "cernée du fond de la page")
         End Sub
 
         ' ---- Avatar ----

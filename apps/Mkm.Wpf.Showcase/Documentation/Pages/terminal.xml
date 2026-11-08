@@ -23,7 +23,8 @@
   <section titre="Accessibilité">
     <h3>Lecteur d'écran</h3>
     <p>Narrateur dit le terminal « groupe », son historique, puis la saisie, « modifier », nommée « Commande » (ou par
-      <c>AutomationProperties.Name</c>).</p>
+      <c>AutomationProperties.Name</c>). Chaque réponse est une région « vivante », polie : Narrateur la lit dès
+      qu'elle s'écrit, qu'elle vienne de <c>e.Response</c> ou de <c>Respond</c>.</p>
     <h3>Clavier</h3>
     <touches>
       <touche nom="Entrée">Envoie la commande.</touche>

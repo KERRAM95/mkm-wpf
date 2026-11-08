@@ -28,15 +28,44 @@ Namespace Mkm.Wpf.Controls
     ''' </summary>
     ''' <remarks>
     ''' Ses éléments sont les possibilités (<c>Items</c>, ou <c>ItemsSource</c> : un texte y devient le message d'une
-    ''' possibilité sans icône). Le message et les possibilités sont annoncés aux lecteurs d'écran ; les actions non.
+    ''' possibilité sans icône). Son titre et son message sont annoncés aux lecteurs d'écran quand ils changent, ou quand
+    ''' les possibilités changent ; les actions non.
     ''' </remarks>
     Public Class EmptyContent
         Inherits ItemsControl
 
-        ''' <summary>Tout son arbre visuel pour les lecteurs d'écran et l'automatisation, gabarit compris.</summary>
+        ''' <summary>
+        ''' Tout son arbre visuel pour les lecteurs d'écran et l'automatisation, gabarit compris ; une région vivante
+        ''' (le <c>aria-live="polite"</c> de mkm), nommée par son titre et son message, annoncée quand ils changent.
+        ''' </summary>
         Protected Overrides Function OnCreateAutomationPeer() As System.Windows.Automation.Peers.AutomationPeer
-            Return New PairDeConteneur(Me, System.Windows.Automation.Peers.AutomationControlType.Group)
+            Return New PairDeConteneur(Me, System.Windows.Automation.Peers.AutomationControlType.Group, AddressOf NomAnnonce)
         End Function
+
+        ' Ce que Narrateur lit : le titre, puis le message s'il est un texte.
+        Private Function NomAnnonce() As String
+            Dim message = TryCast(Me.Message, String)
+            If String.IsNullOrEmpty(message) Then Return Title
+            If String.IsNullOrEmpty(Title) Then Return message
+            Return Title & ". " & message
+        End Function
+
+        ''' <inheritdoc/>
+        Protected Overrides Sub OnPropertyChanged(e As DependencyPropertyChangedEventArgs)
+            MyBase.OnPropertyChanged(e)
+            If e.Property Is TitleProperty OrElse e.Property Is MessageProperty Then Annoncer()
+        End Sub
+
+        ' Un changement chargé se dit aux lecteurs d'écran (LiveRegionChanged), une fois la mise en page faite.
+        Private Sub Annoncer()
+            If Not IsLoaded Then Return
+            Dispatcher.BeginInvoke(System.Windows.Threading.DispatcherPriority.Loaded, New System.Action(
+                Sub()
+                    Dim pair = System.Windows.Automation.Peers.UIElementAutomationPeer.FromElement(Me)
+                    If pair Is Nothing Then pair = System.Windows.Automation.Peers.UIElementAutomationPeer.CreatePeerForElement(Me)
+                    pair?.RaiseAutomationEvent(System.Windows.Automation.Peers.AutomationEvents.LiveRegionChanged)
+                End Sub))
+        End Sub
 
         ''' <summary>Le titre, en gras.</summary>
         Public Shared ReadOnly TitleProperty As DependencyProperty = DependencyProperty.Register(
@@ -134,6 +163,7 @@ Namespace Mkm.Wpf.Controls
         Protected Overrides Sub OnItemsChanged(e As NotifyCollectionChangedEventArgs)
             MyBase.OnItemsChanged(e)
             MarquerLaDerniere()
+            Annoncer()
         End Sub
 
         ' Un « ou » sépare deux possibilités : toutes en ont un, sauf la dernière.
