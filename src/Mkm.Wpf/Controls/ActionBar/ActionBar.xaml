@@ -224,19 +224,26 @@
                         </StackPanel>
                         <Popup x:Name="PART_Popup"
                                AllowsTransparency="True" Focusable="False" StaysOpen="False"
-                               Placement="Top" PlacementTarget="{Binding ElementName=Racine}" VerticalOffset="-4"
+                               Placement="Top" PlacementTarget="{Binding ElementName=Racine}" VerticalOffset="-1" HorizontalOffset="-2"
                                IsOpen="{Binding IsOpen, RelativeSource={RelativeSource TemplatedParent}, Mode=TwoWay}">
-                            <Border local:ActionBarDropDown.IsInList="True"
-                                    MinWidth="{DynamicResource mkm.menu.min.width}"
-                                    Padding="{DynamicResource mkm.menu.list.padding}"
-                                    Background="{DynamicResource mkm.menu.background}"
-                                    BorderBrush="{DynamicResource mkm.menu.border.color}" BorderThickness="1"
-                                    CornerRadius="{DynamicResource mkm.menu.border.radius}"
-                                    TextElement.Foreground="{DynamicResource mkm.menu.color}"
-                                    KeyboardNavigation.DirectionalNavigation="Cycle"
-                                    KeyboardNavigation.TabNavigation="Cycle">
-                                <ItemsPresenter />
-                            </Border>
+                            <!-- L'ombre du menu de mkm (menu.shadow), sur un fond à part (sinon le texte aussi en
+                                 aurait une), dans la place transparente autour. -->
+                            <Grid Margin="{DynamicResource mkm.contextmenu.window.padding}">
+                                <Border Background="{DynamicResource mkm.menu.background}"
+                                        CornerRadius="{DynamicResource mkm.menu.border.radius}"
+                                        Effect="{DynamicResource mkm.menu.shadow}" />
+                                <Border local:ActionBarDropDown.IsInList="True"
+                                        MinWidth="{DynamicResource mkm.menu.min.width}"
+                                        Padding="{DynamicResource mkm.menu.list.padding}"
+                                        Background="{DynamicResource mkm.menu.background}"
+                                        BorderBrush="{DynamicResource mkm.menu.border.color}" BorderThickness="1"
+                                        CornerRadius="{DynamicResource mkm.menu.border.radius}"
+                                        TextElement.Foreground="{DynamicResource mkm.menu.color}"
+                                        KeyboardNavigation.DirectionalNavigation="Cycle"
+                                        KeyboardNavigation.TabNavigation="Cycle">
+                                    <ItemsPresenter />
+                                </Border>
+                            </Grid>
                         </Popup>
                     </Grid>
                 </ControlTemplate>

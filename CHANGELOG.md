@@ -340,6 +340,7 @@ Les évolutions notables de mkm-wpf, version par version. Le format suit
     taille (Small, Large) ; la poignée de redimensionnement au jeton (6 px).
   - Knob : en lecture seule, plus un arrêt de Tab ; son anneau à 1 px
     au-dehors. Dock : Début et Fin. CascadeSelect : ↑ ouvre la liste.
+  - ActionBar : la liste d'une ActionBarDropDown a l'ombre du menu de mkm.
   - InputOtp, ColorPicker, Terminal, Password : la langue n'est suivie que
     tant que le contrôle est chargé (l'abonnement à vie le gardait en
     mémoire).
