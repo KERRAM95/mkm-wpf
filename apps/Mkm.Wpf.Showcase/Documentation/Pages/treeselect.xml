@@ -1,0 +1,96 @@
+<?xml version="1.0" encoding="utf-8"?>
+<page titre="TreeSelect" categorie="Formulaire" types="TreeSelect" jetons="treeselect">
+  <resume>Une liste déroulante en arbre : le champ s'ouvre sur un arbre où choisir un nœud, un dossier par exemple ;
+    son titre s'écrit dans le champ.</resume>
+
+  <section titre="Import">
+    <code><![CDATA[
+<Window xmlns:mkm="urn:mkm-wpf">
+    <mkm:TreeSelect Placeholder="Choisir un dossier">
+        <mkm:TreeNode Header="Documents" />
+    </mkm:TreeSelect>
+</Window>
+]]></code>
+  </section>
+
+  <section titre="Basique">
+    <p>Les nœuds sont des <c>TreeNode</c>, ceux d'un <lien page="tree">Tree</lien>, avec leurs icônes et leurs enfants. Un
+      clic sur le champ ouvre l'arbre ; un clic sur un nœud le choisit et referme l'arbre ; sa flèche le déplie.
+      <c>SelectedItem</c> est le nœud choisi, <c>SelectedItemChanged</c> dit qu'il change.</p>
+    <exemple comportement="TreeSelectChoix"><![CDATA[
+<StackPanel>
+    <mkm:TreeSelect x:Name="Dossier" Placeholder="Choisir un dossier" Width="260" HorizontalAlignment="Left">
+        <mkm:TreeNode Header="Documents" Icon="{x:Static mkm:Icons.Documents}" IsExpanded="True">
+            <mkm:TreeNode Header="Plans" Icon="{x:Static mkm:Icons.Document}" />
+            <mkm:TreeNode Header="Notices" Icon="{x:Static mkm:Icons.Document}" />
+        </mkm:TreeNode>
+        <mkm:TreeNode Header="Pièces" Icon="{x:Static mkm:Icons.Documents}">
+            <mkm:TreeNode Header="Usinées" />
+            <mkm:TreeNode Header="Achetées" />
+        </mkm:TreeNode>
+        <mkm:TreeNode Header="Archives" Icon="{x:Static mkm:Icons.Documents}" />
+    </mkm:TreeSelect>
+    <TextBlock x:Name="Choix" Text="Aucun dossier choisi" Margin="0,12,0,0" />
+</StackPanel>
+]]></exemple>
+  </section>
+
+  <section titre="Effacer">
+    <p><c>ShowClear</c> pose une croix devant le chevron, quand un nœud est choisi : elle retire le choix.</p>
+    <exemple><![CDATA[
+<mkm:TreeSelect ShowClear="True" Placeholder="Choisir un dossier" Width="260" HorizontalAlignment="Left">
+    <mkm:TreeNode Header="Documents" IsExpanded="True">
+        <mkm:TreeNode x:Name="Plans" Header="Plans" />
+    </mkm:TreeNode>
+    <mkm:TreeSelect.SelectedItem>
+        <x:Reference>Plans</x:Reference>
+    </mkm:TreeSelect.SelectedItem>
+</mkm:TreeSelect>
+]]></exemple>
+  </section>
+
+  <section titre="Données">
+    <p>Lié à des objets : <c>ItemsSource</c> donne les racines, un <c>HierarchicalDataTemplate</c> (<c>ItemTemplate</c>)
+      leur titre et leurs enfants ; <c>SelectedItem</c> est alors un objet, et <c>DisplayMemberPath</c> dit laquelle de
+      ses propriétés s'écrit dans le champ.</p>
+    <exemple comportement="TreeSelectDonnees"><![CDATA[
+<mkm:TreeSelect x:Name="NotesLiees" DisplayMemberPath="Titre" Placeholder="Choisir une note" Width="260"
+                HorizontalAlignment="Left">
+    <mkm:TreeSelect.ItemTemplate>
+        <HierarchicalDataTemplate ItemsSource="{Binding Enfants}">
+            <TextBlock Text="{Binding Titre}" />
+        </HierarchicalDataTemplate>
+    </mkm:TreeSelect.ItemTemplate>
+</mkm:TreeSelect>
+]]></exemple>
+  </section>
+
+  <section titre="Désactivé et refusé">
+    <p><c>IsEnabled="False"</c> grise le champ ; <c>Invalid</c> le borde de rouge.</p>
+    <exemple><![CDATA[
+<StackPanel Orientation="Horizontal">
+    <mkm:TreeSelect IsEnabled="False" Placeholder="Choisir un dossier" Width="200" Margin="0,0,12,0" />
+    <mkm:TreeSelect Invalid="True" Placeholder="Choisir un dossier" Width="200" />
+</StackPanel>
+]]></exemple>
+  </section>
+
+  <section titre="Accessibilité">
+    <h3>Lecteur d'écran</h3>
+    <p>Narrateur dit le TreeSelect « zone de liste déroulante », nommé par <c>AutomationProperties.Name</c>, sinon par son
+      texte d'aide ; sa valeur est le titre du nœud choisi, et il se dit « développé » ou « réduit ». L'arbre ouvert est
+      celui du Tree : ses nœuds, développés ou réduits, sélectionnés ou non. La croix se nomme « Effacer ».</p>
+    <h3>Clavier</h3>
+    <p>Ouvert, le clavier entre dans l'arbre, sur le nœud choisi ; il revient au champ quand l'arbre se referme.</p>
+    <touches>
+      <touche nom="Flèche bas">Ouvre l'arbre ; dans l'arbre, passe au nœud suivant.</touche>
+      <touche nom="Flèche haut">Passe au nœud précédent.</touche>
+      <touche nom="Flèche droite">Déplie le nœud, ou passe à son premier enfant.</touche>
+      <touche nom="Flèche gauche">Replie le nœud, ou passe à son parent.</touche>
+      <touche nom="Entrée">Ouvre l'arbre ; dans l'arbre, choisit le nœud et le referme.</touche>
+      <touche nom="Espace">Ouvre l'arbre ; dans l'arbre, choisit le nœud et le referme.</touche>
+      <touche nom="Échap">Referme l'arbre sans rien choisir.</touche>
+      <touche nom="Tab">Referme l'arbre et passe à l'élément suivant.</touche>
+    </touches>
+  </section>
+</page>

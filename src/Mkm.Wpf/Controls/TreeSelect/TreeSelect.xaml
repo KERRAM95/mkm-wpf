@@ -1,0 +1,147 @@
+<!--
+    Le style de TreeSelect, sur la liste déroulante en arbre de mkm (styles/treeselect ; jetons de Nora en pixels pour
+    Dashboard, preset ara : le preset dashboard ne la redessine pas) : le champ de MultiSelect (fond, bordure d'un pixel,
+    coins du thème ; le texte gris tant que rien n'est choisi ; le chevron dans 30 px à droite ; la croix qui retire le
+    choix devant lui ; la bordure plus foncée au survol, au bleu du thème au clavier et arbre ouvert). L'arbre s'ouvre
+    dessous, aussi large que le champ au moins, dans un cadre ombré : l'arbre de mkm-wpf, ses nœuds et leurs flèches.
+-->
+<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+                    xmlns:local="clr-namespace:Mkm.Wpf.Controls"
+                    xmlns:loc="clr-namespace:Mkm.Wpf.Localization">
+
+    <!-- Toute la surface du champ ouvre l'arbre. -->
+    <Style x:Key="mkm.TreeSelect.Zone" TargetType="{x:Type ToggleButton}">
+        <Setter Property="Focusable" Value="False" />
+        <Setter Property="Cursor" Value="Hand" />
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="{x:Type ToggleButton}">
+                    <Border Background="Transparent" />
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+
+    <!-- La croix qui retire le choix : une icône, sans arrêt du clavier, comme mkm. -->
+    <Style x:Key="mkm.TreeSelect.Croix" TargetType="{x:Type Button}">
+        <Setter Property="Focusable" Value="False" />
+        <Setter Property="Cursor" Value="Hand" />
+        <Setter Property="Foreground" Value="{DynamicResource mkm.treeselect.clear.icon.color}" />
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="{x:Type Button}">
+                    <Border Background="Transparent" Padding="{DynamicResource mkm.treeselect.clear.icon.padding}">
+                        <local:Icon Source="{x:Static local:InternalIcons.Times}" VerticalAlignment="Center"
+                                    Width="{DynamicResource mkm.icon.size}" Height="{DynamicResource mkm.icon.size}" />
+                    </Border>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+
+    <Style TargetType="{x:Type local:TreeSelect}">
+        <Setter Property="Background" Value="{DynamicResource mkm.treeselect.background}" />
+        <Setter Property="Foreground" Value="{DynamicResource mkm.treeselect.color}" />
+        <Setter Property="BorderBrush" Value="{DynamicResource mkm.treeselect.border.color}" />
+        <Setter Property="BorderThickness" Value="1" />
+        <Setter Property="FontFamily" Value="{DynamicResource mkm.font.family}" />
+        <Setter Property="FontSize" Value="{DynamicResource mkm.font.size}" />
+        <Setter Property="VerticalAlignment" Value="Center" />
+        <Setter Property="FocusVisualStyle" Value="{x:Null}" />
+        <Setter Property="SnapsToDevicePixels" Value="True" />
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="{x:Type local:TreeSelect}">
+                    <Grid x:Name="Racine">
+                        <Border x:Name="Bord" Background="{TemplateBinding Background}" BorderBrush="{TemplateBinding BorderBrush}"
+                                BorderThickness="{TemplateBinding BorderThickness}"
+                                CornerRadius="{DynamicResource mkm.treeselect.border.radius}">
+                            <DockPanel>
+                                <Border DockPanel.Dock="Right" Width="{DynamicResource mkm.treeselect.dropdown.width}">
+                                    <local:Icon Source="{x:Static local:InternalIcons.ChevronDown}" HorizontalAlignment="Center"
+                                                VerticalAlignment="Center" Width="{DynamicResource mkm.icon.size}"
+                                                Height="{DynamicResource mkm.icon.size}"
+                                                Foreground="{DynamicResource mkm.treeselect.dropdown.color}" />
+                                </Border>
+                                <!-- La place de la croix, qui se pose par-dessus la zone. -->
+                                <Border x:Name="PlaceDeLaCroix" DockPanel.Dock="Right" Visibility="Collapsed"
+                                        Width="{Binding ActualWidth, ElementName=PART_Clear}" />
+                                <Grid ClipToBounds="True">
+                                    <TextBlock x:Name="Aide" Visibility="Collapsed" Margin="{DynamicResource mkm.treeselect.label.padding}"
+                                               TextTrimming="CharacterEllipsis" Text="{TemplateBinding Placeholder}"
+                                               Foreground="{DynamicResource mkm.treeselect.placeholder.color}" />
+                                    <TextBlock x:Name="Libelle" Margin="{DynamicResource mkm.treeselect.label.padding}"
+                                               TextTrimming="CharacterEllipsis" Text="{TemplateBinding SelectionText}" />
+                                    <!-- La hauteur d'une ligne de texte, que le champ garde vide. -->
+                                    <TextBlock Margin="{DynamicResource mkm.treeselect.label.padding}" Text=" " Visibility="Hidden" />
+                                </Grid>
+                            </DockPanel>
+                        </Border>
+                        <ToggleButton x:Name="PART_Field" Style="{StaticResource mkm.TreeSelect.Zone}" />
+                        <Button x:Name="PART_Clear" Style="{StaticResource mkm.TreeSelect.Croix}" Visibility="Collapsed"
+                                HorizontalAlignment="Right" Margin="{DynamicResource mkm.treeselect.clear.icon.margin}"
+                                AutomationProperties.Name="{loc:T aria.clear}" />
+                        <Popup x:Name="PART_Popup" AllowsTransparency="True" Focusable="False" StaysOpen="False"
+                               Placement="Bottom" PlacementTarget="{Binding ElementName=Racine}" PopupAnimation="None"
+                               VerticalOffset="{DynamicResource mkm.anchor.gutter}"
+                               IsOpen="{Binding IsDropDownOpen, RelativeSource={RelativeSource TemplatedParent}, Mode=TwoWay}">
+                            <Grid Margin="{DynamicResource mkm.treeselect.overlay.window.padding}"
+                                  MinWidth="{Binding ActualWidth, ElementName=Racine}">
+                                <Border Background="{DynamicResource mkm.treeselect.overlay.background}"
+                                        CornerRadius="{DynamicResource mkm.treeselect.overlay.border.radius}"
+                                        Effect="{DynamicResource mkm.treeselect.overlay.shadow}" />
+                                <Border Background="{DynamicResource mkm.treeselect.overlay.background}" BorderThickness="1"
+                                        BorderBrush="{DynamicResource mkm.treeselect.overlay.border.color}"
+                                        CornerRadius="{DynamicResource mkm.treeselect.overlay.border.radius}"
+                                        TextElement.Foreground="{DynamicResource mkm.treeselect.overlay.color}">
+                                    <Grid>
+                                        <ContentPresenter x:Name="PART_TreeHost" />
+                                        <TextBlock x:Name="Vide" Visibility="Collapsed" Margin="{DynamicResource mkm.treeselect.empty.message.padding}"
+                                                   Text="{loc:T locale.emptyMessage}" />
+                                    </Grid>
+                                </Border>
+                            </Grid>
+                        </Popup>
+                    </Grid>
+                    <ControlTemplate.Triggers>
+                        <Trigger Property="HasSelection" Value="False">
+                            <Setter TargetName="Aide" Property="Visibility" Value="Visible" />
+                            <Setter TargetName="Libelle" Property="Visibility" Value="Collapsed" />
+                        </Trigger>
+                        <MultiTrigger>
+                            <MultiTrigger.Conditions>
+                                <Condition Property="ShowClear" Value="True" />
+                                <Condition Property="HasSelection" Value="True" />
+                                <Condition Property="IsEnabled" Value="True" />
+                            </MultiTrigger.Conditions>
+                            <Setter TargetName="PART_Clear" Property="Visibility" Value="Visible" />
+                            <Setter TargetName="PlaceDeLaCroix" Property="Visibility" Value="Visible" />
+                        </MultiTrigger>
+                        <Trigger Property="IsEmpty" Value="True">
+                            <Setter TargetName="Vide" Property="Visibility" Value="Visible" />
+                        </Trigger>
+                        <Trigger Property="IsMouseOver" Value="True">
+                            <Setter Property="BorderBrush" Value="{DynamicResource mkm.treeselect.hover.border.color}" />
+                        </Trigger>
+                        <Trigger Property="IsKeyboardFocusWithin" Value="True">
+                            <Setter Property="BorderBrush" Value="{DynamicResource mkm.treeselect.focus.border.color}" />
+                        </Trigger>
+                        <Trigger Property="IsDropDownOpen" Value="True">
+                            <Setter Property="BorderBrush" Value="{DynamicResource mkm.treeselect.focus.border.color}" />
+                        </Trigger>
+                        <Trigger Property="Invalid" Value="True">
+                            <Setter Property="BorderBrush" Value="{DynamicResource mkm.treeselect.invalid.border.color}" />
+                            <Setter TargetName="Aide" Property="Foreground" Value="{DynamicResource mkm.treeselect.invalid.placeholder.color}" />
+                        </Trigger>
+                        <Trigger Property="IsEnabled" Value="False">
+                            <Setter Property="Background" Value="{DynamicResource mkm.treeselect.disabled.background}" />
+                            <Setter TargetName="Libelle" Property="Foreground" Value="{DynamicResource mkm.treeselect.disabled.color}" />
+                        </Trigger>
+                    </ControlTemplate.Triggers>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+
+</ResourceDictionary>

@@ -5,7 +5,7 @@ Bibliothèque de composants WPF en VB.NET, déclinaison bureau de **mkm**
 documentation. Neutre, indépendante de toute application.
 
 **État :** les fondations (langue, thème et zoom, changeables à chaud), les icônes
-de mkm et 67 composants, chacun avec sa page de documentation, ses tests et
+de mkm et 69 composants, chacun avec sa page de documentation, ses tests et
 ses scénarios d'interaction. La version 0.1.0 est en préparation.
 
 **La documentation** est l'application `Mkm.Wpf.Showcase`, sur le modèle de
@@ -134,9 +134,15 @@ Les commandes de l'application se déclarent une fois dans un `CommandRegistry`
 20. ~~Le lot 15~~ : fait — `Stepper`, `Timeline`, `Paginator`
    (`docs/composants/etapes-frise-et-pagination.md`).
 21. ~~Le lot 16~~ : fait — `Drawer`, `Inplace`, `Image`, `ImageCompare`
-   (`docs/composants/tiroir-sur-place-et-images.md`). La suite de la priorité 2 :
-   `TreeSelect`, `CascadeSelect`.
-22. La suite : le paquet NuGet ; hscart-next sur la bibliothèque.
+   (`docs/composants/tiroir-sur-place-et-images.md`).
+22. ~~Le lot 17~~ : fait — `TreeSelect`, `CascadeSelect`
+   (`docs/composants/listes-en-arbre-et-en-cascade.md`). La priorité 2 est faite.
+23. La priorité 3 : les champs (Rating, Slider, Knob, Password, InputMask,
+   InputOtp, InputChips, FloatLabel, IftaLabel, ColorPicker, KeyFilter), les
+   menus (Menubar, MegaMenu, PanelMenu, Dock, SpeedDial), les données
+   (DataView, OrderList, PickList, OrganizationChart, MeterGroup), les médias
+   (Carousel, Galleria), ButtonGroup et Terminal.
+24. La suite : le paquet NuGet ; hscart-next sur la bibliothèque.
 
 ## Règles
 

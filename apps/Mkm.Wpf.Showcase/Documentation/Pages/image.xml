@@ -18,7 +18,7 @@
       sur le voile le ferment. <c>AutomationProperties.Name</c> dit ce que montre l'image.</p>
     <exemple><![CDATA[
 <mkm:Image x:Name="Photo" Source="/Images/galleria10.jpg" Preview="True" Width="260"
-           AutomationProperties.Name="Paysage de montagne" />
+           AutomationProperties.Name="Canal illuminé, la nuit" />
 ]]></exemple>
   </section>
 

@@ -223,6 +223,71 @@ Namespace Mkm.Wpf.UiTests
             Assert.That(reference.Patterns.Value.Pattern.Value.Value, [Is].EqualTo("HS-00041"))
         End Sub
 
+        ' Un élément d'une liste ouverte : sous le champ pour UI Automation, ou dans sa fenêtre à part.
+        Private Function DansLaListe(champ As AutomationElement, nom As String, role As ControlType) As AutomationElement
+            Return Attendre(Function() If(champ.FindFirstDescendant(Function(cf) cf.ByName(nom).And(cf.ByControlType(role))),
+                                          ChercherAilleurs(nom, role)), $"« {nom} » dans la liste")
+        End Function
+
+        <Test>
+        Public Sub TreeSelect_UnClicEtLeClavierChoisissentUnNoeud()
+            Dim page = OuvrirLaDoc("treeselect")
+            Dim dossier = Trouver("Dossier", page)
+            Dim etat = Function() dossier.Patterns.ExpandCollapse.Pattern.ExpandCollapseState.Value
+            Dim valeur = Function() dossier.Patterns.Value.Pattern.Value.Value
+
+            Assert.That(NomDe(dossier), [Is].EqualTo("Choisir un dossier"), "nommé par son texte d'aide")
+            Cliquer(dossier)
+            AttendreQue(Function() etat() = ExpandCollapseState.Expanded, "l'arbre ouvert")
+            Cliquer(DansLaListe(dossier, "Notices", ControlType.TreeItem))
+            AttendreQue(Function() valeur() = "Notices", "un clic choisit « Notices »")
+            AttendreQue(Function() etat() = ExpandCollapseState.Collapsed, "et referme l'arbre")
+            AttendreQue(Function() NomDe(Trouver("Choix", page)) = "Dossier choisi : Notices", "SelectedItemChanged")
+
+            ' Au clavier : ↓ rouvre l'arbre sur le nœud choisi, ↑ remonte à « Plans », Entrée le choisit.
+            Taper(VirtualKeyShort.DOWN)
+            Dim notices = DansLaListe(dossier, "Notices", ControlType.TreeItem)
+            AttendreQue(Function() AFocus(notices), "le clavier sur le nœud choisi")
+            Taper(VirtualKeyShort.UP, VirtualKeyShort.RETURN)
+            AttendreQue(Function() valeur() = "Plans", "↑ Entrée : « Plans »")
+            AttendreQue(Function() AFocus(dossier), "le clavier revient au champ")
+            Taper(VirtualKeyShort.DOWN)
+            AttendreQue(Function() etat() = ExpandCollapseState.Expanded, "↓ rouvre l'arbre")
+            Taper(VirtualKeyShort.ESCAPE)
+            AttendreQue(Function() etat() = ExpandCollapseState.Collapsed, "Échap le referme")
+            Assert.That(valeur(), [Is].EqualTo("Plans"), "sans rien choisir")
+        End Sub
+
+        <Test>
+        Public Sub CascadeSelect_LaSourisPuisLeClavierChoisissentUneMachine()
+            Dim page = OuvrirLaDoc("cascadeselect")
+            Dim machine = Trouver("Machine", page)
+            Dim valeur = Function() machine.Patterns.Value.Pattern.Value.Value
+
+            Assert.That(NomDe(machine), [Is].EqualTo("Choisir une machine"), "nommé par son texte d'aide")
+            Cliquer(machine)
+            Cliquer(DansLaListe(machine, "Lyon", ControlType.MenuItem))
+            Cliquer(DansLaListe(machine, "Usinage", ControlType.MenuItem))
+            Cliquer(DansLaListe(machine, "Fraiseuse 5 axes", ControlType.MenuItem))
+            AttendreQue(Function() valeur() = "Fraiseuse 5 axes", "un clic choisit « Fraiseuse 5 axes »")
+            AttendreQue(Function() NomDe(Trouver("Choix", page)) = "Machine choisie : Fraiseuse 5 axes", "SelectedItemChanged")
+            AttendreQue(Function() Referme("Usinage"), "les listes refermées")
+
+            ' Au clavier : ↓ ouvre sur « Lyon », ↓ passe à « Toulouse », → ouvre sa suite, → encore, Entrée choisit.
+            AttendreQue(Function() AFocus(machine), "le clavier au champ")
+            Taper(VirtualKeyShort.DOWN)
+            Dim lyon = DansLaListe(machine, "Lyon", ControlType.MenuItem)
+            AttendreQue(Function() AFocus(lyon), "le clavier sur « Lyon »")
+            Taper(VirtualKeyShort.DOWN, VirtualKeyShort.RIGHT)
+            Dim peinture = DansLaListe(machine, "Peinture", ControlType.MenuItem)
+            AttendreQue(Function() AFocus(peinture), "→ ouvre la suite de « Toulouse »")
+            Taper(VirtualKeyShort.RIGHT)
+            Dim cabine = DansLaListe(machine, "Cabine 2", ControlType.MenuItem)
+            AttendreQue(Function() AFocus(cabine), "→ encore")
+            Taper(VirtualKeyShort.RETURN)
+            AttendreQue(Function() valeur() = "Cabine 2", "Entrée : « Cabine 2 »")
+        End Sub
+
     End Class
 
 End Namespace

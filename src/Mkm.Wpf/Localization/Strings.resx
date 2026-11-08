@@ -141,4 +141,7 @@
   <data name="aria.compare" xml:space="preserve">
     <value>Compare</value>
   </data>
+  <data name="aria.clear" xml:space="preserve">
+    <value>Clear</value>
+  </data>
 </root>

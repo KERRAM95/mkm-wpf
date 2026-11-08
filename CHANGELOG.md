@@ -144,6 +144,11 @@ Les évolutions notables de mkm-wpf, version par version. Le format suit
   et revient), `Inplace` (modifier sur place), `Image` (aperçu en grand :
   tourner, agrandir, réduire), `ImageCompare` (deux images à une poignée) ;
   leurs jetons, leurs pages, leurs tests et leurs scénarios.
+- Le lot 17 (`docs/composants/listes-en-arbre-et-en-cascade.md`) :
+  `TreeSelect` (un arbre sous un champ, croix qui retire le choix) et
+  `CascadeSelect` avec `CascadeSelectItem` (des listes qui s'ouvrent l'une à
+  droite de l'autre) ; liés à des données ou écrits dans le XAML ; leurs
+  jetons, leurs pages, leurs tests et leurs scénarios. La priorité 2 est faite.
 - Info-bulle et Popover : la page qui défile les referme, comme mkm.
 - Le zoom de toute l'interface (`docs/fondations/zoom.md`) :
   `MkmResources.Zoom` (80 à 200 %), `ZoomIn`, `ZoomOut`, `ResetZoom`,

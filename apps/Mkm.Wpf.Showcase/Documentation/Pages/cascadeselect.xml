@@ -1,0 +1,87 @@
+<?xml version="1.0" encoding="utf-8"?>
+<page titre="CascadeSelect" categorie="Formulaire" types="CascadeSelect CascadeSelectItem" jetons="cascadeselect">
+  <resume>Une liste déroulante en cascade : chaque option en ouvre d'autres, à sa droite, jusqu'à celle qui se choisit,
+    un site, puis un atelier, puis une machine.</resume>
+
+  <section titre="Import">
+    <code><![CDATA[
+<Window xmlns:mkm="urn:mkm-wpf">
+    <mkm:CascadeSelect Placeholder="Choisir une machine">
+        <mkm:CascadeSelectItem Header="Lyon">
+            <mkm:CascadeSelectItem Header="Tour CN 1" />
+        </mkm:CascadeSelectItem>
+    </mkm:CascadeSelect>
+</Window>
+]]></code>
+  </section>
+
+  <section titre="Basique">
+    <p>Les options sont des <c>CascadeSelectItem</c> : une option qui en contient d'autres ouvre leur liste à sa droite,
+      au survol ou au clic ; une option sans suite se choisit, s'écrit dans le champ et referme les listes.
+      <c>SelectedItem</c> est l'option choisie, <c>SelectedItemChanged</c> dit qu'elle change.</p>
+    <exemple comportement="CascadeSelectChoix"><![CDATA[
+<StackPanel>
+    <mkm:CascadeSelect x:Name="Machine" Placeholder="Choisir une machine" Width="260" HorizontalAlignment="Left">
+        <mkm:CascadeSelectItem Header="Lyon">
+            <mkm:CascadeSelectItem Header="Usinage">
+                <mkm:CascadeSelectItem Header="Tour CN 1" />
+                <mkm:CascadeSelectItem Header="Fraiseuse 5 axes" />
+            </mkm:CascadeSelectItem>
+            <mkm:CascadeSelectItem Header="Montage">
+                <mkm:CascadeSelectItem Header="Banc d'essai" />
+            </mkm:CascadeSelectItem>
+        </mkm:CascadeSelectItem>
+        <mkm:CascadeSelectItem Header="Toulouse">
+            <mkm:CascadeSelectItem Header="Peinture">
+                <mkm:CascadeSelectItem Header="Cabine 2" />
+            </mkm:CascadeSelectItem>
+        </mkm:CascadeSelectItem>
+    </mkm:CascadeSelect>
+    <TextBlock x:Name="Choix" Text="Aucune machine choisie" Margin="0,12,0,0" />
+</StackPanel>
+]]></exemple>
+  </section>
+
+  <section titre="Données">
+    <p>Lié à des objets : <c>ItemsSource</c> donne la première liste, un <c>HierarchicalDataTemplate</c>
+      (<c>ItemTemplate</c>) le texte de chaque option et les options qui la suivent ; <c>SelectedItem</c> est alors un
+      objet, et <c>DisplayMemberPath</c> dit laquelle de ses propriétés s'écrit dans le champ.</p>
+    <exemple comportement="CascadeSelectDonnees"><![CDATA[
+<mkm:CascadeSelect x:Name="Sites" DisplayMemberPath="Nom" Placeholder="Choisir un atelier" Width="260"
+                   HorizontalAlignment="Left">
+    <mkm:CascadeSelect.ItemTemplate>
+        <HierarchicalDataTemplate ItemsSource="{Binding Suite}">
+            <TextBlock Text="{Binding Nom}" />
+        </HierarchicalDataTemplate>
+    </mkm:CascadeSelect.ItemTemplate>
+</mkm:CascadeSelect>
+]]></exemple>
+  </section>
+
+  <section titre="Désactivé et refusé">
+    <p><c>IsEnabled="False"</c> grise le champ ; <c>Invalid</c> le borde de rouge.</p>
+    <exemple><![CDATA[
+<StackPanel Orientation="Horizontal">
+    <mkm:CascadeSelect IsEnabled="False" Placeholder="Choisir une machine" Width="200" Margin="0,0,12,0" />
+    <mkm:CascadeSelect Invalid="True" Placeholder="Choisir une machine" Width="200" />
+</StackPanel>
+]]></exemple>
+  </section>
+
+  <section titre="Accessibilité">
+    <h3>Lecteur d'écran</h3>
+    <p>Narrateur dit le CascadeSelect « zone de liste déroulante », nommé par <c>AutomationProperties.Name</c>, sinon par
+      son texte d'aide ; sa valeur est le texte de l'option choisie, et il se dit « développé » ou « réduit ». Les listes
+      sont des menus : chaque option, un élément de menu, qui se dit « développé » quand sa liste est ouverte.</p>
+    <h3>Clavier</h3>
+    <p>Ouvert au clavier, le clavier entre dans la première liste ; il revient au champ quand les listes se referment.</p>
+    <touches>
+      <touche nom="Flèche bas">Ouvre la liste ; dans la liste, passe à l'option suivante.</touche>
+      <touche nom="Flèche haut">Passe à l'option précédente.</touche>
+      <touche nom="Flèche droite">Ouvre la liste qui suit l'option, sur sa première option.</touche>
+      <touche nom="Flèche gauche">Referme la liste, et revient à l'option qui l'avait ouverte.</touche>
+      <touche nom="Entrée">Ouvre la liste ; sur une option sans suite, la choisit et referme les listes.</touche>
+      <touche nom="Échap">Referme la liste ouverte en dernier ; la première, sans rien choisir.</touche>
+    </touches>
+  </section>
+</page>

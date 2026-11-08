@@ -19,6 +19,7 @@
         <ResourceDictionary Source="/Mkm.Wpf;component/Controls/Breadcrumb/Breadcrumb.xaml" />
         <ResourceDictionary Source="/Mkm.Wpf;component/Controls/Button/Button.xaml" />
         <ResourceDictionary Source="/Mkm.Wpf;component/Controls/Card/Card.xaml" />
+        <ResourceDictionary Source="/Mkm.Wpf;component/Controls/CascadeSelect/CascadeSelect.xaml" />
         <ResourceDictionary Source="/Mkm.Wpf;component/Controls/Checkbox/Checkbox.xaml" />
         <ResourceDictionary Source="/Mkm.Wpf;component/Controls/Chip/Chip.xaml" />
         <ResourceDictionary Source="/Mkm.Wpf;component/Controls/DataTable/DataTable.xaml" />
@@ -65,6 +66,7 @@
         <ResourceDictionary Source="/Mkm.Wpf;component/Controls/Toolbar/Toolbar.xaml" />
         <ResourceDictionary Source="/Mkm.Wpf;component/Controls/Tree/Tree.xaml" />
         <ResourceDictionary Source="/Mkm.Wpf;component/Controls/TreeGrid/TreeGrid.xaml" />
+        <ResourceDictionary Source="/Mkm.Wpf;component/Controls/TreeSelect/TreeSelect.xaml" />
         <ResourceDictionary Source="/Mkm.Wpf;component/Controls/Triptych/Triptych.xaml" />
         <ResourceDictionary Source="/Mkm.Wpf;component/Controls/WelcomePanel/WelcomePanel.xaml" />
     </ResourceDictionary.MergedDictionaries>

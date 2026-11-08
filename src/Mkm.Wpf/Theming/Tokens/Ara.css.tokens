@@ -393,3 +393,17 @@ image.toolbar.margin = {image.toolbar.position.top} {image.toolbar.position.righ
 # la moitié de la poignée de chaque côté (calc(-1 * handle.size / 2) chez mkm), pour que la poignée aille aux bords.
 imagecompare.handle.all.border.width = {imagecompare.handle.border.width} {imagecompare.handle.border.width}
 imagecompare.track.margin = 0 -7.5px 0 -7.5px
+
+# treeselect : le champ de MultiSelect ; la croix qui retire le choix, devant le chevron ; l'arbre s'ouvre sur 240 px
+# au plus (scrollHeight 20rem chez mkm).
+treeselect.label.padding = {treeselect.padding.y} {treeselect.padding.x}
+treeselect.clear.icon.padding = 0 2px 0 2px
+treeselect.clear.icon.margin = 0 {treeselect.dropdown.width} 0 0
+treeselect.overlay.window.padding = 0 2px 3px 2px
+treeselect.tree.max.height = 240px
+
+# cascadeselect : le champ de MultiSelect ; chaque liste dans un cadre ombré, la suivante à droite de son option ;
+# l'icône du groupe (option.icon.size) à 6 px du libellé.
+cascadeselect.label.padding = {cascadeselect.padding.y} {cascadeselect.padding.x}
+cascadeselect.overlay.window.padding = 0 2px 3px 2px
+cascadeselect.option.icon.margin = 6px 0 0 0
