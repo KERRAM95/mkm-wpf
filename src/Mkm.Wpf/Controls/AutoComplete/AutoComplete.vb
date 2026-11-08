@@ -313,6 +313,12 @@ Namespace Mkm.Wpf.Controls
         Private Shared Sub OnIsDropDownOpenChanged(d As DependencyObject, e As DependencyPropertyChangedEventArgs)
             Dim champ = DirectCast(d, AutoComplete)
             If CBool(e.NewValue) Then champ._fermeture.Ecouter() Else champ._fermeture.Cesser()
+            ' Déplié ou replié, dit aux lecteurs d'écran (aria-expanded de mkm).
+            If AutomationPeer.ListenerExists(AutomationEvents.PropertyChanged) Then
+                UIElementAutomationPeer.FromElement(champ)?.RaisePropertyChangedEvent(ExpandCollapsePatternIdentifiers.ExpandCollapseStateProperty,
+                    If(CBool(e.OldValue), ExpandCollapseState.Expanded, ExpandCollapseState.Collapsed),
+                    If(CBool(e.NewValue), ExpandCollapseState.Expanded, ExpandCollapseState.Collapsed))
+            End If
         End Sub
 
         Private Sub Popup_Closed(sender As Object, e As EventArgs)
@@ -398,7 +404,74 @@ Namespace Mkm.Wpf.Controls
         Private Sub Surligner(indice As Integer)
             _liste.SelectedIndex = indice
             _liste.ScrollIntoView(_liste.SelectedItem)
+            ' La suggestion surlignée est annoncée (aria-activedescendant de mkm) : le clavier reste au champ.
+            Dim conteneur = TryCast(_liste.ItemContainerGenerator.ContainerFromIndex(indice), UIElement)
+            If conteneur IsNot Nothing AndAlso AutomationPeer.ListenerExists(AutomationEvents.SelectionItemPatternOnElementSelected) Then
+                UIElementAutomationPeer.CreatePeerForElement(conteneur)?.RaiseAutomationEvent(AutomationEvents.SelectionItemPatternOnElementSelected)
+            End If
         End Sub
+
+        ''' <summary>Une liste déroulante pour les lecteurs d'écran (role="combobox" de mkm) : sa valeur, et elle se déplie.</summary>
+        Protected Overrides Function OnCreateAutomationPeer() As AutomationPeer
+            Return New PairDAutoComplete(Me)
+        End Function
+
+        Friend Sub Deplier()
+            If IsDropDownOpen Then Return
+            Focus()
+            Demander(If(Dropdown, String.Empty, Text))
+        End Sub
+
+        Private NotInheritable Class PairDAutoComplete
+            Inherits TextBoxAutomationPeer
+            Implements IExpandCollapseProvider
+
+            Public Sub New(champ As AutoComplete)
+                MyBase.New(champ)
+            End Sub
+
+            Private ReadOnly Property Champ As AutoComplete
+                Get
+                    Return DirectCast(Owner, AutoComplete)
+                End Get
+            End Property
+
+            Protected Overrides Function GetAutomationControlTypeCore() As AutomationControlType
+                Return AutomationControlType.ComboBox
+            End Function
+
+            Protected Overrides Function GetClassNameCore() As String
+                Return NameOf(AutoComplete)
+            End Function
+
+            Protected Overrides Function GetNameCore() As String
+                Return Nommer(MyBase.GetNameCore(), Champ.Placeholder)
+            End Function
+
+            Protected Overrides Function GetItemStatusCore() As String
+                Return EtatDuChamp(Owner, MyBase.GetItemStatusCore())
+            End Function
+
+            Public Overrides Function GetPattern(patternInterface As PatternInterface) As Object
+                If patternInterface = PatternInterface.ExpandCollapse Then Return Me
+                Return MyBase.GetPattern(patternInterface)
+            End Function
+
+            Public ReadOnly Property ExpandCollapseState As ExpandCollapseState Implements IExpandCollapseProvider.ExpandCollapseState
+                Get
+                    Return If(Champ.IsDropDownOpen, ExpandCollapseState.Expanded, ExpandCollapseState.Collapsed)
+                End Get
+            End Property
+
+            Public Sub Expand() Implements IExpandCollapseProvider.Expand
+                Champ.Deplier()
+            End Sub
+
+            Public Sub Collapse() Implements IExpandCollapseProvider.Collapse
+                Champ.SetCurrentValue(IsDropDownOpenProperty, False)
+            End Sub
+
+        End Class
 
         ''' <inheritdoc/>
         Protected Overrides Sub OnLostKeyboardFocus(e As KeyboardFocusChangedEventArgs)

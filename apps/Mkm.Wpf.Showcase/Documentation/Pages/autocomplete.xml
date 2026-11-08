@@ -45,8 +45,9 @@ End Sub
 
   <section titre="Accessibilité">
     <h3>Lecteur d'écran</h3>
-    <p>Le champ est une <lien page="inputtext">InputText</lien> : Narrateur le dit « modifier », nommé par son libellé,
-      sinon par son texte d'aide. Les suggestions sont une liste à part, que le clavier parcourt sans quitter le champ.</p>
+    <p>Le champ est une liste déroulante modifiable (role="combobox" de mkm) : Narrateur la dit « zone de liste
+      déroulante », nommée par son libellé, sinon par son texte d'aide, « développée » ou « réduite ». Les suggestions sont
+      une liste à part, que le clavier parcourt sans quitter le champ ; la suggestion surlignée est annoncée.</p>
     <h3>Clavier</h3>
     <touches>
       <touche nom="Flèche bas">Surligne la suggestion suivante.</touche>

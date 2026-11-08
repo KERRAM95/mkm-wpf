@@ -48,6 +48,17 @@ Namespace Mkm.Wpf.Tests.Controls
             Assert.That(champ.Padding.Left, [Is].EqualTo(2))
         End Sub
 
+        <Test>
+        Public Sub AutoComplete_UneListeDeroulantePourLesLecteursDEcran()
+            Dim champ = Pret(New AutoComplete With {.Placeholder = "Référence"})
+            Dim pair = UIElementAutomationPeer.CreatePeerForElement(champ)
+            Assert.That(pair.GetAutomationControlType(), [Is].EqualTo(AutomationControlType.ComboBox), "role combobox de mkm")
+            Assert.That(pair.GetName(), [Is].EqualTo("Référence"))
+            Dim depli = DirectCast(pair.GetPattern(PatternInterface.ExpandCollapse), IExpandCollapseProvider)
+            Assert.That(depli.ExpandCollapseState, [Is].EqualTo(System.Windows.Automation.ExpandCollapseState.Collapsed))
+            Assert.That(pair.GetPattern(PatternInterface.Value), [Is].Not.Null, "sa valeur, le texte")
+        End Sub
+
         ' ---- InputGroup ----
 
         <Test>

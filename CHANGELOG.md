@@ -314,6 +314,9 @@ Les évolutions notables de mkm-wpf, version par version. Le format suit
   - TreeGrid : chaque ligne dit aux lecteurs d'écran sa place parmi ses
     sœurs, son niveau et, si elle a des enfants, si elle est dépliée ; Début
     et Fin vont à la première et à la dernière ligne, comme mkm.
+  - AutoComplete : une liste déroulante pour les lecteurs d'écran (le
+    combobox de mkm), développée ou réduite ; la suggestion surlignée est
+    annoncée.
   - InputOtp, ColorPicker, Terminal, Password : la langue n'est suivie que
     tant que le contrôle est chargé (l'abonnement à vie le gardait en
     mémoire).
