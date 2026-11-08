@@ -199,6 +199,7 @@ Les évolutions notables de mkm-wpf, version par version. Le format suit
   scénarios. La priorité 3 est faite.
 - PickList : un double clic rend la souris avant de faire passer l'élément
   (le clic suivant se perdait).
+- Galleria : une vignette pâlie s'éclaire sous la souris, comme mkm.
 - OrganizationChart : le bouton qui replie un nœud passe au-dessus du trait
   qui descend vers les enfants (le trait le barrait et prenait son clic).
 - PickList : ses deux listes ont toujours la même largeur, même quand elle

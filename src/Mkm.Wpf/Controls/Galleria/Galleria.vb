@@ -336,12 +336,12 @@ Namespace Mkm.Wpf.Controls
             End If
         End Sub
 
-        ' La vignette montrée, entière ; les autres, pâlies, comme mkm.
-        Private Sub MarquerLesVignettes()
+        ' La vignette montrée, entière ; les autres, pâlies, comme mkm (et entières sous la souris).
+        Friend Sub MarquerLesVignettes()
             If _vignettes Is Nothing Then Return
             For i = 0 To _vignettes.Items.Count - 1
                 Dim conteneur = TryCast(_vignettes.ItemContainerGenerator.ContainerFromIndex(i), UIElement)
-                If conteneur IsNot Nothing Then conteneur.Opacity = If(i = ActiveIndex, 1.0, 0.5)
+                If conteneur IsNot Nothing Then conteneur.Opacity = If(i = ActiveIndex OrElse conteneur.IsMouseOver, 1.0, 0.5)
             Next
         End Sub
 
@@ -425,6 +425,25 @@ Namespace Mkm.Wpf.Controls
         Shared Sub New()
             DefaultStyleKeyProperty.OverrideMetadata(GetType(BoutonDeVignette), New FrameworkPropertyMetadata(GetType(BoutonDeVignette)))
         End Sub
+
+        ' Sous la souris, la vignette s'éclaire ; en partant, elle reprend sa marque.
+        Protected Overrides Sub OnMouseEnter(e As MouseEventArgs)
+            MyBase.OnMouseEnter(e)
+            Galerie(Me)?.MarquerLesVignettes()
+        End Sub
+
+        Protected Overrides Sub OnMouseLeave(e As MouseEventArgs)
+            MyBase.OnMouseLeave(e)
+            Galerie(Me)?.MarquerLesVignettes()
+        End Sub
+
+        Private Shared Function Galerie(element As DependencyObject) As Galleria
+            Dim parent = element
+            While parent IsNot Nothing AndAlso TypeOf parent IsNot Galleria
+                parent = Media.VisualTreeHelper.GetParent(parent)
+            End While
+            Return TryCast(parent, Galleria)
+        End Function
 
         ''' <summary>Un bouton qui se dit sélectionné quand son élément est montré.</summary>
         Protected Overrides Function OnCreateAutomationPeer() As AutomationPeer
