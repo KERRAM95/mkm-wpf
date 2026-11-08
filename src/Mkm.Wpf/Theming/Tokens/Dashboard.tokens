@@ -884,6 +884,23 @@ card.title.font.size = 15px
 card.title.font.weight = 500
 card.subtitle.color = {text.muted.color}
 
+# carousel
+carousel.transition.duration = {transition.duration}
+carousel.content.gap = 3px
+carousel.indicator.list.padding = 12px
+carousel.indicator.list.gap = 6px
+carousel.indicator.width = 24px
+carousel.indicator.height = 6px
+carousel.indicator.border.radius = {content.border.radius}
+carousel.indicator.focus.ring.width = {focus.ring.width}
+carousel.indicator.focus.ring.style = {focus.ring.style}
+carousel.indicator.focus.ring.color = {focus.ring.color}
+carousel.indicator.focus.ring.offset = {focus.ring.offset}
+carousel.indicator.focus.ring.shadow = {focus.ring.shadow}
+carousel.indicator.background = {surface.300}
+carousel.indicator.hover.background = {surface.400}
+carousel.indicator.active.background = {primary.color}
+
 # cascadeselect
 cascadeselect.background = {form.field.background}
 cascadeselect.disabled.background = {form.field.disabled.background}
@@ -1403,6 +1420,73 @@ floatlabel.in.active.top = {form.field.padding.y}
 floatlabel.on.border.radius = {border.radius.xs}
 floatlabel.on.active.background = {form.field.background}
 floatlabel.on.active.padding = 0 1.5px
+
+# galleria
+galleria.border.width = 1px
+galleria.border.color = {content.border.color}
+galleria.border.radius = {content.border.radius}
+galleria.transition.duration = {transition.duration}
+galleria.nav.button.background = rgba(255, 255, 255, 0.1)
+galleria.nav.button.hover.background = rgba(255, 255, 255, 0.2)
+galleria.nav.button.color = {surface.100}
+galleria.nav.button.hover.color = {surface.0}
+galleria.nav.button.size = 36px
+galleria.nav.button.gutter = 6px
+galleria.nav.button.prev.border.radius = 50%
+galleria.nav.button.next.border.radius = 50%
+galleria.nav.button.focus.ring.width = {focus.ring.width}
+galleria.nav.button.focus.ring.style = {focus.ring.style}
+galleria.nav.button.focus.ring.color = {focus.ring.color}
+galleria.nav.button.focus.ring.offset = {focus.ring.offset}
+galleria.nav.button.focus.ring.shadow = {focus.ring.shadow}
+galleria.nav.icon.size = 18px
+galleria.thumbnails.content.background = {content.background}
+galleria.thumbnails.content.padding = 12px 3px
+galleria.thumbnail.nav.button.size = 24px
+galleria.thumbnail.nav.button.border.radius = {content.border.radius}
+galleria.thumbnail.nav.button.gutter = 6px
+galleria.thumbnail.nav.button.focus.ring.width = {focus.ring.width}
+galleria.thumbnail.nav.button.focus.ring.style = {focus.ring.style}
+galleria.thumbnail.nav.button.focus.ring.color = {focus.ring.color}
+galleria.thumbnail.nav.button.focus.ring.offset = {focus.ring.offset}
+galleria.thumbnail.nav.button.focus.ring.shadow = {focus.ring.shadow}
+galleria.thumbnail.nav.button.hover.background = {surface.200}
+galleria.thumbnail.nav.button.color = {text.color}
+galleria.thumbnail.nav.button.hover.color = {text.hover.color}
+galleria.thumbnail.nav.button.icon.size = 12px
+galleria.caption.background = rgba(0, 0, 0, 0.5)
+galleria.caption.color = {surface.100}
+galleria.caption.padding = 12px
+galleria.indicator.list.gap = 6px
+galleria.indicator.list.padding = 12px
+galleria.indicator.button.width = 12px
+galleria.indicator.button.height = 12px
+galleria.indicator.button.active.background = {primary.color}
+galleria.indicator.button.border.radius = 50%
+galleria.indicator.button.focus.ring.width = {focus.ring.width}
+galleria.indicator.button.focus.ring.style = {focus.ring.style}
+galleria.indicator.button.focus.ring.color = {focus.ring.color}
+galleria.indicator.button.focus.ring.offset = {focus.ring.offset}
+galleria.indicator.button.focus.ring.shadow = {focus.ring.shadow}
+galleria.indicator.button.background = {surface.300}
+galleria.indicator.button.hover.background = {surface.400}
+galleria.inset.indicator.list.background = rgba(0, 0, 0, 0.5)
+galleria.inset.indicator.button.background = rgba(255, 255, 255, 0.4)
+galleria.inset.indicator.button.hover.background = rgba(255, 255, 255, 0.6)
+galleria.inset.indicator.button.active.background = rgba(255, 255, 255, 0.9)
+galleria.close.button.size = 36px
+galleria.close.button.gutter = 6px
+galleria.close.button.background = rgba(255, 255, 255, 0.1)
+galleria.close.button.hover.background = rgba(255, 255, 255, 0.2)
+galleria.close.button.color = {surface.50}
+galleria.close.button.hover.color = {surface.0}
+galleria.close.button.border.radius = 50%
+galleria.close.button.focus.ring.width = {focus.ring.width}
+galleria.close.button.focus.ring.style = {focus.ring.style}
+galleria.close.button.focus.ring.color = {focus.ring.color}
+galleria.close.button.focus.ring.offset = {focus.ring.offset}
+galleria.close.button.focus.ring.shadow = {focus.ring.shadow}
+galleria.close.button.icon.size = 18px
 
 # iconfield
 iconfield.icon.color = {form.field.icon.color}
@@ -2427,6 +2511,16 @@ tag.danger.background = color-mix(in srgb, {status.danger} 70%, #000)
 tag.danger.color = #ffffff
 tag.contrast.background = {surface.700}
 tag.contrast.color = {surface.0}
+
+# terminal
+terminal.background = {form.field.background}
+terminal.border.color = {form.field.border.color}
+terminal.color = {form.field.color}
+terminal.height = 216px
+terminal.padding = {form.field.padding.y} {form.field.padding.x}
+terminal.border.radius = {form.field.border.radius}
+terminal.prompt.gap = 3px
+terminal.command.response.margin = 2px 0
 
 # textarea
 textarea.background = {form.field.background}

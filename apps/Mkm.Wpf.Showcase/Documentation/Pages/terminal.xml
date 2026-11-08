@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="utf-8"?>
+<page titre="Terminal" categorie="Divers" types="Terminal TerminalEntry TerminalCommandEventArgs" jetons="terminal">
+  <resume>Un terminal : une invite où taper une commande ; Entrée l'envoie, et sa réponse s'écrit dessous.</resume>
+
+  <section titre="Import">
+    <code><![CDATA[
+<Window xmlns:mkm="urn:mkm-wpf">
+    <mkm:Terminal WelcomeMessage="Bienvenue" Prompt="hscart $" />
+</Window>
+]]></code>
+  </section>
+
+  <section titre="Basique">
+    <p><c>WelcomeMessage</c> s'écrit en tête, <c>Prompt</c> devant chaque commande. Entrée envoie la commande :
+      <c>CommandEntered</c> la donne, et sa réponse se pose dans <c>e.Response</c> ; une réponse qui vient plus tard passe
+      par <c>Respond</c>. <c>Entries</c> garde l'historique, <c>Clear</c> le vide. Tapez « aide ».</p>
+    <exemple comportement="TerminalCommandes"><![CDATA[
+<mkm:Terminal x:Name="Console" WelcomeMessage="Bienvenue dans le terminal de HS CART. Tapez « aide »." Prompt="hscart $"
+              Width="520" HorizontalAlignment="Left" />
+]]></exemple>
+  </section>
+
+  <section titre="Accessibilité">
+    <h3>Lecteur d'écran</h3>
+    <p>Narrateur dit le terminal « groupe », son historique, puis la saisie, « modifier », nommée « Commande » (ou par
+      <c>AutomationProperties.Name</c>).</p>
+    <h3>Clavier</h3>
+    <touches>
+      <touche nom="Entrée">Envoie la commande.</touche>
+    </touches>
+  </section>
+</page>

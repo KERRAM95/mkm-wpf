@@ -225,12 +225,18 @@ Namespace Mkm.Wpf.Controls
             End Select
         End Sub
 
-        ' Un double clic sur un élément le fait passer de l'autre côté, comme mkm.
+        ' Un double clic sur un élément le fait passer de l'autre côté, comme mkm. La liste tient la souris pendant le clic
+        ' (le choix au glisser) : elle la rend, et l'élément passe une fois le clic fini, sinon le clic suivant se perdrait.
         Private Sub Liste_MouseDoubleClick(sender As Object, e As MouseButtonEventArgs)
             Dim element = ItemsControl.ContainerFromElement(DirectCast(sender, OrderList).Liste, TryCast(e.OriginalSource, DependencyObject))
             If element Is Nothing Then Return
-            If sender Is _source Then MoveToTarget() Else MoveToSource()
             e.Handled = True
+            Mouse.Capture(Nothing)
+            Dim versLaCible = sender Is _source
+            Dispatcher.BeginInvoke(Threading.DispatcherPriority.Input, New System.Action(
+                Sub()
+                    If versLaCible Then MoveToTarget() Else MoveToSource()
+                End Sub))
         End Sub
 
         ''' <summary>Fait passer les éléments choisis de la source à la cible.</summary>

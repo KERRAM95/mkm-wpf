@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="utf-8"?>
+<page titre="Carousel" categorie="Divers" types="Carousel CarouselPage" jetons="carousel">
+  <resume>Un carrousel : ses éléments page par page, quelques-uns à la fois ; des flèches pour passer à la page voisine,
+    des indicateurs pour aller à une page.</resume>
+
+  <section titre="Import">
+    <code><![CDATA[
+<Window xmlns:mkm="urn:mkm-wpf">
+    <mkm:Carousel ItemsSource="{Binding Pieces}" NumVisible="3" />
+</Window>
+]]></code>
+  </section>
+
+  <section titre="Basique">
+    <p><c>NumVisible</c> éléments à la fois, <c>NumScroll</c> par page ; <c>Page</c> est la page montrée. Les éléments
+      sont ceux du carrousel, ou ceux d'<c>ItemsSource</c> par <c>ItemTemplate</c>.</p>
+    <exemple><![CDATA[
+<mkm:Carousel x:Name="Pieces" NumVisible="3" AutomationProperties.Name="Pièces du mois">
+    <Border BorderBrush="#E5E7EB" BorderThickness="1" CornerRadius="4" Margin="4" Padding="16">
+        <StackPanel><TextBlock Text="Bride" FontWeight="SemiBold" /><TextBlock Text="HS-00041" /></StackPanel>
+    </Border>
+    <Border BorderBrush="#E5E7EB" BorderThickness="1" CornerRadius="4" Margin="4" Padding="16">
+        <StackPanel><TextBlock Text="Arbre" FontWeight="SemiBold" /><TextBlock Text="HS-00042" /></StackPanel>
+    </Border>
+    <Border BorderBrush="#E5E7EB" BorderThickness="1" CornerRadius="4" Margin="4" Padding="16">
+        <StackPanel><TextBlock Text="Palier" FontWeight="SemiBold" /><TextBlock Text="HS-00043" /></StackPanel>
+    </Border>
+    <Border BorderBrush="#E5E7EB" BorderThickness="1" CornerRadius="4" Margin="4" Padding="16">
+        <StackPanel><TextBlock Text="Carter" FontWeight="SemiBold" /><TextBlock Text="HS-00044" /></StackPanel>
+    </Border>
+    <Border BorderBrush="#E5E7EB" BorderThickness="1" CornerRadius="4" Margin="4" Padding="16">
+        <StackPanel><TextBlock Text="Pignon" FontWeight="SemiBold" /><TextBlock Text="HS-00045" /></StackPanel>
+    </Border>
+</mkm:Carousel>
+]]></exemple>
+  </section>
+
+  <section titre="Qui tourne">
+    <p><c>Circular</c> revient au début après la dernière page ; <c>AutoplayInterval</c> (en millisecondes) le fait
+      tourner seul, sauf sous la souris.</p>
+    <exemple><![CDATA[
+<mkm:Carousel NumVisible="2" Circular="True" AutoplayInterval="3000">
+    <Border Background="#DBEAFE" Margin="4" Padding="24"><TextBlock Text="Plans" HorizontalAlignment="Center" /></Border>
+    <Border Background="#DCFCE7" Margin="4" Padding="24"><TextBlock Text="Pièces" HorizontalAlignment="Center" /></Border>
+    <Border Background="#FEF3C7" Margin="4" Padding="24"><TextBlock Text="Assemblages" HorizontalAlignment="Center" /></Border>
+    <Border Background="#F3E8FF" Margin="4" Padding="24"><TextBlock Text="Notices" HorizontalAlignment="Center" /></Border>
+</mkm:Carousel>
+]]></exemple>
+  </section>
+
+  <section titre="Accessibilité">
+    <h3>Lecteur d'écran</h3>
+    <p>Narrateur dit le carrousel « groupe », nommé par <c>AutomationProperties.Name</c> ; ses flèches « Page précédente »
+      et « Page suivante » ; ses indicateurs « Page 1 », « Page 2 »…</p>
+    <h3>Clavier</h3>
+    <touches>
+      <touche nom="Tab">Passe des flèches aux éléments, puis aux indicateurs.</touche>
+      <touche nom="Entrée">Sur une flèche ou un indicateur, change de page.</touche>
+    </touches>
+  </section>
+</page>

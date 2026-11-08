@@ -489,3 +489,13 @@ metergroup.meters.vertical.margin = 0 {metergroup.gap} 0 0
 # chevron.
 organizationchart.node.toggle.button.margin = 0 0 -9px 0
 organizationchart.node.toggle.icon.size = 10px
+
+# carousel : l'anneau d'un indicateur en épaisseur.
+carousel.indicator.ring.border.width = {carousel.indicator.focus.ring.width} {carousel.indicator.focus.ring.width}
+
+# galleria : la bordure du cadre en épaisseur ; les flèches à nav.button.gutter des bords.
+galleria.all.border.width = {galleria.border.width} {galleria.border.width}
+galleria.nav.button.margin = 0 {galleria.nav.button.gutter} 0 {galleria.nav.button.gutter}
+
+# terminal : l'invite de la saisie à prompt.gap de la saisie.
+terminal.prompt.margin = 0 {terminal.prompt.gap} 0 0

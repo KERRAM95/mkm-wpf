@@ -13,13 +13,14 @@
         <ResourceDictionary Source="/Mkm.Wpf;component/Controls/ActionBar/ActionBar.xaml" />
         <ResourceDictionary Source="/Mkm.Wpf;component/Controls/AutoComplete/AutoComplete.xaml" />
         <ResourceDictionary Source="/Mkm.Wpf;component/Controls/Avatar/Avatar.xaml" />
-        <ResourceDictionary Source="/Mkm.Wpf;component/Controls/Badge/Badge.xaml" />
         <ResourceDictionary Source="/Mkm.Wpf;component/Controls/Badge/OverlayBadge.xaml" />
+        <ResourceDictionary Source="/Mkm.Wpf;component/Controls/Badge/Badge.xaml" />
         <ResourceDictionary Source="/Mkm.Wpf;component/Controls/BlockUI/BlockUI.xaml" />
         <ResourceDictionary Source="/Mkm.Wpf;component/Controls/Breadcrumb/Breadcrumb.xaml" />
         <ResourceDictionary Source="/Mkm.Wpf;component/Controls/Button/Button.xaml" />
         <ResourceDictionary Source="/Mkm.Wpf;component/Controls/ButtonGroup/ButtonGroup.xaml" />
         <ResourceDictionary Source="/Mkm.Wpf;component/Controls/Card/Card.xaml" />
+        <ResourceDictionary Source="/Mkm.Wpf;component/Controls/Carousel/Carousel.xaml" />
         <ResourceDictionary Source="/Mkm.Wpf;component/Controls/CascadeSelect/CascadeSelect.xaml" />
         <ResourceDictionary Source="/Mkm.Wpf;component/Controls/Checkbox/Checkbox.xaml" />
         <ResourceDictionary Source="/Mkm.Wpf;component/Controls/Chip/Chip.xaml" />
@@ -34,6 +35,7 @@
         <ResourceDictionary Source="/Mkm.Wpf;component/Controls/EmptyContent/EmptyContent.xaml" />
         <ResourceDictionary Source="/Mkm.Wpf;component/Controls/Fieldset/Fieldset.xaml" />
         <ResourceDictionary Source="/Mkm.Wpf;component/Controls/FloatLabel/FloatLabel.xaml" />
+        <ResourceDictionary Source="/Mkm.Wpf;component/Controls/Galleria/Galleria.xaml" />
         <ResourceDictionary Source="/Mkm.Wpf;component/Controls/IconField/IconField.xaml" />
         <ResourceDictionary Source="/Mkm.Wpf;component/Controls/IdCard/IdCard.xaml" />
         <ResourceDictionary Source="/Mkm.Wpf;component/Controls/Image/Image.xaml" />
@@ -77,6 +79,7 @@
         <ResourceDictionary Source="/Mkm.Wpf;component/Controls/Stepper/Stepper.xaml" />
         <ResourceDictionary Source="/Mkm.Wpf;component/Controls/Tabs/Tabs.xaml" />
         <ResourceDictionary Source="/Mkm.Wpf;component/Controls/Tag/Tag.xaml" />
+        <ResourceDictionary Source="/Mkm.Wpf;component/Controls/Terminal/Terminal.xaml" />
         <ResourceDictionary Source="/Mkm.Wpf;component/Controls/Textarea/Textarea.xaml" />
         <ResourceDictionary Source="/Mkm.Wpf;component/Controls/Timeline/Timeline.xaml" />
         <ResourceDictionary Source="/Mkm.Wpf;component/Controls/Toast/Toast.xaml" />

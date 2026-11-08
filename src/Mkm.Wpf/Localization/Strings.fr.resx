@@ -201,4 +201,7 @@
   <data name="aria.moveAllToSource" xml:space="preserve">
     <value>Tout vers la source</value>
   </data>
+  <data name="aria.terminalCommand" xml:space="preserve">
+    <value>Commande</value>
+  </data>
 </root>

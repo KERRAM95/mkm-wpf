@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="utf-8"?>
+<page titre="Galleria" categorie="Divers" types="Galleria" jetons="galleria">
+  <resume>Une galerie : une image en grand, et dessous ses vignettes, qui défilent ; un clic sur une vignette la
+    montre.</resume>
+
+  <section titre="Import">
+    <code><![CDATA[
+<Window xmlns:mkm="urn:mkm-wpf">
+    <mkm:Galleria ItemsSource="{Binding Photos}" />
+</Window>
+]]></code>
+  </section>
+
+  <section titre="Basique">
+    <p><c>ItemsSource</c> donne les éléments ; <c>ItemTemplate</c> montre l'élément en grand, <c>ThumbnailTemplate</c> une
+      vignette ; <c>ActiveIndex</c> est le rang montré, <c>NumVisible</c> le nombre de vignettes.</p>
+    <exemple comportement="GalleriaPhotos"><![CDATA[
+<mkm:Galleria x:Name="Photos" NumVisible="3" Width="520" HorizontalAlignment="Left"
+              AutomationProperties.Name="Photos du site">
+    <mkm:Galleria.ItemTemplate>
+        <DataTemplate>
+            <Image Source="{Binding Source}" Height="280" Stretch="UniformToFill" />
+        </DataTemplate>
+    </mkm:Galleria.ItemTemplate>
+    <mkm:Galleria.ThumbnailTemplate>
+        <DataTemplate>
+            <Image Source="{Binding Source}" Height="60" Stretch="UniformToFill" Margin="2" />
+        </DataTemplate>
+    </mkm:Galleria.ThumbnailTemplate>
+</mkm:Galleria>
+]]></exemple>
+  </section>
+
+  <section titre="Flèches, indicateurs, légende">
+    <p><c>ShowItemNavigators</c> pose des flèches sur l'image ; <c>ShowIndicators</c>, un indicateur par élément ;
+      <c>CaptionTemplate</c>, une légende en bas de l'image ; <c>ShowThumbnails="False"</c> retire les vignettes.
+      <c>Circular</c> revient au début, <c>AutoPlay</c> passe seul à la suivante (<c>TransitionInterval</c>).</p>
+    <exemple comportement="GalleriaPhotos"><![CDATA[
+<mkm:Galleria x:Name="Diaporama" ShowThumbnails="False" ShowItemNavigators="True" ShowIndicators="True" Circular="True"
+              Width="520" HorizontalAlignment="Left">
+    <mkm:Galleria.ItemTemplate>
+        <DataTemplate>
+            <Image Source="{Binding Source}" Height="280" Stretch="UniformToFill" />
+        </DataTemplate>
+    </mkm:Galleria.ItemTemplate>
+    <mkm:Galleria.CaptionTemplate>
+        <DataTemplate>
+            <TextBlock Text="{Binding Titre}" FontWeight="SemiBold" />
+        </DataTemplate>
+    </mkm:Galleria.CaptionTemplate>
+</mkm:Galleria>
+]]></exemple>
+  </section>
+
+  <section titre="Accessibilité">
+    <h3>Lecteur d'écran</h3>
+    <p>Narrateur dit la galerie « groupe », nommée par <c>AutomationProperties.Name</c> ; chaque vignette, un bouton nommé
+      par son élément ; les flèches « Page précédente » et « Page suivante ».</p>
+    <h3>Clavier</h3>
+    <touches>
+      <touche nom="Tab">Passe d'une vignette à l'autre.</touche>
+      <touche nom="Entrée">Sur une vignette, la montre.</touche>
+      <touche nom="Flèche gauche">Dans la galerie (hors des vignettes), l'élément précédent.</touche>
+      <touche nom="Flèche droite">L'élément suivant.</touche>
+    </touches>
+  </section>
+</page>

@@ -1,0 +1,181 @@
+<!--
+    Le style de Galleria, sur la galerie de mkm (styles/galleria ; jetons de Nora en pixels, dans les deux thèmes) : un
+    cadre bordé, aux coins du thème ; l'élément montré ; sur lui, au besoin, les flèches (des ronds translucides de
+    36 px, leur chevron de 18 px, à 6 px du bord) et, en bas, la légende sur un voile noir à 50 % ; dessous, les
+    indicateurs (des ronds de 12 px, gris, de la couleur du thème pour l'élément montré) ; puis, sur le fond du
+    contenu, les vignettes, qui défilent (un carrousel), la vignette montrée entière, les autres pâlies.
+-->
+<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+                    xmlns:local="clr-namespace:Mkm.Wpf.Controls"
+                    xmlns:loc="clr-namespace:Mkm.Wpf.Localization">
+
+    <Style TargetType="{x:Type local:BoutonDeVignette}">
+        <Setter Property="Cursor" Value="Hand" />
+        <Setter Property="FocusVisualStyle" Value="{x:Null}" />
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="{x:Type local:BoutonDeVignette}">
+                    <Grid Background="Transparent">
+                        <ContentPresenter />
+                        <Rectangle x:Name="Anneau" Visibility="Collapsed" IsHitTestVisible="False"
+                                   Stroke="{DynamicResource mkm.galleria.thumbnail.nav.button.focus.ring.color}"
+                                   StrokeThickness="{DynamicResource mkm.galleria.thumbnail.nav.button.focus.ring.width}" />
+                    </Grid>
+                    <ControlTemplate.Triggers>
+                        <Trigger Property="local:FocusVisible.IsVisible" Value="True">
+                            <Setter TargetName="Anneau" Property="Visibility" Value="Visible" />
+                        </Trigger>
+                    </ControlTemplate.Triggers>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+
+    <!-- Une flèche sur l'élément montré : un rond translucide, son chevron. -->
+    <Style x:Key="mkm.Galleria.Fleche" TargetType="{x:Type Button}">
+        <Setter Property="Cursor" Value="Hand" />
+        <Setter Property="FocusVisualStyle" Value="{x:Null}" />
+        <Setter Property="Width" Value="{DynamicResource mkm.galleria.nav.button.size}" />
+        <Setter Property="Height" Value="{DynamicResource mkm.galleria.nav.button.size}" />
+        <Setter Property="Margin" Value="{DynamicResource mkm.galleria.nav.button.margin}" />
+        <Setter Property="VerticalAlignment" Value="Center" />
+        <Setter Property="Background" Value="{DynamicResource mkm.galleria.nav.button.background}" />
+        <Setter Property="Foreground" Value="{DynamicResource mkm.galleria.nav.button.color}" />
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="{x:Type Button}">
+                    <Grid>
+                        <Ellipse Fill="{TemplateBinding Background}" />
+                        <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center" />
+                        <Ellipse x:Name="Anneau" Visibility="Collapsed" IsHitTestVisible="False"
+                                 Stroke="{DynamicResource mkm.galleria.nav.button.focus.ring.color}"
+                                 StrokeThickness="{DynamicResource mkm.galleria.nav.button.focus.ring.width}" />
+                    </Grid>
+                    <ControlTemplate.Triggers>
+                        <Trigger Property="IsMouseOver" Value="True">
+                            <Setter Property="Background" Value="{DynamicResource mkm.galleria.nav.button.hover.background}" />
+                            <Setter Property="Foreground" Value="{DynamicResource mkm.galleria.nav.button.hover.color}" />
+                        </Trigger>
+                        <Trigger Property="IsEnabled" Value="False">
+                            <Setter Property="Opacity" Value="{DynamicResource mkm.disabled.opacity}" />
+                        </Trigger>
+                        <Trigger Property="local:FocusVisible.IsVisible" Value="True">
+                            <Setter TargetName="Anneau" Property="Visibility" Value="Visible" />
+                        </Trigger>
+                    </ControlTemplate.Triggers>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+
+    <!-- Un indicateur : un rond. -->
+    <Style x:Key="mkm.Galleria.Indicateur" TargetType="{x:Type Button}">
+        <Setter Property="Cursor" Value="Hand" />
+        <Setter Property="FocusVisualStyle" Value="{x:Null}" />
+        <Setter Property="Width" Value="{DynamicResource mkm.galleria.indicator.button.width}" />
+        <Setter Property="Height" Value="{DynamicResource mkm.galleria.indicator.button.height}" />
+        <Setter Property="Background" Value="{DynamicResource mkm.galleria.indicator.button.background}" />
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="{x:Type Button}">
+                    <Grid>
+                        <Ellipse Fill="{TemplateBinding Background}" />
+                        <Ellipse x:Name="Anneau" Visibility="Collapsed" Margin="-2" IsHitTestVisible="False"
+                                 Stroke="{DynamicResource mkm.galleria.indicator.button.focus.ring.color}"
+                                 StrokeThickness="{DynamicResource mkm.galleria.indicator.button.focus.ring.width}" />
+                    </Grid>
+                    <ControlTemplate.Triggers>
+                        <Trigger Property="IsMouseOver" Value="True">
+                            <Setter Property="Background" Value="{DynamicResource mkm.galleria.indicator.button.hover.background}" />
+                        </Trigger>
+                        <DataTrigger Binding="{Binding IsActive}" Value="True">
+                            <Setter Property="Background" Value="{DynamicResource mkm.galleria.indicator.button.active.background}" />
+                        </DataTrigger>
+                        <Trigger Property="local:FocusVisible.IsVisible" Value="True">
+                            <Setter TargetName="Anneau" Property="Visibility" Value="Visible" />
+                        </Trigger>
+                    </ControlTemplate.Triggers>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+
+    <Style TargetType="{x:Type local:Galleria}">
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="{x:Type local:Galleria}">
+                    <Border BorderBrush="{DynamicResource mkm.galleria.border.color}" BorderThickness="{DynamicResource mkm.galleria.all.border.width}"
+                            CornerRadius="{DynamicResource mkm.galleria.border.radius}" ClipToBounds="True">
+                        <DockPanel>
+                            <Border x:Name="Vignettes" DockPanel.Dock="Bottom" Background="{DynamicResource mkm.galleria.thumbnails.content.background}"
+                                    Padding="{DynamicResource mkm.galleria.thumbnails.content.padding}">
+                                <local:Carousel x:Name="PART_Thumbnails" ItemsSource="{TemplateBinding ItemsSource}"
+                                                NumVisible="{TemplateBinding NumVisible}" ShowIndicators="False">
+                                    <local:Carousel.ItemTemplate>
+                                        <DataTemplate>
+                                            <local:BoutonDeVignette Content="{Binding}" AutomationProperties.Name="{Binding}"
+                                                                    ContentTemplate="{Binding ThumbnailTemplate, RelativeSource={RelativeSource AncestorType={x:Type local:Galleria}}}" />
+                                        </DataTemplate>
+                                    </local:Carousel.ItemTemplate>
+                                </local:Carousel>
+                            </Border>
+                            <ItemsControl x:Name="PART_Indicators" DockPanel.Dock="Bottom" Visibility="Collapsed" Focusable="False"
+                                          HorizontalAlignment="Center" ItemsSource="{TemplateBinding Positions}"
+                                          Margin="{DynamicResource mkm.galleria.indicator.list.padding}">
+                                <ItemsControl.ItemsPanel>
+                                    <ItemsPanelTemplate>
+                                        <local:GapStackPanel Orientation="Horizontal" Gap="{DynamicResource mkm.galleria.indicator.list.gap}" />
+                                    </ItemsPanelTemplate>
+                                </ItemsControl.ItemsPanel>
+                                <ItemsControl.ItemTemplate>
+                                    <DataTemplate>
+                                        <Button Style="{StaticResource mkm.Galleria.Indicateur}" AutomationProperties.Name="{Binding Label}" />
+                                    </DataTemplate>
+                                </ItemsControl.ItemTemplate>
+                            </ItemsControl>
+                            <Grid>
+                                <ContentPresenter Content="{TemplateBinding ActiveItem}" ContentTemplate="{TemplateBinding ItemTemplate}" />
+                                <Border x:Name="Legende" VerticalAlignment="Bottom" Visibility="Collapsed"
+                                        Background="{DynamicResource mkm.galleria.caption.background}"
+                                        Padding="{DynamicResource mkm.galleria.caption.padding}"
+                                        TextElement.Foreground="{DynamicResource mkm.galleria.caption.color}">
+                                    <ContentPresenter Content="{TemplateBinding ActiveItem}" ContentTemplate="{TemplateBinding CaptionTemplate}" />
+                                </Border>
+                                <Button x:Name="PART_Previous" Style="{StaticResource mkm.Galleria.Fleche}" HorizontalAlignment="Left" Visibility="Collapsed"
+                                        IsEnabled="{TemplateBinding CanGoPrevious}" AutomationProperties.Name="{loc:T aria.previousPage}">
+                                    <local:Icon Source="{x:Static local:InternalIcons.ChevronLeft}"
+                                                Width="{DynamicResource mkm.galleria.nav.icon.size}" Height="{DynamicResource mkm.galleria.nav.icon.size}" />
+                                </Button>
+                                <Button x:Name="PART_Next" Style="{StaticResource mkm.Galleria.Fleche}" HorizontalAlignment="Right" Visibility="Collapsed"
+                                        IsEnabled="{TemplateBinding CanGoNext}" AutomationProperties.Name="{loc:T aria.nextPage}">
+                                    <local:Icon Source="{x:Static local:InternalIcons.ChevronRight}"
+                                                Width="{DynamicResource mkm.galleria.nav.icon.size}" Height="{DynamicResource mkm.galleria.nav.icon.size}" />
+                                </Button>
+                            </Grid>
+                        </DockPanel>
+                    </Border>
+                    <ControlTemplate.Triggers>
+                        <Trigger Property="ShowThumbnails" Value="False">
+                            <Setter TargetName="Vignettes" Property="Visibility" Value="Collapsed" />
+                        </Trigger>
+                        <Trigger Property="ShowIndicators" Value="True">
+                            <Setter TargetName="PART_Indicators" Property="Visibility" Value="Visible" />
+                        </Trigger>
+                        <Trigger Property="ShowItemNavigators" Value="True">
+                            <Setter TargetName="PART_Previous" Property="Visibility" Value="Visible" />
+                            <Setter TargetName="PART_Next" Property="Visibility" Value="Visible" />
+                        </Trigger>
+                        <MultiTrigger>
+                            <MultiTrigger.Conditions>
+                                <Condition Property="HasCaption" Value="True" />
+                            </MultiTrigger.Conditions>
+                            <Setter TargetName="Legende" Property="Visibility" Value="Visible" />
+                        </MultiTrigger>
+                    </ControlTemplate.Triggers>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+
+</ResourceDictionary>

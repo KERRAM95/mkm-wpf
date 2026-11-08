@@ -91,6 +91,39 @@ Namespace Mkm.Wpf.UiTests
             AttendreQue(Function() valeur() = 99, "flèche gauche : un pas")
         End Sub
 
+        <Test>
+        Public Sub Carousel_LaFlecheEtLesIndicateursChangentDePage()
+            Dim page = OuvrirLaDoc("carousel")
+            Dim carrousel = Trouver("Pieces", page)
+            Dim suivante = TrouverParNom(T("aria.nextPage"), ControlType.Button, carrousel)
+            Cliquer(suivante)
+            Cliquer(suivante)
+            AttendreQue(Function() Not suivante.IsEnabled, "la dernière page : plus de page suivante")
+            Cliquer(TrouverParNom(T("aria.page", 1), ControlType.Button, carrousel))
+            AttendreQue(Function() Not TrouverParNom(T("aria.previousPage"), ControlType.Button, carrousel).IsEnabled, "l'indicateur ramène à la première")
+        End Sub
+
+        <Test>
+        Public Sub Galleria_UneVignetteSeMontre()
+            Dim page = OuvrirLaDoc("galleria")
+            Dim galerie = Trouver("Photos", page)
+            Dim canal = TrouverParNom("Le canal, la nuit", ControlType.Button, galerie)
+            Assert.That(canal.Patterns.SelectionItem.Pattern.IsSelected.Value, [Is].False)
+            Cliquer(canal)
+            AttendreQue(Function() canal.Patterns.SelectionItem.Pattern.IsSelected.Value, "la vignette cliquée est montrée")
+            Assert.That(TrouverParNom("L'île, au crépuscule", ControlType.Button, galerie).Patterns.SelectionItem.Pattern.IsSelected.Value, [Is].False)
+        End Sub
+
+        <Test>
+        Public Sub Terminal_UneCommandeRecoitSaReponse()
+            Dim page = OuvrirLaDoc("terminal")
+            Dim console = Trouver("Console", page)
+            Cliquer(TrouverParNom(T("aria.terminalCommand"), ControlType.Edit, console))
+            Ecrire("bonjour")
+            Taper(VirtualKeyShort.RETURN)
+            AttendreQue(Function() console.FindFirstDescendant(Function(cf) cf.ByName("Bonjour !")) IsNot Nothing, "« Bonjour ! »")
+        End Sub
+
     End Class
 
 End Namespace

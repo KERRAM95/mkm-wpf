@@ -42,7 +42,7 @@ Namespace Mkm.Wpf.Tests.Controls
             Assert.That(etapes, [Is].EqualTo({"A", "C", "B", "D"}))
             Assert.That(liste.SelectedItems.Cast(Of String)(), [Is].EqualTo({"C"}), "le choix suit l'élément")
             Choisir(liste, "A", "B").MoveDown()
-            Assert.That(etapes, [Is].EqualTo({"C", "A", "B", "D"}))
+            Assert.That(etapes, [Is].EqualTo({"C", "A", "D", "B"}), "chacun d'un rang")
             Choisir(liste, "C").MoveUp()
             Assert.That(reordonnee, [Is].EqualTo(2), "rien à monter : pas de Reorder")
         End Sub

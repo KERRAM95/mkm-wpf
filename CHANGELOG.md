@@ -192,6 +192,13 @@ Les évolutions notables de mkm-wpf, version par version. Le format suit
   ses nœuds qui se replient et se choisissent), `MeterGroup` et `MeterItem`
   (des parts dans une barre, et leur légende) ; leurs jetons, leurs pages,
   leurs tests et leurs scénarios.
+- Le lot 25 (`docs/composants/carrousel-galerie-et-terminal.md`) : `Carousel`
+  (des éléments page par page, flèches, indicateurs, lecture automatique),
+  `Galleria` (une image en grand et ses vignettes), `Terminal` (des commandes
+  et leurs réponses) ; leurs jetons, leurs pages, leurs tests et leurs
+  scénarios. La priorité 3 est faite.
+- PickList : un double clic rend la souris avant de faire passer l'élément
+  (le clic suivant se perdait).
 - Info-bulle et Popover : la page qui défile les referme, comme mkm.
 - Le zoom de toute l'interface (`docs/fondations/zoom.md`) :
   `MkmResources.Zoom` (80 à 200 %), `ZoomIn`, `ZoomOut`, `ResetZoom`,
