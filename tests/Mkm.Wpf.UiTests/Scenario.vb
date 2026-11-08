@@ -244,9 +244,9 @@ Namespace Mkm.Wpf.UiTests
         End Sub
 
         Private Shared Sub Defiler(element As AutomationElement)
-            ' Déjà sous la souris (un élément d'une liste ouverte, au-dessus de la page) : faire défiler la page fermerait
-            ' la liste, comme mkm.
-            If EstCliquable(element) Then Return
+            ' Un élément d'une liste ou d'un menu ouverts (une fenêtre flottante, au-dessus de la page) : faire défiler la
+            ' page fermerait la liste, comme mkm.
+            If EstDansUneFenetreFlottante(element) Then Return
             Dim defileur = AncetreQuiDefile(element)
             If defileur Is Nothing Then Return
             Dim defilement = defileur.Patterns.Scroll.Pattern
@@ -268,14 +268,16 @@ Namespace Mkm.Wpf.UiTests
             Next
         End Sub
 
-        ' Vrai quand le milieu de l'élément est à l'écran et que c'est bien lui (ou un de ses enfants) qui s'y trouve.
-        Private Shared Function EstCliquable(element As AutomationElement) As Boolean
+        ' Vrai quand ce qui est sous le milieu de l'élément appartient à une autre fenêtre que la principale (la liste
+        ' ouverte d'un Select, un menu) : on remonte jusqu'à la première fenêtre native.
+        Private Shared Function EstDansUneFenetreFlottante(element As AutomationElement) As Boolean
             If element.IsOffscreen Then Return False
             Dim touche = Vitrine.Automation.FromPoint(Centre(element))
-            Dim marcheur = Vitrine.Automation.TreeWalkerFactory.GetControlViewWalker()
-            For i = 1 To 20
+            Dim marcheur = Vitrine.Automation.TreeWalkerFactory.GetRawViewWalker()
+            For i = 1 To 60
                 If touche Is Nothing Then Return False
-                If touche.Equals(element) Then Return True
+                Dim fenetreNative = touche.Properties.NativeWindowHandle.ValueOrDefault
+                If fenetreNative <> IntPtr.Zero Then Return fenetreNative <> Fenetre.Properties.NativeWindowHandle.ValueOrDefault
                 touche = marcheur.GetParent(touche)
             Next
             Return False
