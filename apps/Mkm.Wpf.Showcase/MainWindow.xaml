@@ -24,24 +24,31 @@
                     <mkm:Button x:Name="BoutonPages" DockPanel.Dock="Left" Visibility="Collapsed" Margin="0,0,12,0"
                                 Icon="{x:Static mkm:Icons.Menu}" Variant="Text" Severity="Secondary"
                                 ToolTip="Pages de la documentation" Click="BoutonPages_Click" />
-                    <StackPanel x:Name="Reglages" DockPanel.Dock="Right" Orientation="Horizontal">
-                        <TextBlock Margin="0,0,8,0" VerticalAlignment="Center" Text="{mkm:T showcase.theme}" />
-                        <!-- Les thèmes connus ; en choisir un change toute l'apparence, à chaud. -->
-                        <ComboBox x:Name="ChoixDuTheme" MinWidth="120" Margin="0,0,16,0"
-                                  DisplayMemberPath="Name"
-                                  ItemsSource="{x:Static mkm:Themes.All}"
-                                  SelectionChanged="ChoixDuTheme_SelectionChanged" />
-                        <TextBlock Margin="0,0,8,0" VerticalAlignment="Center" Text="{mkm:T showcase.language}" />
-                        <!-- La langue des textes propres aux composants (« Modifier », « Fermer »…) et de la vitrine. -->
-                        <ComboBox MinWidth="140"
-                                  DisplayMemberPath="NativeName"
-                                  ItemsSource="{Binding Languages, Source={x:Static mkm:Localizer.Current}}"
-                                  SelectedItem="{Binding Language, Source={x:Static mkm:Localizer.Current}}" />
-                        <TextBlock Margin="16,0,8,0" VerticalAlignment="Center" Text="{mkm:T showcase.zoom}" />
-                        <!-- Le zoom de toute l'interface (MkmResources.Zoom) ; Ctrl +, Ctrl −, Ctrl + 0 le changent aussi. -->
-                        <ComboBox x:Name="ChoixDuZoom" MinWidth="80" AutomationProperties.Name="{mkm:T showcase.zoom}"
-                                  SelectionChanged="ChoixDuZoom_SelectionChanged" />
-                    </StackPanel>
+                    <!-- Chaque réglage avec son libellé : à l'étroit (un fort zoom), ils passent à la ligne ensemble. -->
+                    <WrapPanel x:Name="Reglages" DockPanel.Dock="Right" Orientation="Horizontal">
+                        <StackPanel Orientation="Horizontal" Margin="0,0,16,0">
+                            <TextBlock Margin="0,0,8,0" VerticalAlignment="Center" Text="{mkm:T showcase.theme}" />
+                            <!-- Les thèmes connus ; en choisir un change toute l'apparence, à chaud. -->
+                            <ComboBox x:Name="ChoixDuTheme" MinWidth="120"
+                                      DisplayMemberPath="Name"
+                                      ItemsSource="{x:Static mkm:Themes.All}"
+                                      SelectionChanged="ChoixDuTheme_SelectionChanged" />
+                        </StackPanel>
+                        <StackPanel Orientation="Horizontal" Margin="0,0,16,0">
+                            <TextBlock Margin="0,0,8,0" VerticalAlignment="Center" Text="{mkm:T showcase.language}" />
+                            <!-- La langue des textes propres aux composants (« Modifier », « Fermer »…) et de la vitrine. -->
+                            <ComboBox MinWidth="140"
+                                      DisplayMemberPath="NativeName"
+                                      ItemsSource="{Binding Languages, Source={x:Static mkm:Localizer.Current}}"
+                                      SelectedItem="{Binding Language, Source={x:Static mkm:Localizer.Current}}" />
+                        </StackPanel>
+                        <StackPanel Orientation="Horizontal">
+                            <TextBlock Margin="0,0,8,0" VerticalAlignment="Center" Text="{mkm:T showcase.zoom}" />
+                            <!-- Le zoom de toute l'interface (MkmResources.Zoom) ; Ctrl +, Ctrl −, Ctrl + 0 le changent aussi. -->
+                            <ComboBox x:Name="ChoixDuZoom" MinWidth="80" AutomationProperties.Name="{mkm:T showcase.zoom}"
+                                      SelectionChanged="ChoixDuZoom_SelectionChanged" />
+                        </StackPanel>
+                    </WrapPanel>
                     <DockPanel VerticalAlignment="Center">
                         <TextBlock DockPanel.Dock="Left" FontSize="18" FontWeight="Bold" Foreground="{DynamicResource mkm.primary.color}" Text="mkm-wpf" />
                         <TextBlock Margin="10,0,0,0" VerticalAlignment="Bottom" Foreground="{DynamicResource mkm.text.muted.color}"
