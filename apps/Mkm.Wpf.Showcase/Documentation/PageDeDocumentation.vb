@@ -73,7 +73,7 @@ Namespace Mkm.Wpf.Showcase.Documentation
                 _onglets.Items.Add(New Tab With {.Header = "API", .Content = OngletApi()})
                 _onglets.Items.Add(New Tab With {.Header = "Thème", .Content = OngletTheme()})
                 AddHandler _onglets.SelectionChanged, Sub(s, e)
-                                                          If e.OriginalSource Is _onglets AndAlso _sommaire IsNot Nothing Then AjusterLeSommaire()
+                                                          If e.OriginalSource Is _onglets Then AjusterLeSommaire()
                                                       End Sub
                 contenu.Children.Add(_onglets)
             End If
@@ -99,15 +99,24 @@ Namespace Mkm.Wpf.Showcase.Documentation
             grille.Children.Add(_defileur)
             Content = grille
             AddHandler Loaded, Sub() MarquerLaSection()
-            ' Une fenêtre étroite (un écran de portable) garde la place pour les exemples : le sommaire se retire.
-            AddHandler SizeChanged, Sub() AjusterLeSommaire()
         End Sub
 
         Private Const LargeurSansSommaire As Double = 860
+        Private _largeur As Double = Double.PositiveInfinity
+
+        ' Une fenêtre étroite (un écran de portable) garde la place pour les exemples : le sommaire se retire. Décidé
+        ' pendant la mesure, avant celle du contenu : décidé après, le contenu gardait la largeur qu'il avait avec lui.
+        Protected Overrides Function MeasureOverride(constraint As Size) As Size
+            _largeur = constraint.Width
+            AjusterLeSommaire()
+            Return MyBase.MeasureOverride(constraint)
+        End Function
 
         Private Sub AjusterLeSommaire()
+            If _sommaire Is Nothing Then Return
             Dim ongletDesFonctionnalites = _onglets Is Nothing OrElse _onglets.SelectedIndex = 0
-            _sommaire.Visibility = If(ActualWidth >= LargeurSansSommaire AndAlso ongletDesFonctionnalites, Visibility.Visible, Visibility.Collapsed)
+            Dim voulue = If(_largeur >= LargeurSansSommaire AndAlso ongletDesFonctionnalites, Visibility.Visible, Visibility.Collapsed)
+            If _sommaire.Visibility <> voulue Then _sommaire.Visibility = voulue
         End Sub
 
         ''' <summary>La page décrite.</summary>

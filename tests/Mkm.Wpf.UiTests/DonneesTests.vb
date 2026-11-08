@@ -41,16 +41,13 @@ Namespace Mkm.Wpf.UiTests
         End Sub
 
         <Test>
-        Public Sub DataTable_LeChargementPoseSonVoile()
+        Public Sub DataTable_LeChargementSeDitAuxLecteursDEcran()
             Dim page = OuvrirLaDoc("datatable")
             Dim chargement = Trouver("Chargement", page)
 
-            ' La commande est au-dessus du tableau : l'en-tête d'un DataTable n'est pas visible des lecteurs d'écran.
             Cliquer(Trouver("Charger", page))
-            Dim attente = TrouverParNom(T("aria.busy"), ControlType.ProgressBar, chargement)
-            AttendreQue(Function() attente.IsOffscreen OrElse
-                                   chargement.FindFirstDescendant(Function(cf) cf.ByName(T("aria.busy")).And(cf.ByControlType(ControlType.ProgressBar))) Is Nothing,
-                        "le voile levé après le chargement", TimeSpan.FromSeconds(8))
+            AttendreQue(Function() chargement.ItemStatus = T("aria.busy"), "« Chargement en cours », son état")
+            AttendreQue(Function() String.IsNullOrEmpty(chargement.ItemStatus), "chargé : plus d'état", TimeSpan.FromSeconds(8))
         End Sub
 
         <Test>

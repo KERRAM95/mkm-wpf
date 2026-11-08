@@ -74,7 +74,7 @@
                                 TextElement.FontWeight="{DynamicResource mkm.fieldset.legend.font.weight}">
                             <Grid>
                                 <ContentPresenter x:Name="Legende" ContentSource="Header" RecognizesAccessKey="True" />
-                                <ToggleButton x:Name="Bascule" Visibility="Collapsed" Style="{StaticResource MkmFieldsetBascule}"
+                                <local:FieldsetToggle x:Name="Bascule" Visibility="Collapsed" Style="{StaticResource MkmFieldsetBascule}"
                                               IsChecked="{Binding IsCollapsed, RelativeSource={RelativeSource TemplatedParent}, Mode=TwoWay}"
                                               AutomationProperties.Name="{Binding Header, RelativeSource={RelativeSource TemplatedParent}}">
                                     <StackPanel Orientation="Horizontal">
@@ -85,7 +85,7 @@
                                                           ContentTemplate="{Binding HeaderTemplate, RelativeSource={RelativeSource TemplatedParent}}"
                                                           VerticalAlignment="Center" RecognizesAccessKey="True" />
                                     </StackPanel>
-                                </ToggleButton>
+                                </local:FieldsetToggle>
                             </Grid>
                         </Border>
                         <Border Grid.Row="2"

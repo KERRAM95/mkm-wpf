@@ -73,8 +73,9 @@ Ceux de `TabControl` et de `GroupBox`. La légende repliable est un
 - Les onglets ne défilent pas quand ils débordent (les flèches de PrimeVue) :
   à ajouter quand un besoin viendra.
 - Le groupe se replie sans transition.
-- Sa bascule annonce aux lecteurs d'écran « cochée » quand il est replié (mkm
-  annonce « déplié » : `aria-expanded`).
+- ~~Sa bascule annonce aux lecteurs d'écran « cochée » quand il est replié~~ :
+  corrigé, sa légende se dit déplié ou réduit (ExpandCollapse), comme
+  `aria-expanded` dans mkm.
 
 ## La vitrine et les tests
 

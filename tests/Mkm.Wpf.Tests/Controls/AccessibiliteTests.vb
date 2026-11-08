@@ -151,6 +151,21 @@ Namespace Mkm.Wpf.Tests.Controls
             Assert.That(PairDe(carte).GetName(), [Is].EqualTo("Plan HS-00042"))
         End Sub
 
+        ' mkm dit la légende repliable « déplié » (aria-expanded) ; elle se disait « activée » quand le groupe était replié.
+        <Test>
+        Public Sub Fieldset_SaLegendeDitDeplieOuReplie()
+            Dim groupe As New Fieldset With {.Header = "Options", .Toggleable = True, .Content = New TextBlock With {.Text = "Contenu"}}
+            Pret(groupe)
+            Dim legende = Descendants(PairDe(groupe)).First(Function(p) p.GetName() = "Options" AndAlso p.GetAutomationControlType() = AutomationControlType.Button)
+            Dim depli = DirectCast(legende.GetPattern(PatternInterface.ExpandCollapse), System.Windows.Automation.Provider.IExpandCollapseProvider)
+
+            Assert.That(legende.GetPattern(PatternInterface.Toggle), [Is].Null, "plus une bascule")
+            Assert.That(depli.ExpandCollapseState, [Is].EqualTo(System.Windows.Automation.ExpandCollapseState.Expanded))
+            depli.Collapse()
+            Assert.That(groupe.IsCollapsed, [Is].True)
+            Assert.That(depli.ExpandCollapseState, [Is].EqualTo(System.Windows.Automation.ExpandCollapseState.Collapsed))
+        End Sub
+
         <Test>
         Public Sub InputNumber_EstUneToupieQuiDitSaValeur()
             Dim nombre As New InputNumber With {.Value = 3, .Minimum = 1, .Maximum = 10}

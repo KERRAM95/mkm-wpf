@@ -54,8 +54,8 @@
   <section titre="Accessibilité">
     <h3>Lecteur d'écran</h3>
     <p>Fieldset est un <c>GroupBox</c> de WPF : Narrateur le dit « groupe », nommé par sa légende. Repliable, sa
-      légende est un bouton bascule nommé comme elle ; il se dit « activé » quand le groupe est replié (mkm annonce
-      plutôt « déplié » : un écart connu).</p>
+      légende est un bouton nommé comme elle, qui se dit « développé » ou « réduit » selon l'état du groupe, comme
+      <c>aria-expanded</c> dans mkm ; un lecteur d'écran peut aussi le déplier ou le replier lui-même.</p>
     <h3>Clavier</h3>
     <touches>
       <touche nom="Tab">Amène le clavier sur la légende repliable, puis sur les champs du groupe.</touche>

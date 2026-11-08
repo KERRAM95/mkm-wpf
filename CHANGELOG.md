@@ -154,6 +154,11 @@ Les évolutions notables de mkm-wpf, version par version. Le format suit
 - TieredMenu : un élément choisi dans un étage referme les étages ouverts ; ils
   restaient ouverts (trouvé par les tests d'interaction).
 - ActionBar : repliée dès le départ, son bouton de repli n'avait pas de nom.
+- Fieldset : sa légende repliable se dit « développé » ou « réduit »
+  (ExpandCollapse), comme `aria-expanded` dans mkm ; elle se disait « activée »
+  quand le groupe était replié.
+- DataTable : pendant un chargement, il se dit « Chargement en cours » (son
+  état) ; le voile, dans son gabarit, échappait aux lecteurs d'écran.
 - La relecture des lots 1 à 4 :
   - ActionBar : les commandes d'une liste ouverte n'avaient pas la forme de lignes
     de menu ; Début et Fin faisaient défiler la rangée sans déplacer le focus ;

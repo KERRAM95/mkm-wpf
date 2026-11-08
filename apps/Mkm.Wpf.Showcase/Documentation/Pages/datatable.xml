@@ -168,6 +168,8 @@
       <c>AutomationProperties.Name</c> quand le texte qui le précède ne suffit pas.</p>
     <p>Une ligne se nomme par son objet (<c>ToString</c>) : donnez à la classe des lignes un <c>ToString</c> qui la
       nomme (sa référence, son nom), sans quoi Narrateur lit le nom de la classe.</p>
+    <p>Pendant un chargement (<c>Loading</c>), le tableau se dit « Chargement en cours » : c'est son état
+      (<c>ItemStatus</c>), comme <c>aria-busy</c> dans mkm.</p>
     <p><b>Limite :</b> le pair d'automatisation du DataGrid de WPF ne montre que les titres et les lignes. Ce que
       contiennent <c>Header</c> et <c>Footer</c> (une recherche, des commandes) se lit quand il prend le clavier,
       mais un lecteur d'écran ne le trouve pas en parcourant le tableau : posez les commandes au-dessus du tableau,

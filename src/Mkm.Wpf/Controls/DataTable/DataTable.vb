@@ -53,7 +53,19 @@ Namespace Mkm.Wpf.Controls
 
         ''' <summary>Vrai pendant un chargement : un voile et un chargeur couvrent le tableau.</summary>
         Public Shared ReadOnly LoadingProperty As DependencyProperty = DependencyProperty.Register(
-            NameOf(Loading), GetType(Boolean), GetType(DataTable), New FrameworkPropertyMetadata(False))
+            NameOf(Loading), GetType(Boolean), GetType(DataTable), New FrameworkPropertyMetadata(False, AddressOf OnLoadingChanged))
+
+        ' Le voile est dans le gabarit, que le pair du DataGrid de WPF ne montre pas : le tableau dit lui-même aux lecteurs
+        ' d'écran qu'il charge (son état, ItemStatus), comme aria-busy dans mkm.
+        Private Shared Sub OnLoadingChanged(d As DependencyObject, e As DependencyPropertyChangedEventArgs)
+            Dim avant = System.Windows.Automation.AutomationProperties.GetItemStatus(d)
+            Dim apres = If(CBool(e.NewValue), Mkm.Wpf.Localization.Localizer.Current.T("aria.busy"), String.Empty)
+            System.Windows.Automation.AutomationProperties.SetItemStatus(d, apres)
+            If System.Windows.Automation.Peers.AutomationPeer.ListenerExists(System.Windows.Automation.Peers.AutomationEvents.PropertyChanged) Then
+                System.Windows.Automation.Peers.UIElementAutomationPeer.FromElement(DirectCast(d, UIElement))?.RaisePropertyChangedEvent(
+                    System.Windows.Automation.AutomationElementIdentifiers.ItemStatusProperty, If(avant, String.Empty), apres)
+            End If
+        End Sub
 
         ''' <summary>Ce qui se montre au-dessus du tableau (un titre, une recherche…).</summary>
         Public Shared ReadOnly HeaderProperty As DependencyProperty = DependencyProperty.Register(
