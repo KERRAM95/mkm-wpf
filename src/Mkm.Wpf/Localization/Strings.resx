@@ -174,4 +174,7 @@
   <data name="aria.hue" xml:space="preserve">
     <value>Hue</value>
   </data>
+  <data name="aria.actions" xml:space="preserve">
+    <value>Actions</value>
+  </data>
 </root>

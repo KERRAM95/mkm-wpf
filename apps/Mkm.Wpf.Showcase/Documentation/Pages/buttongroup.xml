@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="utf-8"?>
+<page titre="ButtonGroup" categorie="Bouton" types="ButtonGroup ButtonGroupPosition" jetons="buttongroup">
+  <resume>Un groupe de boutons : des boutons collés, une seule forme ; seuls le premier et le dernier gardent leurs
+    coins.</resume>
+
+  <section titre="Import">
+    <code><![CDATA[
+<Window xmlns:mkm="urn:mkm-wpf">
+    <mkm:ButtonGroup>
+        <mkm:Button Content="Enregistrer" />
+        <mkm:Button Content="Annuler" />
+    </mkm:ButtonGroup>
+</Window>
+]]></code>
+  </section>
+
+  <section titre="Basique">
+    <p>Les boutons du groupe sont des <lien page="button">Button</lien> : le groupe pose sur chacun sa place
+      (<c>ButtonGroup.Position</c> : <c>First</c>, <c>Middle</c>, <c>Last</c>), et le style du bouton en tire ses coins
+      et sa bordure.</p>
+    <exemple><![CDATA[
+<mkm:ButtonGroup x:Name="Groupe" AutomationProperties.Name="Fichier">
+    <mkm:Button Content="Enregistrer" Icon="{x:Static mkm:Icons.Download}" />
+    <mkm:Button Content="Supprimer" Icon="{x:Static mkm:Icons.Delete}" />
+    <mkm:Button Content="Annuler" Icon="{x:Static mkm:Icons.Close}" />
+</mkm:ButtonGroup>
+]]></exemple>
+  </section>
+
+  <section titre="Gravités et icônes seules">
+    <exemple><![CDATA[
+<StackPanel Orientation="Horizontal">
+    <mkm:ButtonGroup Margin="0,0,24,0">
+        <mkm:Button Content="Précédent" Severity="Secondary" />
+        <mkm:Button Content="Suivant" Severity="Secondary" />
+    </mkm:ButtonGroup>
+    <mkm:ButtonGroup>
+        <mkm:Button Icon="{x:Static mkm:Icons.SortAscending}" ToolTip="Trier par ordre croissant" />
+        <mkm:Button Icon="{x:Static mkm:Icons.SortDescending}" ToolTip="Trier par ordre décroissant" />
+        <mkm:Button Icon="{x:Static mkm:Icons.Filter}" ToolTip="Filtrer" />
+    </mkm:ButtonGroup>
+</StackPanel>
+]]></exemple>
+  </section>
+
+  <section titre="Accessibilité">
+    <h3>Lecteur d'écran</h3>
+    <p>Narrateur dit le groupe « groupe », nommé par <c>AutomationProperties.Name</c> ; ses boutons restent des boutons.</p>
+    <h3>Clavier</h3>
+    <touches>
+      <touche nom="Tab">Passe d'un bouton du groupe à l'autre.</touche>
+    </touches>
+  </section>
+</page>

@@ -1142,6 +1142,20 @@ divider.vertical.margin = 0 12px
 divider.vertical.padding = 6px 0
 divider.vertical.content.padding = 6px 0
 
+# dock
+dock.background = rgba(255, 255, 255, 0.1)
+dock.border.color = rgba(255, 255, 255, 0.2)
+dock.padding = 6px
+dock.border.radius = {border.radius.xl}
+dock.item.border.radius = {content.border.radius}
+dock.item.padding = 6px
+dock.item.size = 36px
+dock.item.focus.ring.width = {focus.ring.width}
+dock.item.focus.ring.style = {focus.ring.style}
+dock.item.focus.ring.color = {focus.ring.color}
+dock.item.focus.ring.offset = {focus.ring.offset}
+dock.item.focus.ring.shadow = {focus.ring.shadow}
+
 # drawer
 drawer.background = {overlay.modal.background}
 drawer.border.color = {overlay.modal.border.color}
@@ -2050,6 +2064,10 @@ slider.handle.focus.ring.style = {focus.ring.style}
 slider.handle.focus.ring.color = {focus.ring.color}
 slider.handle.focus.ring.offset = {focus.ring.offset}
 slider.handle.focus.ring.shadow = {focus.ring.shadow}
+
+# speeddial
+speeddial.gap = 6px
+speeddial.transition.duration = {transition.duration}
 
 # splitbutton
 splitbutton.border.radius = {form.field.border.radius}

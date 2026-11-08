@@ -94,7 +94,7 @@ Namespace Mkm.Wpf.Showcase.Documentation
             Next
 
             Dim grille As New DockPanel()
-            DockPanel.SetDock(_sommaire, Dock.Right)
+            DockPanel.SetDock(_sommaire, System.Windows.Controls.Dock.Right)
             grille.Children.Add(_sommaire)
             grille.Children.Add(_defileur)
             Content = grille

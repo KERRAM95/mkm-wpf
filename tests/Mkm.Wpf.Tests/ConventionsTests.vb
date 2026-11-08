@@ -307,7 +307,7 @@ Namespace Mkm.Wpf.Tests
         ''' </summary>
         <Test>
         Public Sub ChaquePartieInterne_NHeriteDUnControleDeMkmQueVoulu()
-            Dim voulues As New HashSet(Of String) From {"ChevronDeSplitButton"}
+            Dim voulues As New HashSet(Of String) From {"ChevronDeSplitButton", "BoutonDeSpeedDial"}
             Dim bibliotheque = Assembly.Load("Mkm.Wpf")
             Dim fautifs = bibliotheque.GetTypes().
                 Where(Function(t) Not t.IsVisible AndAlso GetType(Control).IsAssignableFrom(t)).

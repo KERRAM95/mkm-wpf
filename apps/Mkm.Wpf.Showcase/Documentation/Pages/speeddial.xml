@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="utf-8"?>
+<page titre="SpeedDial" categorie="Bouton" types="SpeedDial SpeedDialItem SpeedDialDirection SpeedDialType" jetons="speeddial">
+  <resume>Un bouton d'actions : un bouton rond qui, cliqué, déploie ses actions en ligne, en cercle ou en arc.</resume>
+
+  <section titre="Import">
+    <code><![CDATA[
+<Window xmlns:mkm="urn:mkm-wpf">
+    <mkm:SpeedDial>
+        <mkm:SpeedDialItem Label="Copier" Icon="{x:Static mkm:Icons.Copy}" />
+    </mkm:SpeedDial>
+</Window>
+]]></code>
+  </section>
+
+  <section titre="Basique">
+    <p>Les actions sont des <c>SpeedDialItem</c> (des boutons ronds d'icône), leur nom en info-bulle (<c>Label</c>),
+      <c>Click</c> et <c>Command</c>. Une action choisie replie les autres ; un clic ailleurs, ou Échap, aussi.
+      <c>Direction</c> : où elles s'ouvrent ; le plus tourne en croix.</p>
+    <exemple comportement="SpeedDialJournal"><![CDATA[
+<StackPanel>
+    <Grid Height="180">
+        <mkm:SpeedDial x:Name="Actions" AutomationProperties.Name="Actions sur le plan" Direction="Up"
+                       HorizontalAlignment="Center" VerticalAlignment="Bottom">
+            <mkm:SpeedDialItem Label="Copier" Icon="{x:Static mkm:Icons.Copy}" />
+            <mkm:SpeedDialItem Label="Modifier" Icon="{x:Static mkm:Icons.Edit}" />
+            <mkm:SpeedDialItem Label="Supprimer" Icon="{x:Static mkm:Icons.Delete}" />
+        </mkm:SpeedDial>
+    </Grid>
+    <TextBlock x:Name="Journal" Margin="0,12,0,0" Text="Aucune action" />
+</StackPanel>
+]]></exemple>
+  </section>
+
+  <section titre="Cercle et arcs">
+    <p><c>Type</c> : <c>Circle</c> autour du bouton, <c>SemiCircle</c> du côté de la direction, <c>QuarterCircle</c>
+      dans une direction en diagonale (<c>UpLeft</c>…) ; <c>Radius</c> en pixels.</p>
+    <exemple><![CDATA[
+<Grid Height="240">
+    <mkm:SpeedDial Type="Circle" Radius="70" HorizontalAlignment="Left" VerticalAlignment="Center" Margin="90,0,0,0"
+                   IsOpen="True">
+        <mkm:SpeedDialItem Label="Copier" Icon="{x:Static mkm:Icons.Copy}" />
+        <mkm:SpeedDialItem Label="Modifier" Icon="{x:Static mkm:Icons.Edit}" />
+        <mkm:SpeedDialItem Label="Supprimer" Icon="{x:Static mkm:Icons.Delete}" />
+        <mkm:SpeedDialItem Label="Partager" Icon="{x:Static mkm:Icons.Link}" />
+    </mkm:SpeedDial>
+    <mkm:SpeedDial Type="QuarterCircle" Direction="UpRight" Radius="80" HorizontalAlignment="Left"
+                   VerticalAlignment="Bottom" Margin="280,0,0,12" IsOpen="True">
+        <mkm:SpeedDialItem Label="Copier" Icon="{x:Static mkm:Icons.Copy}" />
+        <mkm:SpeedDialItem Label="Modifier" Icon="{x:Static mkm:Icons.Edit}" />
+        <mkm:SpeedDialItem Label="Supprimer" Icon="{x:Static mkm:Icons.Delete}" />
+    </mkm:SpeedDial>
+</Grid>
+]]></exemple>
+  </section>
+
+  <section titre="Accessibilité">
+    <h3>Lecteur d'écran</h3>
+    <p>Le bouton se dit « bouton », nommé par <c>AutomationProperties.Name</c> (sinon « Actions »), développé ou réduit ;
+      chaque action, un bouton nommé par son <c>Label</c>.</p>
+    <h3>Clavier</h3>
+    <touches>
+      <touche nom="Entrée">Déploie les actions, le clavier sur la première ; sur une action, la lance.</touche>
+      <touche nom="Flèches">Passent d'une action à l'autre.</touche>
+      <touche nom="Échap">Replie les actions ; le clavier revient au bouton.</touche>
+    </touches>
+  </section>
+</page>

@@ -172,6 +172,12 @@ Les évolutions notables de mkm-wpf, version par version. Le format suit
   `MegaMenuColumn` (des panneaux en colonnes de liens), `PanelMenu` et
   `PanelMenuItem` (des panneaux qui se déplient en arbre) ; leurs jetons,
   leurs pages, leurs tests et leurs scénarios.
+- Le lot 22 (`docs/composants/groupes-dock-et-actions.md`) : `ButtonGroup`
+  (des boutons collés, `ButtonGroup.Position`), `Dock` et `DockItem` (un
+  lanceur d'applications translucide), `SpeedDial` et `SpeedDialItem` (des
+  actions en ligne ou en arc autour d'un bouton rond) ; leurs jetons, leurs
+  pages, leurs tests et leurs scénarios. `Dock` étant aussi une énumération
+  de WPF, le code de mkm-wpf l'écrit en entier.
 - Info-bulle et Popover : la page qui défile les referme, comme mkm.
 - Le zoom de toute l'interface (`docs/fondations/zoom.md`) :
   `MkmResources.Zoom` (80 à 200 %), `ZoomIn`, `ZoomOut`, `ResetZoom`,

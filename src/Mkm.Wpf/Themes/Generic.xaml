@@ -13,11 +13,12 @@
         <ResourceDictionary Source="/Mkm.Wpf;component/Controls/ActionBar/ActionBar.xaml" />
         <ResourceDictionary Source="/Mkm.Wpf;component/Controls/AutoComplete/AutoComplete.xaml" />
         <ResourceDictionary Source="/Mkm.Wpf;component/Controls/Avatar/Avatar.xaml" />
-        <ResourceDictionary Source="/Mkm.Wpf;component/Controls/Badge/OverlayBadge.xaml" />
         <ResourceDictionary Source="/Mkm.Wpf;component/Controls/Badge/Badge.xaml" />
+        <ResourceDictionary Source="/Mkm.Wpf;component/Controls/Badge/OverlayBadge.xaml" />
         <ResourceDictionary Source="/Mkm.Wpf;component/Controls/BlockUI/BlockUI.xaml" />
         <ResourceDictionary Source="/Mkm.Wpf;component/Controls/Breadcrumb/Breadcrumb.xaml" />
         <ResourceDictionary Source="/Mkm.Wpf;component/Controls/Button/Button.xaml" />
+        <ResourceDictionary Source="/Mkm.Wpf;component/Controls/ButtonGroup/ButtonGroup.xaml" />
         <ResourceDictionary Source="/Mkm.Wpf;component/Controls/Card/Card.xaml" />
         <ResourceDictionary Source="/Mkm.Wpf;component/Controls/CascadeSelect/CascadeSelect.xaml" />
         <ResourceDictionary Source="/Mkm.Wpf;component/Controls/Checkbox/Checkbox.xaml" />
@@ -27,6 +28,7 @@
         <ResourceDictionary Source="/Mkm.Wpf;component/Controls/DatePicker/DatePicker.xaml" />
         <ResourceDictionary Source="/Mkm.Wpf;component/Controls/Dialog/Dialog.xaml" />
         <ResourceDictionary Source="/Mkm.Wpf;component/Controls/Divider/Divider.xaml" />
+        <ResourceDictionary Source="/Mkm.Wpf;component/Controls/Dock/Dock.xaml" />
         <ResourceDictionary Source="/Mkm.Wpf;component/Controls/Drawer/Drawer.xaml" />
         <ResourceDictionary Source="/Mkm.Wpf;component/Controls/EmptyContent/EmptyContent.xaml" />
         <ResourceDictionary Source="/Mkm.Wpf;component/Controls/Fieldset/Fieldset.xaml" />
@@ -63,6 +65,7 @@
         <ResourceDictionary Source="/Mkm.Wpf;component/Controls/SelectButton/SelectButton.xaml" />
         <ResourceDictionary Source="/Mkm.Wpf;component/Controls/Skeleton/Skeleton.xaml" />
         <ResourceDictionary Source="/Mkm.Wpf;component/Controls/Slider/Slider.xaml" />
+        <ResourceDictionary Source="/Mkm.Wpf;component/Controls/SpeedDial/SpeedDial.xaml" />
         <ResourceDictionary Source="/Mkm.Wpf;component/Controls/SplitButton/SplitButton.xaml" />
         <ResourceDictionary Source="/Mkm.Wpf;component/Controls/Splitter/Splitter.xaml" />
         <ResourceDictionary Source="/Mkm.Wpf;component/Controls/StateGraph/StateGraph.xaml" />

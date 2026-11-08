@@ -83,7 +83,7 @@ Namespace Mkm.Wpf.Controls
             enLignes.Setters.Add(New Setter(TextBlock.TextWrappingProperty, TextWrapping.Wrap))
             question.Resources.Add(GetType(TextBlock), enLignes)
             Dim contenu As New DockPanel()
-            DockPanel.SetDock(_icone, Dock.Left)
+            DockPanel.SetDock(_icone, System.Windows.Controls.Dock.Left)
             contenu.Children.Add(_icone)
             contenu.Children.Add(question)
             Content = contenu

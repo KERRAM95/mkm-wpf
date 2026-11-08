@@ -52,7 +52,7 @@ Namespace Mkm.Wpf.Showcase.Documentation
                                              ' Le presse-papiers est pris par une autre application : on n'insiste pas.
                                          End Try
                                      End Sub
-            DockPanel.SetDock(copier, Dock.Right)
+            DockPanel.SetDock(copier, System.Windows.Controls.Dock.Right)
             entete.Children.Add(copier)
             entete.Children.Add(New TextBlock With {
                 .Text = If(langage = "vb", "VB", If(langage = "xml", "XML", "XAML")), .FontSize = 11, .FontWeight = FontWeights.SemiBold,
@@ -67,7 +67,7 @@ Namespace Mkm.Wpf.Showcase.Documentation
                 .VerticalScrollBarVisibility = ScrollBarVisibility.Disabled, .Focusable = False}
 
             Dim pile As New DockPanel()
-            DockPanel.SetDock(entete, Dock.Top)
+            DockPanel.SetDock(entete, System.Windows.Controls.Dock.Top)
             pile.Children.Add(entete)
             pile.Children.Add(defileur)
             Child = pile

@@ -457,3 +457,13 @@ panelmenu.panel.last.corner.radius = 0 0 {panelmenu.panel.last.bottom.border.rad
 panelmenu.panel.single.corner.radius = {panelmenu.panel.first.top.border.radius} {panelmenu.panel.first.top.border.radius} {panelmenu.panel.last.bottom.border.radius} {panelmenu.panel.last.bottom.border.radius}
 panelmenu.submenu.margin = {panelmenu.submenu.indent} 0 0 0
 panelmenu.submenu.icon.size = {navigation.submenu.icon.size}
+
+# buttongroup : les coins du premier bouton (à gauche) et du dernier (à droite).
+buttongroup.first.corner.radius = {button.border.radius} 0 0 {button.border.radius}
+buttongroup.last.corner.radius = 0 {button.border.radius} {button.border.radius} 0
+
+# dock : l'anneau du focus en épaisseur.
+dock.item.ring.border.width = {dock.item.focus.ring.width} {dock.item.focus.ring.width}
+
+# speeddial : le bouton rond de 2,5 rem (le bouton « rounded » de mkm, sans taille à lui).
+speeddial.button.size = 30px

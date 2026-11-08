@@ -100,7 +100,7 @@ Namespace Mkm.Wpf.Showcase
             End If
             Reglages.Measure(New Size(Double.PositiveInfinity, Double.PositiveInfinity))
             Dim aLaLigne = Reglages.DesiredSize.Width + 140 > Barre.ActualWidth - Barre.Padding.Left - Barre.Padding.Right
-            DockPanel.SetDock(Reglages, If(aLaLigne, Dock.Bottom, Dock.Right))
+            DockPanel.SetDock(Reglages, If(aLaLigne, System.Windows.Controls.Dock.Bottom, System.Windows.Controls.Dock.Right))
             Reglages.Margin = If(aLaLigne, New Thickness(0, 8, 0, 0), New Thickness())
         End Sub
 

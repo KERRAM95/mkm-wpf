@@ -229,6 +229,27 @@ Namespace Mkm.Wpf.UiTests
             AttendreQue(Function() plans() Is Nothing OrElse plans().IsOffscreen, "un seul panneau déplié")
         End Sub
 
+        <Test>
+        Public Sub Dock_UneApplicationSeLance()
+            Dim page = OuvrirLaDoc("dock")
+            Dim dock = Trouver("Applications", page)
+            Cliquer(TrouverParNom("Statistiques", ControlType.MenuItem, dock))
+            AttendreQue(Function() NomDe(Trouver("Journal", page)) = "Lancé : Statistiques", "« Lancé : Statistiques »")
+        End Sub
+
+        <Test>
+        Public Sub SpeedDial_LeBoutonDeploieLesActionsEtUneActionLesReplie()
+            Dim page = OuvrirLaDoc("speeddial")
+            Dim cadre = Exemple(page, "basique")
+            Dim bouton = TrouverParNom("Actions sur le plan", ControlType.Button, cadre)
+            Dim etat = Function() bouton.Patterns.ExpandCollapse.Pattern.ExpandCollapseState.Value
+            Cliquer(bouton)
+            AttendreQue(Function() etat() = ExpandCollapseState.Expanded, "les actions déployées")
+            Cliquer(TrouverParNom("Modifier", ControlType.Button, cadre))
+            AttendreQue(Function() NomDe(Trouver("Journal", page)) = "Action : Modifier", "« Action : Modifier »")
+            AttendreQue(Function() etat() = ExpandCollapseState.Collapsed, "et repliées")
+        End Sub
+
     End Class
 
 End Namespace

@@ -1,0 +1,56 @@
+<!--
+    Le style de SpeedDial, sur le bouton d'actions de mkm (styles/speeddial ; jetons de Nora en pixels, dans les deux
+    thèmes) : un bouton rond de la couleur du thème, son plus qui tourne d'un huitième de tour (une croix) quand il
+    s'ouvre ; ses actions, des boutons ronds secondaires d'icône seule, à 6 px de lui et l'une de l'autre, en ligne ou
+    en arc ; elles débordent autour de lui sans pousser la page.
+-->
+<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+                    xmlns:local="clr-namespace:Mkm.Wpf.Controls">
+
+    <Style TargetType="{x:Type local:SpeedDial}">
+        <Setter Property="HorizontalAlignment" Value="Left" />
+        <Setter Property="VerticalAlignment" Value="Top" />
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="{x:Type local:SpeedDial}">
+                    <Grid>
+                        <local:RangeeDeSpeedDial x:Name="Actions" IsItemsHost="True" Visibility="Collapsed"
+                                                 Direction="{TemplateBinding Direction}" Type="{TemplateBinding Type}"
+                                                 Radius="{TemplateBinding Radius}" Gap="{DynamicResource mkm.speeddial.gap}"
+                                                 KeyboardNavigation.DirectionalNavigation="Cycle" />
+                        <local:BoutonDeSpeedDial x:Name="PART_Button" Icon="{TemplateBinding ShowIcon}" RenderTransformOrigin="0.5,0.5"
+                                                 Width="{DynamicResource mkm.speeddial.button.size}"
+                                                 Height="{DynamicResource mkm.speeddial.button.size}"
+                                                 CornerRadius="{DynamicResource mkm.button.rounded.border.radius}">
+                        </local:BoutonDeSpeedDial>
+                    </Grid>
+                    <ControlTemplate.Triggers>
+                        <Trigger Property="IsOpen" Value="True">
+                            <Setter TargetName="Actions" Property="Visibility" Value="Visible" />
+                        </Trigger>
+                        <MultiTrigger>
+                            <MultiTrigger.Conditions>
+                                <Condition Property="IsOpen" Value="True" />
+                                <Condition Property="HasHideIcon" Value="True" />
+                            </MultiTrigger.Conditions>
+                            <Setter TargetName="PART_Button" Property="Icon" Value="{Binding HideIcon, RelativeSource={RelativeSource TemplatedParent}}" />
+                        </MultiTrigger>
+                        <MultiTrigger>
+                            <MultiTrigger.Conditions>
+                                <Condition Property="IsOpen" Value="True" />
+                                <Condition Property="HasHideIcon" Value="False" />
+                            </MultiTrigger.Conditions>
+                            <Setter TargetName="PART_Button" Property="RenderTransform">
+                                <Setter.Value>
+                                    <RotateTransform Angle="45" />
+                                </Setter.Value>
+                            </Setter>
+                        </MultiTrigger>
+                    </ControlTemplate.Triggers>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+
+</ResourceDictionary>
