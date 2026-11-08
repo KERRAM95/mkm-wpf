@@ -357,6 +357,9 @@ Les évolutions notables de mkm-wpf, version par version. Le format suit
     réduite.
   - InputGroup : un Select perd bien ses coins du côté de son voisin (il
     passait pour un champ à coins propres).
+  - WelcomePanel : l'info-bulle d'une entrée est claire, bordée, centrée,
+    à la flèche bordée, comme mkm (elle avait le style sombre de toutes les
+    info-bulles).
 - Avatar et Chip : leur image est peinte par le code ; liée dans le gabarit,
   elle faisait écrire à WPF une erreur de liaison (sans effet visible).
 - Galleria : une vignette pâlie s'éclaire sous la souris, comme mkm.

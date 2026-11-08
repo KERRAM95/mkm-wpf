@@ -29,6 +29,61 @@
     </Style>
 
     <Style TargetType="{x:Type local:WelcomePanelItem}">
+        <Style.Resources>
+            <!-- L'info-bulle d'une entrée du panneau replié (.p-welcomepanel-tooltip de mkm) : claire, bordée, sans ombre,
+                 le texte centré ; sa flèche bordée (le triangle du bord, puis celui du fond décalé d'un pixel, qui ouvre
+                 la bordure de la bulle). -->
+            <Style TargetType="{x:Type ToolTip}">
+                <Setter Property="Background" Value="{DynamicResource mkm.welcomepanel.tooltip.background}" />
+                <Setter Property="BorderBrush" Value="{DynamicResource mkm.welcomepanel.tooltip.border.color}" />
+                <Setter Property="BorderThickness" Value="{DynamicResource mkm.welcomepanel.tooltip.border.width}" />
+                <Setter Property="Foreground" Value="{DynamicResource mkm.welcomepanel.tooltip.color}" />
+                <Setter Property="Padding" Value="{DynamicResource mkm.welcomepanel.tooltip.padding}" />
+                <Setter Property="FontFamily" Value="{DynamicResource mkm.font.family}" />
+                <Setter Property="FontSize" Value="{DynamicResource mkm.welcomepanel.tooltip.font.size}" />
+                <Setter Property="FontWeight" Value="Normal" />
+                <Setter Property="HasDropShadow" Value="False" />
+                <Setter Property="Placement" Value="Custom" />
+                <Setter Property="CustomPopupPlacementCallback" Value="{x:Static local:TooltipPlacement.Right}" />
+                <Setter Property="SnapsToDevicePixels" Value="True" />
+                <Setter Property="Template">
+                    <Setter.Value>
+                        <ControlTemplate TargetType="{x:Type ToolTip}">
+                            <Grid>
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="Auto" />
+                                    <ColumnDefinition Width="*" />
+                                </Grid.ColumnDefinitions>
+                                <Border Grid.Column="1" MaxWidth="{DynamicResource mkm.welcomepanel.tooltip.max.width}"
+                                        Background="{TemplateBinding Background}" BorderBrush="{TemplateBinding BorderBrush}"
+                                        BorderThickness="{TemplateBinding BorderThickness}"
+                                        CornerRadius="{DynamicResource mkm.welcomepanel.tooltip.border.radius}"
+                                        Padding="{TemplateBinding Padding}">
+                                    <ContentPresenter TextBlock.TextAlignment="Center">
+                                        <ContentPresenter.Resources>
+                                            <Style TargetType="{x:Type TextBlock}">
+                                                <Setter Property="TextWrapping" Value="Wrap" />
+                                            </Style>
+                                        </ContentPresenter.Resources>
+                                    </ContentPresenter>
+                                </Border>
+                                <Path Grid.Column="0" VerticalAlignment="Center" Stretch="Fill" Data="M 1,0 L 0,1 L 1,2 Z"
+                                      Margin="{DynamicResource mkm.welcomepanel.tooltip.arrow.margin}"
+                                      Width="{DynamicResource mkm.welcomepanel.tooltip.arrow.width}"
+                                      Height="{DynamicResource mkm.welcomepanel.tooltip.arrow.height}"
+                                      Fill="{TemplateBinding BorderBrush}" />
+                                <Path Grid.Column="0" Grid.ColumnSpan="2" HorizontalAlignment="Left" VerticalAlignment="Center"
+                                      Stretch="Fill" Data="M 1,0 L 0,1 L 1,2 Z" RenderTransform="1,0,0,1,1,0"
+                                      Margin="{DynamicResource mkm.welcomepanel.tooltip.arrow.margin}"
+                                      Width="{DynamicResource mkm.welcomepanel.tooltip.arrow.width}"
+                                      Height="{DynamicResource mkm.welcomepanel.tooltip.arrow.height}"
+                                      Fill="{TemplateBinding Background}" />
+                            </Grid>
+                        </ControlTemplate>
+                    </Setter.Value>
+                </Setter>
+            </Style>
+        </Style.Resources>
         <Setter Property="Padding" Value="{DynamicResource mkm.welcomepanel.item.padding}" />
         <Setter Property="Background" Value="Transparent" />
         <Setter Property="BorderBrush" Value="Transparent" />

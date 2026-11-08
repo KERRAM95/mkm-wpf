@@ -279,6 +279,20 @@ welcomepanel.item.collapsed.icon.line.height = 34.29px
 welcomepanel.item.side.border.width = 0 0 0 {welcomepanel.item.border.width}
 welcomepanel.separator.vertical.margin = 5px 0
 
+# welcomepanel.tooltip (.p-welcomepanel-tooltip de la feuille) : l'info-bulle d'une entrée du panneau replié, claire,
+# bordée, sans ombre, en 12 px centrés, 300 px au plus ; sa flèche bordée (8 × 10 px) commence à 1 px de l'entrée.
+welcomepanel.tooltip.background = {surface.50}
+welcomepanel.tooltip.border.color = {surface.400}
+welcomepanel.tooltip.color = {surface.500}
+welcomepanel.tooltip.border.width = 1px 1px 1px 1px
+welcomepanel.tooltip.border.radius = 2px
+welcomepanel.tooltip.padding = 3px 8px
+welcomepanel.tooltip.font.size = 12px
+welcomepanel.tooltip.max.width = 300px
+welcomepanel.tooltip.arrow.width = 8px
+welcomepanel.tooltip.arrow.height = 10px
+welcomepanel.tooltip.arrow.margin = 0 0 0 1px
+
 # treegrid (styles/treegrid) : l'icône d'un nœud à 7 px de sa case, son libellé à 7 px d'elle et du bord droit.
 treegrid.node.icon.margin = 0 0 0 {treegrid.body.cell.gap}
 treegrid.node.label.margin = 0 {treegrid.body.cell.gap} 0 {treegrid.body.cell.gap}
