@@ -183,6 +183,15 @@ Les évolutions notables de mkm-wpf, version par version. Le format suit
   passent de l'une à l'autre), `DataView` (des éléments par un gabarit, en
   liste ou en grille, page par page) ; leurs jetons, leurs pages, leurs tests
   et leurs scénarios.
+- Jetons écrits à la main : les marges et retraits sont dans l'ordre de CSS
+  (haut, droite, bas, gauche) ; plusieurs, depuis le lot 18, étaient dans
+  celui de WPF (FloatLabel, Slider, CascadeSelect, MegaMenu, PanelMenu,
+  OrderList, PickList).
+- Le lot 24 (`docs/composants/organigramme-et-jauges.md`) :
+  `OrganizationChart` et `OrganizationChartNode` (un organigramme, ses traits,
+  ses nœuds qui se replient et se choisissent), `MeterGroup` et `MeterItem`
+  (des parts dans une barre, et leur légende) ; leurs jetons, leurs pages,
+  leurs tests et leurs scénarios.
 - Info-bulle et Popover : la page qui défile les referme, comme mkm.
 - Le zoom de toute l'interface (`docs/fondations/zoom.md`) :
   `MkmResources.Zoom` (80 à 200 %), `ZoomIn`, `ZoomOut`, `ResetZoom`,

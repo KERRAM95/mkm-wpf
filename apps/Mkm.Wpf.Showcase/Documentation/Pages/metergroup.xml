@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="utf-8"?>
+<page titre="MeterGroup" categorie="Divers" types="MeterGroup MeterItem MeterGroupLabelPosition" jetons="metergroup">
+  <resume>Un groupe de jauges : des valeurs côte à côte dans une même barre, chacune de sa couleur, et leur légende.</resume>
+
+  <section titre="Import">
+    <code><![CDATA[
+<Window xmlns:mkm="urn:mkm-wpf">
+    <mkm:MeterGroup>
+        <mkm:MeterItem Label="Plans" Value="16" Color="#34D399" />
+    </mkm:MeterGroup>
+</Window>
+]]></code>
+  </section>
+
+  <section titre="Basique">
+    <p>Chaque <c>MeterItem</c> a son libellé, sa valeur et sa couleur ; sa part de la barre est sa valeur sur l'étendue
+      (<c>Minimum</c> 0, <c>Maximum</c> 100). La légende dit le libellé et la part.</p>
+    <exemple><![CDATA[
+<mkm:MeterGroup x:Name="Stockage" AutomationProperties.Name="Espace occupé" Width="420" HorizontalAlignment="Left">
+    <mkm:MeterItem Label="Plans" Value="16" Color="#34D399" />
+    <mkm:MeterItem Label="Pièces" Value="8" Color="#FBBF24" />
+    <mkm:MeterItem Label="Assemblages" Value="24" Color="#60A5FA" />
+    <mkm:MeterItem Label="Notices" Value="10" Color="#C084FC" />
+</mkm:MeterGroup>
+]]></exemple>
+  </section>
+
+  <section titre="Icônes et légende">
+    <p><c>Icon</c> remplace le repère rond ; <c>LabelPosition="Start"</c> pose la légende avant la barre,
+      <c>LabelOrientation="Vertical"</c> l'une sous l'autre.</p>
+    <exemple><![CDATA[
+<mkm:MeterGroup LabelPosition="Start" LabelOrientation="Vertical" Width="420" HorizontalAlignment="Left">
+    <mkm:MeterItem Label="Plans" Value="30" Color="#34D399" Icon="{x:Static mkm:Icons.Drawings}" />
+    <mkm:MeterItem Label="Documents" Value="25" Color="#60A5FA" Icon="{x:Static mkm:Icons.Documents}" />
+</mkm:MeterGroup>
+]]></exemple>
+  </section>
+
+  <section titre="En colonne">
+    <exemple><![CDATA[
+<mkm:MeterGroup Orientation="Vertical" LabelOrientation="Vertical" Height="160" HorizontalAlignment="Left">
+    <mkm:MeterItem Label="Plans" Value="16" Color="#34D399" />
+    <mkm:MeterItem Label="Pièces" Value="8" Color="#FBBF24" />
+    <mkm:MeterItem Label="Assemblages" Value="24" Color="#60A5FA" />
+</mkm:MeterGroup>
+]]></exemple>
+  </section>
+
+  <section titre="Accessibilité">
+    <h3>Lecteur d'écran</h3>
+    <p>Narrateur dit le groupe « groupe », nommé par <c>AutomationProperties.Name</c> ; la légende, ses textes
+      (« Plans (16 %) »). La barre n'est que son dessin.</p>
+  </section>
+</page>

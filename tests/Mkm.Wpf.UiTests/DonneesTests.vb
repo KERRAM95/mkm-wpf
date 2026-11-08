@@ -160,6 +160,21 @@ Namespace Mkm.Wpf.UiTests
             Assert.That(TexteDe(vue).Contains("Bride"), [Is].False, "la première n'est plus montrée")
         End Sub
 
+        <Test>
+        Public Sub OrganizationChart_UnNoeudSeChoisitEtSeReplie()
+            Dim page = OuvrirLaDoc("organizationchart")
+            Dim organigramme = Trouver("Organigramme", page)
+            Dim production = TrouverParNom("Production", ControlType.TreeItem, organigramme)
+            Cliquer(TrouverParNom("Production", ControlType.Text, production))
+            AttendreQue(Function() production.Patterns.SelectionItem.Pattern.IsSelected.Value, "« Production » choisi")
+            Cliquer(TrouverParNom(T("aria.collapse"), ControlType.Button, production))
+            AttendreQue(Function() production.Patterns.ExpandCollapse.Pattern.ExpandCollapseState.Value = ExpandCollapseState.Collapsed, "replié")
+            AttendreQue(Function()
+                            Dim usinage = organigramme.FindFirstDescendant(Function(cf) cf.ByName("Usinage").And(cf.ByControlType(ControlType.TreeItem)))
+                            Return usinage Is Nothing OrElse usinage.IsOffscreen
+                        End Function, "ses enfants cachés")
+        End Sub
+
     End Class
 
 End Namespace

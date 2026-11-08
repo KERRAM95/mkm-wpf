@@ -479,3 +479,13 @@ orderlist.controls.margin = 0 {orderlist.gap} 0 0
 orderlist.controls.right.margin = 0 0 0 {orderlist.gap}
 orderlist.header.margin = 0 0 6px 0
 picklist.controls.margin = 0 {picklist.gap} 0 {picklist.gap}
+
+# metergroup : la barre à gap de la légende (dessous, dessus, ou à sa gauche en colonne).
+metergroup.meters.end.margin = 0 0 {metergroup.gap} 0
+metergroup.meters.start.margin = {metergroup.gap} 0 0 0
+metergroup.meters.vertical.margin = 0 {metergroup.gap} 0 0
+
+# organizationchart : le bouton qui replie un nœud, à cheval sur son bas (la moitié de sa taille dessous) ; son
+# chevron.
+organizationchart.node.toggle.button.margin = 0 0 -9px 0
+organizationchart.node.toggle.icon.size = 10px

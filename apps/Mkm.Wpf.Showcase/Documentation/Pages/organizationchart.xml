@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="utf-8"?>
+<page titre="OrganizationChart" categorie="Données" types="OrganizationChart OrganizationChartNode" jetons="organizationchart">
+  <resume>Un organigramme : des nœuds en arbre, chacun au-dessus de ses enfants, reliés par des traits ; un nœud peut
+    se replier, se choisir.</resume>
+
+  <section titre="Import">
+    <code><![CDATA[
+<Window xmlns:mkm="urn:mkm-wpf">
+    <mkm:OrganizationChart>
+        <mkm:OrganizationChartNode Header="Direction">
+            <mkm:OrganizationChartNode Header="Bureau d'études" />
+        </mkm:OrganizationChartNode>
+    </mkm:OrganizationChart>
+</Window>
+]]></code>
+  </section>
+
+  <section titre="Basique">
+    <p>Les nœuds sont des <c>OrganizationChartNode</c> : leur contenu (<c>Header</c>) dans un cadre, leurs enfants dessous.
+      <c>Collapsible</c> pose sous chaque nœud qui a des enfants un bouton qui les replie ; <c>Selectable</c> rend les
+      nœuds cliquables : <c>SelectedItem</c> est le nœud choisi.</p>
+    <exemple><![CDATA[
+<mkm:OrganizationChart x:Name="Organigramme" Collapsible="True" Selectable="True">
+    <mkm:OrganizationChartNode Header="Direction">
+        <mkm:OrganizationChartNode Header="Bureau d'études">
+            <mkm:OrganizationChartNode Header="Mécanique" />
+            <mkm:OrganizationChartNode Header="Électrique" />
+        </mkm:OrganizationChartNode>
+        <mkm:OrganizationChartNode Header="Production">
+            <mkm:OrganizationChartNode Header="Usinage" />
+            <mkm:OrganizationChartNode Header="Montage" />
+            <mkm:OrganizationChartNode Header="Contrôle" />
+        </mkm:OrganizationChartNode>
+        <mkm:OrganizationChartNode Header="Qualité" />
+    </mkm:OrganizationChartNode>
+</mkm:OrganizationChart>
+]]></exemple>
+  </section>
+
+  <section titre="Contenu">
+    <p>Le contenu d'un nœud peut être n'importe quoi : une personne, une fiche.</p>
+    <exemple><![CDATA[
+<mkm:OrganizationChart>
+    <mkm:OrganizationChartNode>
+        <mkm:OrganizationChartNode.Header>
+            <StackPanel>
+                <mkm:Avatar Label="MK" Shape="Circle" HorizontalAlignment="Center" Margin="0,0,0,6" />
+                <TextBlock Text="M. Kerram" FontWeight="SemiBold" HorizontalAlignment="Center" />
+                <TextBlock Text="Direction technique" HorizontalAlignment="Center" />
+            </StackPanel>
+        </mkm:OrganizationChartNode.Header>
+        <mkm:OrganizationChartNode Header="J. Durand" />
+        <mkm:OrganizationChartNode Header="A. Martin" />
+    </mkm:OrganizationChartNode>
+</mkm:OrganizationChart>
+]]></exemple>
+  </section>
+
+  <section titre="Accessibilité">
+    <h3>Lecteur d'écran</h3>
+    <p>Narrateur dit l'organigramme « arbre », chaque nœud « élément d'arborescence », nommé par son en-tête, développé ou
+      réduit, sélectionné ou non ; le bouton d'un nœud se nomme « Replier » ou « Déplier ».</p>
+    <h3>Clavier</h3>
+    <touches>
+      <touche nom="Tab">Passe d'un nœud cliquable à l'autre, et à leurs boutons.</touche>
+      <touche nom="Entrée">Choisit le nœud, ou le retire.</touche>
+      <touche nom="Espace">Comme Entrée.</touche>
+    </touches>
+  </section>
+</page>

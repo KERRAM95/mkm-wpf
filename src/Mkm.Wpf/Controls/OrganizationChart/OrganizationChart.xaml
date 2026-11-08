@@ -1,0 +1,147 @@
+<!--
+    Les styles d'OrganizationChart, sur l'organigramme de mkm (styles/organizationchart ; jetons de Nora en pixels, dans
+    les deux thèmes) : chaque nœud, un cadre bordé au fond du contenu, aux coins du thème, 9 px sur 12 de retrait ;
+    choisi, le fond de la surbrillance ; qui se replie, un bouton rond de 18 px à cheval sur son bas. Sous un nœud
+    déplié, un trait de 24 px, puis le trait qui relie ses enfants et descend vers chacun ; les enfants à 9 px de
+    gouttière l'un de l'autre. Les traits ont la couleur des bordures.
+-->
+<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+                    xmlns:local="clr-namespace:Mkm.Wpf.Controls">
+
+    <!-- Le bouton qui replie un nœud : un rond, son chevron. -->
+    <Style x:Key="mkm.OrganizationChart.Bascule" TargetType="{x:Type Button}">
+        <Setter Property="Cursor" Value="Hand" />
+        <Setter Property="FocusVisualStyle" Value="{x:Null}" />
+        <Setter Property="Width" Value="{DynamicResource mkm.organizationchart.node.toggle.button.size}" />
+        <Setter Property="Height" Value="{DynamicResource mkm.organizationchart.node.toggle.button.size}" />
+        <Setter Property="Foreground" Value="{DynamicResource mkm.organizationchart.node.toggle.button.color}" />
+        <Setter Property="Background" Value="{DynamicResource mkm.organizationchart.node.toggle.button.background}" />
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="{x:Type Button}">
+                    <Grid>
+                        <Ellipse Fill="{TemplateBinding Background}" StrokeThickness="1"
+                                 Stroke="{DynamicResource mkm.organizationchart.node.toggle.button.border.color}" />
+                        <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center" />
+                        <Ellipse x:Name="Anneau" Visibility="Collapsed" Margin="-2" IsHitTestVisible="False"
+                                 Stroke="{DynamicResource mkm.organizationchart.node.toggle.button.focus.ring.color}"
+                                 StrokeThickness="{DynamicResource mkm.organizationchart.node.toggle.button.focus.ring.width}" />
+                    </Grid>
+                    <ControlTemplate.Triggers>
+                        <Trigger Property="IsMouseOver" Value="True">
+                            <Setter Property="Background" Value="{DynamicResource mkm.organizationchart.node.toggle.button.hover.background}" />
+                            <Setter Property="Foreground" Value="{DynamicResource mkm.organizationchart.node.toggle.button.hover.color}" />
+                        </Trigger>
+                        <Trigger Property="local:FocusVisible.IsVisible" Value="True">
+                            <Setter TargetName="Anneau" Property="Visibility" Value="Visible" />
+                        </Trigger>
+                    </ControlTemplate.Triggers>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+
+    <Style TargetType="{x:Type local:OrganizationChartNode}">
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="{x:Type local:OrganizationChartNode}">
+                    <StackPanel>
+                        <Grid HorizontalAlignment="Center">
+                            <Border x:Name="PART_Node" Background="{DynamicResource mkm.organizationchart.node.background}"
+                                    BorderBrush="{DynamicResource mkm.organizationchart.node.border.color}" BorderThickness="1"
+                                    CornerRadius="{DynamicResource mkm.organizationchart.node.border.radius}"
+                                    Padding="{DynamicResource mkm.organizationchart.node.padding}"
+                                    TextElement.Foreground="{DynamicResource mkm.organizationchart.node.color}"
+                                    FocusVisualStyle="{x:Null}">
+                                <ContentPresenter ContentSource="Header" HorizontalAlignment="Center" />
+                            </Border>
+                            <Rectangle x:Name="Anneau" Visibility="Collapsed" Margin="-2" IsHitTestVisible="False" RadiusX="4" RadiusY="4"
+                                       Stroke="{DynamicResource mkm.organizationchart.node.toggle.button.focus.ring.color}"
+                                       StrokeThickness="{DynamicResource mkm.organizationchart.node.toggle.button.focus.ring.width}" />
+                            <Button x:Name="PART_Toggle" Style="{StaticResource mkm.OrganizationChart.Bascule}" Visibility="Collapsed"
+                                    VerticalAlignment="Bottom" HorizontalAlignment="Center"
+                                    Margin="{DynamicResource mkm.organizationchart.node.toggle.button.margin}">
+                                <local:Icon x:Name="Chevron" Source="{x:Static local:InternalIcons.ChevronUp}"
+                                            Width="{DynamicResource mkm.organizationchart.node.toggle.icon.size}"
+                                            Height="{DynamicResource mkm.organizationchart.node.toggle.icon.size}" />
+                            </Button>
+                        </Grid>
+                        <Rectangle x:Name="Descente" Width="1" HorizontalAlignment="Center"
+                                   Height="{DynamicResource mkm.organizationchart.connector.height}"
+                                   Fill="{DynamicResource mkm.organizationchart.connector.color}" />
+                        <ItemsPresenter x:Name="Enfants" HorizontalAlignment="Center" />
+                    </StackPanel>
+                    <ControlTemplate.Triggers>
+                        <Trigger Property="HasItems" Value="False">
+                            <Setter TargetName="Descente" Property="Visibility" Value="Collapsed" />
+                            <Setter TargetName="Enfants" Property="Visibility" Value="Collapsed" />
+                        </Trigger>
+                        <Trigger Property="IsExpanded" Value="False">
+                            <Setter TargetName="Descente" Property="Visibility" Value="Collapsed" />
+                            <Setter TargetName="Enfants" Property="Visibility" Value="Collapsed" />
+                            <Setter TargetName="Chevron" Property="Source" Value="{x:Static local:InternalIcons.ChevronDown}" />
+                        </Trigger>
+                        <MultiTrigger>
+                            <MultiTrigger.Conditions>
+                                <Condition Property="Collapsible" Value="True" />
+                                <Condition Property="HasItems" Value="True" />
+                            </MultiTrigger.Conditions>
+                            <Setter TargetName="PART_Toggle" Property="Visibility" Value="Visible" />
+                            <Setter TargetName="PART_Node" Property="Padding" Value="{DynamicResource mkm.organizationchart.node.toggleable.padding}" />
+                        </MultiTrigger>
+                        <Trigger Property="Selectable" Value="True">
+                            <Setter TargetName="PART_Node" Property="Cursor" Value="Hand" />
+                            <Setter TargetName="PART_Node" Property="Focusable" Value="True" />
+                        </Trigger>
+                        <MultiTrigger>
+                            <MultiTrigger.Conditions>
+                                <Condition Property="Selectable" Value="True" />
+                                <Condition SourceName="PART_Node" Property="IsMouseOver" Value="True" />
+                            </MultiTrigger.Conditions>
+                            <Setter TargetName="PART_Node" Property="Background" Value="{DynamicResource mkm.organizationchart.node.hover.background}" />
+                            <Setter TargetName="PART_Node" Property="TextElement.Foreground" Value="{DynamicResource mkm.organizationchart.node.hover.color}" />
+                        </MultiTrigger>
+                        <Trigger Property="IsSelected" Value="True">
+                            <Setter TargetName="PART_Node" Property="Background" Value="{DynamicResource mkm.organizationchart.node.selected.background}" />
+                            <Setter TargetName="PART_Node" Property="TextElement.Foreground" Value="{DynamicResource mkm.organizationchart.node.selected.color}" />
+                        </Trigger>
+                        <Trigger SourceName="PART_Node" Property="local:FocusVisible.IsVisible" Value="True">
+                            <Setter TargetName="Anneau" Property="Visibility" Value="Visible" />
+                        </Trigger>
+                    </ControlTemplate.Triggers>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+        <Setter Property="ItemsPanel">
+            <Setter.Value>
+                <ItemsPanelTemplate>
+                    <local:RangeeDOrganigramme Gutter="{DynamicResource mkm.organizationchart.gutter}"
+                                               ConnectorHeight="{DynamicResource mkm.organizationchart.connector.height}"
+                                               ConnectorBrush="{DynamicResource mkm.organizationchart.connector.color}" />
+                </ItemsPanelTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+
+    <Style TargetType="{x:Type local:OrganizationChart}">
+        <Setter Property="FontFamily" Value="{DynamicResource mkm.font.family}" />
+        <Setter Property="FontSize" Value="{DynamicResource mkm.font.size}" />
+        <Setter Property="HorizontalAlignment" Value="Center" />
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="{x:Type local:OrganizationChart}">
+                    <ItemsPresenter />
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+        <Setter Property="ItemsPanel">
+            <Setter.Value>
+                <ItemsPanelTemplate>
+                    <StackPanel Orientation="Horizontal" />
+                </ItemsPanelTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+
+</ResourceDictionary>

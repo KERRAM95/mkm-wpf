@@ -50,8 +50,10 @@
         <ResourceDictionary Source="/Mkm.Wpf;component/Controls/Menu/Menu.xaml" />
         <ResourceDictionary Source="/Mkm.Wpf;component/Controls/Menubar/Menubar.xaml" />
         <ResourceDictionary Source="/Mkm.Wpf;component/Controls/Message/Message.xaml" />
+        <ResourceDictionary Source="/Mkm.Wpf;component/Controls/MeterGroup/MeterGroup.xaml" />
         <ResourceDictionary Source="/Mkm.Wpf;component/Controls/MultiSelect/MultiSelect.xaml" />
         <ResourceDictionary Source="/Mkm.Wpf;component/Controls/OrderList/OrderList.xaml" />
+        <ResourceDictionary Source="/Mkm.Wpf;component/Controls/OrganizationChart/OrganizationChart.xaml" />
         <ResourceDictionary Source="/Mkm.Wpf;component/Controls/Paginator/Paginator.xaml" />
         <ResourceDictionary Source="/Mkm.Wpf;component/Controls/Panel/Panel.xaml" />
         <ResourceDictionary Source="/Mkm.Wpf;component/Controls/PanelMenu/PanelMenu.xaml" />

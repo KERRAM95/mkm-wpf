@@ -1847,6 +1847,17 @@ message.contrast.outlined.color = {surface.900}
 message.contrast.outlined.border.color = {surface.900}
 message.contrast.simple.color = {surface.900}
 
+# metergroup
+metergroup.border.radius = {content.border.radius}
+metergroup.gap = 12px
+metergroup.meters.size = 6px
+metergroup.meters.background = {surface.300}
+metergroup.label.gap = 6px
+metergroup.label.marker.size = 6px
+metergroup.label.icon.size = 12px
+metergroup.label.list.vertical.gap = 6px
+metergroup.label.list.horizontal.gap = 12px
+
 # multiselect
 multiselect.background = {form.field.background}
 multiselect.disabled.background = {form.field.disabled.background}
@@ -1908,6 +1919,35 @@ multiselect.empty.message.padding = {list.option.padding}
 # orderlist
 orderlist.gap = 13.5px
 orderlist.controls.gap = 6px
+
+# organizationchart
+organizationchart.gutter = 9px
+organizationchart.transition.duration = {transition.duration}
+organizationchart.node.background = {content.background}
+organizationchart.node.hover.background = {content.hover.background}
+organizationchart.node.selected.background = {highlight.background}
+organizationchart.node.border.color = {content.border.color}
+organizationchart.node.color = {content.color}
+organizationchart.node.selected.color = {highlight.color}
+organizationchart.node.hover.color = {content.hover.color}
+organizationchart.node.padding = 9px 12px
+organizationchart.node.toggleable.padding = 9px 12px 15px 12px
+organizationchart.node.border.radius = {content.border.radius}
+organizationchart.node.toggle.button.background = {content.background}
+organizationchart.node.toggle.button.hover.background = {content.hover.background}
+organizationchart.node.toggle.button.border.color = {content.border.color}
+organizationchart.node.toggle.button.color = {text.muted.color}
+organizationchart.node.toggle.button.hover.color = {text.color}
+organizationchart.node.toggle.button.size = 18px
+organizationchart.node.toggle.button.border.radius = 50%
+organizationchart.node.toggle.button.focus.ring.width = {focus.ring.width}
+organizationchart.node.toggle.button.focus.ring.style = {focus.ring.style}
+organizationchart.node.toggle.button.focus.ring.color = {focus.ring.color}
+organizationchart.node.toggle.button.focus.ring.offset = {focus.ring.offset}
+organizationchart.node.toggle.button.focus.ring.shadow = {focus.ring.shadow}
+organizationchart.connector.color = {content.border.color}
+organizationchart.connector.border.radius = {content.border.radius}
+organizationchart.connector.height = 24px
 
 # overlaybadge
 overlaybadge.outline.width = 2px
