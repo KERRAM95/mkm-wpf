@@ -80,6 +80,9 @@ Namespace Mkm.Wpf.Tests.Controls
             AutomationProperties.SetLabeledBy(champ, libelle)
             Pret(champ)
             Dim saisie = Partie(Of TextBox)(champ, "PART_Input")
+            Assert.That(AutomationProperties.GetLabeledBy(saisie), [Is].SameAs(libelle))
+            ' Le pair du libellé, que crée le lecteur d'écran en parcourant la fenêtre (le libellé n'est ici dans aucune).
+            Peers.UIElementAutomationPeer.CreatePeerForElement(libelle)
             Dim pair = Peers.UIElementAutomationPeer.CreatePeerForElement(saisie)
             Assert.That(pair.GetName(), [Is].EqualTo("Matières"), "le libellé l'emporte sur le texte d'aide")
             AutomationProperties.SetLabeledBy(champ, Nothing)
