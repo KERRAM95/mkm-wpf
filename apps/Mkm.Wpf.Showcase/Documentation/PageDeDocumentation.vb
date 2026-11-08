@@ -228,9 +228,9 @@ Namespace Mkm.Wpf.Showcase.Documentation
                 ' application qui les écrit en XAML compilé. Lu en UTF-8 : Parse avec un contexte se trompait d'encodage
                 ' (les accents des exemples, « caractère invalide »).
                 Dim contexte As New ParserContext With {.BaseUri = New Uri("pack://application:,,,/")}
-                Dim octets = Text.Encoding.UTF8.GetBytes(EnveloppeOuvrante & xaml & EnveloppeFermante)
+                Dim octets = System.Text.Encoding.UTF8.GetBytes(EnveloppeOuvrante & xaml & EnveloppeFermante)
                 Dim racine As FrameworkElement
-                Using flux As New IO.MemoryStream(octets)
+                Using flux As New System.IO.MemoryStream(octets)
                     racine = DirectCast(XamlReader.Load(flux, contexte), FrameworkElement)
                 End Using
                 If CStr(xml.Attribute("etendu")) = "oui" Then
