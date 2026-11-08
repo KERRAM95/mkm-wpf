@@ -360,6 +360,9 @@ Les évolutions notables de mkm-wpf, version par version. Le format suit
   - WelcomePanel : l'info-bulle d'une entrée est claire, bordée, centrée,
     à la flèche bordée, comme mkm (elle avait le style sombre de toutes les
     info-bulles).
+  - InputChips : vide, il est aussi haut qu'avec des puces (la première puce
+    le grandissait de 4 px) ; avec des puces, 3 px de côté, comme mkm ; la
+    saisie se nomme aussi par le libellé du champ (LabeledBy).
 - Avatar et Chip : leur image est peinte par le code ; liée dans le gabarit,
   elle faisait écrire à WPF une erreur de liaison (sans effet visible).
 - Galleria : une vignette pâlie s'éclaire sous la souris, comme mkm.

@@ -442,6 +442,10 @@ inputchips.input.padding = 3px {inputchips.padding.x} 3px {inputchips.padding.x}
 inputchips.gap = 3px
 inputchips.chip.padding = 3px {chip.padding.x} 3px {chip.padding.x}
 inputchips.input.min.width = 40px
+# La saisie a 3 px au-dessus et au-dessous (padding.y / 2, .p-inputchips-input-item) : vide, le champ est aussi haut
+# qu'avec des puces ; avec des puces, le retrait de côté passe à 3 px (.p-inputchips-input:has(.p-inputchips-chip)).
+inputchips.input.item.margin = 3px 0 3px 0
+inputchips.input.chips.padding = 3px 3px 3px 3px
 
 # floatlabel : le libellé à position.x du bord (plus la bordure) ; envolé, au-dessus (over.active.top), en haut dans
 # le champ (in.active.top plus la bordure), ou sur la bordure (centré sur elle : la moitié de sa hauteur, 9 px) ; le

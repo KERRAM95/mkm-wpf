@@ -88,6 +88,7 @@ Namespace Mkm.Wpf.Controls
             DefaultStyleKeyProperty.OverrideMetadata(GetType(InputChips), New FrameworkPropertyMetadata(GetType(InputChips)))
             FocusableProperty.OverrideMetadata(GetType(InputChips), New FrameworkPropertyMetadata(False))
             AutomationProperties.NameProperty.OverrideMetadata(GetType(InputChips), New FrameworkPropertyMetadata(String.Empty, AddressOf OnNomChanged))
+            AutomationProperties.LabeledByProperty.OverrideMetadata(GetType(InputChips), New FrameworkPropertyMetadata(Nothing, AddressOf OnNomChanged))
         End Sub
 
         Public Sub New()
@@ -342,11 +343,13 @@ Namespace Mkm.Wpf.Controls
             DirectCast(d, InputChips).Nommer()
         End Sub
 
-        ' La saisie porte le nom du champ, sinon son texte d'aide.
+        ' La saisie porte le nom du champ, sinon son texte d'aide ; et son libellé (LabeledBy), qui l'emporte sur le texte d'aide.
         Private Sub Nommer()
             If _saisie Is Nothing Then Return
             Dim nom = AutomationProperties.GetName(Me)
-            AutomationProperties.SetName(_saisie, If(String.IsNullOrEmpty(nom), If(Placeholder, String.Empty), nom))
+            Dim libelle = AutomationProperties.GetLabeledBy(Me)
+            AutomationProperties.SetLabeledBy(_saisie, libelle)
+            AutomationProperties.SetName(_saisie, If(Not String.IsNullOrEmpty(nom), nom, If(libelle IsNot Nothing, String.Empty, If(Placeholder, String.Empty))))
         End Sub
 
         ''' <summary>Un groupe pour les lecteurs d'écran, nommé par <c>AutomationProperties.Name</c> : ses puces et sa saisie.</summary>

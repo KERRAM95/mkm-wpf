@@ -63,6 +63,29 @@ Namespace Mkm.Wpf.Tests.Controls
             Assert.That(champ.Ajouter("d"), [Is].False, "au-delà de Max")
         End Sub
 
+        <Test>
+        Public Sub InputChips_VideAussiHautQuAvecDesPuces()
+            Dim champ = Pret(New InputChips(), largeur:=300, hauteur:=200)
+            Dim vide = champ.DesiredSize.Height
+            champ.Ajouter("acier")
+            champ.UpdateLayout()
+            Assert.That(champ.DesiredSize.Height, [Is].EqualTo(vide).Within(0.5), "la première puce ne le grandit pas")
+            Assert.That(champ.Padding.Left, [Is].EqualTo(3), "avec des puces, 3 px de côté")
+        End Sub
+
+        <Test>
+        Public Sub InputChips_LaSaisieSeNommeParSonLibelle()
+            Dim libelle As New Label With {.Content = "Matières"}
+            Dim champ As New InputChips With {.Placeholder = "Ajouter une matière"}
+            AutomationProperties.SetLabeledBy(champ, libelle)
+            Pret(champ)
+            Dim saisie = Partie(Of TextBox)(champ, "PART_Input")
+            Dim pair = Peers.UIElementAutomationPeer.CreatePeerForElement(saisie)
+            Assert.That(pair.GetName(), [Is].EqualTo("Matières"), "le libellé l'emporte sur le texte d'aide")
+            AutomationProperties.SetLabeledBy(champ, Nothing)
+            Assert.That(pair.GetName(), [Is].EqualTo("Ajouter une matière"))
+        End Sub
+
         ' ---- FloatLabel, IftaLabel ----
 
         <Test>
