@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="utf-8"?>
+<page titre="KeyFilter" categorie="Formulaire" types="KeyFilter">
+  <resume>Un filtre de touches : posé sur un champ, il refuse les caractères qui ne conviennent pas, à la frappe comme
+    au collage.</resume>
+
+  <section titre="Import">
+    <code><![CDATA[
+<Window xmlns:mkm="urn:mkm-wpf">
+    <mkm:InputText mkm:KeyFilter.Pattern="pint" />
+</Window>
+]]></code>
+  </section>
+
+  <section titre="Filtres">
+    <p><c>KeyFilter.Pattern</c>, une propriété attachée, se pose sur tout champ (<c>InputText</c>, <c>Textarea</c>,
+      <c>TextBox</c>) : <c>pint</c> (chiffres), <c>int</c> (chiffres et moins), <c>pnum</c> (chiffres et point),
+      <c>num</c> (chiffres, moins et point), <c>money</c>, <c>hex</c>, <c>email</c>, <c>alpha</c>, <c>alphanum</c>.</p>
+    <exemple><![CDATA[
+<StackPanel Width="260" HorizontalAlignment="Left">
+    <mkm:InputText x:Name="Quantite" mkm:KeyFilter.Pattern="pint" Placeholder="Quantité (pint)" Margin="0,0,0,8" />
+    <mkm:InputText mkm:KeyFilter.Pattern="num" Placeholder="Cote (num)" Margin="0,0,0,8" />
+    <mkm:InputText mkm:KeyFilter.Pattern="hex" Placeholder="Couleur (hex)" Margin="0,0,0,8" />
+    <mkm:InputText mkm:KeyFilter.Pattern="alpha" Placeholder="Nom (alpha)" />
+</StackPanel>
+]]></exemple>
+  </section>
+
+  <section titre="Expression">
+    <p>Tout autre filtre est une expression régulière que chaque caractère doit satisfaire.</p>
+    <exemple><![CDATA[
+<mkm:InputText mkm:KeyFilter.Pattern="[A-Z0-9-]" Placeholder="Référence (A-Z, 0-9, -)" Width="260" HorizontalAlignment="Left" />
+]]></exemple>
+  </section>
+
+  <section titre="Accessibilité">
+    <h3>Lecteur d'écran</h3>
+    <p>Le champ reste ce qu'il est ; un caractère refusé ne s'écrit pas. Dites ce qui est attendu dans le texte d'aide
+      ou le libellé.</p>
+  </section>
+</page>

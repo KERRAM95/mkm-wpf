@@ -415,3 +415,10 @@ slider.track.vertical.margin = -8px 0 -8px 0
 slider.range.horizontal.padding = 8px 0 0 0
 slider.range.vertical.padding = 0 0 0 8px
 slider.vertical.min.height = 100px
+
+# password : le champ d'InputText ; l'œil à form.field.padding.x du bord droit, le texte s'arrête avant lui
+# (padding.x * 2 + icon.size chez mkm) ; le texte d'aide du champ masqué, au retrait du champ plus sa bordure.
+password.input.toggle.padding = 4px 30px 4px 6px
+password.toggle.margin = 0 {form.field.padding.x} 0 0
+password.placeholder.margin = 5px 7px 5px 7px
+password.overlay.window.padding = 0 2px 3px 2px

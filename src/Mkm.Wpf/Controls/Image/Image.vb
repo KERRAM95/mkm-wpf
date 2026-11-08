@@ -167,12 +167,11 @@ Namespace Mkm.Wpf.Controls
         End Sub
 
         ' Un bouton de la barre : 36 px, l'icône de 18 px, claire sur le voile.
-        Private Shared Function BoutonDAction(icone As Geometry, cle As String, quoi As System.Action) As System.Windows.Controls.Button
+        Private Shared Function BoutonDAction(icone As Geometry, cle As String, quoi As System.Action) As BoutonDApercu
             Dim dessin As New Mkm.Wpf.Controls.Icon With {.Source = icone}
             dessin.SetResourceReference(WidthProperty, "mkm.image.action.icon.size")
             dessin.SetResourceReference(HeightProperty, "mkm.image.action.icon.size")
-            Dim bouton As New System.Windows.Controls.Button With {.Content = dessin}
-            bouton.SetResourceReference(StyleProperty, "mkm.Image.Action")
+            Dim bouton As New BoutonDApercu With {.Content = dessin}
             AutomationProperties.SetName(bouton, Localizer.Current.T(cle))
             AddHandler bouton.Click, Sub() quoi()
             Return bouton
@@ -185,6 +184,19 @@ Namespace Mkm.Wpf.Controls
                 Close()
                 e.Handled = True
             End If
+        End Sub
+
+    End Class
+
+    ''' <summary>
+    ''' Un bouton de la barre de l'aperçu d'une <see cref="Image"/> : son style est dans Generic.xaml, trouvé par son type
+    ''' (une clé de chaîne ne s'y trouve pas depuis le code).
+    ''' </summary>
+    Friend NotInheritable Class BoutonDApercu
+        Inherits System.Windows.Controls.Button
+
+        Shared Sub New()
+            DefaultStyleKeyProperty.OverrideMetadata(GetType(BoutonDApercu), New FrameworkPropertyMetadata(GetType(BoutonDApercu)))
         End Sub
 
     End Class

@@ -69,4 +69,7 @@
         </Setter>
     </Style>
 
+    <!-- InputMask est une InputText : le même style (BasedOn ne joint que les styles d'un même dictionnaire). -->
+    <Style TargetType="{x:Type local:InputMask}" BasedOn="{StaticResource {x:Type local:InputText}}" />
+
 </ResourceDictionary>

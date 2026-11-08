@@ -144,4 +144,25 @@
   <data name="aria.clear" xml:space="preserve">
     <value>Clear</value>
   </data>
+  <data name="locale.weak" xml:space="preserve">
+    <value>Weak</value>
+  </data>
+  <data name="locale.medium" xml:space="preserve">
+    <value>Medium</value>
+  </data>
+  <data name="locale.strong" xml:space="preserve">
+    <value>Strong</value>
+  </data>
+  <data name="locale.passwordPrompt" xml:space="preserve">
+    <value>Enter a password</value>
+  </data>
+  <data name="aria.showPassword" xml:space="preserve">
+    <value>Show password</value>
+  </data>
+  <data name="aria.hidePassword" xml:space="preserve">
+    <value>Hide password</value>
+  </data>
+  <data name="aria.otpLabel" xml:space="preserve">
+    <value>Character {0} of {1}</value>
+  </data>
 </root>

@@ -336,6 +336,52 @@ Namespace Mkm.Wpf.UiTests
             AttendreQue(Function() valeur() = 0, "Début : 0")
         End Sub
 
+        <Test>
+        Public Sub Password_LaJaugeDitLaForceEtEchapLaCache()
+            Dim page = OuvrirLaDoc("password")
+            Dim champ = TrouverParNom("Mot de passe", ControlType.Edit, Exemple(page, "basique"))
+            Cliquer(champ)
+            TrouverAilleurs(T("locale.passwordPrompt"))
+            Ecrire("abc")
+            TrouverAilleurs(T("locale.weak"))
+            Ecrire("Def12")
+            TrouverAilleurs(T("locale.strong"))
+            Taper(VirtualKeyShort.ESCAPE)
+            AttendreQue(Function() Referme(T("locale.strong")), "Échap cache la jauge")
+        End Sub
+
+        <Test>
+        Public Sub InputMask_LaFrappeSuitLeModele()
+            Dim page = OuvrirLaDoc("inputmask")
+            Dim telephone = Trouver("Telephone", page)
+            Cliquer(telephone)
+            Ecrire("06x12345678")
+            AttendreQue(Function() telephone.Patterns.Value.Pattern.Value.Value = "06 12 34 56 78", "« 06 12 34 56 78 », le « x » refusé")
+            Taper(VirtualKeyShort.BACK)
+            AttendreQue(Function() telephone.Patterns.Value.Pattern.Value.Value = "06 12 34 56 7_", "Retour arrière vide la dernière case")
+        End Sub
+
+        <Test>
+        Public Sub InputOtp_LaFrappePasseDeCaseEnCase()
+            Dim page = OuvrirLaDoc("inputotp")
+            Dim code = Trouver("Code", page)
+            Assert.That(NomDe(code), [Is].EqualTo("Code de vérification"))
+            Cliquer(TrouverParNom(T("aria.otpLabel", 1, 4), ControlType.Edit, code))
+            Ecrire("4721")
+            AttendreQue(Function() NomDe(Trouver("Journal", page)) = "Code : 4721", "« Code : 4721 »")
+            Taper(VirtualKeyShort.BACK)
+            AttendreQue(Function() NomDe(Trouver("Journal", page)) = "Code : 472", "Retour arrière vide la dernière case")
+        End Sub
+
+        <Test>
+        Public Sub KeyFilter_LesCaracteresRefusesNeSEcriventPas()
+            Dim page = OuvrirLaDoc("keyfilter")
+            Dim quantite = Trouver("Quantite", page)
+            Cliquer(quantite)
+            Ecrire("12a-3")
+            AttendreQue(Function() quantite.Patterns.Value.Pattern.Value.Value = "123", "pint : « 123 »")
+        End Sub
+
     End Class
 
 End Namespace

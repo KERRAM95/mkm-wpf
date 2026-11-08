@@ -1450,6 +1450,12 @@ inputnumber.button.vertical.padding = {form.field.padding.y}
 inputnumber.button.hover.background = {surface.200}
 inputnumber.button.active.background = {surface.300}
 
+# inputotp
+inputotp.gap = 6px
+inputotp.input.width = 30px
+inputotp.input.sm.width = 24px
+inputotp.input.lg.width = 36px
+
 # inputtext
 inputtext.background = {form.field.background}
 inputtext.disabled.background = {form.field.disabled.background}
@@ -1739,6 +1745,22 @@ panel.toggleable.header.padding = 4.5px 13.5px
 panel.title.font.weight = 700
 panel.content.padding = 13.5px
 panel.footer.padding = 0 13.5px 13.5px 13.5px
+
+# password
+password.meter.border.radius = {content.border.radius}
+password.meter.height = 9px
+password.meter.background = {surface.300}
+password.icon.color = {form.field.icon.color}
+password.overlay.background = {overlay.popover.background}
+password.overlay.border.color = {overlay.popover.border.color}
+password.overlay.border.radius = {overlay.popover.border.radius}
+password.overlay.color = {overlay.popover.color}
+password.overlay.padding = {overlay.popover.padding}
+password.overlay.shadow = {overlay.popover.shadow}
+password.content.gap = 6px
+password.strength.weak.background = {red.600}
+password.strength.medium.background = {yellow.600}
+password.strength.strong.background = {green.600}
 
 # popover
 popover.background = {overlay.popover.background}

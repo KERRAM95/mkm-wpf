@@ -9,7 +9,7 @@
                     xmlns:loc="clr-namespace:Mkm.Wpf.Localization">
 
     <!-- Un bouton de la barre de l'aperçu. -->
-    <Style x:Key="mkm.Image.Action" TargetType="{x:Type Button}">
+    <Style TargetType="{x:Type local:BoutonDApercu}">
         <Setter Property="Width" Value="{DynamicResource mkm.image.action.size}" />
         <Setter Property="Height" Value="{DynamicResource mkm.image.action.size}" />
         <Setter Property="Foreground" Value="{DynamicResource mkm.image.action.color}" />

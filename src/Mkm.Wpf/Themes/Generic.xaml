@@ -13,8 +13,8 @@
         <ResourceDictionary Source="/Mkm.Wpf;component/Controls/ActionBar/ActionBar.xaml" />
         <ResourceDictionary Source="/Mkm.Wpf;component/Controls/AutoComplete/AutoComplete.xaml" />
         <ResourceDictionary Source="/Mkm.Wpf;component/Controls/Avatar/Avatar.xaml" />
-        <ResourceDictionary Source="/Mkm.Wpf;component/Controls/Badge/Badge.xaml" />
         <ResourceDictionary Source="/Mkm.Wpf;component/Controls/Badge/OverlayBadge.xaml" />
+        <ResourceDictionary Source="/Mkm.Wpf;component/Controls/Badge/Badge.xaml" />
         <ResourceDictionary Source="/Mkm.Wpf;component/Controls/BlockUI/BlockUI.xaml" />
         <ResourceDictionary Source="/Mkm.Wpf;component/Controls/Breadcrumb/Breadcrumb.xaml" />
         <ResourceDictionary Source="/Mkm.Wpf;component/Controls/Button/Button.xaml" />
@@ -36,6 +36,7 @@
         <ResourceDictionary Source="/Mkm.Wpf;component/Controls/Inplace/Inplace.xaml" />
         <ResourceDictionary Source="/Mkm.Wpf;component/Controls/InputGroup/InputGroup.xaml" />
         <ResourceDictionary Source="/Mkm.Wpf;component/Controls/InputNumber/InputNumber.xaml" />
+        <ResourceDictionary Source="/Mkm.Wpf;component/Controls/InputOtp/InputOtp.xaml" />
         <ResourceDictionary Source="/Mkm.Wpf;component/Controls/InputText/InputText.xaml" />
         <ResourceDictionary Source="/Mkm.Wpf;component/Controls/Knob/Knob.xaml" />
         <ResourceDictionary Source="/Mkm.Wpf;component/Controls/Listbox/Listbox.xaml" />
@@ -44,6 +45,7 @@
         <ResourceDictionary Source="/Mkm.Wpf;component/Controls/MultiSelect/MultiSelect.xaml" />
         <ResourceDictionary Source="/Mkm.Wpf;component/Controls/Paginator/Paginator.xaml" />
         <ResourceDictionary Source="/Mkm.Wpf;component/Controls/Panel/Panel.xaml" />
+        <ResourceDictionary Source="/Mkm.Wpf;component/Controls/Password/Password.xaml" />
         <ResourceDictionary Source="/Mkm.Wpf;component/Controls/Popover/Popover.xaml" />
         <ResourceDictionary Source="/Mkm.Wpf;component/Controls/ProgressBar/ProgressBar.xaml" />
         <ResourceDictionary Source="/Mkm.Wpf;component/Controls/ProgressSpinner/ProgressSpinner.xaml" />

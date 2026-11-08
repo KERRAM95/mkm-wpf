@@ -154,6 +154,13 @@ Les évolutions notables de mkm-wpf, version par version. Le format suit
   habillé comme mkm), `Knob` (un arc qu'on tourne, la valeur au milieu) ;
   `Icon.Filled` (une icône pleine) ; leurs jetons, leurs pages, leurs tests et
   leurs scénarios.
+- Le lot 19 (`docs/composants/saisies-protegees-et-filtrees.md`) : `Password`
+  (masqué, l'œil, la jauge de force), `InputMask` (un champ qui suit un
+  modèle), `InputOtp` (une case par caractère), `KeyFilter` (le filtre de
+  touches, propriété attachée) ; leurs jetons, leurs pages, leurs tests et
+  leurs scénarios.
+- Image : les boutons de l'aperçu prennent enfin leur style (un type à eux,
+  au lieu d'une clé que l'application ne voyait pas).
 - Info-bulle et Popover : la page qui défile les referme, comme mkm.
 - Le zoom de toute l'interface (`docs/fondations/zoom.md`) :
   `MkmResources.Zoom` (80 à 200 %), `ZoomIn`, `ZoomOut`, `ResetZoom`,

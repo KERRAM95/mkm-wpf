@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="utf-8"?>
+<page titre="InputOtp" categorie="Formulaire" types="InputOtp" jetons="inputotp">
+  <resume>Un code à usage unique : une case par caractère ; la frappe passe à la case suivante, un code collé remplit
+    les cases.</resume>
+
+  <section titre="Import">
+    <code><![CDATA[
+<Window xmlns:mkm="urn:mkm-wpf">
+    <mkm:InputOtp />
+</Window>
+]]></code>
+  </section>
+
+  <section titre="Basique">
+    <p><c>Value</c> est le code, lié dans les deux sens ; <c>Length</c> le nombre de cases (4).</p>
+    <exemple><![CDATA[
+<StackPanel>
+    <mkm:InputOtp x:Name="Code" AutomationProperties.Name="Code de vérification" />
+    <TextBlock x:Name="Journal" Margin="0,12,0,0" Text="{Binding Value, ElementName=Code, StringFormat='Code : {0}'}" />
+</StackPanel>
+]]></exemple>
+  </section>
+
+  <section titre="Chiffres et masque">
+    <p><c>IntegerOnly</c> n'accepte que des chiffres ; <c>Mask</c> masque les caractères.</p>
+    <exemple><![CDATA[
+<StackPanel>
+    <mkm:InputOtp Length="6" IntegerOnly="True" Margin="0,0,0,12" />
+    <mkm:InputOtp Mask="True" />
+</StackPanel>
+]]></exemple>
+  </section>
+
+  <section titre="Lecture seule et refusé">
+    <exemple><![CDATA[
+<StackPanel>
+    <mkm:InputOtp Value="4721" IsReadOnly="True" Margin="0,0,0,12" />
+    <mkm:InputOtp Invalid="True" />
+</StackPanel>
+]]></exemple>
+  </section>
+
+  <section titre="Accessibilité">
+    <h3>Lecteur d'écran</h3>
+    <p>Narrateur dit le code « groupe », nommé par <c>AutomationProperties.Name</c> ; chaque case, « Caractère 2 sur 4 ».</p>
+    <h3>Clavier</h3>
+    <touches>
+      <touche nom="Tab">Passe d'une case à l'autre.</touche>
+      <touche nom="Flèche droite">Passe à la case suivante.</touche>
+      <touche nom="Flèche gauche">Passe à la case précédente.</touche>
+      <touche nom="Retour arrière">Vide la case et revient à la précédente.</touche>
+      <touche nom="Suppr">Vide la case.</touche>
+    </touches>
+  </section>
+</page>

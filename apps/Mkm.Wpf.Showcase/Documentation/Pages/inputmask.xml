@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="utf-8"?>
+<page titre="InputMask" categorie="Formulaire" types="InputMask" jetons="inputtext">
+  <resume>Un champ qui suit un modèle : un téléphone, une date, une référence ; les cases à remplir se montrent, les
+    séparateurs s'écrivent seuls.</resume>
+
+  <section titre="Import">
+    <code><![CDATA[
+<Window xmlns:mkm="urn:mkm-wpf">
+    <mkm:InputMask Mask="99/99/9999" />
+</Window>
+]]></code>
+  </section>
+
+  <section titre="Basique">
+    <p>InputMask est une <lien page="inputtext">InputText</lien>. Dans <c>Mask</c>, <c>9</c> est un chiffre, <c>a</c> une
+      lettre, <c>*</c> une lettre ou un chiffre ; le reste s'écrit tel quel. Au clavier, les cases vides se montrent
+      (<c>SlotChar</c>, « _ ») ; un caractère qui ne convient pas est refusé. <c>Text</c> est le texte montré,
+      <c>UnmaskedValue</c> les seuls caractères saisis, <c>IsComplete</c> dit si tout est rempli.</p>
+    <exemple><![CDATA[
+<StackPanel Width="260" HorizontalAlignment="Left">
+    <mkm:InputMask x:Name="Telephone" Mask="99 99 99 99 99" Placeholder="06 00 00 00 00" />
+    <TextBlock Margin="0,12,0,0" Text="{Binding UnmaskedValue, ElementName=Telephone, StringFormat='Chiffres : {0}'}" />
+</StackPanel>
+]]></exemple>
+  </section>
+
+  <section titre="Modèles">
+    <p>Une référence, une date ; ce qui suit <c>?</c> est facultatif (l'extension d'un poste).</p>
+    <exemple><![CDATA[
+<StackPanel Width="260" HorizontalAlignment="Left">
+    <mkm:InputMask Mask="HS-99999" Placeholder="HS-00000" Margin="0,0,0,8" />
+    <mkm:InputMask Mask="99/99/9999" SlotChar="jj/mm/aaaa" Placeholder="jj/mm/aaaa" Margin="0,0,0,8" />
+    <mkm:InputMask Mask="(999) 999-9999? x99999" Placeholder="(000) 000-0000 x00000" />
+</StackPanel>
+]]></exemple>
+  </section>
+
+  <section titre="Saisie incomplète">
+    <p>En quittant le champ, une saisie incomplète est vidée ; <c>AutoClear="False"</c> la garde.</p>
+    <exemple><![CDATA[
+<mkm:InputMask Mask="aaa-999" AutoClear="False" Placeholder="ABC-123" Width="260" HorizontalAlignment="Left" />
+]]></exemple>
+  </section>
+
+  <section titre="Accessibilité">
+    <h3>Lecteur d'écran</h3>
+    <p>Celle d'InputText : Narrateur dit le champ « modifier », avec son texte, cases vides comprises.</p>
+    <h3>Clavier</h3>
+    <touches>
+      <touche nom="Retour arrière">Vide la case précédente ; ce qui suit revient d'une case.</touche>
+      <touche nom="Suppr">Vide la case suivante ; ce qui suit revient d'une case.</touche>
+    </touches>
+  </section>
+</page>
