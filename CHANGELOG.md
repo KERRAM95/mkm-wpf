@@ -303,6 +303,8 @@ Les évolutions notables de mkm-wpf, version par version. Le format suit
   - InputGroup : Select, InputNumber, Password, DatePicker, IconField et
     FloatLabel perdent aussi leurs coins du côté d'un voisin, comme mkm (ils
     les gardaient, arrondis au milieu du groupe).
+  - MegaMenu : les liens d'une colonne ont le retrait des liens de mkm, celui
+    du libellé de leur groupe (ils avaient celui du menu de 3DEXPERIENCE).
   - InputOtp, ColorPicker, Terminal, Password : la langue n'est suivie que
     tant que le contrôle est chargé (l'abonnement à vie le gardait en
     mémoire).

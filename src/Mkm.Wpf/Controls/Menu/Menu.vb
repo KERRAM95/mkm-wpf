@@ -136,8 +136,15 @@ Namespace Mkm.Wpf.Controls
         ''' <inheritdoc/>
         Protected Overrides Sub PrepareContainerForItemOverride(element As DependencyObject, item As Object)
             MyBase.PrepareContainerForItemOverride(element, item)
-            ' Le trait d'un groupe : celui des menus (un menu le pose lui-même sur les siens).
+            ' Le trait d'un groupe : celui des menus.
             Colonne.StylerLeTrait(element)
+            ' Dans une colonne de MegaMenu, un lien a le retrait des liens de mkm (megamenu.item.padding, celui du
+            ' libellé du groupe), et non celui du menu de 3DEXPERIENCE.
+            Dim lien = TryCast(element, MenuItem)
+            If lien IsNot Nothing AndAlso TypeOf ItemsControl.ItemsControlFromItemContainer(Me) Is MegaMenuColumn AndAlso
+               lien.ReadLocalValue(Control.PaddingProperty) Is DependencyProperty.UnsetValue Then
+                lien.SetResourceReference(Control.PaddingProperty, "mkm.megamenu.item.padding")
+            End If
         End Sub
 
         ''' <inheritdoc/>
