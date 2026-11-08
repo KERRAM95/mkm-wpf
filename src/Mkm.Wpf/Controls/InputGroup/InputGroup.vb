@@ -147,9 +147,12 @@ Namespace Mkm.Wpf.Controls
             Return Not (TypeOf contenu Is InputGroupAddon OrElse TypeOf contenu Is ButtonBase)
         End Function
 
+        ' La hauteur de la ligne est celle des champs (24 px pour celui de 3DEXPERIENCE) : les compléments et les boutons
+        ' la prennent (align-items: stretch chez mkm) ; sans champ, celle du plus haut.
         Protected Overrides Function MeasureOverride(disponible As Size) As Size
             Dim fixe = 0.0
             Dim hauteur = 0.0
+            Dim hauteurDesChamps = 0.0
             Dim champs = 0
             For Each enfant As UIElement In InternalChildren
                 If EstUnChamp(enfant) Then
@@ -167,8 +170,9 @@ Namespace Mkm.Wpf.Controls
                 If Not EstUnChamp(enfant) Then Continue For
                 enfant.Measure(New Size(part, disponible.Height))
                 largeurDesChamps += enfant.DesiredSize.Width
-                hauteur = Math.Max(hauteur, enfant.DesiredSize.Height)
+                hauteurDesChamps = Math.Max(hauteurDesChamps, enfant.DesiredSize.Height)
             Next
+            If champs > 0 Then hauteur = hauteurDesChamps
             Dim largeur = If(Double.IsInfinity(disponible.Width), fixe + largeurDesChamps, Math.Max(fixe + largeurDesChamps, disponible.Width))
             Return New Size(If(champs = 0, fixe, largeur), hauteur)
         End Function

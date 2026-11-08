@@ -34,7 +34,8 @@
         <Setter Property="BorderBrush" Value="{DynamicResource mkm.inputgroup.addon.border.color}" />
         <Setter Property="BorderThickness" Value="{DynamicResource mkm.inputgroup.addon.border.width}" />
         <Setter Property="CornerRadius" Value="{DynamicResource mkm.inputgroup.addon.border.radius}" />
-        <Setter Property="Padding" Value="{DynamicResource mkm.inputgroup.addon.padding}" />
+        <!-- La hauteur du champ (24 px) : le retrait de côté seulement. -->
+        <Setter Property="Padding" Value="{DynamicResource mkm.inputgroup.addon.inline.padding}" />
         <Setter Property="MinWidth" Value="{DynamicResource mkm.inputgroup.addon.min.width}" />
         <Setter Property="FontFamily" Value="{DynamicResource mkm.font.family}" />
         <Setter Property="FontSize" Value="{DynamicResource mkm.font.size}" />

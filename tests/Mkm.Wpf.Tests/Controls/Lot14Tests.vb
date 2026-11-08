@@ -80,6 +80,7 @@ Namespace Mkm.Wpf.Tests.Controls
             Pret(groupe, 300, 24)
             Assert.That(euro.ActualWidth + prix.ActualWidth, [Is].EqualTo(300).Within(0.5))
             Assert.That(euro.ActualWidth, [Is].EqualTo(30).Within(0.5), "inputgroup.addon.min.width")
+            Assert.That(euro.ActualHeight, [Is].EqualTo(prix.ActualHeight).Within(0.5), "le complément à la hauteur du champ")
         End Sub
 
         ' ---- Listbox ----

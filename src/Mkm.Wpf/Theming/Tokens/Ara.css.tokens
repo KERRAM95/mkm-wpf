@@ -355,6 +355,8 @@ inputgroup.addon.border.width = 1px 0 1px 0
 inputgroup.addon.start.border.width = 1px 0 1px 1px
 inputgroup.addon.end.border.width = 1px 1px 1px 0
 inputgroup.addon.both.border.width = 1px 1px 1px 1px
+# Un complément prend la hauteur du champ de 3DEXPERIENCE (24 px) : son retrait de côté seulement.
+inputgroup.addon.inline.padding = 0 {inputgroup.addon.padding}
 
 # listbox : la coche de l'option choisie, ses gouttières en marge (gutter.start et gutter.end sont des nombres).
 listbox.checkmark.margin = 0 {listbox.checkmark.gutter.end} 0 {listbox.checkmark.gutter.start}
