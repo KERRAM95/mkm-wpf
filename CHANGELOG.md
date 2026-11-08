@@ -289,6 +289,8 @@ Les évolutions notables de mkm-wpf, version par version. Le format suit
   - Dialog : la poignée d'étirement prend le clavier (flèches, Maj), se nomme
     et montre l'anneau ; à l'ouverture, le clavier entre dans le dialogue
     (l'élément désigné, sinon la croix).
+  - Drawer : PanelWidth et PanelHeight règlent la taille du panneau (la
+    section « Size » de mkm).
   - InputOtp, ColorPicker, Terminal, Password : la langue n'est suivie que
     tant que le contrôle est chargé (l'abonnement à vie le gardait en
     mémoire).

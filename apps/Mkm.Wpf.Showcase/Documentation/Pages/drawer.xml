@@ -52,6 +52,16 @@
 ]]></code>
   </section>
 
+  <section titre="Taille">
+    <p><c>PanelWidth</c> règle la largeur du panneau à gauche ou à droite, <c>PanelHeight</c> sa hauteur en haut ou en
+      bas ; sans elles, celles du thème.</p>
+    <code><![CDATA[
+<mkm:Drawer Header="Nomenclature" Position="Right" PanelWidth="480">
+    <TextBlock Text="Les 42 lignes de la nomenclature." />
+</mkm:Drawer>
+]]></code>
+  </section>
+
   <section titre="Accessibilité">
     <h3>Lecteur d'écran</h3>
     <p>Narrateur dit le tiroir « volet », nommé par son titre ; sa croix se nomme « Fermer ».</p>

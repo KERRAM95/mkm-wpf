@@ -42,6 +42,15 @@ Namespace Mkm.Wpf.Tests.Controls
         ' ---- Drawer ----
 
         <Test>
+        Public Sub Drawer_PanelWidthRegleLaLargeurDuPanneau()
+            Dim tiroir = Pret(New Drawer With {.Position = DrawerPosition.Right, .PanelWidth = 420})
+            Dim panneau = DirectCast(tiroir.Template.FindName("PART_Panel", tiroir), FrameworkElement)
+            Assert.That(panneau.Width, [Is].EqualTo(420))
+            tiroir.Position = DrawerPosition.Top
+            Assert.That(Double.IsNaN(panneau.Width), [Is].True, "en haut, la largeur n'a pas d'objet")
+        End Sub
+
+        <Test>
         Public Sub Drawer_FermeIlNeSeVoitPas()
             Dim tiroir = Pret(New Drawer With {.Header = "Filtres", .Content = New TextBlock With {.Text = "Plans"}})
             Assert.That(tiroir.Visibility, [Is].EqualTo(Visibility.Collapsed))

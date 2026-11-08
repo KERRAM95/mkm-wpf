@@ -43,7 +43,48 @@ Namespace Mkm.Wpf.Controls
 
         ''' <summary>Le bord d'où il sort : à gauche par défaut.</summary>
         Public Shared ReadOnly PositionProperty As DependencyProperty = DependencyProperty.Register(
-            NameOf(Position), GetType(DrawerPosition), GetType(Drawer), New FrameworkPropertyMetadata(DrawerPosition.Left))
+            NameOf(Position), GetType(DrawerPosition), GetType(Drawer), New FrameworkPropertyMetadata(DrawerPosition.Left, AddressOf OnTailleChanged))
+
+        ''' <summary>La largeur du panneau à gauche ou à droite (la section « Size » de mkm) ; sinon celle du thème.</summary>
+        Public Shared ReadOnly PanelWidthProperty As DependencyProperty = DependencyProperty.Register(
+            NameOf(PanelWidth), GetType(Double), GetType(Drawer), New FrameworkPropertyMetadata(Double.NaN, AddressOf OnTailleChanged))
+
+        ''' <summary>La hauteur du panneau en haut ou en bas ; sinon celle du thème.</summary>
+        Public Shared ReadOnly PanelHeightProperty As DependencyProperty = DependencyProperty.Register(
+            NameOf(PanelHeight), GetType(Double), GetType(Drawer), New FrameworkPropertyMetadata(Double.NaN, AddressOf OnTailleChanged))
+
+        ''' <summary>La largeur du panneau à gauche ou à droite ; Double.NaN (par défaut) : celle du thème.</summary>
+        Public Property PanelWidth As Double
+            Get
+                Return CDbl(GetValue(PanelWidthProperty))
+            End Get
+            Set(value As Double)
+                SetValue(PanelWidthProperty, value)
+            End Set
+        End Property
+
+        ''' <summary>La hauteur du panneau en haut ou en bas ; Double.NaN (par défaut) : celle du thème.</summary>
+        Public Property PanelHeight As Double
+            Get
+                Return CDbl(GetValue(PanelHeightProperty))
+            End Get
+            Set(value As Double)
+                SetValue(PanelHeightProperty, value)
+            End Set
+        End Property
+
+        Private Shared Sub OnTailleChanged(d As DependencyObject, e As DependencyPropertyChangedEventArgs)
+            DirectCast(d, Drawer).Dimensionner()
+        End Sub
+
+        ' La taille choisie par l'application, du seul côté où elle compte ; sinon le gabarit (jetons du thème).
+        Private Sub Dimensionner()
+            If _panneau Is Nothing Then Return
+            Dim lateral = Position = DrawerPosition.Left OrElse Position = DrawerPosition.Right
+            Dim horizontal = Position = DrawerPosition.Top OrElse Position = DrawerPosition.Bottom
+            If lateral AndAlso Not Double.IsNaN(PanelWidth) Then _panneau.Width = PanelWidth Else _panneau.ClearValue(WidthProperty)
+            If horizontal AndAlso Not Double.IsNaN(PanelHeight) Then _panneau.Height = PanelHeight Else _panneau.ClearValue(HeightProperty)
+        End Sub
 
         ''' <summary>Le pied, sous le contenu : des boutons.</summary>
         Public Shared ReadOnly FooterProperty As DependencyProperty = DependencyProperty.Register(
@@ -133,6 +174,7 @@ Namespace Mkm.Wpf.Controls
             If _croix IsNot Nothing Then RemoveHandler _croix.Click, AddressOf Croix_Click
             MyBase.OnApplyTemplate()
             _panneau = TryCast(GetTemplateChild("PART_Panel"), FrameworkElement)
+            Dimensionner()
             _voile = TryCast(GetTemplateChild("PART_Mask"), UIElement)
             _croix = TryCast(GetTemplateChild("PART_Close"), ButtonBase)
             If _voile IsNot Nothing Then AddHandler _voile.MouseLeftButtonDown, AddressOf Voile_Clic
