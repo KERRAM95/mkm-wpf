@@ -143,9 +143,11 @@ Namespace Mkm.Wpf.Controls
         End Function
 
         ' Un champ, un bouton ou un complément de mkm qui ont leurs coins (CornerRadius, celui de Border).
+        ' Une propriété CornerRadius déclarée par le type lui-même (FromProperty en trouve une à tout élément).
         Private Shared Function APropreCoins(element As DependencyObject) As Boolean
-            Return TypeOf element Is FrameworkElement AndAlso
-                DependencyPropertyDescriptor.FromProperty(Border.CornerRadiusProperty, element.GetType()) IsNot Nothing
+            If TypeOf element IsNot FrameworkElement OrElse TypeOf element Is Border Then Return False
+            Dim propriete = element.GetType().GetProperty("CornerRadius", Reflection.BindingFlags.Public Or Reflection.BindingFlags.Instance)
+            Return propriete IsNot Nothing AndAlso propriete.PropertyType Is GetType(CornerRadius)
         End Function
 
     End Class
