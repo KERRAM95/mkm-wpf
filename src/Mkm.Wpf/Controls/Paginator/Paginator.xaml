@@ -50,6 +50,8 @@
         <Setter Property="AutomationProperties.Name" Value="{Binding Label}" />
         <Style.Triggers>
             <DataTrigger Binding="{Binding IsCurrent}" Value="True">
+                <!-- La page montrée le dit aux lecteurs d'écran (aria-current="page" de mkm). -->
+                <Setter Property="AutomationProperties.ItemStatus" Value="{loc:T aria.currentPage}" />
                 <Setter Property="Background" Value="{DynamicResource mkm.paginator.nav.button.selected.background}" />
                 <Setter Property="Foreground" Value="{DynamicResource mkm.paginator.nav.button.selected.color}" />
             </DataTrigger>
@@ -92,11 +94,11 @@
                             <Button x:Name="PART_Last" Style="{StaticResource mkm.Paginator.Bouton}" AutomationProperties.Name="{loc:T aria.lastPage}">
                                 <local:Icon Source="{x:Static local:InternalIcons.AngleDoubleRight}" />
                             </Button>
-                            <local:Select x:Name="Lignes" MinWidth="70" VerticalAlignment="Center" Margin="6,0,0,0"
+                            <local:Select x:Name="Lignes" VerticalAlignment="Center"
                                           AutomationProperties.Name="{loc:T aria.rowsPerPage}"
                                           ItemsSource="{TemplateBinding RowsPerPageOptions}"
                                           SelectedItem="{Binding Rows, RelativeSource={RelativeSource TemplatedParent}, Mode=TwoWay}" />
-                            <TextBlock x:Name="Rapport" Visibility="Collapsed" VerticalAlignment="Center" Margin="6,0,0,0"
+                            <TextBlock x:Name="Rapport" Visibility="Collapsed" VerticalAlignment="Center"
                                        Foreground="{DynamicResource mkm.paginator.current.page.report.color}"
                                        Text="{TemplateBinding CurrentPageReport}" />
                         </local:GapStackPanel>

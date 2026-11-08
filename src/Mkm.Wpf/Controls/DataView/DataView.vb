@@ -225,8 +225,9 @@ Namespace Mkm.Wpf.Controls
             Dim vue = DirectCast(d, DataView)
             Dim avant = TryCast(e.OldValue, INotifyCollectionChanged)
             Dim apres = TryCast(e.NewValue, INotifyCollectionChanged)
-            If avant IsNot Nothing Then RemoveHandler avant.CollectionChanged, AddressOf vue.Elements_CollectionChanged
-            If apres IsNot Nothing Then AddHandler apres.CollectionChanged, AddressOf vue.Elements_CollectionChanged
+            ' Abonnement faible : une liste qui vit plus longtemps que la vue ne la retient pas.
+            If avant IsNot Nothing Then CollectionChangedEventManager.RemoveHandler(avant, AddressOf vue.Elements_CollectionChanged)
+            If apres IsNot Nothing Then CollectionChangedEventManager.AddHandler(apres, AddressOf vue.Elements_CollectionChanged)
             vue.Paginer()
         End Sub
 
@@ -243,6 +244,11 @@ Namespace Mkm.Wpf.Controls
             Dim tous = If(ItemsSource, Enumerable.Empty(Of Object)()).Cast(Of Object)().ToList()
             SetValue(TotalRecordsPropertyKey, tous.Count)
             SetValue(IsEmptyPropertyKey, tous.Count = 0)
+            ' La liste a rétréci sous la page montrée : la dernière page, comme mkm (sinon la vue paraîtrait vide).
+            If Paginator AndAlso Rows > 0 AndAlso tous.Count > 0 AndAlso First >= tous.Count Then
+                SetCurrentValue(FirstProperty, ((tous.Count - 1) \ Rows) * Rows)
+                Return
+            End If
             If Paginator AndAlso Rows > 0 Then
                 SetValue(PageItemsPropertyKey, tous.Skip(Math.Max(0, First)).Take(Rows).ToList())
             Else

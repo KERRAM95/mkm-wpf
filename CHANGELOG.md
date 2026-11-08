@@ -248,6 +248,12 @@ Les évolutions notables de mkm-wpf, version par version. Le format suit
   - MultiSelect : ↑ ouvre la liste ; la case de tête n'est cochée que si
     toutes les options montrées sont choisies (elle l'était à tort avec un
     filtre). Rating : l'anneau du clavier à 1 px de l'étoile.
+  - Paginator : moins de lignes qu'avant, la dernière page (First restait
+    au-delà) ; un autre nombre de lignes n'annonce la page qu'une fois ; la
+    page montrée le dit aux lecteurs d'écran ; la liste des lignes par page
+    n'est plus élargie.
+  - DataView : une liste qui rétrécit ramène à la dernière page (la vue
+    paraissait vide) ; abonnement faible à la liste.
   - InputOtp, ColorPicker, Terminal, Password : la langue n'est suivie que
     tant que le contrôle est chargé (l'abonnement à vie le gardait en
     mémoire).

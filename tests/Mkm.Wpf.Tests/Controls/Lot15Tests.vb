@@ -82,10 +82,25 @@ Namespace Mkm.Wpf.Tests.Controls
         Public Sub Paginator_UnAutreNombreDeLignesGardeLaPremiereLigne()
             Dim p = Pret(New Paginator With {.TotalRecords = 120, .Rows = 10})
             p.ChangePage(5)
+            Dim annonces = 0
+            AddHandler p.PageChange, Sub(s, e) annonces += 1
             p.Rows = 25
+            Assert.That(annonces, [Is].EqualTo(1), "une seule annonce")
             Assert.That(p.First, [Is].EqualTo(50), "la page qui contient la ligne 51")
             Assert.That(p.Page, [Is].EqualTo(2))
             Assert.That(p.PageCount, [Is].EqualTo(5))
+        End Sub
+
+        <Test>
+        Public Sub Paginator_MoinsDeLignesRameneALaDernierePage()
+            Dim p = Pret(New Paginator With {.TotalRecords = 120, .Rows = 10})
+            p.ChangePage(11)
+            Dim annonces = 0
+            AddHandler p.PageChange, Sub(s, e) annonces += 1
+            p.TotalRecords = 35
+            Assert.That(p.First, [Is].EqualTo(30), "la dernière page, comme mkm")
+            Assert.That(p.Page, [Is].EqualTo(3))
+            Assert.That(annonces, [Is].EqualTo(1))
         End Sub
 
         <Test>

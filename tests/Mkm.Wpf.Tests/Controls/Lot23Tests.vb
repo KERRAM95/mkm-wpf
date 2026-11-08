@@ -121,6 +121,17 @@ Namespace Mkm.Wpf.Tests.Controls
         End Sub
 
         <Test>
+        Public Sub DataView_UneListeQuiRetrecitRameneALaDernierePage()
+            Dim pieces As New ObservableCollection(Of String)(Enumerable.Range(1, 12).Select(Function(i) $"P{i}"))
+            Dim vue = Pret(New DataView With {.ItemsSource = pieces, .Paginator = True, .Rows = 5, .First = 10})
+            For i = 1 To 6
+                pieces.RemoveAt(pieces.Count - 1)
+            Next
+            Assert.That(vue.First, [Is].EqualTo(5), "la dernière page")
+            Assert.That(vue.PageItems.Cast(Of String)(), [Is].EqualTo({"P6"}), "pas une page vide")
+        End Sub
+
+        <Test>
         Public Sub DataView_SuitLaListeEtDitSonVide()
             Dim pieces As New ObservableCollection(Of String)
             Dim vue = Pret(New DataView With {.ItemsSource = pieces})

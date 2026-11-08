@@ -266,20 +266,38 @@ Namespace Mkm.Wpf.Controls
             SetCurrentValue(FirstProperty, borne * Math.Max(1, Rows))
         End Sub
 
+        ' Vrai pendant que le paginateur range First lui-même : il n'annonce la page qu'une fois, à la fin.
+        Private _range As Boolean
+
         Private Shared Sub OnChange(d As DependencyObject, e As DependencyPropertyChangedEventArgs)
             Dim pagination = DirectCast(d, Paginator)
             Dim avant = pagination.Page
             pagination.Calculer()
+            If pagination._range Then Return
             If e.Property Is FirstProperty AndAlso pagination.Page <> avant Then pagination.Annoncer()
+            ' Moins de lignes qu'avant, First au-delà : la dernière page, annoncée (mkm ramène à pageCount - 1).
+            If e.Property Is TotalRecordsProperty AndAlso pagination.TotalRecords > 0 AndAlso pagination.First >= pagination.TotalRecords Then
+                pagination.Ranger((pagination.PageCount - 1) * Math.Max(1, pagination.Rows))
+            End If
         End Sub
 
         ' Un autre nombre de lignes : la page qui contient la première ligne montrée, comme mkm.
         Private Shared Sub OnRowsChanged(d As DependencyObject, e As DependencyPropertyChangedEventArgs)
             Dim pagination = DirectCast(d, Paginator)
             Dim lignes = Math.Max(1, CInt(e.NewValue))
-            pagination.SetCurrentValue(FirstProperty, (pagination.First \ lignes) * lignes)
-            pagination.Calculer()
-            pagination.Annoncer()
+            pagination.Ranger((pagination.First \ lignes) * lignes)
+        End Sub
+
+        ' Pose First, recalcule, et annonce la page une seule fois.
+        Private Sub Ranger(premier As Integer)
+            _range = True
+            Try
+                SetCurrentValue(FirstProperty, premier)
+            Finally
+                _range = False
+            End Try
+            Calculer()
+            Annoncer()
         End Sub
 
         Private Sub Annoncer()

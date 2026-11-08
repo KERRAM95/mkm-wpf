@@ -114,6 +114,9 @@
   <data name="aria.lastPage" xml:space="preserve">
     <value>Dernière page</value>
   </data>
+  <data name="aria.currentPage" xml:space="preserve">
+    <value>Page actuelle</value>
+  </data>
   <data name="aria.page" xml:space="preserve">
     <value>Page {0}</value>
   </data>
