@@ -151,6 +151,9 @@ Les évolutions notables de mkm-wpf, version par version. Le format suit
   - les boutons plier/déplier du Tree et les cases d'une colonne du DataTable
     ont un nom.
 - RadioButton : les flèches choisissent le bouton voisin du groupe, comme mkm.
+- TieredMenu : un élément choisi dans un étage referme les étages ouverts ; ils
+  restaient ouverts (trouvé par les tests d'interaction).
+- ActionBar : repliée dès le départ, son bouton de repli n'avait pas de nom.
 - La relecture des lots 1 à 4 :
   - ActionBar : les commandes d'une liste ouverte n'avaient pas la forme de lignes
     de menu ; Début et Fin faisaient défiler la rangée sans déplacer le focus ;

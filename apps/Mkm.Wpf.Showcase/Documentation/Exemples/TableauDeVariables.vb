@@ -12,6 +12,12 @@ Namespace Mkm.Wpf.Showcase.Documentation.Exemples
         Public Property Portee As String
         Public Property Modifiee As Date
         Public Property Active As Boolean
+
+        ''' <summary>Le nom de la ligne pour les lecteurs d'écran : sans lui, Narrateur lirait le nom de la classe.</summary>
+        Public Overrides Function ToString() As String
+            Return Nom
+        End Function
+
     End Class
 
     ''' <summary>Les tableaux de l'exemple reçoivent des variables d'environnement ; un tableau marqué « vide » n'en reçoit pas.</summary>

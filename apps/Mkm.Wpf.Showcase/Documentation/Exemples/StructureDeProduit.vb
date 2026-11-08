@@ -23,6 +23,12 @@ Namespace Mkm.Wpf.Showcase.Documentation.Exemples
                 Me.Enfants.Add(enfant)
             Next
         End Sub
+
+        ''' <summary>Le nom de la ligne pour les lecteurs d'écran : sans lui, Narrateur lirait le nom de la classe.</summary>
+        Public Overrides Function ToString() As String
+            Return Nom
+        End Function
+
     End Class
 
     ''' <summary>

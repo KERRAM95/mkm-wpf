@@ -73,7 +73,7 @@ Namespace Mkm.Wpf.Showcase.Documentation
                 _onglets.Items.Add(New Tab With {.Header = "API", .Content = OngletApi()})
                 _onglets.Items.Add(New Tab With {.Header = "Thème", .Content = OngletTheme()})
                 AddHandler _onglets.SelectionChanged, Sub(s, e)
-                                                          If e.OriginalSource Is _onglets Then _sommaire.Visibility = If(_onglets.SelectedIndex = 0, Visibility.Visible, Visibility.Collapsed)
+                                                          If e.OriginalSource Is _onglets AndAlso _sommaire IsNot Nothing Then AjusterLeSommaire()
                                                       End Sub
                 contenu.Children.Add(_onglets)
             End If
@@ -99,6 +99,15 @@ Namespace Mkm.Wpf.Showcase.Documentation
             grille.Children.Add(_defileur)
             Content = grille
             AddHandler Loaded, Sub() MarquerLaSection()
+            ' Une fenêtre étroite (un écran de portable) garde la place pour les exemples : le sommaire se retire.
+            AddHandler SizeChanged, Sub() AjusterLeSommaire()
+        End Sub
+
+        Private Const LargeurSansSommaire As Double = 860
+
+        Private Sub AjusterLeSommaire()
+            Dim ongletDesFonctionnalites = _onglets Is Nothing OrElse _onglets.SelectedIndex = 0
+            _sommaire.Visibility = If(ActualWidth >= LargeurSansSommaire AndAlso ongletDesFonctionnalites, Visibility.Visible, Visibility.Collapsed)
         End Sub
 
         ''' <summary>La page décrite.</summary>

@@ -9,6 +9,12 @@ Namespace Mkm.Wpf.Showcase.Documentation.Exemples
         Public Property Titre As String
         Public Property Icone As Object
         Public Property Enfants As New ObservableCollection(Of NoteDePlan)
+
+        ''' <summary>Le nom de la ligne pour les lecteurs d'écran : sans lui, Narrateur lirait le nom de la classe.</summary>
+        Public Overrides Function ToString() As String
+            Return Titre
+        End Function
+
     End Class
 
     ''' <summary>L'arbre « NotesLiees » de l'exemple reçoit ses nœuds de données.</summary>

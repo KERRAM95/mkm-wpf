@@ -174,6 +174,25 @@ Namespace Mkm.Wpf.Controls
         ''' <summary>Un menu à étages vide.</summary>
         Public Sub New()
             AddHandler Loaded, Sub(s, e) Colonne.Poser(Me)
+            [AddHandler](MenuItem.ClickEvent, New RoutedEventHandler(AddressOf ElementClique))
+        End Sub
+
+        ' Un élément choisi referme les étages ouverts, comme mkm. Posé dans la page, le menu n'entre pas en mode menu
+        ' (son survol ne prend pas le clavier) : WPF, qui ferme les étages en quittant ce mode, les laissait ouverts.
+        Private Sub ElementClique(sender As Object, e As RoutedEventArgs)
+            Dim element = TryCast(e.OriginalSource, MenuItem)
+            If element Is Nothing OrElse element.HasItems OrElse element.StaysOpenOnClick Then Return
+            For Each item In Items
+                Fermer(TryCast(If(TryCast(item, MenuItem), ItemContainerGenerator.ContainerFromItem(item)), MenuItem))
+            Next
+        End Sub
+
+        Private Shared Sub Fermer(element As MenuItem)
+            If element Is Nothing Then Return
+            For Each item In element.Items
+                Fermer(TryCast(If(TryCast(item, MenuItem), element.ItemContainerGenerator.ContainerFromItem(item)), MenuItem))
+            Next
+            element.IsSubmenuOpen = False
         End Sub
 
         ''' <summary>Le survol d'un élément le montre (et ouvre son étage) sans prendre le focus.</summary>

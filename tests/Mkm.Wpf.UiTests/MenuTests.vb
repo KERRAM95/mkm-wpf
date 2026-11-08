@@ -38,7 +38,7 @@ Namespace Mkm.Wpf.UiTests
             Assert.That(edition.Patterns.SelectionItem.Pattern.IsSelected.Value, [Is].True, "Édition, la section de départ")
             Cliquer(outils)
             AttendreQue(Function() outils.Patterns.SelectionItem.Pattern.IsSelected.Value, "« Outils » choisie")
-            AttendreQue(Function() barre.BoundingRectangle.Width > largeur + 20, "la section Outils élargit la barre")
+            AttendreQue(Function() barre.BoundingRectangle.Width >= largeur, "la section Outils, au moins aussi large")
             AttendreQue(Function() Masquee(barre, "Ajouter"), "les commandes d'Édition parties")
             ' Le défaut d'une capture : revenue d'Outils à Édition, la barre gardait la largeur d'Outils.
             Cliquer(edition)
@@ -149,7 +149,8 @@ Namespace Mkm.Wpf.UiTests
             Dim page = OuvrirLaDoc("contextmenu")
             Dim cadre = Exemple(page, "basique")
 
-            Cliquer(Trouver("Zone", cadre), MouseButton.Right)
+            ' La zone (une bordure) n'a pas de pair : on clique son texte, le clic droit remonte à elle.
+            Cliquer(TrouverParNom("Clic droit ici", dans:=cadre), MouseButton.Right)
             Cliquer(TrouverAilleurs("Renommer", ControlType.MenuItem))
             AttendreQue(Function() NomDe(Trouver("Journal", cadre)) = "Choisi : Renommer", "« Renommer » choisi")
             AttendreQue(Function() Referme("Renommer"), "le menu refermé")

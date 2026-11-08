@@ -149,13 +149,9 @@
     <p><c>Loading</c> couvre le tableau d'un voile et d'un chargeur le temps que les données arrivent : on ne peut plus
       ni cliquer ni choisir dessous.</p>
     <exemple comportement="TableauEnChargement" etendu="oui"><![CDATA[
-<mkm:DataTable x:Name="Chargement" Height="230" AutoGenerateColumns="False" IsReadOnly="True">
-    <mkm:DataTable.Header>
-        <DockPanel>
-            <mkm:Button x:Name="Charger" DockPanel.Dock="Right" Content="Recharger" Severity="Secondary" />
-            <TextBlock VerticalAlignment="Center" FontWeight="Bold" Text="Variables d'environnement" />
-        </DockPanel>
-    </mkm:DataTable.Header>
+<mkm:Button x:Name="Charger" Content="Recharger" Severity="Secondary" HorizontalAlignment="Left" Margin="0,0,0,8" />
+<mkm:DataTable x:Name="Chargement" Height="230" AutoGenerateColumns="False" IsReadOnly="True"
+               AutomationProperties.Name="Variables d'environnement">
     <mkm:DataTable.Columns>
         <DataGridTextColumn Header="Nom" Binding="{Binding Nom}" Width="2*" />
         <DataGridTextColumn Header="Valeur" Binding="{Binding Valeur}" Width="3*" />
@@ -170,6 +166,12 @@
       titres des colonnes, et chaque cellule avec le titre de sa colonne. Une ligne choisie se dit choisie. La case d'une
       colonne de cases se nomme par le titre de sa colonne. Nommez le tableau par
       <c>AutomationProperties.Name</c> quand le texte qui le précède ne suffit pas.</p>
+    <p>Une ligne se nomme par son objet (<c>ToString</c>) : donnez à la classe des lignes un <c>ToString</c> qui la
+      nomme (sa référence, son nom), sans quoi Narrateur lit le nom de la classe.</p>
+    <p><b>Limite :</b> le pair d'automatisation du DataGrid de WPF ne montre que les titres et les lignes. Ce que
+      contiennent <c>Header</c> et <c>Footer</c> (une recherche, des commandes) se lit quand il prend le clavier,
+      mais un lecteur d'écran ne le trouve pas en parcourant le tableau : posez les commandes au-dessus du tableau,
+      dans une Toolbar par exemple, et gardez l'en-tête pour son titre.</p>
     <code><![CDATA[
 <mkm:DataTable AutomationProperties.Name="Variables d'environnement" />
 ]]></code>

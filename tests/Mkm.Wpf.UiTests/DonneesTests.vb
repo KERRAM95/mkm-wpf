@@ -31,18 +31,13 @@ Namespace Mkm.Wpf.UiTests
             Dim page = OuvrirLaDoc("datatable")
             Dim variables = Trouver("Variables", page)
             Dim entete = TrouverParNom("Nom", ControlType.HeaderItem, variables)
-            Dim francais = StringComparer.Create(CultureInfo.GetCultureInfo("fr-FR"), True)
 
+            ' Les premières lignes, celles que le tableau montre (les autres ne sont pas encore dessinées).
             Cliquer(entete)
-            AttendreQue(Function()
-                            Dim noms = Colonne(variables, 0)
-                            Return noms.Count > 1 AndAlso noms.SequenceEqual(noms.OrderBy(Function(n) n, francais))
-                        End Function, "triée de A à Z")
+            AttendreQue(Function() Cellule(variables, 0, 0) = "CATDLLPath", "triée de A à Z : « CATDLLPath » en tête")
             Cliquer(entete)
-            AttendreQue(Function()
-                            Dim noms = Colonne(variables, 0)
-                            Return noms.Count > 1 AndAlso noms.SequenceEqual(noms.OrderByDescending(Function(n) n, francais))
-                        End Function, "triée de Z à A")
+            AttendreQue(Function() Cellule(variables, 0, 0) = "HSCART_TENANT", "triée de Z à A : « HSCART_TENANT » en tête")
+            Assert.That(String.Compare(Cellule(variables, 1, 0), Cellule(variables, 0, 0), StringComparison.CurrentCulture), [Is].LessThan(0))
         End Sub
 
         <Test>
@@ -50,7 +45,8 @@ Namespace Mkm.Wpf.UiTests
             Dim page = OuvrirLaDoc("datatable")
             Dim chargement = Trouver("Chargement", page)
 
-            Cliquer(Trouver("Charger", chargement))
+            ' La commande est au-dessus du tableau : l'en-tête d'un DataTable n'est pas visible des lecteurs d'écran.
+            Cliquer(Trouver("Charger", page))
             Dim attente = TrouverParNom(T("aria.busy"), ControlType.ProgressBar, chargement)
             AttendreQue(Function() attente.IsOffscreen OrElse
                                    chargement.FindFirstDescendant(Function(cf) cf.ByName(T("aria.busy")).And(cf.ByControlType(ControlType.ProgressBar))) Is Nothing,
