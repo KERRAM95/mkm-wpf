@@ -272,7 +272,10 @@ l'anglais en repli (voir « Thème et langue »).
   `RadioButton`, `Panel`…) : `Panel` surtout, que les panneaux de mise en page
   de la bibliothèque héritent de WPF (`Inherits System.Windows.Controls.Panel`,
   `System.Windows.Controls.Panel.SetZIndex`). Un contrôle écrit son type de base en entier
-  (`Inherits System.Windows.Controls.Button`) ; un fichier qui importe les deux
+  (`Inherits System.Windows.Controls.Button`), une partie de gabarit aussi
+  (`Inherits System.Windows.Controls.Primitives.ToggleButton` : sinon elle
+  hérite du contrôle de mkm et de son style, ce que refuse le test
+  `ChaquePartieInterne_NHeriteDUnControleDeMkmQueVoulu`) ; un fichier qui importe les deux
   espaces de noms écrit `Mkm.Wpf.Controls.Button` (la casse ne les distingue
   pas). Les mots-clés de VB se mettent entre crochets (`[Select]`, `[Variant]`,
   `[Error]`, `[Structure]`). En XAML, le préfixe suffit (`mkm:Button`).

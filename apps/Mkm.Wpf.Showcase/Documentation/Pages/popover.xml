@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="utf-8"?>
+<page titre="Popover" categorie="Superposition" types="Popover" jetons="popover">
+  <resume>Une fenêtre flottante attachée à un élément, une flèche vers lui : un complément qui s'ouvre au clic et se
+    ferme d'un clic ailleurs ou d'Échap.</resume>
+
+  <section titre="Import">
+    <code><![CDATA[
+<Window xmlns:mkm="urn:mkm-wpf">
+    <mkm:Popover Target="{Binding ElementName=Partager}">
+        <!-- Le contenu de la fenêtre. -->
+    </mkm:Popover>
+</Window>
+]]></code>
+  </section>
+
+  <section titre="Basique">
+    <p>Posé n'importe où dans la page, le Popover n'y prend pas de place. <c>Target</c> est l'élément sous lequel il
+      s'ouvre ; <c>Toggle()</c> l'ouvre ou le ferme, <c>Show()</c> et <c>Hide()</c> aussi, et <c>IsOpen</c> dit s'il
+      est ouvert. Il s'ouvre dessous, dessus s'il n'y a pas la place.</p>
+    <exemple comportement="PopoverPartager" etendu="oui"><![CDATA[
+<StackPanel Orientation="Horizontal">
+    <mkm:Button x:Name="Partager" Content="Partager" Icon="{x:Static mkm:Icons.Link}" />
+    <mkm:Popover x:Name="Partage" Target="{Binding ElementName=Partager}" AutomationProperties.Name="Partager le document">
+        <StackPanel Width="280">
+            <TextBlock Text="Lien du document" FontWeight="Bold" Margin="0,0,0,8" />
+            <mkm:InputText Text="https://plm.exemple.fr/HS-00042" IsReadOnly="True" Margin="0,0,0,8" />
+            <mkm:Button x:Name="Copier" Content="Copier le lien" HorizontalAlignment="Right" />
+        </StackPanel>
+    </mkm:Popover>
+</StackPanel>
+<TextBlock x:Name="Journal" Foreground="{DynamicResource mkm.text.muted.color}" Text="Partagez le document." />
+]]></exemple>
+  </section>
+
+  <section titre="Évènements">
+    <p><c>Opened</c> et <c>Closed</c> disent quand il s'ouvre et se ferme ; <c>IsFlipped</c> dit qu'il s'est ouvert
+      au-dessus de son élément.</p>
+  </section>
+
+  <section titre="Accessibilité">
+    <h3>Lecteur d'écran</h3>
+    <p>Le cadre est un « volet », nommé par le <c>AutomationProperties.Name</c> du Popover, comme
+      <c>role="dialog"</c> et <c>aria-label</c> dans mkm. Donnez-lui un nom qui dit ce qu'il contient.</p>
+    <h3>Clavier</h3>
+    <touches>
+      <touche nom="Entrée">Sur l'élément, l'ouvre ; le clavier passe dans le cadre.</touche>
+      <touche nom="Tab">Passe d'un élément du cadre au suivant, en boucle.</touche>
+      <touche nom="Échap">Le ferme ; le clavier revient à l'élément.</touche>
+    </touches>
+  </section>
+</page>

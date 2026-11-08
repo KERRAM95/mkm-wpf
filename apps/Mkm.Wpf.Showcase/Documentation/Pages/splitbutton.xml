@@ -1,0 +1,73 @@
+<?xml version="1.0" encoding="utf-8"?>
+<page titre="SplitButton" categorie="Bouton" types="SplitButton" jetons="splitbutton button">
+  <resume>Un bouton partagé : l'action principale, et à sa droite un chevron qui ouvre un menu des actions voisines.</resume>
+
+  <section titre="Import">
+    <code><![CDATA[
+<Window xmlns:mkm="urn:mkm-wpf">
+    <mkm:SplitButton Content="Enregistrer">
+        <MenuItem Header="Enregistrer sous…" />
+    </mkm:SplitButton>
+</Window>
+]]></code>
+  </section>
+
+  <section titre="Basique">
+    <p>Le libellé (<c>Content</c>) et l'icône (<c>Icon</c>) sont ceux du bouton principal ; son clic est le
+      <c>Click</c> du bouton partagé. Les éléments du bouton partagé sont ceux du menu : des <c>MenuItem</c> et des
+      <c>Separator</c> de WPF, avec leur <c>Click</c> ou leur <c>Command</c>. <c>IsDropDownOpen</c> dit si le menu
+      est ouvert.</p>
+    <exemple comportement="SplitButtonJournal" etendu="oui"><![CDATA[
+<mkm:SplitButton x:Name="Enregistrer" Content="Enregistrer" Icon="{x:Static mkm:Icons.Download}">
+    <MenuItem Header="Enregistrer sous…" />
+    <MenuItem Header="Enregistrer une révision" />
+    <Separator />
+    <MenuItem Header="Exporter en PDF" />
+</mkm:SplitButton>
+<TextBlock x:Name="Journal" Foreground="{DynamicResource mkm.text.muted.color}" Text="Lancez une action." />
+]]></exemple>
+  </section>
+
+  <section titre="Gravités">
+    <p><c>Severity</c> donne la couleur des deux boutons, comme celle d'un <lien page="button">Button</lien>.</p>
+    <exemple><![CDATA[
+<WrapPanel>
+    <mkm:SplitButton Content="Principal" Margin="0,0,8,8"><MenuItem Header="Autre" /></mkm:SplitButton>
+    <mkm:SplitButton Content="Secondaire" Severity="Secondary" Margin="0,0,8,8"><MenuItem Header="Autre" /></mkm:SplitButton>
+    <mkm:SplitButton Content="Réussite" Severity="Success" Margin="0,0,8,8"><MenuItem Header="Autre" /></mkm:SplitButton>
+    <mkm:SplitButton Content="Danger" Severity="Danger" Margin="0,0,8,8"><MenuItem Header="Autre" /></mkm:SplitButton>
+</WrapPanel>
+]]></exemple>
+  </section>
+
+  <section titre="Formes">
+    <p><c>Variant</c> donne la forme des deux boutons : à contour, en texte.</p>
+    <exemple><![CDATA[
+<WrapPanel>
+    <mkm:SplitButton Content="À contour" Variant="Outlined" Margin="0,0,8,8"><MenuItem Header="Autre" /></mkm:SplitButton>
+    <mkm:SplitButton Content="En texte" Variant="Text" Margin="0,0,8,8"><MenuItem Header="Autre" /></mkm:SplitButton>
+</WrapPanel>
+]]></exemple>
+  </section>
+
+  <section titre="Désactivé">
+    <p><c>IsEnabled="False"</c> désactive les deux boutons.</p>
+    <exemple><![CDATA[
+<mkm:SplitButton Content="Enregistrer" IsEnabled="False"><MenuItem Header="Enregistrer sous…" /></mkm:SplitButton>
+]]></exemple>
+  </section>
+
+  <section titre="Accessibilité">
+    <h3>Lecteur d'écran</h3>
+    <p>Narrateur dit le bouton partagé « groupe », nommé par son libellé, et ses deux boutons : le principal, nommé par
+      son libellé ; le chevron, « Plus de commandes », qui se dit « développé » ou « réduit » selon son menu, comme
+      <c>aria-expanded</c> dans mkm.</p>
+    <h3>Clavier</h3>
+    <touches>
+      <touche nom="Tab">Passe du bouton principal au chevron.</touche>
+      <touche nom="Entrée">Lance l'action principale, ou ouvre le menu sur le chevron.</touche>
+      <touche nom="Flèche bas">Sur le chevron, ouvre le menu, le clavier sur sa première action.</touche>
+      <touche nom="Échap">Referme le menu ; le clavier revient au chevron.</touche>
+    </touches>
+  </section>
+</page>

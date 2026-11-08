@@ -6,7 +6,7 @@ Imports NUnit.Framework
 
 Namespace Mkm.Wpf.UiTests
 
-    ''' <summary>Ce qui s'ouvre par-dessus la page : le dialogue de confirmation, le dialogue, l'info-bulle.</summary>
+    ''' <summary>Ce qui s'ouvre par-dessus la page : le dialogue de confirmation, le dialogue, l'info-bulle, le Popover.</summary>
     <TestFixture>
     Public Class SuperpositionTests
         Inherits Scenario
@@ -77,6 +77,23 @@ Namespace Mkm.Wpf.UiTests
 
             Survoler(Trouver("Survol", page))
             TrouverAilleurs("Met à jour le cartouche du plan depuis 3DEXPERIENCE.")
+        End Sub
+
+        <Test>
+        Public Sub Popover_SOuvreAuClicEtSeFermeParEchapOuSonBouton()
+            Dim page = OuvrirLaDoc("popover")
+            Dim partager = Trouver("Partager", page)
+
+            Cliquer(partager)
+            TrouverAilleurs("Partager le document")
+            TrouverAilleurs("Copier le lien", ControlType.Button)
+            Taper(VirtualKeyShort.ESCAPE)
+            AttendreQue(Function() Referme("Copier le lien"), "Échap le ferme")
+
+            Cliquer(partager)
+            Cliquer(TrouverAilleurs("Copier le lien", ControlType.Button))
+            AttendreQue(Function() NomDe(Trouver("Journal", page)) = "Lien copié.", "son bouton agit")
+            AttendreQue(Function() Referme("Copier le lien"), "et le ferme")
         End Sub
 
     End Class

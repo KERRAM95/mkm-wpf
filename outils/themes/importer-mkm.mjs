@@ -20,7 +20,7 @@ const THEMES = {
     Dashboard: { dossier: 'dashboard', etend: 'nora', rem: 12 },
     Ara: { dossier: 'ara' }
 };
-const COMPOSANTS = ['accordion', 'actionbar', 'avatar', 'badge', 'blockui', 'button', 'card', 'checkbox', 'chip', 'confirmdialog', 'contextmenu', 'datatable', 'datepicker', 'dialog', 'divider', 'emptycontent', 'fieldset', 'idcard', 'inputnumber', 'inputtext', 'menu', 'message', 'overlaybadge', 'panel', 'progressbar', 'progressspinner', 'propertypanel', 'radiobutton', 'scrollpanel', 'select', 'selectbutton', 'skeleton', 'splitter', 'stategraph', 'tabs', 'tag', 'textarea', 'tieredmenu', 'toast', 'togglebutton', 'toggleswitch', 'toolbar', 'tooltip', 'tree', 'treegrid', 'triptych', 'welcomepanel'];
+const COMPOSANTS = ['accordion', 'actionbar', 'avatar', 'badge', 'blockui', 'breadcrumb', 'button', 'card', 'checkbox', 'chip', 'confirmdialog', 'contextmenu', 'datatable', 'datepicker', 'dialog', 'divider', 'emptycontent', 'fieldset', 'idcard', 'inputnumber', 'inputtext', 'menu', 'message', 'overlaybadge', 'panel', 'popover', 'progressbar', 'progressspinner', 'propertypanel', 'radiobutton', 'scrollpanel', 'select', 'selectbutton', 'skeleton', 'splitbutton', 'splitter', 'stategraph', 'tabs', 'tag', 'textarea', 'tieredmenu', 'toast', 'togglebutton', 'toggleswitch', 'toolbar', 'tooltip', 'tree', 'treegrid', 'triptych', 'welcomepanel'];
 
 const [racine, ...demandes] = process.argv.slice(2);
 if (!racine) {

@@ -56,6 +56,12 @@ Namespace Mkm.Wpf.Controls
         Public Shared ReadOnly VariantProperty As DependencyProperty = DependencyProperty.Register(
             NameOf([Variant]), GetType(ButtonVariant), GetType(Button), New FrameworkPropertyMetadata(ButtonVariant.Filled, AddressOf OnCouleurChanged))
 
+        ''' <summary>
+        ''' Les coins du bouton : ceux du thème (button.border.radius) par défaut. Un bouton accolé à un autre (SplitButton)
+        ''' a ses coins du côté de l'autre carrés.
+        ''' </summary>
+        Public Shared ReadOnly CornerRadiusProperty As DependencyProperty = System.Windows.Controls.Border.CornerRadiusProperty.AddOwner(GetType(Button))
+
         ''' <summary>Le fond au survol (posé par la gravité et la forme).</summary>
         Public Shared ReadOnly HoverBackgroundProperty As DependencyProperty = Pinceau(NameOf(HoverBackground))
         ''' <summary>La bordure au survol.</summary>
@@ -105,6 +111,16 @@ Namespace Mkm.Wpf.Controls
         Private Shared Function Pinceau(nom As String) As DependencyProperty
             Return DependencyProperty.Register(nom, GetType(Brush), GetType(Button), New FrameworkPropertyMetadata(Nothing))
         End Function
+
+        ''' <summary>Les coins du bouton.</summary>
+        Public Property CornerRadius As CornerRadius
+            Get
+                Return DirectCast(GetValue(CornerRadiusProperty), CornerRadius)
+            End Get
+            Set(value As CornerRadius)
+                SetValue(CornerRadiusProperty, value)
+            End Set
+        End Property
 
         ''' <summary>L'icône.</summary>
         Public Property Icon As Object

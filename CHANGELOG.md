@@ -123,6 +123,11 @@ Les évolutions notables de mkm-wpf, version par version. Le format suit
   ses actions et son pied), `Card`, `Accordion` et `AccordionPanel` (une seule
   section ouverte ou plusieurs, ↑ ↓ Début Fin) ; leurs jetons, leurs pages,
   leurs tests et leurs scénarios.
+- Le lot 13 (`docs/composants/chemin-bouton-partage-et-popover.md`) :
+  `Breadcrumb` et `BreadcrumbItem`, `SplitButton` (son menu au clavier aussi),
+  `Popover` (dessous ou dessus, sa flèche vers son élément, Échap) ; `Button`
+  gagne `CornerRadius` ; leurs jetons, leurs pages, leurs tests et leurs
+  scénarios.
 - La documentation, sur le modèle d'ui-kit : la vitrine devient une page par
   composant, rangée par catégorie (Pour commencer, Formulaire, Bouton, Données,
   Panneau, Superposition, Menu, Messages, Divers), avec une recherche. Chaque

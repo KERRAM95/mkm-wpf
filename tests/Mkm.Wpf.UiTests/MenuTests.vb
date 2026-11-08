@@ -7,7 +7,7 @@ Imports NUnit.Framework
 
 Namespace Mkm.Wpf.UiTests
 
-    ''' <summary>Les menus et les barres de commandes : ActionBar, registre des commandes, Menu, TieredMenu, menu contextuel.</summary>
+    ''' <summary>Les menus et les barres de commandes : ActionBar, registre des commandes, Menu, TieredMenu, menu contextuel, fil d'Ariane, bouton partagé.</summary>
     <TestFixture>
     Public Class MenuTests
         Inherits Scenario
@@ -154,6 +154,46 @@ Namespace Mkm.Wpf.UiTests
             Cliquer(TrouverAilleurs("Renommer", ControlType.MenuItem))
             AttendreQue(Function() NomDe(Trouver("Journal", cadre)) = "Choisi : Renommer", "« Renommer » choisi")
             AttendreQue(Function() Referme("Renommer"), "le menu refermé")
+        End Sub
+
+        <Test>
+        Public Sub Breadcrumb_UnLienSeSuitAuClicEtAuClavier()
+            Dim page = OuvrirLaDoc("breadcrumb")
+            Dim chemin = Trouver("Chemin", page)
+            Dim journal = Trouver("Journal", page)
+
+            Assert.That(NomDe(chemin), [Is].EqualTo("Fil d'Ariane"))
+            Cliquer(TrouverParNom("Projets", ControlType.Hyperlink, chemin))
+            AttendreQue(Function() NomDe(journal) = "Lien suivi : Projets", "« Projets » suivi au clic")
+            Dim accueil = TrouverParNom("Accueil", ControlType.Hyperlink, chemin)
+            accueil.Focus()
+            Taper(VirtualKeyShort.RETURN)
+            AttendreQue(Function() NomDe(journal) = "Lien suivi : Accueil", "Entrée : « Accueil », une icône nommée par son info-bulle")
+        End Sub
+
+        <Test>
+        Public Sub SplitButton_LeBoutonPrincipalEtLesActionsDuMenu()
+            Dim page = OuvrirLaDoc("splitbutton")
+            Dim partage = Trouver("Enregistrer", page)
+            Dim journal = Trouver("Journal", page)
+            Dim chevron = TrouverParNom(T("aria.moreCommands"), ControlType.Button, partage)
+            Dim etat = Function() chevron.Patterns.ExpandCollapse.Pattern.ExpandCollapseState.Value
+
+            Assert.That(NomDe(partage), [Is].EqualTo("Enregistrer"), "un groupe nommé par son libellé")
+            Cliquer(TrouverParNom("Enregistrer", ControlType.Button, partage))
+            AttendreQue(Function() NomDe(journal) = "Action : Enregistrer", "le bouton principal")
+            Cliquer(chevron)
+            AttendreQue(Function() etat() = ExpandCollapseState.Expanded, "le chevron ouvre le menu")
+            Cliquer(TrouverAilleurs("Enregistrer une révision", ControlType.MenuItem))
+            AttendreQue(Function() NomDe(journal) = "Action : Enregistrer une révision", "une action du menu")
+            AttendreQue(Function() etat() = ExpandCollapseState.Collapsed, "le menu refermé")
+
+            ' Au clavier : ↓ sur le chevron ouvre le menu, Échap le referme.
+            chevron.Focus()
+            Taper(VirtualKeyShort.DOWN)
+            AttendreQue(Function() etat() = ExpandCollapseState.Expanded, "↓ ouvre le menu")
+            Taper(VirtualKeyShort.ESCAPE)
+            AttendreQue(Function() etat() = ExpandCollapseState.Collapsed, "Échap le referme")
         End Sub
 
     End Class

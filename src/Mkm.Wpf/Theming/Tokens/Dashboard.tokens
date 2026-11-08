@@ -609,6 +609,24 @@ badge.contrast.color = {surface.0}
 # blockui
 blockui.border.radius = {content.border.radius}
 
+# breadcrumb
+breadcrumb.padding = 12px
+breadcrumb.background = {content.background}
+breadcrumb.gap = 6px
+breadcrumb.transition.duration = {transition.duration}
+breadcrumb.item.color = {text.muted.color}
+breadcrumb.item.hover.color = {text.color}
+breadcrumb.item.border.radius = {content.border.radius}
+breadcrumb.item.gap = {navigation.item.gap}
+breadcrumb.item.icon.color = {text.muted.color}
+breadcrumb.item.icon.hover.color = {text.color}
+breadcrumb.item.focus.ring.width = {focus.ring.width}
+breadcrumb.item.focus.ring.style = {focus.ring.style}
+breadcrumb.item.focus.ring.color = {focus.ring.color}
+breadcrumb.item.focus.ring.offset = {focus.ring.offset}
+breadcrumb.item.focus.ring.shadow = {focus.ring.shadow}
+breadcrumb.separator.color = {navigation.item.icon.color}
+
 # button
 button.border.radius = 4px
 button.rounded.border.radius = 24px
@@ -1394,6 +1412,16 @@ panel.title.font.weight = 700
 panel.content.padding = 13.5px
 panel.footer.padding = 0 13.5px 13.5px 13.5px
 
+# popover
+popover.background = {overlay.popover.background}
+popover.border.color = {overlay.popover.border.color}
+popover.color = {overlay.popover.color}
+popover.border.radius = {overlay.popover.border.radius}
+popover.shadow = {overlay.popover.shadow}
+popover.gutter = 10px
+popover.arrow.offset = 15px
+popover.content.padding = {overlay.popover.padding}
+
 # progressbar
 progressbar.border.radius = 999px
 progressbar.height = 6px
@@ -1579,6 +1607,11 @@ selectbutton.invalid.border.color = {form.field.invalid.border.color}
 skeleton.border.radius = {content.border.radius}
 skeleton.background = {surface.300}
 skeleton.animation.background = rgba(255,255,255,0.4)
+
+# splitbutton
+splitbutton.border.radius = {form.field.border.radius}
+splitbutton.rounded.border.radius = 24px
+splitbutton.raised.shadow = 0 3px 1px -2px rgba(0, 0, 0, 0.2), 0 2px 2px 0 rgba(0, 0, 0, 0.14), 0 1px 5px 0 rgba(0, 0, 0, 0.12)
 
 # splitter
 splitter.background = {content.background}

@@ -16,6 +16,7 @@
         <Setter Property="MinWidth" Value="{DynamicResource mkm.button.min.width}" />
         <Setter Property="Padding" Value="{DynamicResource mkm.button.padding}" />
         <Setter Property="BorderThickness" Value="1" />
+        <Setter Property="CornerRadius" Value="{DynamicResource mkm.button.border.radius}" />
         <Setter Property="FontFamily" Value="{DynamicResource mkm.font.family}" />
         <Setter Property="FontSize" Value="{DynamicResource mkm.button.font.size}" />
         <Setter Property="FontWeight" Value="{DynamicResource mkm.button.label.font.weight}" />
@@ -32,7 +33,7 @@
                             Background="{TemplateBinding Background}"
                             BorderBrush="{TemplateBinding BorderBrush}"
                             BorderThickness="{TemplateBinding BorderThickness}"
-                            CornerRadius="{DynamicResource mkm.button.border.radius}"
+                            CornerRadius="{TemplateBinding CornerRadius}"
                             Padding="{TemplateBinding Padding}">
                         <StackPanel HorizontalAlignment="Center" VerticalAlignment="Center" Orientation="Horizontal">
                             <local:Icon x:Name="Icone" Width="16" Height="16" Margin="0,-1" Visibility="Collapsed"

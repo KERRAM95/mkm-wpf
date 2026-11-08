@@ -15,6 +15,7 @@
         <ResourceDictionary Source="/Mkm.Wpf;component/Controls/Badge/Badge.xaml" />
         <ResourceDictionary Source="/Mkm.Wpf;component/Controls/Badge/OverlayBadge.xaml" />
         <ResourceDictionary Source="/Mkm.Wpf;component/Controls/BlockUI/BlockUI.xaml" />
+        <ResourceDictionary Source="/Mkm.Wpf;component/Controls/Breadcrumb/Breadcrumb.xaml" />
         <ResourceDictionary Source="/Mkm.Wpf;component/Controls/Button/Button.xaml" />
         <ResourceDictionary Source="/Mkm.Wpf;component/Controls/Card/Card.xaml" />
         <ResourceDictionary Source="/Mkm.Wpf;component/Controls/Checkbox/Checkbox.xaml" />
@@ -31,6 +32,7 @@
         <ResourceDictionary Source="/Mkm.Wpf;component/Controls/Menu/Menu.xaml" />
         <ResourceDictionary Source="/Mkm.Wpf;component/Controls/Message/Message.xaml" />
         <ResourceDictionary Source="/Mkm.Wpf;component/Controls/Panel/Panel.xaml" />
+        <ResourceDictionary Source="/Mkm.Wpf;component/Controls/Popover/Popover.xaml" />
         <ResourceDictionary Source="/Mkm.Wpf;component/Controls/ProgressBar/ProgressBar.xaml" />
         <ResourceDictionary Source="/Mkm.Wpf;component/Controls/ProgressSpinner/ProgressSpinner.xaml" />
         <ResourceDictionary Source="/Mkm.Wpf;component/Controls/PropertyPanel/PropertyPanel.xaml" />
@@ -39,6 +41,7 @@
         <ResourceDictionary Source="/Mkm.Wpf;component/Controls/Select/Select.xaml" />
         <ResourceDictionary Source="/Mkm.Wpf;component/Controls/SelectButton/SelectButton.xaml" />
         <ResourceDictionary Source="/Mkm.Wpf;component/Controls/Skeleton/Skeleton.xaml" />
+        <ResourceDictionary Source="/Mkm.Wpf;component/Controls/SplitButton/SplitButton.xaml" />
         <ResourceDictionary Source="/Mkm.Wpf;component/Controls/Splitter/Splitter.xaml" />
         <ResourceDictionary Source="/Mkm.Wpf;component/Controls/StateGraph/StateGraph.xaml" />
         <ResourceDictionary Source="/Mkm.Wpf;component/Controls/Tabs/Tabs.xaml" />

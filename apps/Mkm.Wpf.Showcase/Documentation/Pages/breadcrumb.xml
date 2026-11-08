@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="utf-8"?>
+<page titre="Breadcrumb" categorie="Menu" types="Breadcrumb BreadcrumbItem" jetons="breadcrumb">
+  <resume>Le fil d'Ariane : le chemin de l'accueil jusqu'à la page actuelle, des liens séparés d'un chevron.</resume>
+
+  <section titre="Import">
+    <code><![CDATA[
+<Window xmlns:mkm="urn:mkm-wpf">
+    <mkm:Breadcrumb>
+        <mkm:BreadcrumbItem Content="Projets" />
+    </mkm:Breadcrumb>
+</Window>
+]]></code>
+  </section>
+
+  <section titre="Basique">
+    <p>Chaque lien est un <c>BreadcrumbItem</c> : son libellé (<c>Content</c>), son icône (<c>Icon</c>). Le premier sert
+      d'accueil : une icône seule, nommée par son info-bulle. Un lien est un bouton : <c>Click</c> ou <c>Command</c>
+      mènent à sa page ; le clic d'un lien remonte au fil d'Ariane, qui peut les écouter tous.</p>
+    <exemple comportement="BreadcrumbJournal" etendu="oui"><![CDATA[
+<mkm:Breadcrumb x:Name="Chemin" AutomationProperties.Name="Fil d'Ariane">
+    <mkm:BreadcrumbItem Icon="{x:Static mkm:Icons.Home}" ToolTip="Accueil" />
+    <mkm:BreadcrumbItem Content="Projets" />
+    <mkm:BreadcrumbItem Content="Transmission" />
+    <mkm:BreadcrumbItem Content="HS-00042" />
+</mkm:Breadcrumb>
+<TextBlock x:Name="Journal" Foreground="{DynamicResource mkm.text.muted.color}" Text="Suivez un lien." />
+]]></exemple>
+  </section>
+
+  <section titre="Icônes">
+    <p>Une icône se pose avant le libellé de n'importe quel lien.</p>
+    <exemple><![CDATA[
+<mkm:Breadcrumb>
+    <mkm:BreadcrumbItem Icon="{x:Static mkm:Icons.Home}" ToolTip="Accueil" />
+    <mkm:BreadcrumbItem Icon="{x:Static mkm:Icons.Documents}" Content="Documents" />
+    <mkm:BreadcrumbItem Icon="{x:Static mkm:Icons.Drawings}" Content="Plans" />
+</mkm:Breadcrumb>
+]]></exemple>
+  </section>
+
+  <section titre="Lié à des données">
+    <p>Lié à une liste (<c>ItemsSource</c>), chaque élément devient un lien qui le montre ; un modèle
+      (<c>ItemTemplate</c>) le dessine autrement.</p>
+    <code langage="vb"><![CDATA[
+Chemin.ItemsSource = {"Projets", "Transmission", "HS-00042"}
+]]></code>
+  </section>
+
+  <section titre="Accessibilité">
+    <h3>Lecteur d'écran</h3>
+    <p>Narrateur dit le fil d'Ariane « groupe », nommé par <c>AutomationProperties.Name</c>, et chaque lien
+      « lien », nommé par son libellé, sinon son info-bulle. Les chevrons ne se lisent pas.</p>
+    <h3>Clavier</h3>
+    <touches>
+      <touche nom="Tab">Passe d'un lien au suivant.</touche>
+      <touche nom="Entrée">Suit le lien.</touche>
+      <touche nom="Espace">Suit le lien.</touche>
+    </touches>
+  </section>
+</page>

@@ -322,3 +322,18 @@ accordion.header.last.corner.radius = 0 0 {accordion.header.last.bottom.border.r
 accordion.header.last.active.corner.radius = 0 0 {accordion.header.last.active.bottom.border.radius} {accordion.header.last.active.bottom.border.radius}
 accordion.header.single.corner.radius = {accordion.header.first.top.border.radius} {accordion.header.first.top.border.radius} {accordion.header.last.bottom.border.radius} {accordion.header.last.bottom.border.radius}
 accordion.header.single.active.corner.radius = {accordion.header.first.top.border.radius} {accordion.header.first.top.border.radius} {accordion.header.last.active.bottom.border.radius} {accordion.header.last.active.bottom.border.radius}
+
+# splitbutton : le bouton principal sans bordure à droite, ses coins de droite carrés ; ceux de gauche du chevron aussi.
+splitbutton.button.corner.radius = {button.border.radius} 0 0 {button.border.radius}
+splitbutton.dropdown.corner.radius = 0 {button.border.radius} {button.border.radius} 0
+splitbutton.button.border.width = 1px 0 1px 1px
+
+# popover : la place de l'ombre (0 1px 2px) autour de la fenêtre (mesure de mkm-wpf, comme tooltip.window.padding) ;
+# le cadre à « gutter » de son élément, dessous ou, retourné, dessus ; la flèche de 2 × gutter sur gutter, son milieu à
+# arrow.offset du bord (15 − 10 px), posée sur la bordure du cadre qu'elle recouvre.
+popover.window.padding = 2px 2px 3px 2px
+popover.below.margin = {popover.gutter} 0 0 0
+popover.above.margin = 0 0 {popover.gutter} 0
+popover.arrow.width = 20px
+popover.arrow.margin = 1px 0 0 5px
+popover.arrow.flipped.margin = 0 0 1px 5px

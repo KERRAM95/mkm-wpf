@@ -1,0 +1,68 @@
+<!--
+    Le style de Popover, sur la fenêtre flottante de mkm (styles/popover ; jetons de Nora en pixels pour Dashboard,
+    preset ara) : un cadre blanc bordé d'un pixel gris, aux coins du thème, ombré (0 1px 2px), 8 px de retrait ; à
+    10 px (gutter) sous son élément, une flèche de 20 px sur 10 qui pointe vers lui, son milieu à 15 px du bord gauche ;
+    au-dessus, faute de place dessous, la flèche en bas. La fenêtre garde autour la place de l'ombre
+    (popover.window.padding).
+-->
+<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+                    xmlns:local="clr-namespace:Mkm.Wpf.Controls">
+
+    <Style TargetType="{x:Type local:Popover}">
+        <Setter Property="FontFamily" Value="{DynamicResource mkm.font.family}" />
+        <Setter Property="FontSize" Value="{DynamicResource mkm.font.size}" />
+        <Setter Property="Foreground" Value="{DynamicResource mkm.popover.color}" />
+        <Setter Property="Background" Value="{DynamicResource mkm.popover.background}" />
+        <Setter Property="BorderBrush" Value="{DynamicResource mkm.popover.border.color}" />
+        <Setter Property="BorderThickness" Value="1" />
+        <Setter Property="Padding" Value="{DynamicResource mkm.popover.content.padding}" />
+        <Setter Property="SnapsToDevicePixels" Value="True" />
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="{x:Type local:Popover}">
+                    <Popup x:Name="PART_Popup" AllowsTransparency="True" StaysOpen="False" Placement="Custom"
+                           PopupAnimation="None" Focusable="False"
+                           PlacementTarget="{TemplateBinding Target}"
+                           IsOpen="{Binding IsOpen, RelativeSource={RelativeSource TemplatedParent}, Mode=TwoWay}">
+                        <Grid Margin="{DynamicResource mkm.popover.window.padding}" KeyboardNavigation.TabNavigation="Cycle"
+                              KeyboardNavigation.DirectionalNavigation="Contained"
+                              TextElement.Foreground="{TemplateBinding Foreground}">
+                            <!-- L'ombre sur un fond à part, derrière le cadre : posée sur le cadre, elle flouterait son texte. -->
+                            <Border x:Name="Ombre" Margin="{DynamicResource mkm.popover.below.margin}"
+                                    Background="{TemplateBinding Background}" CornerRadius="{DynamicResource mkm.popover.border.radius}"
+                                    Effect="{DynamicResource mkm.popover.shadow}" />
+                            <local:CadreDePopover x:Name="Cadre" Margin="{DynamicResource mkm.popover.below.margin}"
+                                                  Background="{TemplateBinding Background}" BorderBrush="{TemplateBinding BorderBrush}"
+                                                  BorderThickness="{TemplateBinding BorderThickness}"
+                                                  CornerRadius="{DynamicResource mkm.popover.border.radius}"
+                                                  Padding="{TemplateBinding Padding}">
+                                <ContentPresenter />
+                            </local:CadreDePopover>
+                            <!-- La flèche : deux côtés bordés, rempli du fond, posé sur la bordure du cadre qu'il recouvre. -->
+                            <Path x:Name="PART_Arrow" HorizontalAlignment="Left" VerticalAlignment="Top"
+                                  Margin="{DynamicResource mkm.popover.arrow.margin}"
+                                  Width="{DynamicResource mkm.popover.arrow.width}" Height="{DynamicResource mkm.popover.gutter}"
+                                  Stretch="Fill" Data="M 0,1 L 1,0 L 2,1" SnapsToDevicePixels="True"
+                                  Fill="{TemplateBinding Background}" Stroke="{TemplateBinding BorderBrush}" StrokeThickness="1" />
+                        </Grid>
+                    </Popup>
+                    <ControlTemplate.Triggers>
+                        <Trigger Property="IsFlipped" Value="True">
+                            <Setter TargetName="Ombre" Property="Margin" Value="{DynamicResource mkm.popover.above.margin}" />
+                            <Setter TargetName="Cadre" Property="Margin" Value="{DynamicResource mkm.popover.above.margin}" />
+                            <Setter TargetName="PART_Arrow" Property="VerticalAlignment" Value="Bottom" />
+                            <Setter TargetName="PART_Arrow" Property="Margin" Value="{DynamicResource mkm.popover.arrow.flipped.margin}" />
+                            <Setter TargetName="PART_Arrow" Property="LayoutTransform">
+                                <Setter.Value>
+                                    <ScaleTransform ScaleY="-1" />
+                                </Setter.Value>
+                            </Setter>
+                        </Trigger>
+                    </ControlTemplate.Triggers>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+
+</ResourceDictionary>
