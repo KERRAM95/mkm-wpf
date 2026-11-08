@@ -262,6 +262,10 @@ Les évolutions notables de mkm-wpf, version par version. Le format suit
     nœud à l'en-tête composé se nomme par ses textes.
   - Timeline : la documentation de TimelineAlign Top et Bottom remise à
     l'endroit.
+  - Carousel, Galleria : les indicateurs ne sont plus recréés à chaque page
+    (le clavier quittait le carrousel) ; la page montrée le dit aux lecteurs
+    d'écran ; le carrousel glisse vraiment d'une page à l'autre ; ses
+    indicateurs sont un seul arrêt de Tab, parcourus aux flèches.
   - InputOtp, ColorPicker, Terminal, Password : la langue n'est suivie que
     tant que le contrôle est chargé (l'abonnement à vie le gardait en
     mémoire).

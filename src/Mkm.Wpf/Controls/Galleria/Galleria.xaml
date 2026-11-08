@@ -90,6 +90,8 @@
                             <Setter Property="Background" Value="{DynamicResource mkm.galleria.indicator.button.hover.background}" />
                         </Trigger>
                         <DataTrigger Binding="{Binding IsActive}" Value="True">
+                            <!-- La page montrée le dit aux lecteurs d'écran (aria-current de mkm). -->
+                            <Setter Property="AutomationProperties.ItemStatus" Value="{loc:T aria.currentPage}" />
                             <Setter Property="Background" Value="{DynamicResource mkm.galleria.indicator.button.active.background}" />
                         </DataTrigger>
                         <Trigger Property="local:FocusVisible.IsVisible" Value="True">

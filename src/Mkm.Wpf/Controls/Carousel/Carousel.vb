@@ -13,11 +13,18 @@ Namespace Mkm.Wpf.Controls
 
     ''' <summary>Une page d'un <see cref="Carousel"/>, pour ses indicateurs.</summary>
     Public NotInheritable Class CarouselPage
+        Implements System.ComponentModel.INotifyPropertyChanged
+
+        Private _active As Boolean
+
         Friend Sub New(numero As Integer, active As Boolean)
             Me.Number = numero
-            Me.IsActive = active
+            _active = active
             Label = Localization.Localizer.Current.T("aria.page", numero)
         End Sub
+
+        ''' <summary>Dit qu'IsActive a changé : l'indicateur suit, sans être recréé (le clavier y reste).</summary>
+        Public Event PropertyChanged As System.ComponentModel.PropertyChangedEventHandler Implements System.ComponentModel.INotifyPropertyChanged.PropertyChanged
 
         ''' <summary>Son nom pour les lecteurs d'écran : « Page 2 ».</summary>
         Public ReadOnly Property Label As String
@@ -26,7 +33,16 @@ Namespace Mkm.Wpf.Controls
         Public ReadOnly Property Number As Integer
 
         ''' <summary>Vrai pour la page montrée.</summary>
-        Public ReadOnly Property IsActive As Boolean
+        Public Property IsActive As Boolean
+            Get
+                Return _active
+            End Get
+            Friend Set(value As Boolean)
+                If _active = value Then Return
+                _active = value
+                RaiseEvent PropertyChanged(Me, New System.ComponentModel.PropertyChangedEventArgs(NameOf(IsActive)))
+            End Set
+        End Property
     End Class
 
     ''' <summary>
@@ -274,23 +290,31 @@ Namespace Mkm.Wpf.Controls
 
         Private Shared Sub OnPageChanged(d As DependencyObject, e As DependencyPropertyChangedEventArgs)
             Dim carrousel = DirectCast(d, Carousel)
-            carrousel.Recompter()
+            ' Sans replacer la piste d'un coup : elle glisse jusqu'à la page (l'animation jouait vers où elle était déjà).
+            carrousel.Recompter(placer:=False)
             carrousel.Placer(True)
         End Sub
 
-        ' Les pages, les indicateurs, ce que les flèches peuvent.
-        Private Sub Recompter()
+        ' Les pages, les indicateurs, ce que les flèches peuvent. Les indicateurs ne sont recréés que si leur nombre
+        ' change : sinon la page montrée passe de l'un à l'autre, et celui qui a le clavier le garde.
+        Private Sub Recompter(Optional placer As Boolean = True)
             CoerceValue(PageProperty)
             Dim nombre = CompterLesPages()
             SetValue(PageCountPropertyKey, nombre)
             Dim pages = Me.Pages
-            pages.Clear()
-            For i = 0 To nombre - 1
-                pages.Add(New CarouselPage(i + 1, i = Page))
-            Next
+            If pages.Count <> nombre Then
+                pages.Clear()
+                For i = 0 To nombre - 1
+                    pages.Add(New CarouselPage(i + 1, i = Page))
+                Next
+            Else
+                For i = 0 To nombre - 1
+                    pages(i).IsActive = (i = Page)
+                Next
+            End If
             SetValue(CanGoPreviousPropertyKey, nombre > 1 AndAlso (Circular OrElse Page > 0))
             SetValue(CanGoNextPropertyKey, nombre > 1 AndAlso (Circular OrElse Page < nombre - 1))
-            Placer(False)
+            If placer Then Me.Placer(False)
         End Sub
 
         ' La piste glisse jusqu'au premier élément de la page.

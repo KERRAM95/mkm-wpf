@@ -319,10 +319,17 @@ Namespace Mkm.Wpf.Controls
         Private Sub Montrer()
             Dim nombre = _elements.Count
             SetValue(ActiveItemPropertyKey, If(nombre = 0, Nothing, _elements(ActiveIndex)))
-            Positions.Clear()
-            For i = 0 To nombre - 1
-                Positions.Add(New CarouselPage(i + 1, i = ActiveIndex))
-            Next
+            ' Les indicateurs gardés tant que leur nombre ne change pas : celui qui a le clavier le garde.
+            If Positions.Count <> nombre Then
+                Positions.Clear()
+                For i = 0 To nombre - 1
+                    Positions.Add(New CarouselPage(i + 1, i = ActiveIndex))
+                Next
+            Else
+                For i = 0 To nombre - 1
+                    Positions(i).IsActive = (i = ActiveIndex)
+                Next
+            End If
             SetValue(CanGoPreviousPropertyKey, nombre > 1 AndAlso (Circular OrElse ActiveIndex > 0))
             SetValue(CanGoNextPropertyKey, nombre > 1 AndAlso (Circular OrElse ActiveIndex < nombre - 1))
             If _vignettes IsNot Nothing Then

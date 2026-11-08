@@ -46,6 +46,15 @@ Namespace Mkm.Wpf.Tests.Controls
         End Sub
 
         <Test>
+        Public Sub Carousel_LesIndicateursRestentLesMemes()
+            Dim c = Carrousel(5, 3)
+            Dim avant = c.Pages.ToList()
+            c.Next()
+            Assert.That(c.Pages.ToList(), [Is].EqualTo(avant), "les mêmes indicateurs : celui qui a le clavier le garde")
+            Assert.That(c.Pages.Select(Function(p) p.IsActive), [Is].EqualTo({False, True, False}))
+        End Sub
+
+        <Test>
         Public Sub Carousel_CirculaireRevientAuDebut()
             Dim c = Carrousel(4, 2, circulaire:=True)
             c.Previous()

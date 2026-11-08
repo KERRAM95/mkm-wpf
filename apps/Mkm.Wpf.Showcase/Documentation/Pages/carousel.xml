@@ -54,8 +54,11 @@
       et « Page suivante » ; ses indicateurs « Page 1 », « Page 2 »…</p>
     <h3>Clavier</h3>
     <touches>
-      <touche nom="Tab">Passe des flèches aux éléments, puis aux indicateurs.</touche>
+      <touche nom="Tab">Passe des flèches aux éléments, puis aux indicateurs (un seul arrêt pour eux tous).</touche>
+      <touche nom="Flèche gauche">Entre les indicateurs, va au précédent (en boucle).</touche>
+      <touche nom="Flèche droite">Entre les indicateurs, va au suivant (en boucle).</touche>
       <touche nom="Entrée">Sur une flèche ou un indicateur, change de page.</touche>
+      <touche nom="Espace">Comme Entrée.</touche>
     </touches>
   </section>
 </page>

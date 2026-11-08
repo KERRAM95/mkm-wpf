@@ -31,6 +31,8 @@
                             <Setter Property="Background" Value="{DynamicResource mkm.carousel.indicator.hover.background}" />
                         </Trigger>
                         <DataTrigger Binding="{Binding IsActive}" Value="True">
+                            <!-- La page montrée le dit aux lecteurs d'écran (aria-current de mkm). -->
+                            <Setter Property="AutomationProperties.ItemStatus" Value="{loc:T aria.currentPage}" />
                             <Setter Property="Background" Value="{DynamicResource mkm.carousel.indicator.active.background}" />
                         </DataTrigger>
                         <Trigger Property="local:FocusVisible.IsVisible" Value="True">
@@ -55,6 +57,7 @@
                 <ControlTemplate TargetType="{x:Type local:Carousel}">
                     <DockPanel>
                         <ItemsControl x:Name="PART_Indicators" DockPanel.Dock="Bottom" Focusable="False" HorizontalAlignment="Center"
+                                      KeyboardNavigation.TabNavigation="Once" KeyboardNavigation.DirectionalNavigation="Cycle"
                                       ItemsSource="{TemplateBinding Pages}" Margin="{DynamicResource mkm.carousel.indicator.list.padding}">
                             <ItemsControl.ItemsPanel>
                                 <ItemsPanelTemplate>
