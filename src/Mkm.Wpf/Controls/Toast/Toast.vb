@@ -91,6 +91,62 @@ Namespace Mkm.Wpf.Controls
             FocusableProperty.OverrideMetadata(GetType(Toast), New FrameworkPropertyMetadata(False))
         End Sub
 
+        ' La zone qui défile d'une fenêtre zoomée (DefilementDuZoom) : les notifications restent dans sa partie visible.
+        Private _zone As DefilementDuZoom
+
+        ''' <summary>Une liste de notifications vide.</summary>
+        Public Sub New()
+            AddHandler Loaded, Sub() SuivreLaZone(ZoneAutour(Me))
+            AddHandler Unloaded, Sub() SuivreLaZone(Nothing)
+        End Sub
+
+        ''' <summary>
+        ''' Suit la zone qui défile d'une fenêtre zoomée : les notifications se tiennent dans sa partie visible, à leur place
+        ''' (en haut à droite…), comme un élément fixe d'une page agrandie dans un navigateur.
+        ''' </summary>
+        Friend Sub SuivreLaZone(zone As DefilementDuZoom)
+            If _zone IsNot Nothing Then RemoveHandler _zone.ScrollChanged, AddressOf Zone_ScrollChanged
+            _zone = zone
+            If _zone Is Nothing Then
+                ClearValue(RenderTransformProperty)
+                Return
+            End If
+            AddHandler _zone.ScrollChanged, AddressOf Zone_ScrollChanged
+            Placer()
+        End Sub
+
+        Private Shared Function ZoneAutour(element As DependencyObject) As DefilementDuZoom
+            Dim d = Media.VisualTreeHelper.GetParent(element)
+            While d IsNot Nothing
+                Dim zone = TryCast(d, DefilementDuZoom)
+                If zone IsNot Nothing Then Return zone
+                d = Media.VisualTreeHelper.GetParent(d)
+            End While
+            Return Nothing
+        End Function
+
+        Private Sub Zone_ScrollChanged(sender As Object, e As ScrollChangedEventArgs)
+            Placer()
+        End Sub
+
+        Private Sub Placer()
+            Dim z = _zone
+            If z Is Nothing OrElse z.ExtentWidth <= 0 Then Return
+            Dim dx As Double
+            Select Case HorizontalAlignment
+                Case HorizontalAlignment.Left : dx = z.HorizontalOffset
+                Case HorizontalAlignment.Center : dx = z.HorizontalOffset + (z.ViewportWidth - z.ExtentWidth) / 2
+                Case Else : dx = z.HorizontalOffset + z.ViewportWidth - z.ExtentWidth
+            End Select
+            Dim dy As Double
+            Select Case VerticalAlignment
+                Case VerticalAlignment.Bottom : dy = z.VerticalOffset + z.ViewportHeight - z.ExtentHeight
+                Case VerticalAlignment.Center : dy = z.VerticalOffset + (z.ViewportHeight - z.ExtentHeight) / 2
+                Case Else : dy = z.VerticalOffset
+            End Select
+            RenderTransform = New Media.TranslateTransform(dx, dy)
+        End Sub
+
         ''' <summary>Levé quand une notification se ferme, par sa croix, <see cref="Remove"/> ou la fin de sa vie.</summary>
         Public Event MessageClosed As EventHandler(Of ToastClosedEventArgs)
 

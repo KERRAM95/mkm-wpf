@@ -74,10 +74,18 @@ AddHandler MkmResources.Current.ZoomChanged, Sub() My.Settings.Zoom = MkmResourc
 
   <section titre="La place qui reste">
     <p>Comme le zoom d'un navigateur, il ne change pas la taille des fenêtres : à 200 %, une fenêtre de 1 000 px en
-      montre autant qu'une de 500 px à 100 %. Les composants s'y font : la <lien page="toolbar">Toolbar</lien> et
-      l'<lien page="actionbar">ActionBar</lien> rangent dans leur menu « … » ce qui ne tient plus, le
-      <lien page="triptych">Triptych</lien> replie ses panneaux, une page défile. Une application prévoit une fenêtre
-      qui défile et des panneaux qui se replient.</p>
+      montre autant qu'une de 500 px à 100 %. Rien n'est caché pour autant : agrandie, une fenêtre garde au moins
+      <c>ZoomMinimumSize</c> pour mettre son contenu en page (800 × 600 par défaut, jamais plus que la fenêtre), et
+      défile pour montrer le reste, comme une page agrandie dans un navigateur. La molette la défile quand rien
+      d'autre ne défile sous la souris ; Maj + molette, de côté. Les notifications (<lien page="toast">Toast</lien>)
+      restent dans la partie visible.</p>
+    <p>Une application dont les écrans se replient bien à l'étroit baisse <c>ZoomMinimumSize</c> : la
+      <lien page="toolbar">Toolbar</lien> et l'<lien page="actionbar">ActionBar</lien> rangent dans leur menu « … » ce
+      qui ne tient plus, le <lien page="triptych">Triptych</lien> replie ses panneaux. Une fenêtre à la taille de son
+      contenu (un dialogue) grandit avec le zoom.</p>
+    <code langage="vb"><![CDATA[
+MkmResources.Current.ZoomMinimumSize = New Size(640, 480)
+]]></code>
   </section>
 
   <section titre="Accessibilité">

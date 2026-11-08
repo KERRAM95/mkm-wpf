@@ -32,6 +32,7 @@ Namespace Mkm.Wpf
         Private _zoom As Double = 1.0
         Private _zoomShortcuts As Boolean = True
         Private _zoomIndicator As Boolean = True
+        Private _zoomMinimumSize As New Size(800, 600)
 
         ''' <summary>
         ''' Le zoom de toute l'interface : 1 (100 %) par défaut, de <see cref="MinZoom"/> à <see cref="MaxZoom"/>. Texte,
@@ -63,6 +64,22 @@ Namespace Mkm.Wpf
             End Get
             Set(value As Boolean)
                 _zoomShortcuts = value
+            End Set
+        End Property
+
+        ''' <summary>
+        ''' La plus petite mise en page du contenu d'une fenêtre zoomée, en pixels à 100 % : 800 × 600 par défaut (jamais
+        ''' plus que la fenêtre elle-même). Quand le zoom ne laisse plus cette place, le contenu garde cette taille et la
+        ''' fenêtre défile, comme une page agrandie dans un navigateur, au lieu de cacher ce qui ne tient pas. Une
+        ''' application dont les écrans se replient bien à l'étroit la baisse.
+        ''' </summary>
+        Public Property ZoomMinimumSize As Size
+            Get
+                Return _zoomMinimumSize
+            End Get
+            Set(value As Size)
+                _zoomMinimumSize = value
+                Agrandissement.Appliquer(_zoom)
             End Set
         End Property
 
@@ -205,6 +222,7 @@ Namespace Mkm.Wpf
                     element.ClearValue(ZoomeeProperty)
                 End If
                 fenetre.ClearValue(TextOptions.TextFormattingModeProperty)
+                AjusterLaZone(fenetre, facteur)
                 Return
             End If
             Dim echelle As New ScaleTransform(facteur, facteur)
@@ -212,6 +230,12 @@ Namespace Mkm.Wpf
             element.LayoutTransform = echelle
             element.SetValue(ZoomeeProperty, True)
             fenetre.SetValue(TextOptions.TextFormattingModeProperty, TextFormattingMode.Ideal)
+            AjusterLaZone(fenetre, facteur)
+        End Sub
+
+        ' Agrandie, une fenêtre défile au lieu de cacher ce qui ne tient plus (DefilementDuZoom).
+        Private Shared Sub AjusterLaZone(fenetre As Window, facteur As Double)
+            DefilementDuZoom.De(fenetre, creer:=facteur > 1.001)?.Dimensionner()
         End Sub
 
         Private Shared Sub FenetreChargee(sender As Object, e As RoutedEventArgs)

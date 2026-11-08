@@ -1,3 +1,5 @@
+Imports System.Collections.Generic
+Imports System.Linq
 Imports System.Windows
 Imports System.Windows.Controls
 Imports System.Windows.Input
@@ -123,6 +125,42 @@ Namespace Mkm.Wpf.Tests
                 fenetre.Close()
             End Try
         End Sub
+
+        <Test>
+        Public Sub AgrandieUneFenetreDefileAuLieuDeCacher()
+            Dim contenu As New Border()
+            Dim fenetre As New Window With {.Content = contenu, .Width = 600, .Height = 400, .Left = -10000, .Top = -10000,
+                                            .ShowInTaskbar = False, .ShowActivated = False, .WindowStyle = WindowStyle.None}
+            Dim r = Reglages
+            fenetre.Show()
+            Try
+                Vider()
+                r.Zoom = 2.0
+                Vider()
+                Dim zone = Descendants(fenetre).OfType(Of DefilementDuZoom)().FirstOrDefault()
+                Assert.That(zone, [Is].Not.Null, "agrandie, la fenêtre a sa zone qui défile")
+                Assert.That(fenetre.Content, [Is].SameAs(contenu), "son contenu reste le même")
+                Assert.That(zone.ScrollableWidth, [Is].GreaterThan(0), "la mise en page minimale (sa propre largeur) dépasse la place")
+                Assert.That(zone.ScrollableHeight, [Is].GreaterThan(0))
+
+                r.ResetZoom()
+                Vider()
+                Assert.That(zone.HorizontalScrollBarVisibility, [Is].EqualTo(ScrollBarVisibility.Disabled), "à 100 %, elle s'efface")
+                Assert.That(zone.ScrollableWidth, [Is].EqualTo(0))
+            Finally
+                fenetre.Close()
+            End Try
+        End Sub
+
+        Private Shared Iterator Function Descendants(racine As DependencyObject) As IEnumerable(Of DependencyObject)
+            For i = 0 To VisualTreeHelper.GetChildrenCount(racine) - 1
+                Dim enfant = VisualTreeHelper.GetChild(racine, i)
+                Yield enfant
+                For Each petit In Descendants(enfant)
+                    Yield petit
+                Next
+            Next
+        End Function
 
         <Test>
         Public Sub LaTailleDuTexteDeWindows()

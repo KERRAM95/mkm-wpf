@@ -54,10 +54,15 @@ Namespace Mkm.Wpf.UiTests
             Try
                 zoom.Select(5)
                 AttendreQue(Function() Math.Abs(recherche.BoundingRectangle.Height - hauteur * 1.5) <= 2, "150 % choisi dans la liste")
+                ' Ce qui ne tient plus dans la fenêtre se trouve en la faisant défiler, au lieu d'être caché.
+                Dim zone = Trouver("DefilementDuZoom").Patterns.Scroll.Pattern
+                AttendreQue(Function() zone.HorizontallyScrollable.Value AndAlso zone.VerticallyScrollable.Value, "la fenêtre défile")
             Finally
                 zoom.Select(2)
             End Try
             AttendreQue(Function() Math.Abs(recherche.BoundingRectangle.Height - hauteur) <= 1, "100 % de nouveau")
+            Dim apres = Trouver("DefilementDuZoom").Patterns.Scroll.Pattern
+            AttendreQue(Function() Not apres.HorizontallyScrollable.Value, "à 100 %, plus rien à faire défiler")
         End Sub
 
     End Class

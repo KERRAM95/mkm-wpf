@@ -45,11 +45,20 @@ le fait.
 - **Chaque écran** : le manifeste de l'application déclare `PerMonitorV2` ; la
   vitrine le fait, HS Cart le fera.
 
+- **Rien de caché** : agrandie, une fenêtre de taille fixe garde au moins
+  `ZoomMinimumSize` (800 × 600 par défaut, jamais plus que la fenêtre) pour
+  mettre son contenu en page, et défile pour montrer le reste, comme une page
+  agrandie dans un navigateur (une zone qui défile autour de la présentation
+  de son contenu : `Window.Content` reste le même). La molette la défile quand
+  rien d'autre ne défile, Maj + molette de côté ; les flèches restent à la
+  navigation au clavier. Les notifications (`Toast`) restent dans la partie
+  visible.
+
 ## Écarts et limites
 
 - Le zoom ne change pas la taille des fenêtres : à 200 %, une fenêtre montre
-  moitié moins. Les composants qui se replient (Toolbar, ActionBar, Triptych)
-  s'y font ; une application prévoit une fenêtre qui défile.
+  moitié moins, et défile. Une application dont les écrans se replient bien
+  (Toolbar, ActionBar, Triptych) baisse `ZoomMinimumSize`.
 - Les images bitmap (photos) s'adoucissent agrandies ; les icônes, non.
 
 ## La documentation et les tests
