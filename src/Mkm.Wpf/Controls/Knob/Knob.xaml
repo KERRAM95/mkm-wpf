@@ -23,7 +23,7 @@
                 <ControlTemplate TargetType="{x:Type local:Knob}">
                     <Grid x:Name="Racine" Background="Transparent">
                         <local:DessinDeKnob x:Name="PART_Drawing" />
-                        <Ellipse x:Name="Anneau" Visibility="Collapsed" IsHitTestVisible="False"
+                        <Ellipse x:Name="Anneau" Margin="-2" Visibility="Collapsed" IsHitTestVisible="False"
                                  Stroke="{DynamicResource mkm.knob.focus.ring.color}"
                                  StrokeThickness="{DynamicResource mkm.knob.focus.ring.width}" />
                     </Grid>
@@ -31,8 +31,10 @@
                         <Trigger Property="local:FocusVisible.IsVisible" Value="True">
                             <Setter TargetName="Anneau" Property="Visibility" Value="Visible" />
                         </Trigger>
+                        <!-- En lecture seule, ni curseur de main ni arrêt de Tab, comme mkm (tabindex -1). -->
                         <Trigger Property="IsReadOnly" Value="True">
                             <Setter Property="Cursor" Value="Arrow" />
+                            <Setter Property="Focusable" Value="False" />
                         </Trigger>
                         <Trigger Property="IsEnabled" Value="False">
                             <Setter TargetName="Racine" Property="Opacity" Value="{DynamicResource mkm.disabled.opacity}" />

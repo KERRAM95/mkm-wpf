@@ -338,6 +338,8 @@ Les évolutions notables de mkm-wpf, version par version. Le format suit
   - DataTable : quadrillé, un cadre autour, comme mkm ; le message d'un
     tableau vide centré dans sa ligne ; l'en-tête et le pied suivent la
     taille (Small, Large) ; la poignée de redimensionnement au jeton (6 px).
+  - Knob : en lecture seule, plus un arrêt de Tab ; son anneau à 1 px
+    au-dehors. Dock : Début et Fin. CascadeSelect : ↑ ouvre la liste.
   - InputOtp, ColorPicker, Terminal, Password : la langue n'est suivie que
     tant que le contrôle est chargé (l'abonnement à vie le gardait en
     mémoire).

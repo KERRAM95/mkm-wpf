@@ -329,7 +329,8 @@ Namespace Mkm.Wpf.Controls
             MyBase.OnKeyDown(e)
             If e.Handled OrElse IsDropDownOpen Then Return
             Dim touche = If(e.Key = Key.System, e.SystemKey, e.Key)
-            If touche = Key.Down OrElse touche = Key.Enter OrElse touche = Key.Space OrElse touche = Key.F4 Then
+            ' ↑ ouvre aussi la liste, comme mkm.
+            If touche = Key.Down OrElse touche = Key.Up OrElse touche = Key.Enter OrElse touche = Key.Space OrElse touche = Key.F4 Then
                 SetCurrentValue(IsDropDownOpenProperty, True)
                 e.Handled = True
             End If

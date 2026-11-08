@@ -77,7 +77,7 @@
     <p>Ouvert au clavier, le clavier entre dans la première liste ; il revient au champ quand les listes se referment.</p>
     <touches>
       <touche nom="Flèche bas">Ouvre la liste ; dans la liste, passe à l'option suivante.</touche>
-      <touche nom="Flèche haut">Passe à l'option précédente.</touche>
+      <touche nom="Flèche haut">Ouvre la liste ; dans la liste, passe à l'option précédente.</touche>
       <touche nom="Flèche droite">Ouvre la liste qui suit l'option, sur sa première option.</touche>
       <touche nom="Flèche gauche">Referme la liste, et revient à l'option qui l'avait ouverte.</touche>
       <touche nom="Entrée">Ouvre la liste ; sur une option sans suite, la choisit et referme les listes.</touche>

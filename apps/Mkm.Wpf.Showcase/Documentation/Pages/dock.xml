@@ -59,6 +59,7 @@
     <touches>
       <touche nom="Tab">Amène le clavier dans le dock, puis l'en fait sortir.</touche>
       <touche nom="Flèches">Passent d'une application à l'autre.</touche>
+      <touche nom="Début, Fin">Vont à la première ou à la dernière application.</touche>
       <touche nom="Entrée">Lance l'application.</touche>
     </touches>
   </section>

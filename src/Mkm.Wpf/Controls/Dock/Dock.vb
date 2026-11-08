@@ -64,6 +64,15 @@ Namespace Mkm.Wpf.Controls
             Return New DockItem()
         End Function
 
+        ''' <summary>Début et Fin vont à la première et à la dernière application, comme mkm (les flèches, déjà).</summary>
+        Protected Overrides Sub OnPreviewKeyDown(e As System.Windows.Input.KeyEventArgs)
+            MyBase.OnPreviewKeyDown(e)
+            If e.Handled OrElse (e.Key <> System.Windows.Input.Key.Home AndAlso e.Key <> System.Windows.Input.Key.End) OrElse Items.Count = 0 Then Return
+            Dim rang = If(e.Key = System.Windows.Input.Key.Home, 0, Items.Count - 1)
+            Dim element = TryCast(If(TryCast(Items(rang), UIElement), ItemContainerGenerator.ContainerFromIndex(rang)), UIElement)
+            If element IsNot Nothing AndAlso element.Focus() Then e.Handled = True
+        End Sub
+
         ''' <summary>Un menu pour les lecteurs d'écran, comme mkm : ses applications.</summary>
         Protected Overrides Function OnCreateAutomationPeer() As AutomationPeer
             Return New PairDeConteneur(Me, AutomationControlType.Menu)
