@@ -72,7 +72,7 @@
 
   <section titre="Linéaire">
     <p><c>Linear</c> : un clic ou le clavier sur une étape n'y va pas ; on avance par les boutons de l'application, qui
-      vérifie d'abord l'étape en cours.</p>
+      vérifie d'abord l'étape en cours. Les autres étapes sont grisées, comme mkm.</p>
     <exemple comportement="StepperBoutons"><![CDATA[
 <mkm:Stepper Linear="True" Width="560">
     <mkm:StepperPanel Header="Plan">

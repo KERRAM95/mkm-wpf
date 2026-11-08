@@ -162,6 +162,11 @@
             </StackPanel>
             <Border x:Name="Souligne" VerticalAlignment="Bottom" Background="Transparent"
                     Height="{DynamicResource mkm.tabs.strip.tab.bar.height}" />
+            <!-- L'anneau du clavier, en dedans (tabs.tab.focus.ring.offset, -2px), comme mkm : le soulignement ne
+                 suffit pas, celui de l'onglet choisi le recouvre. -->
+            <Rectangle x:Name="Anneau" Margin="1" Visibility="Collapsed" IsHitTestVisible="False"
+                       Stroke="{DynamicResource mkm.tabs.tab.focus.ring.color}"
+                       StrokeThickness="{DynamicResource mkm.tabs.tab.focus.ring.width}" />
         </Grid>
         <ControlTemplate.Triggers>
             <Trigger Property="Icon" Value="{x:Null}">
@@ -177,6 +182,9 @@
             <Trigger Property="IsSelected" Value="True">
                 <Setter TargetName="Souligne" Property="Background" Value="{DynamicResource mkm.tabs.strip.tab.active.color}" />
                 <Setter TargetName="Titre" Property="TextElement.Foreground" Value="{DynamicResource mkm.tabs.strip.tab.active.color}" />
+            </Trigger>
+            <Trigger Property="local:FocusVisible.IsVisible" Value="True">
+                <Setter TargetName="Anneau" Property="Visibility" Value="Visible" />
             </Trigger>
             <Trigger Property="IsEnabled" Value="False">
                 <Setter TargetName="Fond" Property="Opacity" Value="{DynamicResource mkm.disabled.opacity}" />

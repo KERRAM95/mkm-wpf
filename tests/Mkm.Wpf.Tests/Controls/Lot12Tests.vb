@@ -45,6 +45,12 @@ Namespace Mkm.Wpf.Tests.Controls
             Assert.That(panneau.IsCollapsed, [Is].True)
             Assert.That(contenu.Visibility, [Is].EqualTo(Visibility.Collapsed), "replié : seul l'en-tête reste")
             Assert.That(System.Windows.Automation.AutomationProperties.GetName(bouton), [Is].EqualTo(Texte("aria.expand")))
+
+            ' Pour les lecteurs d'écran, un bouton qui déplie (aria-expanded de mkm).
+            Dim depli = DirectCast(UIElementAutomationPeer.CreatePeerForElement(bouton).GetPattern(PatternInterface.ExpandCollapse), IExpandCollapseProvider)
+            Assert.That(depli.ExpandCollapseState, [Is].EqualTo(System.Windows.Automation.ExpandCollapseState.Collapsed))
+            depli.Expand()
+            Assert.That(panneau.IsCollapsed, [Is].False, "Expand le déplie")
         End Sub
 
         <Test>

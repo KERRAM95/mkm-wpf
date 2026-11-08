@@ -31,8 +31,9 @@
                                 <DockPanel>
                                     <StackPanel DockPanel.Dock="Right" Orientation="Horizontal" VerticalAlignment="Center">
                                         <ContentPresenter Content="{TemplateBinding Actions}" VerticalAlignment="Center" />
-                                        <local:Button x:Name="PART_Toggle" Visibility="Collapsed" Variant="Text" Severity="Secondary"
-                                                      Icon="{x:Static local:InternalIcons.Minus}" />
+                                        <local:BoutonDeRepli x:Name="PART_Toggle" Visibility="Collapsed" Variant="Text" Severity="Secondary"
+                                                             IsCollapsed="{TemplateBinding IsCollapsed}"
+                                                             Icon="{x:Static local:InternalIcons.Minus}" />
                                     </StackPanel>
                                     <ContentPresenter ContentSource="Header" VerticalAlignment="Center" RecognizesAccessKey="True"
                                                       TextElement.FontWeight="{DynamicResource mkm.panel.title.font.weight}"

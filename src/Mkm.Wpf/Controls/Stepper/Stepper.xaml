@@ -77,6 +77,23 @@
             <Trigger Property="IsSelected" Value="True">
                 <Setter Property="Cursor" Value="Arrow" />
             </Trigger>
+            <!-- Linéaire, les étapes autres que l'étape en cours sont grisées, comme mkm (p-disabled). -->
+            <MultiDataTrigger>
+                <MultiDataTrigger.Conditions>
+                    <Condition Binding="{Binding Linear, RelativeSource={RelativeSource AncestorType={x:Type local:Stepper}}}" Value="True" />
+                    <Condition Binding="{Binding IsSelected, RelativeSource={RelativeSource Self}}" Value="False" />
+                </MultiDataTrigger.Conditions>
+                <Setter Property="Opacity" Value="{DynamicResource mkm.disabled.opacity}" />
+                <Setter Property="Cursor" Value="Arrow" />
+            </MultiDataTrigger>
+            <!-- En colonne, seule l'étape en cours est un arrêt de Tab : la touche passe ensuite dans son contenu. -->
+            <MultiTrigger>
+                <MultiTrigger.Conditions>
+                    <Condition Property="Orientation" Value="Vertical" />
+                    <Condition Property="IsSelected" Value="False" />
+                </MultiTrigger.Conditions>
+                <Setter Property="IsTabStop" Value="False" />
+            </MultiTrigger>
             <!-- En colonne : l'en-tête, puis, pour l'étape en cours, son contenu le long du trait. -->
             <Trigger Property="Orientation" Value="Vertical">
                 <Setter Property="Template">
@@ -147,7 +164,7 @@
                         <ControlTemplate TargetType="{x:Type local:Stepper}">
                             <Border Background="{TemplateBinding Background}">
                                 <local:RangeeEtiree Orientation="Vertical" IsItemsHost="True"
-                                                    KeyboardNavigation.TabNavigation="Once" KeyboardNavigation.DirectionalNavigation="Cycle" />
+                                                    KeyboardNavigation.TabNavigation="Local" KeyboardNavigation.DirectionalNavigation="Cycle" />
                             </Border>
                         </ControlTemplate>
                     </Setter.Value>

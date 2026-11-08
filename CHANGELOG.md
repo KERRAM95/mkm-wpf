@@ -266,6 +266,13 @@ Les évolutions notables de mkm-wpf, version par version. Le format suit
     (le clavier quittait le carrousel) ; la page montrée le dit aux lecteurs
     d'écran ; le carrousel glisse vraiment d'une page à l'autre ; ses
     indicateurs sont un seul arrêt de Tab, parcourus aux flèches.
+  - Stepper : linéaire, les autres étapes sont grisées, comme mkm ; en
+    colonne, la touche Tab atteint le contenu de l'étape en cours.
+  - Tabs : en variante Strip, l'anneau du clavier (le focus était
+    invisible).
+  - Panel, IdCard : le bouton de repli se dit développé ou réduit aux
+    lecteurs d'écran ; IdCard : la touche Tab passe par replier, fermer,
+    puis les boutons ajoutés, comme mkm.
   - InputOtp, ColorPicker, Terminal, Password : la langue n'est suivie que
     tant que le contrôle est chargé (l'abonnement à vie le gardait en
     mémoire).

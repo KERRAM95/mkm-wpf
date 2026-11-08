@@ -81,16 +81,19 @@
                                                LineStackingStrategy="BlockLineHeight" />
                                 </DockPanel>
                                 <!-- Les boutons depuis le bord droit : replier au bord, fermer à sa gauche, les ajoutés devant. -->
+                                <!-- La touche Tab, comme mkm : replier, fermer, puis les ajoutés. -->
                                 <StackPanel Grid.Row="0" Grid.Column="1" Orientation="Horizontal" VerticalAlignment="Center"
-                                            Margin="{DynamicResource mkm.idcard.actions.margin}">
-                                    <ContentPresenter x:Name="Ajoutes" Content="{TemplateBinding Actions}" VerticalAlignment="Center" />
-                                    <local:Button x:Name="PART_CloseButton" Visibility="Collapsed" Variant="Text" Severity="Secondary"
+                                            Margin="{DynamicResource mkm.idcard.actions.margin}" KeyboardNavigation.TabNavigation="Local">
+                                    <ContentPresenter x:Name="Ajoutes" Content="{TemplateBinding Actions}" VerticalAlignment="Center"
+                                                      KeyboardNavigation.TabIndex="2" />
+                                    <local:Button x:Name="PART_CloseButton" Visibility="Collapsed" Variant="Text" Severity="Secondary" KeyboardNavigation.TabIndex="1"
                                                   Icon="{x:Static local:InternalIcons.Times}" Padding="4"
                                                   Margin="{DynamicResource mkm.idcard.actions.button.margin}"
                                                   Width="{DynamicResource mkm.idcard.actions.button.size}"
                                                   Height="{DynamicResource mkm.idcard.actions.button.size}"
                                                   AutomationProperties.Name="{loc:T aria.close}" />
-                                    <local:Button x:Name="PART_CollapseButton" Variant="Text" Severity="Secondary"
+                                    <local:BoutonDeRepli x:Name="PART_CollapseButton" Variant="Text" Severity="Secondary" KeyboardNavigation.TabIndex="0"
+                                                  IsCollapsed="{TemplateBinding IsCollapsed}"
                                                   Icon="{x:Static local:InternalIcons.ChevronUp}" Padding="4"
                                                   Margin="{DynamicResource mkm.idcard.actions.button.margin}"
                                                   Width="{DynamicResource mkm.idcard.actions.button.size}"
