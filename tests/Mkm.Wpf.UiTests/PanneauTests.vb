@@ -191,6 +191,21 @@ Namespace Mkm.Wpf.UiTests
             AttendreQue(Function() etat(notes) = ExpandCollapseState.Collapsed, "« Notes » refermée")
         End Sub
 
+        <Test>
+        Public Sub Stepper_UnClicEtSesBoutonsChangentDEtape()
+            Dim page = OuvrirLaDoc("stepper")
+            Dim etapes = Trouver("Etapes", page)
+            Dim cartouche = TrouverParNom("Cartouche", ControlType.TabItem, etapes)
+            Dim diffusion = TrouverParNom("Diffusion", ControlType.TabItem, etapes)
+
+            Cliquer(TrouverParNom("Suivant", ControlType.Button, etapes))
+            AttendreQue(Function() cartouche.Patterns.SelectionItem.Pattern.IsSelected.Value, "« Suivant » : « Cartouche »")
+            Cliquer(diffusion)
+            AttendreQue(Function() diffusion.Patterns.SelectionItem.Pattern.IsSelected.Value, "un clic : « Diffusion »")
+            Cliquer(TrouverParNom("Précédent", ControlType.Button, etapes))
+            AttendreQue(Function() cartouche.Patterns.SelectionItem.Pattern.IsSelected.Value, "« Précédent » : « Cartouche »")
+        End Sub
+
     End Class
 
 End Namespace

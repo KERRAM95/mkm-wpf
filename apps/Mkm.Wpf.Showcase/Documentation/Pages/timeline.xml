@@ -1,0 +1,87 @@
+<?xml version="1.0" encoding="utf-8"?>
+<page titre="Timeline" categorie="Données" types="Timeline TimelineEvent TimelineAlign" jetons="timeline">
+  <resume>Une frise : des évènements le long d'une ligne, chacun un rond sur la ligne, son contenu d'un côté et son
+    opposé (une date) de l'autre.</resume>
+
+  <section titre="Import">
+    <code><![CDATA[
+<Window xmlns:mkm="urn:mkm-wpf">
+    <mkm:Timeline>
+        <mkm:TimelineEvent Opposite="02/09/2026" Content="Création" />
+    </mkm:Timeline>
+</Window>
+]]></code>
+  </section>
+
+  <section titre="Basique">
+    <p>Chaque évènement est un <c>TimelineEvent</c> : son contenu (<c>Content</c>) à droite de la ligne, son opposé
+      (<c>Opposite</c>) à gauche. Lié à une liste (<c>ItemsSource</c>), <c>ItemTemplate</c> dessine le contenu de
+      chaque élément et <c>OppositeTemplate</c> son opposé.</p>
+    <exemple><![CDATA[
+<mkm:Timeline x:Name="Revisions" Width="420">
+    <mkm:TimelineEvent Opposite="02/09/2026" Content="Révision A : création" />
+    <mkm:TimelineEvent Opposite="15/09/2026" Content="Révision B : cotes reprises" />
+    <mkm:TimelineEvent Opposite="03/10/2026" Content="Révision C : cartouche mis à jour" />
+    <mkm:TimelineEvent Opposite="08/11/2026" Content="Validé par J. Durand" />
+</mkm:Timeline>
+]]></exemple>
+  </section>
+
+  <section titre="Côté">
+    <p><c>Align</c> : le contenu à droite de la ligne (<c>Left</c>, par défaut), à gauche (<c>Right</c>), ou d'un côté
+      puis de l'autre (<c>Alternate</c>).</p>
+    <exemple><![CDATA[
+<StackPanel Orientation="Horizontal">
+    <mkm:Timeline Align="Right" Width="260" Margin="0,0,24,0">
+        <mkm:TimelineEvent Opposite="02/09" Content="Création" />
+        <mkm:TimelineEvent Opposite="15/09" Content="Cotes reprises" />
+        <mkm:TimelineEvent Opposite="08/11" Content="Validé" />
+    </mkm:Timeline>
+    <mkm:Timeline Align="Alternate" Width="260">
+        <mkm:TimelineEvent Opposite="02/09" Content="Création" />
+        <mkm:TimelineEvent Opposite="15/09" Content="Cotes reprises" />
+        <mkm:TimelineEvent Opposite="08/11" Content="Validé" />
+    </mkm:Timeline>
+</StackPanel>
+]]></exemple>
+  </section>
+
+  <section titre="Horizontale">
+    <p><c>Layout="Horizontal"</c> : la ligne en travers, l'opposé au-dessus et le contenu dessous ;
+      <c>Align="Bottom"</c> les échange.</p>
+    <exemple><![CDATA[
+<mkm:Timeline Layout="Horizontal" Width="560">
+    <mkm:TimelineEvent Opposite="Septembre" Content="Création" />
+    <mkm:TimelineEvent Opposite="Octobre" Content="Revue" />
+    <mkm:TimelineEvent Opposite="Novembre" Content="Validation" />
+    <mkm:TimelineEvent Opposite="Décembre" Content="Diffusion" />
+</mkm:Timeline>
+]]></exemple>
+  </section>
+
+  <section titre="Rond personnalisé">
+    <p><c>Marker</c> remplace le rond de mkm : une icône, un avatar.</p>
+    <exemple><![CDATA[
+<mkm:Timeline Width="420">
+    <mkm:TimelineEvent Opposite="02/09/2026" Content="Plan créé">
+        <mkm:TimelineEvent.Marker>
+            <mkm:Avatar Icon="{x:Static mkm:Icons.Add}" Shape="Circle" />
+        </mkm:TimelineEvent.Marker>
+    </mkm:TimelineEvent>
+    <mkm:TimelineEvent Opposite="08/11/2026" Content="Plan validé">
+        <mkm:TimelineEvent.Marker>
+            <mkm:Avatar Icon="{x:Static mkm:Icons.Success}" Shape="Circle" />
+        </mkm:TimelineEvent.Marker>
+    </mkm:TimelineEvent>
+</mkm:Timeline>
+]]></exemple>
+  </section>
+
+  <section titre="Accessibilité">
+    <h3>Lecteur d'écran</h3>
+    <p>Narrateur dit la frise « liste », et chaque évènement « élément de liste » : son opposé puis son contenu. Les ronds
+      et la ligne ne se lisent pas.</p>
+    <h3>Clavier</h3>
+    <p>La frise ne prend pas le clavier : Tab passe aux éléments de ses évènements (un lien, un bouton).</p>
+  </section>
+</page>

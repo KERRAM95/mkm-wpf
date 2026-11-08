@@ -380,3 +380,8 @@ autocomplete.input.dropdown.corner.radius = {inputtext.border.radius} 0 0 {input
 autocomplete.dropdown.corner.radius = 0 {autocomplete.dropdown.border.radius} {autocomplete.dropdown.border.radius} 0
 autocomplete.dropdown.border.width = 1px 1px 1px 0
 autocomplete.list.max.height = 168px
+
+# stepper : en ligne, le trait à step.gap de l'en-tête ; en colonne, le contenu en retrait du trait (steppanel.indent,
+# un nombre).
+stepper.separator.horizontal.margin = 0 0 0 {stepper.step.gap}
+stepper.steppanel.vertical.margin = 0 0 0 {stepper.steppanel.indent}

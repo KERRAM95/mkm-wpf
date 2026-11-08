@@ -134,6 +134,12 @@ Les évolutions notables de mkm-wpf, version par version. Le format suit
   l'application, bouton accolé), `IconField`, `InputGroup` et
   `InputGroupAddon` ; `Chip` gagne `CornerRadius` ; leurs jetons, leurs pages,
   leurs tests et leurs scénarios. La priorité 1 est faite.
+- Le lot 15 (`docs/composants/etapes-frise-et-pagination.md`) : `Stepper` et
+  `StepperPanel` (en ligne ou en colonne, linéaire), `Timeline` et
+  `TimelineEvent` (verticale ou horizontale, alternée, rond personnalisé),
+  `Paginator` (flèches, liens de page, lignes par page, « 3 sur 12 ») ; leurs
+  jetons, leurs pages, leurs tests et leurs scénarios.
+- Info-bulle et Popover : la page qui défile les referme, comme mkm.
 - Le zoom de toute l'interface (`docs/fondations/zoom.md`) :
   `MkmResources.Zoom` (80 à 200 %), `ZoomIn`, `ZoomOut`, `ResetZoom`,
   `ZoomChanged` ; chaque fenêtre, ses dialogues et ses fenêtres flottantes

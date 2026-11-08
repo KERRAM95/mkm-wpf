@@ -1435,6 +1435,30 @@ multiselect.empty.message.padding = {list.option.padding}
 overlaybadge.outline.width = 2px
 overlaybadge.outline.color = {content.background}
 
+# paginator
+paginator.padding = 6px 12px
+paginator.gap = 3px
+paginator.border.radius = {content.border.radius}
+paginator.background = {content.background}
+paginator.color = {content.color}
+paginator.transition.duration = {transition.duration}
+paginator.nav.button.background = transparent
+paginator.nav.button.hover.background = {content.hover.background}
+paginator.nav.button.selected.background = {highlight.background}
+paginator.nav.button.color = {text.muted.color}
+paginator.nav.button.hover.color = {text.hover.muted.color}
+paginator.nav.button.selected.color = {highlight.color}
+paginator.nav.button.width = 30px
+paginator.nav.button.height = 30px
+paginator.nav.button.border.radius = {content.border.radius}
+paginator.nav.button.focus.ring.width = {focus.ring.width}
+paginator.nav.button.focus.ring.style = {focus.ring.style}
+paginator.nav.button.focus.ring.color = {focus.ring.color}
+paginator.nav.button.focus.ring.offset = {focus.ring.offset}
+paginator.nav.button.focus.ring.shadow = {focus.ring.shadow}
+paginator.current.page.report.color = {text.muted.color}
+paginator.jump.to.page.input.max.width = 30px
+
 # panel
 panel.background = {content.background}
 panel.border.color = {content.border.color}
@@ -1696,6 +1720,42 @@ stategraph.flag.font.weight = bold
 stategraph.flag.stroke.width = 0.5%
 stategraph.flag.blank.color = {surface.500}
 
+# stepper
+stepper.transition.duration = {transition.duration}
+stepper.separator.background = {content.border.color}
+stepper.separator.active.background = {primary.color}
+stepper.separator.margin = 0 0 0 19.5px
+stepper.separator.size = 2px
+stepper.step.padding = 6px
+stepper.step.gap = 12px
+stepper.step.header.padding = 0
+stepper.step.header.border.radius = {content.border.radius}
+stepper.step.header.focus.ring.width = {focus.ring.width}
+stepper.step.header.focus.ring.style = {focus.ring.style}
+stepper.step.header.focus.ring.color = {focus.ring.color}
+stepper.step.header.focus.ring.offset = {focus.ring.offset}
+stepper.step.header.focus.ring.shadow = {focus.ring.shadow}
+stepper.step.header.gap = 6px
+stepper.step.title.color = {text.muted.color}
+stepper.step.title.active.color = {primary.color}
+stepper.step.title.font.weight = 700
+stepper.step.number.background = {content.background}
+stepper.step.number.active.background = {primary.color}
+stepper.step.number.border.color = {content.border.color}
+stepper.step.number.active.border.color = {primary.color}
+stepper.step.number.color = {text.muted.color}
+stepper.step.number.active.color = {primary.contrast.color}
+stepper.step.number.size = 24px
+stepper.step.number.font.size = 13.716px
+stepper.step.number.font.weight = 500
+stepper.step.number.border.radius = 50%
+stepper.step.number.shadow = none
+stepper.steppanels.padding = 10.5px 6px 13.5px 6px
+stepper.steppanel.background = {content.background}
+stepper.steppanel.color = {content.color}
+stepper.steppanel.padding = 0
+stepper.steppanel.indent = 12px
+
 # tabs
 tabs.transition.duration = {transition.duration}
 tabs.tablist.border.width = 0
@@ -1825,6 +1885,22 @@ tieredmenu.submenu.icon.color = {navigation.submenu.icon.color}
 tieredmenu.submenu.icon.focus.color = {navigation.submenu.icon.focus.color}
 tieredmenu.submenu.icon.active.color = {navigation.submenu.icon.active.color}
 tieredmenu.separator.border.color = {surface.200}
+
+# timeline
+timeline.event.min.height = 60px
+timeline.horizontal.event.content.padding = 12px 0
+timeline.vertical.event.content.padding = 0 12px
+timeline.event.marker.size = 13.5px
+timeline.event.marker.border.radius = 50%
+timeline.event.marker.border.width = 2px
+timeline.event.marker.background = {primary.color}
+timeline.event.marker.border.color = {primary.color}
+timeline.event.marker.content.border.radius = 50%
+timeline.event.marker.content.size = 4.5px
+timeline.event.marker.content.background = transparent
+timeline.event.marker.content.inset.shadow = none
+timeline.event.connector.color = {content.border.color}
+timeline.event.connector.size = 2px
 
 # toast
 toast.width = auto

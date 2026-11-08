@@ -1,0 +1,125 @@
+<!--
+    Le style de Paginator, sur la pagination de mkm (styles/paginator ; jetons de Nora en pixels pour Dashboard, preset
+    ara) : une ligne centrée, 3 px entre ses éléments ; les flèches et les liens de page, 30 px de côté, sans fond, gris,
+    grisés au survol, la page montrée sur le fond du thème (highlight) ; au clavier, l'anneau d'un pixel autour.
+-->
+<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+                    xmlns:local="clr-namespace:Mkm.Wpf.Controls"
+                    xmlns:loc="clr-namespace:Mkm.Wpf.Localization">
+
+    <!-- Une flèche ou un lien de page. -->
+    <Style x:Key="mkm.Paginator.Bouton" TargetType="{x:Type ButtonBase}">
+        <Setter Property="MinWidth" Value="{DynamicResource mkm.paginator.nav.button.width}" />
+        <Setter Property="Height" Value="{DynamicResource mkm.paginator.nav.button.height}" />
+        <Setter Property="Background" Value="{DynamicResource mkm.paginator.nav.button.background}" />
+        <Setter Property="Foreground" Value="{DynamicResource mkm.paginator.nav.button.color}" />
+        <Setter Property="FocusVisualStyle" Value="{x:Null}" />
+        <Setter Property="Cursor" Value="Hand" />
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="{x:Type ButtonBase}">
+                    <Grid>
+                        <Border x:Name="Fond" Background="{TemplateBinding Background}" CornerRadius="{DynamicResource mkm.paginator.nav.button.border.radius}">
+                            <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center" Margin="4,0" />
+                        </Border>
+                        <Rectangle x:Name="Anneau" Margin="-2" Visibility="Collapsed" RadiusX="3" RadiusY="3" IsHitTestVisible="False"
+                                   Stroke="{DynamicResource mkm.paginator.nav.button.focus.ring.color}"
+                                   StrokeThickness="{DynamicResource mkm.paginator.nav.button.focus.ring.width}" />
+                    </Grid>
+                    <ControlTemplate.Triggers>
+                        <Trigger Property="IsMouseOver" Value="True">
+                            <Setter Property="Background" Value="{DynamicResource mkm.paginator.nav.button.hover.background}" />
+                            <Setter Property="Foreground" Value="{DynamicResource mkm.paginator.nav.button.hover.color}" />
+                        </Trigger>
+                        <Trigger Property="local:FocusVisible.IsVisible" Value="True">
+                            <Setter TargetName="Anneau" Property="Visibility" Value="Visible" />
+                        </Trigger>
+                        <Trigger Property="IsEnabled" Value="False">
+                            <Setter TargetName="Fond" Property="Opacity" Value="{DynamicResource mkm.disabled.opacity}" />
+                        </Trigger>
+                    </ControlTemplate.Triggers>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+
+    <!-- Un lien de page : la page montrée sur le fond du thème. -->
+    <Style x:Key="mkm.Paginator.Page" TargetType="{x:Type Button}" BasedOn="{StaticResource mkm.Paginator.Bouton}">
+        <Setter Property="Content" Value="{Binding Number}" />
+        <Setter Property="AutomationProperties.Name" Value="{Binding Label}" />
+        <Style.Triggers>
+            <DataTrigger Binding="{Binding IsCurrent}" Value="True">
+                <Setter Property="Background" Value="{DynamicResource mkm.paginator.nav.button.selected.background}" />
+                <Setter Property="Foreground" Value="{DynamicResource mkm.paginator.nav.button.selected.color}" />
+            </DataTrigger>
+        </Style.Triggers>
+    </Style>
+
+    <Style TargetType="{x:Type local:Paginator}">
+        <Setter Property="FontFamily" Value="{DynamicResource mkm.font.family}" />
+        <Setter Property="FontSize" Value="{DynamicResource mkm.font.size}" />
+        <Setter Property="Background" Value="{DynamicResource mkm.paginator.background}" />
+        <Setter Property="Foreground" Value="{DynamicResource mkm.paginator.color}" />
+        <Setter Property="Padding" Value="{DynamicResource mkm.paginator.padding}" />
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="{x:Type local:Paginator}">
+                    <Border Background="{TemplateBinding Background}" Padding="{TemplateBinding Padding}"
+                            CornerRadius="{DynamicResource mkm.paginator.border.radius}">
+                        <local:GapStackPanel Orientation="Horizontal" HorizontalAlignment="Center" Gap="{DynamicResource mkm.paginator.gap}">
+                            <Button x:Name="PART_First" Style="{StaticResource mkm.Paginator.Bouton}" AutomationProperties.Name="{loc:T aria.firstPage}">
+                                <local:Icon Source="{x:Static local:InternalIcons.AngleDoubleLeft}" />
+                            </Button>
+                            <Button x:Name="PART_Previous" Style="{StaticResource mkm.Paginator.Bouton}" AutomationProperties.Name="{loc:T aria.previousPage}">
+                                <local:Icon Source="{x:Static local:InternalIcons.AngleLeft}" />
+                            </Button>
+                            <ItemsControl ItemsSource="{TemplateBinding Pages}" Focusable="False" IsTabStop="False">
+                                <ItemsControl.ItemsPanel>
+                                    <ItemsPanelTemplate>
+                                        <local:GapStackPanel Orientation="Horizontal" Gap="{DynamicResource mkm.paginator.gap}" />
+                                    </ItemsPanelTemplate>
+                                </ItemsControl.ItemsPanel>
+                                <ItemsControl.ItemTemplate>
+                                    <DataTemplate>
+                                        <Button Style="{StaticResource mkm.Paginator.Page}" />
+                                    </DataTemplate>
+                                </ItemsControl.ItemTemplate>
+                            </ItemsControl>
+                            <Button x:Name="PART_Next" Style="{StaticResource mkm.Paginator.Bouton}" AutomationProperties.Name="{loc:T aria.nextPage}">
+                                <local:Icon Source="{x:Static local:InternalIcons.AngleRight}" />
+                            </Button>
+                            <Button x:Name="PART_Last" Style="{StaticResource mkm.Paginator.Bouton}" AutomationProperties.Name="{loc:T aria.lastPage}">
+                                <local:Icon Source="{x:Static local:InternalIcons.AngleDoubleRight}" />
+                            </Button>
+                            <local:Select x:Name="Lignes" MinWidth="70" VerticalAlignment="Center" Margin="6,0,0,0"
+                                          AutomationProperties.Name="{loc:T aria.rowsPerPage}"
+                                          ItemsSource="{TemplateBinding RowsPerPageOptions}"
+                                          SelectedItem="{Binding Rows, RelativeSource={RelativeSource TemplatedParent}, Mode=TwoWay}" />
+                            <TextBlock x:Name="Rapport" Visibility="Collapsed" VerticalAlignment="Center" Margin="6,0,0,0"
+                                       Foreground="{DynamicResource mkm.paginator.current.page.report.color}"
+                                       Text="{TemplateBinding CurrentPageReport}" />
+                        </local:GapStackPanel>
+                    </Border>
+                    <ControlTemplate.Triggers>
+                        <Trigger Property="RowsPerPageOptions" Value="{x:Null}">
+                            <Setter TargetName="Lignes" Property="Visibility" Value="Collapsed" />
+                        </Trigger>
+                        <Trigger Property="ShowCurrentPageReport" Value="True">
+                            <Setter TargetName="Rapport" Property="Visibility" Value="Visible" />
+                        </Trigger>
+                        <Trigger Property="Page" Value="0">
+                            <Setter TargetName="PART_First" Property="IsEnabled" Value="False" />
+                            <Setter TargetName="PART_Previous" Property="IsEnabled" Value="False" />
+                        </Trigger>
+                        <Trigger Property="IsLastPage" Value="True">
+                            <Setter TargetName="PART_Next" Property="IsEnabled" Value="False" />
+                            <Setter TargetName="PART_Last" Property="IsEnabled" Value="False" />
+                        </Trigger>
+                    </ControlTemplate.Triggers>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+
+</ResourceDictionary>

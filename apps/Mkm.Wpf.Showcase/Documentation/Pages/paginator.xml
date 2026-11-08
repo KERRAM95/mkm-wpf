@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="utf-8"?>
+<page titre="Paginator" categorie="Données" types="Paginator PaginatorPage PageChangeEventArgs" jetons="paginator">
+  <resume>La pagination : aller de page en page dans une longue liste, choisir le nombre de lignes par page, savoir où
+    l'on est.</resume>
+
+  <section titre="Import">
+    <code><![CDATA[
+<Window xmlns:mkm="urn:mkm-wpf">
+    <mkm:Paginator TotalRecords="120" Rows="10" />
+</Window>
+]]></code>
+  </section>
+
+  <section titre="Basique">
+    <p><c>TotalRecords</c> est le nombre de lignes, <c>Rows</c> le nombre par page ; <c>First</c> est l'indice de la
+      première ligne de la page montrée (lié dans les deux sens). Les flèches mènent à la première page, à la précédente,
+      à la suivante, à la dernière ; les liens, à une page de numéro (<c>PageLinkSize</c> à la fois, 5 par défaut,
+      centrés sur la page montrée). À chaque changement, <c>PageChange</c> : l'application montre ses lignes.</p>
+    <exemple comportement="PaginatorJournal" etendu="oui"><![CDATA[
+<mkm:Paginator x:Name="Pages" TotalRecords="120" Rows="10" />
+<TextBlock x:Name="Journal" HorizontalAlignment="Center" Foreground="{DynamicResource mkm.text.muted.color}" Text="Page 1 : lignes 1 à 10" />
+]]></exemple>
+  </section>
+
+  <section titre="Lignes par page et position">
+    <p><c>RowsPerPageOptions</c> propose des nombres de lignes par page (en XAML, « 10, 20, 50 ») ; changé, la page
+      montrée est celle qui contient la première ligne qu'on voyait. <c>ShowCurrentPageReport</c> ajoute « 3 sur 12 ».</p>
+    <exemple><![CDATA[
+<mkm:Paginator TotalRecords="120" Rows="10" RowsPerPageOptions="10, 20, 50" ShowCurrentPageReport="True" />
+]]></exemple>
+  </section>
+
+  <section titre="Accessibilité">
+    <h3>Lecteur d'écran</h3>
+    <p>Narrateur dit la pagination « barre d'outils » ; ses flèches se nomment « Première page », « Page précédente »,
+      « Page suivante », « Dernière page », ses liens « Page 3 », la liste des lignes « Lignes par page ».</p>
+    <h3>Clavier</h3>
+    <touches>
+      <touche nom="Tab">Passe d'une flèche ou d'un lien au suivant ; une flèche grisée (la première page) est sautée.</touche>
+      <touche nom="Entrée">Va à la page de la flèche ou du lien.</touche>
+      <touche nom="Espace">Va à la page de la flèche ou du lien.</touche>
+    </touches>
+  </section>
+</page>

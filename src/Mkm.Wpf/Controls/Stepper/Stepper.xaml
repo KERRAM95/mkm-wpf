@@ -1,0 +1,150 @@
+<!--
+    Le style de Stepper, sur les étapes de mkm (styles/stepper ; jetons de Nora en pixels pour Dashboard, preset ara) :
+    chaque étape, un rond de 24 px bordé de 2 px à son numéro et son titre en gras gris à 6 px ; l'étape en cours, le rond
+    plein de la couleur du thème et son titre de cette couleur ; entre deux étapes, un trait de 2 px de la couleur des
+    bordures, de celle du thème avant l'étape en cours. En ligne, le contenu de l'étape en cours dessous ; en colonne,
+    sous son étape, le long du trait.
+-->
+<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+                    xmlns:local="clr-namespace:Mkm.Wpf.Controls">
+
+    <!-- L'en-tête d'une étape : son rond numéroté et son titre, l'anneau du clavier autour. -->
+    <ControlTemplate x:Key="mkm.Stepper.EnTete" TargetType="{x:Type ContentControl}">
+        <Grid Background="Transparent">
+            <local:GapStackPanel Orientation="Horizontal" Gap="{DynamicResource mkm.stepper.step.header.gap}">
+                <Grid Width="{DynamicResource mkm.stepper.step.number.size}" Height="{DynamicResource mkm.stepper.step.number.size}">
+                    <Ellipse x:Name="Rond" StrokeThickness="2" Fill="{DynamicResource mkm.stepper.step.number.background}"
+                             Stroke="{DynamicResource mkm.stepper.step.number.border.color}" />
+                    <TextBlock x:Name="Numero" HorizontalAlignment="Center" VerticalAlignment="Center"
+                               Text="{Binding Number, RelativeSource={RelativeSource AncestorType={x:Type local:StepperPanel}}}"
+                               FontSize="{DynamicResource mkm.stepper.step.number.font.size}"
+                               FontWeight="{DynamicResource mkm.stepper.step.number.font.weight}"
+                               Foreground="{DynamicResource mkm.stepper.step.number.color}" />
+                </Grid>
+                <ContentPresenter x:Name="Titre" VerticalAlignment="Center"
+                                  TextElement.FontWeight="{DynamicResource mkm.stepper.step.title.font.weight}"
+                                  TextElement.Foreground="{DynamicResource mkm.stepper.step.title.color}" />
+            </local:GapStackPanel>
+            <Rectangle x:Name="Anneau" Margin="-2" Visibility="Collapsed" IsHitTestVisible="False" RadiusX="3" RadiusY="3"
+                       Stroke="{DynamicResource mkm.stepper.step.header.focus.ring.color}"
+                       StrokeThickness="{DynamicResource mkm.stepper.step.header.focus.ring.width}" />
+        </Grid>
+        <ControlTemplate.Triggers>
+            <DataTrigger Binding="{Binding IsSelected, RelativeSource={RelativeSource AncestorType={x:Type local:StepperPanel}}}" Value="True">
+                <Setter TargetName="Rond" Property="Fill" Value="{DynamicResource mkm.stepper.step.number.active.background}" />
+                <Setter TargetName="Rond" Property="Stroke" Value="{DynamicResource mkm.stepper.step.number.active.border.color}" />
+                <Setter TargetName="Numero" Property="Foreground" Value="{DynamicResource mkm.stepper.step.number.active.color}" />
+                <Setter TargetName="Titre" Property="TextElement.Foreground" Value="{DynamicResource mkm.stepper.step.title.active.color}" />
+            </DataTrigger>
+            <DataTrigger Binding="{Binding (local:FocusVisible.IsVisible), RelativeSource={RelativeSource AncestorType={x:Type local:StepperPanel}}}" Value="True">
+                <Setter TargetName="Anneau" Property="Visibility" Value="Visible" />
+            </DataTrigger>
+        </ControlTemplate.Triggers>
+    </ControlTemplate>
+
+    <Style TargetType="{x:Type local:StepperPanel}">
+        <Setter Property="FocusVisualStyle" Value="{x:Null}" />
+        <Setter Property="Cursor" Value="Hand" />
+        <Setter Property="Template">
+            <Setter.Value>
+                <!-- En ligne : l'en-tête, puis le trait jusqu'à l'étape suivante. -->
+                <ControlTemplate TargetType="{x:Type local:StepperPanel}">
+                    <DockPanel x:Name="Etape" Background="Transparent" Margin="{DynamicResource mkm.stepper.step.padding}">
+                        <ContentControl DockPanel.Dock="Left" Focusable="False" Template="{StaticResource mkm.Stepper.EnTete}"
+                                        Content="{TemplateBinding Header}" ContentTemplate="{TemplateBinding HeaderTemplate}" />
+                        <Rectangle x:Name="Trait" Height="{DynamicResource mkm.stepper.separator.size}" VerticalAlignment="Center"
+                                   Margin="{DynamicResource mkm.stepper.separator.horizontal.margin}"
+                                   Fill="{DynamicResource mkm.stepper.separator.background}" />
+                    </DockPanel>
+                    <ControlTemplate.Triggers>
+                        <Trigger Property="IsCompleted" Value="True">
+                            <Setter TargetName="Trait" Property="Fill" Value="{DynamicResource mkm.stepper.separator.active.background}" />
+                        </Trigger>
+                        <Trigger Property="IsLast" Value="True">
+                            <Setter TargetName="Trait" Property="Visibility" Value="Collapsed" />
+                        </Trigger>
+                        <Trigger Property="IsEnabled" Value="False">
+                            <Setter TargetName="Etape" Property="Opacity" Value="{DynamicResource mkm.disabled.opacity}" />
+                        </Trigger>
+                    </ControlTemplate.Triggers>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+        <Style.Triggers>
+            <Trigger Property="IsSelected" Value="True">
+                <Setter Property="Cursor" Value="Arrow" />
+            </Trigger>
+            <!-- En colonne : l'en-tête, puis, pour l'étape en cours, son contenu le long du trait. -->
+            <Trigger Property="Orientation" Value="Vertical">
+                <Setter Property="Template">
+                    <Setter.Value>
+                        <ControlTemplate TargetType="{x:Type local:StepperPanel}">
+                            <StackPanel x:Name="Etape">
+                                <ContentControl HorizontalAlignment="Left" Focusable="False" Margin="{DynamicResource mkm.stepper.step.padding}"
+                                                Template="{StaticResource mkm.Stepper.EnTete}"
+                                                Content="{TemplateBinding Header}" ContentTemplate="{TemplateBinding HeaderTemplate}" />
+                                <Grid x:Name="Panneau" Visibility="Collapsed">
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition Width="Auto" />
+                                        <ColumnDefinition Width="*" />
+                                    </Grid.ColumnDefinitions>
+                                    <Rectangle x:Name="Trait" Width="{DynamicResource mkm.stepper.separator.size}"
+                                               Margin="{DynamicResource mkm.stepper.separator.margin}"
+                                               Fill="{DynamicResource mkm.stepper.separator.background}" />
+                                    <ContentPresenter Grid.Column="1" ContentSource="Content"
+                                                      Margin="{DynamicResource mkm.stepper.steppanel.vertical.margin}" />
+                                </Grid>
+                            </StackPanel>
+                            <ControlTemplate.Triggers>
+                                <Trigger Property="IsSelected" Value="True">
+                                    <Setter TargetName="Panneau" Property="Visibility" Value="Visible" />
+                                </Trigger>
+                                <Trigger Property="IsLast" Value="True">
+                                    <Setter TargetName="Trait" Property="Visibility" Value="Hidden" />
+                                </Trigger>
+                                <Trigger Property="IsEnabled" Value="False">
+                                    <Setter TargetName="Etape" Property="Opacity" Value="{DynamicResource mkm.disabled.opacity}" />
+                                </Trigger>
+                            </ControlTemplate.Triggers>
+                        </ControlTemplate>
+                    </Setter.Value>
+                </Setter>
+            </Trigger>
+        </Style.Triggers>
+    </Style>
+
+    <Style TargetType="{x:Type local:Stepper}">
+        <Setter Property="FontFamily" Value="{DynamicResource mkm.font.family}" />
+        <Setter Property="FontSize" Value="{DynamicResource mkm.font.size}" />
+        <Setter Property="Foreground" Value="{DynamicResource mkm.stepper.steppanel.color}" />
+        <Setter Property="Background" Value="{DynamicResource mkm.stepper.steppanel.background}" />
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="{x:Type local:Stepper}">
+                    <DockPanel Background="{TemplateBinding Background}">
+                        <local:RangeeEtiree DockPanel.Dock="Top" Orientation="Horizontal" IsItemsHost="True"
+                                            KeyboardNavigation.TabNavigation="Once" KeyboardNavigation.DirectionalNavigation="Cycle" />
+                        <ContentPresenter x:Name="PART_SelectedContentHost" ContentSource="SelectedContent"
+                                          Margin="{DynamicResource mkm.stepper.steppanels.padding}" />
+                    </DockPanel>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+        <Style.Triggers>
+            <Trigger Property="Orientation" Value="Vertical">
+                <Setter Property="Template">
+                    <Setter.Value>
+                        <ControlTemplate TargetType="{x:Type local:Stepper}">
+                            <Border Background="{TemplateBinding Background}">
+                                <local:RangeeEtiree Orientation="Vertical" IsItemsHost="True"
+                                                    KeyboardNavigation.TabNavigation="Once" KeyboardNavigation.DirectionalNavigation="Cycle" />
+                            </Border>
+                        </ControlTemplate>
+                    </Setter.Value>
+                </Setter>
+            </Trigger>
+        </Style.Triggers>
+    </Style>
+
+</ResourceDictionary>

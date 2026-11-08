@@ -1,0 +1,132 @@
+<!--
+    Le style de Timeline, sur la frise de mkm (styles/timeline ; jetons de Nora en pixels pour Dashboard, preset ara) :
+    les évènements le long d'une ligne de 2 px (la couleur des bordures) ; sur la ligne, un rond de 13,5 px bordé de
+    2 px de la couleur du thème, rempli d'elle ; le contenu et l'opposé à 12 px de la ligne, chacun sur la moitié de la
+    place ; en colonne, 60 px par évènement au moins (sauf le dernier, sans trait après lui).
+-->
+<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+                    xmlns:local="clr-namespace:Mkm.Wpf.Controls">
+
+    <!-- Le rond de mkm sur la ligne. -->
+    <ControlTemplate x:Key="mkm.Timeline.Rond" TargetType="{x:Type ContentControl}">
+        <Grid Width="{DynamicResource mkm.timeline.event.marker.size}" Height="{DynamicResource mkm.timeline.event.marker.size}">
+            <Ellipse Fill="{DynamicResource mkm.timeline.event.marker.background}"
+                     Stroke="{DynamicResource mkm.timeline.event.marker.border.color}"
+                     StrokeThickness="{DynamicResource mkm.timeline.event.marker.border.width}" />
+            <Ellipse Width="{DynamicResource mkm.timeline.event.marker.content.size}" Height="{DynamicResource mkm.timeline.event.marker.content.size}"
+                     Fill="{DynamicResource mkm.timeline.event.marker.content.background}" />
+        </Grid>
+    </ControlTemplate>
+
+    <Style TargetType="{x:Type local:Timeline}">
+        <Setter Property="FontFamily" Value="{DynamicResource mkm.font.family}" />
+        <Setter Property="FontSize" Value="{DynamicResource mkm.font.size}" />
+        <Setter Property="Foreground" Value="{DynamicResource mkm.text.color}" />
+        <Setter Property="ItemsPanel">
+            <Setter.Value>
+                <ItemsPanelTemplate>
+                    <local:RangeeEtiree Orientation="{Binding Layout, RelativeSource={RelativeSource AncestorType={x:Type local:Timeline}}}" />
+                </ItemsPanelTemplate>
+            </Setter.Value>
+        </Setter>
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="{x:Type local:Timeline}">
+                    <Border Background="{TemplateBinding Background}" Padding="{TemplateBinding Padding}">
+                        <ItemsPresenter />
+                    </Border>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+
+    <Style TargetType="{x:Type local:TimelineEvent}">
+        <Setter Property="Template">
+            <Setter.Value>
+                <!-- En colonne : l'opposé, la ligne, le contenu, côte à côte. -->
+                <ControlTemplate TargetType="{x:Type local:TimelineEvent}">
+                    <Grid x:Name="Racine" MinHeight="{DynamicResource mkm.timeline.event.min.height}">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="*" />
+                            <ColumnDefinition Width="Auto" />
+                            <ColumnDefinition Width="*" />
+                        </Grid.ColumnDefinitions>
+                        <ContentPresenter x:Name="Oppose" Grid.Column="0" HorizontalAlignment="Right" VerticalAlignment="Top"
+                                          Margin="{DynamicResource mkm.timeline.vertical.event.content.padding}"
+                                          Content="{TemplateBinding Opposite}" ContentTemplate="{TemplateBinding OppositeTemplate}" />
+                        <DockPanel Grid.Column="1">
+                            <Grid DockPanel.Dock="Top">
+                                <ContentControl x:Name="Rond" Focusable="False" Visibility="Collapsed" Template="{StaticResource mkm.Timeline.Rond}" />
+                                <ContentPresenter Content="{TemplateBinding Marker}" />
+                            </Grid>
+                            <Rectangle x:Name="Trait" Width="{DynamicResource mkm.timeline.event.connector.size}" HorizontalAlignment="Center"
+                                       Fill="{DynamicResource mkm.timeline.event.connector.color}" />
+                        </DockPanel>
+                        <ContentPresenter x:Name="Contenu" Grid.Column="2" HorizontalAlignment="Left" VerticalAlignment="Top"
+                                          Margin="{DynamicResource mkm.timeline.vertical.event.content.padding}" />
+                    </Grid>
+                    <ControlTemplate.Triggers>
+                        <Trigger Property="IsReversed" Value="True">
+                            <Setter TargetName="Oppose" Property="Grid.Column" Value="2" />
+                            <Setter TargetName="Oppose" Property="HorizontalAlignment" Value="Left" />
+                            <Setter TargetName="Contenu" Property="Grid.Column" Value="0" />
+                            <Setter TargetName="Contenu" Property="HorizontalAlignment" Value="Right" />
+                        </Trigger>
+                        <Trigger Property="IsLast" Value="True">
+                            <Setter TargetName="Trait" Property="Visibility" Value="Collapsed" />
+                            <Setter TargetName="Racine" Property="MinHeight" Value="0" />
+                        </Trigger>
+                        <Trigger Property="Marker" Value="{x:Null}">
+                            <Setter TargetName="Rond" Property="Visibility" Value="Visible" />
+                        </Trigger>
+                    </ControlTemplate.Triggers>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+        <Style.Triggers>
+            <!-- En ligne : l'opposé au-dessus, la ligne, le contenu au-dessous. -->
+            <Trigger Property="Layout" Value="Horizontal">
+                <Setter Property="Template">
+                    <Setter.Value>
+                        <ControlTemplate TargetType="{x:Type local:TimelineEvent}">
+                            <Grid>
+                                <Grid.RowDefinitions>
+                                    <RowDefinition Height="Auto" />
+                                    <RowDefinition Height="Auto" />
+                                    <RowDefinition Height="Auto" />
+                                </Grid.RowDefinitions>
+                                <ContentPresenter x:Name="Oppose" Grid.Row="0" HorizontalAlignment="Left"
+                                                  Margin="{DynamicResource mkm.timeline.horizontal.event.content.padding}"
+                                                  Content="{TemplateBinding Opposite}" ContentTemplate="{TemplateBinding OppositeTemplate}" />
+                                <DockPanel Grid.Row="1">
+                                    <Grid DockPanel.Dock="Left">
+                                        <ContentControl x:Name="Rond" Focusable="False" Visibility="Collapsed" Template="{StaticResource mkm.Timeline.Rond}" />
+                                        <ContentPresenter Content="{TemplateBinding Marker}" />
+                                    </Grid>
+                                    <Rectangle x:Name="Trait" Height="{DynamicResource mkm.timeline.event.connector.size}" VerticalAlignment="Center"
+                                               Fill="{DynamicResource mkm.timeline.event.connector.color}" />
+                                </DockPanel>
+                                <ContentPresenter x:Name="Contenu" Grid.Row="2" HorizontalAlignment="Left"
+                                                  Margin="{DynamicResource mkm.timeline.horizontal.event.content.padding}" />
+                            </Grid>
+                            <ControlTemplate.Triggers>
+                                <Trigger Property="IsReversed" Value="True">
+                                    <Setter TargetName="Oppose" Property="Grid.Row" Value="2" />
+                                    <Setter TargetName="Contenu" Property="Grid.Row" Value="0" />
+                                </Trigger>
+                                <Trigger Property="IsLast" Value="True">
+                                    <Setter TargetName="Trait" Property="Visibility" Value="Collapsed" />
+                                </Trigger>
+                                <Trigger Property="Marker" Value="{x:Null}">
+                                    <Setter TargetName="Rond" Property="Visibility" Value="Visible" />
+                                </Trigger>
+                            </ControlTemplate.Triggers>
+                        </ControlTemplate>
+                    </Setter.Value>
+                </Setter>
+            </Trigger>
+        </Style.Triggers>
+    </Style>
+
+</ResourceDictionary>

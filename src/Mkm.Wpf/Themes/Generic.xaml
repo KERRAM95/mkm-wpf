@@ -36,6 +36,7 @@
         <ResourceDictionary Source="/Mkm.Wpf;component/Controls/Menu/Menu.xaml" />
         <ResourceDictionary Source="/Mkm.Wpf;component/Controls/Message/Message.xaml" />
         <ResourceDictionary Source="/Mkm.Wpf;component/Controls/MultiSelect/MultiSelect.xaml" />
+        <ResourceDictionary Source="/Mkm.Wpf;component/Controls/Paginator/Paginator.xaml" />
         <ResourceDictionary Source="/Mkm.Wpf;component/Controls/Panel/Panel.xaml" />
         <ResourceDictionary Source="/Mkm.Wpf;component/Controls/Popover/Popover.xaml" />
         <ResourceDictionary Source="/Mkm.Wpf;component/Controls/ProgressBar/ProgressBar.xaml" />
@@ -49,9 +50,11 @@
         <ResourceDictionary Source="/Mkm.Wpf;component/Controls/SplitButton/SplitButton.xaml" />
         <ResourceDictionary Source="/Mkm.Wpf;component/Controls/Splitter/Splitter.xaml" />
         <ResourceDictionary Source="/Mkm.Wpf;component/Controls/StateGraph/StateGraph.xaml" />
+        <ResourceDictionary Source="/Mkm.Wpf;component/Controls/Stepper/Stepper.xaml" />
         <ResourceDictionary Source="/Mkm.Wpf;component/Controls/Tabs/Tabs.xaml" />
         <ResourceDictionary Source="/Mkm.Wpf;component/Controls/Tag/Tag.xaml" />
         <ResourceDictionary Source="/Mkm.Wpf;component/Controls/Textarea/Textarea.xaml" />
+        <ResourceDictionary Source="/Mkm.Wpf;component/Controls/Timeline/Timeline.xaml" />
         <ResourceDictionary Source="/Mkm.Wpf;component/Controls/Toast/Toast.xaml" />
         <ResourceDictionary Source="/Mkm.Wpf;component/Controls/ToggleButton/ToggleButton.xaml" />
         <ResourceDictionary Source="/Mkm.Wpf;component/Controls/ToggleSwitch/ToggleSwitch.xaml" />

@@ -1,0 +1,103 @@
+<?xml version="1.0" encoding="utf-8"?>
+<page titre="Stepper" categorie="Panneau" types="Stepper StepperPanel" jetons="stepper">
+  <resume>Des étapes : un assistant en plusieurs temps, chaque étape numérotée, l'étape en cours en couleur et son
+    contenu dessous.</resume>
+
+  <section titre="Import">
+    <code><![CDATA[
+<Window xmlns:mkm="urn:mkm-wpf">
+    <mkm:Stepper>
+        <mkm:StepperPanel Header="Plan">
+            <!-- Le contenu de l'étape. -->
+        </mkm:StepperPanel>
+    </mkm:Stepper>
+</Window>
+]]></code>
+  </section>
+
+  <section titre="Basique">
+    <p>Chaque étape est un <c>StepperPanel</c> : son titre (<c>Header</c>) et son contenu. Stepper est un
+      <c>TabControl</c> de WPF : <c>SelectedIndex</c> est l'étape en cours, un clic sur une étape y va, et
+      <c>Next()</c> et <c>Previous()</c> passent à la suivante ou à la précédente.</p>
+    <exemple comportement="StepperBoutons" etendu="oui"><![CDATA[
+<mkm:Stepper x:Name="Etapes" Width="560">
+    <mkm:StepperPanel Header="Plan">
+        <StackPanel>
+            <TextBlock Text="Choisissez le plan à diffuser." Margin="0,0,0,12" />
+            <mkm:Button Content="Suivant" Tag="suivant" HorizontalAlignment="Right" />
+        </StackPanel>
+    </mkm:StepperPanel>
+    <mkm:StepperPanel Header="Cartouche">
+        <StackPanel>
+            <TextBlock Text="Vérifiez le cartouche." Margin="0,0,0,12" />
+            <StackPanel Orientation="Horizontal" HorizontalAlignment="Right">
+                <mkm:Button Content="Précédent" Tag="precedent" Severity="Secondary" Margin="0,0,8,0" />
+                <mkm:Button Content="Suivant" Tag="suivant" />
+            </StackPanel>
+        </StackPanel>
+    </mkm:StepperPanel>
+    <mkm:StepperPanel Header="Diffusion">
+        <StackPanel>
+            <TextBlock Text="Choisissez les destinataires." Margin="0,0,0,12" />
+            <mkm:Button Content="Précédent" Tag="precedent" Severity="Secondary" HorizontalAlignment="Right" />
+        </StackPanel>
+    </mkm:StepperPanel>
+</mkm:Stepper>
+]]></exemple>
+  </section>
+
+  <section titre="En colonne">
+    <p><c>Orientation="Vertical"</c> : les étapes l'une sous l'autre, le contenu de l'étape en cours sous elle, le long du
+      trait.</p>
+    <exemple comportement="StepperBoutons"><![CDATA[
+<mkm:Stepper Orientation="Vertical" Width="420">
+    <mkm:StepperPanel Header="Plan">
+        <StackPanel>
+            <TextBlock Text="Choisissez le plan à diffuser." Margin="0,0,0,12" />
+            <mkm:Button Content="Suivant" Tag="suivant" HorizontalAlignment="Left" />
+        </StackPanel>
+    </mkm:StepperPanel>
+    <mkm:StepperPanel Header="Cartouche">
+        <StackPanel>
+            <TextBlock Text="Vérifiez le cartouche." Margin="0,0,0,12" />
+            <mkm:Button Content="Précédent" Tag="precedent" Severity="Secondary" HorizontalAlignment="Left" />
+        </StackPanel>
+    </mkm:StepperPanel>
+    <mkm:StepperPanel Header="Diffusion">
+        <TextBlock Text="Choisissez les destinataires." />
+    </mkm:StepperPanel>
+</mkm:Stepper>
+]]></exemple>
+  </section>
+
+  <section titre="Linéaire">
+    <p><c>Linear</c> : un clic ou le clavier sur une étape n'y va pas ; on avance par les boutons de l'application, qui
+      vérifie d'abord l'étape en cours.</p>
+    <exemple comportement="StepperBoutons"><![CDATA[
+<mkm:Stepper Linear="True" Width="560">
+    <mkm:StepperPanel Header="Plan">
+        <mkm:Button Content="Suivant" Tag="suivant" HorizontalAlignment="Right" />
+    </mkm:StepperPanel>
+    <mkm:StepperPanel Header="Cartouche">
+        <mkm:Button Content="Suivant" Tag="suivant" HorizontalAlignment="Right" />
+    </mkm:StepperPanel>
+    <mkm:StepperPanel Header="Diffusion">
+        <mkm:Button Content="Précédent" Tag="precedent" Severity="Secondary" HorizontalAlignment="Right" />
+    </mkm:StepperPanel>
+</mkm:Stepper>
+]]></exemple>
+  </section>
+
+  <section titre="Accessibilité">
+    <h3>Lecteur d'écran</h3>
+    <p>Comme un TabControl : Narrateur dit les étapes « onglets », chacune nommée par son titre, l'étape en cours
+      sélectionnée.</p>
+    <h3>Clavier</h3>
+    <touches>
+      <touche nom="Tab">Amène le clavier sur l'étape en cours, puis dans son contenu.</touche>
+      <touche nom="Flèche droite">Passe à l'étape suivante (sauf linéaire).</touche>
+      <touche nom="Flèche gauche">Passe à l'étape précédente (sauf linéaire).</touche>
+      <touche nom="Ctrl+Tab">Passe à l'étape suivante (sauf linéaire).</touche>
+    </touches>
+  </section>
+</page>

@@ -104,6 +104,30 @@ Namespace Mkm.Wpf.UiTests
             AttendreQue(Function() NomDe(journal) = "Action choisie : Valider", "« Valider » lancée par un lecteur d'écran")
         End Sub
 
+        <Test>
+        Public Sub Paginator_SesFlechesEtSesLiensMenentALaPage()
+            Dim page = OuvrirLaDoc("paginator")
+            Dim pages = Trouver("Pages", page)
+            Dim journal = Trouver("Journal", page)
+
+            Cliquer(TrouverParNom(T("aria.nextPage"), ControlType.Button, pages))
+            AttendreQue(Function() NomDe(journal) = "Page 2 : lignes 11 à 20", "« Page suivante »")
+            Cliquer(TrouverParNom(T("aria.page", 4), ControlType.Button, pages))
+            AttendreQue(Function() NomDe(journal) = "Page 4 : lignes 31 à 40", "« Page 4 »")
+            Cliquer(TrouverParNom(T("aria.lastPage"), ControlType.Button, pages))
+            AttendreQue(Function() NomDe(journal) = "Page 12 : lignes 111 à 120", "« Dernière page »")
+            Assert.That(TrouverParNom(T("aria.nextPage"), ControlType.Button, pages).IsEnabled, [Is].False, "grisée à la dernière page")
+        End Sub
+
+        <Test>
+        Public Sub Timeline_UneListeDEvenements()
+            Dim page = OuvrirLaDoc("timeline")
+            Dim frise = Trouver("Revisions", page)
+
+            Assert.That(frise.ControlType, [Is].EqualTo(ControlType.List))
+            Assert.That(frise.FindAllChildren(Function(cf) cf.ByControlType(ControlType.ListItem)).Length, [Is].EqualTo(4))
+        End Sub
+
     End Class
 
 End Namespace

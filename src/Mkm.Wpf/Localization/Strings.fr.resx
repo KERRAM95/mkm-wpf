@@ -102,4 +102,25 @@
   <data name="aria.showSuggestions" xml:space="preserve">
     <value>Afficher les suggestions</value>
   </data>
+  <data name="aria.firstPage" xml:space="preserve">
+    <value>Première page</value>
+  </data>
+  <data name="aria.previousPage" xml:space="preserve">
+    <value>Page précédente</value>
+  </data>
+  <data name="aria.nextPage" xml:space="preserve">
+    <value>Page suivante</value>
+  </data>
+  <data name="aria.lastPage" xml:space="preserve">
+    <value>Dernière page</value>
+  </data>
+  <data name="aria.page" xml:space="preserve">
+    <value>Page {0}</value>
+  </data>
+  <data name="aria.rowsPerPage" xml:space="preserve">
+    <value>Lignes par page</value>
+  </data>
+  <data name="locale.currentPageReport" xml:space="preserve">
+    <value>{0} sur {1}</value>
+  </data>
 </root>
