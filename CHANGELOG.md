@@ -273,6 +273,10 @@ Les évolutions notables de mkm-wpf, version par version. Le format suit
   - Panel, IdCard : le bouton de repli se dit développé ou réduit aux
     lecteurs d'écran ; IdCard : la touche Tab passe par replier, fermer,
     puis les boutons ajoutés, comme mkm.
+  - InputText, AutoComplete, DatePicker, InputChips, CascadeSelect : refusé,
+    le survol et le clavier l'emportent sur le rouge, comme mkm ; un champ
+    refusé le dit aux lecteurs d'écran (« Non valide », le aria-invalid de
+    mkm), Select compris.
   - InputOtp, ColorPicker, Terminal, Password : la langue n'est suivie que
     tant que le contrôle est chargé (l'abonnement à vie le gardait en
     mémoire).

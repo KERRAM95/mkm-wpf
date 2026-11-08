@@ -66,6 +66,11 @@
                             <Setter TargetName="Aide" Property="Visibility" Value="Visible" />
                             <Setter TargetName="Libelle" Property="Visibility" Value="Collapsed" />
                         </Trigger>
+                        <!-- Refusé : le survol et le clavier l'emportent sur le rouge, comme mkm (:enabled:hover et :focus pèsent plus que .p-invalid). -->
+                        <Trigger Property="Invalid" Value="True">
+                            <Setter Property="BorderBrush" Value="{DynamicResource mkm.cascadeselect.invalid.border.color}" />
+                            <Setter TargetName="Aide" Property="Foreground" Value="{DynamicResource mkm.cascadeselect.invalid.placeholder.color}" />
+                        </Trigger>
                         <Trigger Property="IsMouseOver" Value="True">
                             <Setter Property="BorderBrush" Value="{DynamicResource mkm.cascadeselect.hover.border.color}" />
                         </Trigger>
@@ -74,10 +79,6 @@
                         </Trigger>
                         <Trigger Property="IsDropDownOpen" Value="True">
                             <Setter Property="BorderBrush" Value="{DynamicResource mkm.cascadeselect.focus.border.color}" />
-                        </Trigger>
-                        <Trigger Property="Invalid" Value="True">
-                            <Setter Property="BorderBrush" Value="{DynamicResource mkm.cascadeselect.invalid.border.color}" />
-                            <Setter TargetName="Aide" Property="Foreground" Value="{DynamicResource mkm.cascadeselect.invalid.placeholder.color}" />
                         </Trigger>
                         <Trigger Property="IsEnabled" Value="False">
                             <Setter Property="Background" Value="{DynamicResource mkm.cascadeselect.disabled.background}" />

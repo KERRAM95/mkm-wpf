@@ -112,6 +112,14 @@ Namespace Mkm.Wpf.Tests.Controls
         End Sub
 
         <Test>
+        Public Sub ChampRefuse_LeDitAuxLecteursDEcran()
+            Dim champ = Pret(New InputText With {.Invalid = True})
+            Assert.That(PairDe(champ).GetItemStatus(), [Is].EqualTo(Localizer.Current.T("aria.invalid")), "aria-invalid de mkm")
+            champ.Invalid = False
+            Assert.That(PairDe(champ).GetItemStatus(), [Is].Empty)
+        End Sub
+
+        <Test>
         Public Sub BoutonDIconeSeule_SonInfoBulleLeNomme()
             Dim bouton As New BoutonDeMkm With {.Icon = Icons.Refresh, .ToolTip = "Actualiser"}
             Pret(bouton)

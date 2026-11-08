@@ -64,14 +64,15 @@
                         <Trigger Property="IsMaxedOut" Value="True">
                             <Setter TargetName="PART_Input" Property="IsReadOnly" Value="True" />
                         </Trigger>
+                        <!-- Refusé : le survol et le clavier l'emportent sur le rouge, comme mkm (:enabled:hover et :focus pèsent plus que .p-invalid). -->
+                        <Trigger Property="Invalid" Value="True">
+                            <Setter Property="BorderBrush" Value="{DynamicResource mkm.inputchips.invalid.border.color}" />
+                        </Trigger>
                         <Trigger Property="IsMouseOver" Value="True">
                             <Setter Property="BorderBrush" Value="{DynamicResource mkm.inputchips.hover.border.color}" />
                         </Trigger>
                         <Trigger Property="IsKeyboardFocusWithin" Value="True">
                             <Setter Property="BorderBrush" Value="{DynamicResource mkm.inputchips.focus.border.color}" />
-                        </Trigger>
-                        <Trigger Property="Invalid" Value="True">
-                            <Setter Property="BorderBrush" Value="{DynamicResource mkm.inputchips.invalid.border.color}" />
                         </Trigger>
                         <Trigger Property="IsEnabled" Value="False">
                             <Setter Property="Background" Value="{DynamicResource mkm.inputchips.disabled.background}" />

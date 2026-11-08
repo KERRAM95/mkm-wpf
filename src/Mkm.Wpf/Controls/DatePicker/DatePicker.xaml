@@ -359,14 +359,15 @@
                                PlacementTarget="{Binding ElementName=PART_Root}" />
                     </Grid>
                     <ControlTemplate.Triggers>
+                        <!-- Refusé : le survol et le clavier l'emportent sur le rouge, comme mkm (:enabled:hover et :focus pèsent plus que .p-invalid). -->
+                        <Trigger Property="Invalid" Value="True">
+                            <Setter Property="BorderBrush" Value="{DynamicResource mkm.inputtext.invalid.border.color}" />
+                        </Trigger>
                         <Trigger Property="IsMouseOver" Value="True">
                             <Setter Property="BorderBrush" Value="{DynamicResource mkm.inputtext.hover.border.color}" />
                         </Trigger>
                         <Trigger Property="IsKeyboardFocusWithin" Value="True">
                             <Setter Property="BorderBrush" Value="{DynamicResource mkm.inputtext.focus.border.color}" />
-                        </Trigger>
-                        <Trigger Property="Invalid" Value="True">
-                            <Setter Property="BorderBrush" Value="{DynamicResource mkm.inputtext.invalid.border.color}" />
                         </Trigger>
                         <Trigger Property="IsEnabled" Value="False">
                             <Setter Property="Background" Value="{DynamicResource mkm.inputtext.disabled.background}" />

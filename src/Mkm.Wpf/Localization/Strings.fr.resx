@@ -117,6 +117,9 @@
   <data name="aria.currentPage" xml:space="preserve">
     <value>Page actuelle</value>
   </data>
+  <data name="aria.invalid" xml:space="preserve">
+    <value>Non valide</value>
+  </data>
   <data name="aria.page" xml:space="preserve">
     <value>Page {0}</value>
   </data>

@@ -17,6 +17,17 @@ Namespace Mkm.Wpf.Controls
             Return If(String.IsNullOrEmpty(nom), If(indication, String.Empty), nom)
         End Function
 
+        ''' <summary>
+        ''' L'état d'un champ refusé (sa propriété <c>Invalid</c>), dit aux lecteurs d'écran comme le <c>aria-invalid</c> de
+        ''' mkm ; sinon l'état posé par l'application.
+        ''' </summary>
+        Friend Function EtatDuChamp(champ As UIElement, etat As String) As String
+            If Not String.IsNullOrEmpty(etat) Then Return etat
+            Dim refuse = System.ComponentModel.DependencyPropertyDescriptor.FromName("Invalid", champ.GetType(), champ.GetType())
+            If refuse IsNot Nothing AndAlso CBool(refuse.GetValue(champ)) Then Return Localization.Localizer.Current.T("aria.invalid")
+            Return String.Empty
+        End Function
+
     End Module
 
     ''' <summary>Le pair d'automatisation d'<see cref="InputText"/> et de <see cref="Textarea"/>.</summary>
@@ -33,6 +44,11 @@ Namespace Mkm.Wpf.Controls
         ''' <inheritdoc/>
         Protected Overrides Function GetNameCore() As String
             Return Nommer(MyBase.GetNameCore(), _indication())
+        End Function
+
+        ''' <inheritdoc/>
+        Protected Overrides Function GetItemStatusCore() As String
+            Return EtatDuChamp(Owner, MyBase.GetItemStatusCore())
         End Function
 
         ''' <inheritdoc/>
@@ -53,6 +69,11 @@ Namespace Mkm.Wpf.Controls
         ''' <inheritdoc/>
         Protected Overrides Function GetNameCore() As String
             Return Nommer(MyBase.GetNameCore(), DirectCast(Owner, [Select]).Placeholder)
+        End Function
+
+        ''' <inheritdoc/>
+        Protected Overrides Function GetItemStatusCore() As String
+            Return EtatDuChamp(Owner, MyBase.GetItemStatusCore())
         End Function
 
         ''' <inheritdoc/>

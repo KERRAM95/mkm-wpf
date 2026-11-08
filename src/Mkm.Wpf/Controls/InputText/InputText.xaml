@@ -48,15 +48,16 @@
                         <Trigger Property="Text" Value="">
                             <Setter TargetName="Aide" Property="Visibility" Value="Visible" />
                         </Trigger>
+                        <!-- Refusé : le survol et le clavier l'emportent sur le rouge, comme mkm (:enabled:hover et :focus pèsent plus que .p-invalid). -->
+                        <Trigger Property="Invalid" Value="True">
+                            <Setter Property="BorderBrush" Value="{DynamicResource mkm.inputtext.invalid.border.color}" />
+                            <Setter TargetName="Aide" Property="Foreground" Value="{DynamicResource mkm.inputtext.invalid.placeholder.color}" />
+                        </Trigger>
                         <Trigger Property="IsMouseOver" Value="True">
                             <Setter Property="BorderBrush" Value="{DynamicResource mkm.inputtext.hover.border.color}" />
                         </Trigger>
                         <Trigger Property="IsKeyboardFocused" Value="True">
                             <Setter Property="BorderBrush" Value="{DynamicResource mkm.inputtext.focus.border.color}" />
-                        </Trigger>
-                        <Trigger Property="Invalid" Value="True">
-                            <Setter Property="BorderBrush" Value="{DynamicResource mkm.inputtext.invalid.border.color}" />
-                            <Setter TargetName="Aide" Property="Foreground" Value="{DynamicResource mkm.inputtext.invalid.placeholder.color}" />
                         </Trigger>
                         <Trigger Property="IsEnabled" Value="False">
                             <Setter Property="Background" Value="{DynamicResource mkm.inputtext.disabled.background}" />
