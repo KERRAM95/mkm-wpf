@@ -1,6 +1,8 @@
 # Ce que la feuille CSS du preset de mkm (Dashboard, « css ») dit sans jeton, écrit en jetons pour mkm-wpf.
 # Écrit à la main d'après ui-kit, packages/themes/src/presets/dashboard/(inputtext|select|button|checkbox|tabs|message|toast|dialog)/index.ts : à reprendre
 # quand ces feuilles changent. Lu après Dashboard.tokens (outils/themes/importer-mkm.mjs ne touche pas ce fichier).
+# Une marge, un retrait ou des coins à plusieurs valeurs s'écrivent dans l'ordre de CSS : haut, droite, bas, gauche
+# (« 0 0 0 8px » : 8 px à gauche), comme les jetons importés.
 
 # inputtext : 24 px de haut, le retrait du bas d'un pixel de plus que celui du haut.
 inputtext.height = 24px
@@ -406,14 +408,14 @@ treeselect.tree.max.height = 240px
 # l'icône du groupe (option.icon.size) à 6 px du libellé.
 cascadeselect.label.padding = {cascadeselect.padding.y} {cascadeselect.padding.x}
 cascadeselect.overlay.window.padding = 0 2px 3px 2px
-cascadeselect.option.icon.margin = 6px 0 0 0
+cascadeselect.option.icon.margin = 0 0 0 6px
 
 # slider : la piste du Track dépasse de la moitié de la poignée (handle.width / 2) à chaque bout, pour que la poignée
 # se centre sur les bouts comme chez mkm ; la plage commence au bout visible ; en colonne, 100 px au moins.
 slider.track.horizontal.margin = 0 -8px 0 -8px
 slider.track.vertical.margin = -8px 0 -8px 0
-slider.range.horizontal.padding = 8px 0 0 0
-slider.range.vertical.padding = 0 0 0 8px
+slider.range.horizontal.padding = 0 0 0 8px
+slider.range.vertical.padding = 0 0 8px 0
 slider.vertical.min.height = 100px
 
 # password : le champ d'InputText ; l'œil à form.field.padding.x du bord droit, le texte s'arrête avant lui
@@ -433,10 +435,10 @@ inputchips.input.min.width = 40px
 # floatlabel : le libellé à position.x du bord (plus la bordure) ; envolé, au-dessus (over.active.top), en haut dans
 # le champ (in.active.top plus la bordure), ou sur la bordure (centré sur elle : la moitié de sa hauteur, 9 px) ; le
 # champ « in » descend son texte sous lui (in.input.padding.top).
-floatlabel.label.margin = 8px 0 0 0
-floatlabel.over.active.margin = 8px -15px 0 0
-floatlabel.in.active.margin = 8px 7px 0 0
-floatlabel.on.active.margin = 6px -5px 0 0
+floatlabel.label.margin = 0 0 0 8px
+floatlabel.over.active.margin = -15px 0 0 8px
+floatlabel.in.active.margin = 7px 0 0 8px
+floatlabel.on.active.margin = -5px 0 0 6px
 floatlabel.in.input.all.padding = 18px 6px 6px 6px
 
 # colorpicker : l'anneau du carré en épaisseur ; la place de l'ombre du panneau.
@@ -446,7 +448,7 @@ colorpicker.overlay.window.padding = 0 2px 3px 2px
 # menubar, megamenu : le début de la barre à gap de ses éléments ; le chevron d'un élément à 6 px de son libellé ; la
 # place de l'ombre du panneau.
 menubar.start.margin = 0 {menubar.gap} 0 0
-megamenu.submenu.icon.margin = 6px 0 0 0
+megamenu.submenu.icon.margin = 0 0 0 6px
 megamenu.overlay.window.padding = 0 2px 3px 2px
 
 # panelmenu : la bordure d'un panneau du milieu en épaisseur ; les coins du premier (en haut), du dernier (en bas) et
@@ -455,7 +457,7 @@ panelmenu.panel.all.border.width = {panelmenu.panel.border.width} {panelmenu.pan
 panelmenu.panel.first.corner.radius = {panelmenu.panel.first.top.border.radius} {panelmenu.panel.first.top.border.radius} 0 0
 panelmenu.panel.last.corner.radius = 0 0 {panelmenu.panel.last.bottom.border.radius} {panelmenu.panel.last.bottom.border.radius}
 panelmenu.panel.single.corner.radius = {panelmenu.panel.first.top.border.radius} {panelmenu.panel.first.top.border.radius} {panelmenu.panel.last.bottom.border.radius} {panelmenu.panel.last.bottom.border.radius}
-panelmenu.submenu.margin = {panelmenu.submenu.indent} 0 0 0
+panelmenu.submenu.margin = 0 0 0 {panelmenu.submenu.indent}
 panelmenu.submenu.icon.size = {navigation.submenu.icon.size}
 
 # buttongroup : les coins du premier bouton (à gauche) et du dernier (à droite).
@@ -473,7 +475,7 @@ dataview.all.border.width = {dataview.border.width} {dataview.border.width}
 
 # orderlist, picklist : les boutons à gap de la liste (à gauche, ou à droite pour la cible d'un PickList) ; l'en-tête
 # au-dessus de la liste ; les boutons du milieu d'un PickList à gap des deux listes.
-orderlist.controls.margin = 0 0 {orderlist.gap} 0
-orderlist.controls.right.margin = {orderlist.gap} 0 0 0
-orderlist.header.margin = 0 0 0 6px
-picklist.controls.margin = {picklist.gap} 0 {picklist.gap} 0
+orderlist.controls.margin = 0 {orderlist.gap} 0 0
+orderlist.controls.right.margin = 0 0 0 {orderlist.gap}
+orderlist.header.margin = 0 0 6px 0
+picklist.controls.margin = 0 {picklist.gap} 0 {picklist.gap}
