@@ -472,4 +472,17 @@ Namespace Mkm.Wpf.Controls
 
     End Class
 
+    ''' <summary>
+    ''' Une zone du panneau d'un <see cref="ColorPicker"/> (les nuances, les teintes) : elle prend le clavier, et se
+    ''' présente aux lecteurs d'écran, nommée.
+    ''' </summary>
+    Friend NotInheritable Class ZoneDeCouleur
+        Inherits ContentControl
+
+        Protected Overrides Function OnCreateAutomationPeer() As System.Windows.Automation.Peers.AutomationPeer
+            Return New PairDeConteneur(Me, System.Windows.Automation.Peers.AutomationControlType.Custom)
+        End Function
+
+    End Class
+
 End Namespace

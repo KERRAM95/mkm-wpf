@@ -453,4 +453,30 @@ Namespace Mkm.Wpf.Controls
 
     End Class
 
+    ''' <summary>
+    ''' Le texte de la jauge d'un <see cref="Password"/> : un texte lu par les lecteurs d'écran, et annoncé quand il
+    ''' change. Un TextBlock posé dans un gabarit ne leur est pas présenté (WPF le tient pour un détail du dessin).
+    ''' </summary>
+    Friend NotInheritable Class TexteAnnonce
+        Inherits TextBlock
+
+        Protected Overrides Function OnCreateAutomationPeer() As AutomationPeer
+            Return New PairDuTexte(Me)
+        End Function
+
+        Private NotInheritable Class PairDuTexte
+            Inherits TextBlockAutomationPeer
+
+            Public Sub New(texte As TexteAnnonce)
+                MyBase.New(texte)
+            End Sub
+
+            Protected Overrides Function IsControlElementCore() As Boolean
+                Return True
+            End Function
+
+        End Class
+
+    End Class
+
 End Namespace
