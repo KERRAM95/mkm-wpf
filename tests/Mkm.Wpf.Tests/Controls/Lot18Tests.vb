@@ -81,6 +81,8 @@ Namespace Mkm.Wpf.Tests.Controls
             Assert.That(piste.Thumb, [Is].Not.Null)
             Assert.That(piste.DecreaseRepeatButton.ActualWidth, [Is].GreaterThan(0), "la plage, jusqu'à la valeur")
             Assert.That(UIElementAutomationPeer.CreatePeerForElement(curseur).GetAutomationControlType(), [Is].EqualTo(AutomationControlType.Slider))
+            Assert.That(curseur.SmallChange, [Is].EqualTo(1), "le pas de mkm, et non 0,1")
+            Assert.That(curseur.LargeChange, [Is].EqualTo(10))
         End Sub
 
         ' ---- Knob ----

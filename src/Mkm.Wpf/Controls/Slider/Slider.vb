@@ -22,6 +22,9 @@ Namespace Mkm.Wpf.Controls
 
         Shared Sub New()
             DefaultStyleKeyProperty.OverrideMetadata(GetType(Slider), New FrameworkPropertyMetadata(GetType(Slider)))
+            ' Le pas de mkm (step) : 1 ; celui de WPF est 0,1. Page haut et bas : 10.
+            SmallChangeProperty.OverrideMetadata(GetType(Slider), New FrameworkPropertyMetadata(1.0))
+            LargeChangeProperty.OverrideMetadata(GetType(Slider), New FrameworkPropertyMetadata(10.0))
         End Sub
 
         ''' <summary>Un curseur pour les lecteurs d'écran, avec sa valeur ; sa piste et sa poignée ne sont que son dessin.</summary>
