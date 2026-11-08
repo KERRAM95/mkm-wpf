@@ -333,6 +333,8 @@ Les évolutions notables de mkm-wpf, version par version. Le format suit
   - InputOtp : Suppr vide la case et passe à la suivante ; InputMask : Échap
     rend la valeur qu'avait le champ en prenant le clavier ; InputNumber :
     Début et Fin donnent le minimum et le maximum, s'ils sont fixés (mkm).
+  - Registre de commandes : un raccourci ne se lance plus pendant la frappe
+    dans un champ (Ctrl+N dans une zone de texte), comme mkm.
   - InputOtp, ColorPicker, Terminal, Password : la langue n'est suivie que
     tant que le contrôle est chargé (l'abonnement à vie le gardait en
     mémoire).

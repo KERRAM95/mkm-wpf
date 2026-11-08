@@ -131,7 +131,9 @@ Namespace Mkm.Wpf.Tests.Commands
             Dim liaison = fenetre.InputBindings.OfType(Of KeyBinding)().Single()
             Assert.That(liaison.Key, [Is].EqualTo(Key.S))
             Assert.That(liaison.Modifiers, [Is].EqualTo(ModifierKeys.Control))
-            Assert.That(liaison.Command, [Is].SameAs(r("enregistrer")))
+            Assert.That(DirectCast(liaison.Command, RaccourciHorsSaisie).Commande, [Is].SameAs(r("enregistrer")))
+            Assert.That(RaccourciHorsSaisie.EstUneSaisie(New TextBox()), [Is].True, "un champ de saisie garde ses touches")
+            Assert.That(RaccourciHorsSaisie.EstUneSaisie(New Border()), [Is].False)
         End Sub
 
         <Test>

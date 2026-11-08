@@ -520,8 +520,48 @@ Namespace Mkm.Wpf.Commands
             If element Is Nothing Then Throw New ArgumentNullException(NameOf(element))
             For Each cle In _ordre
                 Dim commande = _commandes(cle)
-                If commande.Gesture IsNot Nothing Then element.InputBindings.Add(New KeyBinding(commande, commande.Gesture))
+                If commande.Gesture IsNot Nothing Then element.InputBindings.Add(New KeyBinding(New RaccourciHorsSaisie(commande), commande.Gesture))
             Next
+        End Sub
+
+    End Class
+
+    ''' <summary>
+    ''' Le raccourci d'une commande : il ne se lance pas quand le clavier est dans un champ de saisie (une zone de texte,
+    ''' un mot de passe, une liste modifiable), comme mkm ; la touche reste au champ.
+    ''' </summary>
+    Friend NotInheritable Class RaccourciHorsSaisie
+        Implements ICommand
+
+        Friend ReadOnly Property Commande As RegisteredCommand
+
+        Friend Sub New(commande As RegisteredCommand)
+            Me.Commande = commande
+        End Sub
+
+        Public Custom Event CanExecuteChanged As EventHandler Implements ICommand.CanExecuteChanged
+            AddHandler(value As EventHandler)
+                AddHandler Commande.CanExecuteChanged, value
+            End AddHandler
+            RemoveHandler(value As EventHandler)
+                RemoveHandler Commande.CanExecuteChanged, value
+            End RemoveHandler
+            RaiseEvent(sender As Object, e As EventArgs)
+            End RaiseEvent
+        End Event
+
+        Friend Shared Function EstUneSaisie(element As Object) As Boolean
+            If TypeOf element Is System.Windows.Controls.Primitives.TextBoxBase OrElse TypeOf element Is PasswordBox Then Return True
+            Dim liste = TryCast(element, ComboBox)
+            Return liste IsNot Nothing AndAlso liste.IsEditable
+        End Function
+
+        Public Function CanExecute(parameter As Object) As Boolean Implements ICommand.CanExecute
+            Return Not EstUneSaisie(Keyboard.FocusedElement) AndAlso DirectCast(Commande, ICommand).CanExecute(parameter)
+        End Function
+
+        Public Sub Execute(parameter As Object) Implements ICommand.Execute
+            DirectCast(Commande, ICommand).Execute(parameter)
         End Sub
 
     End Class
