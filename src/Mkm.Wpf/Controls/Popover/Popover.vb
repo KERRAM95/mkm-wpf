@@ -11,7 +11,7 @@ Namespace Mkm.Wpf.Controls
 
     ''' <summary>
     ''' La fenêtre flottante de mkm (Popover) : un cadre ombré, une flèche vers son élément, qui s'ouvre dessous (dessus
-    ''' s'il n'y a pas la place) et se ferme d'un clic ailleurs ou d'Échap. Posé n'importe où dans la page, il n'y prend
+    ''' s'il n'y a pas la place) et se ferme d'un clic ailleurs, d'Échap ou quand la page défile. Posé n'importe où dans la page, il n'y prend
     ''' pas de place ; l'application l'ouvre sur un élément.
     ''' <code>
     ''' &lt;mkm:Button x:Name="Partager" Content="Partager" Click="Partager_Click" /&gt;
@@ -49,6 +49,7 @@ Namespace Mkm.Wpf.Controls
         Private _popup As Popup
         Private _fleche As FrameworkElement
         Private _fenetre As Window
+        Private _defilement As FermetureAuDefilement
         ' Le moment où un clic sur l'élément l'a fermé : le Click de ce même clic ne doit pas le rouvrir.
         Private _fermeSurLaCible As Date = Date.MinValue
 
@@ -172,6 +173,12 @@ Namespace Mkm.Wpf.Controls
         End Sub
 
         Private Sub Popup_Opened(sender As Object, e As EventArgs)
+            ' La page de son élément qui défile le ferme, comme mkm : il resterait sinon détaché de son élément.
+            Dim cible = TryCast(Target, FrameworkElement)
+            If cible IsNot Nothing Then
+                _defilement = New FermetureAuDefilement(cible, AddressOf Hide)
+                _defilement.Ecouter()
+            End If
             ' Échap le ferme où qu'ait été le clavier, comme mkm (closeOnEscape écoute le document).
             _fenetre = Window.GetWindow(Me)
             If _fenetre IsNot Nothing Then AddHandler _fenetre.PreviewKeyDown, AddressOf Fenetre_PreviewKeyDown
@@ -186,6 +193,8 @@ Namespace Mkm.Wpf.Controls
         End Sub
 
         Private Sub Popup_Closed(sender As Object, e As EventArgs)
+            _defilement?.Cesser()
+            _defilement = Nothing
             If _fenetre IsNot Nothing Then RemoveHandler _fenetre.PreviewKeyDown, AddressOf Fenetre_PreviewKeyDown
             _fenetre = Nothing
             If Target IsNot Nothing AndAlso Target.IsMouseOver AndAlso Mouse.LeftButton = MouseButtonState.Pressed Then

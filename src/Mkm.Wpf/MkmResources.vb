@@ -44,6 +44,7 @@ Namespace Mkm.Wpf
             Controls.MenuIcons.Enregistrer()
             Controls.FocusVisible.Enregistrer()
             Agrandissement.Enregistrer()
+            Controls.InfoBulleAuDefilement.Enregistrer()
         End Sub
 
         ' Les styles que mkm-wpf pose sur des contrôles de WPF eux-mêmes (l'info-bulle…), pour toute l'application.

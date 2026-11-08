@@ -1,6 +1,7 @@
 Imports System
 Imports FlaUI.Core.AutomationElements
 Imports FlaUI.Core.Definitions
+Imports FlaUI.Core.Input
 Imports FlaUI.Core.WindowsAPI
 Imports NUnit.Framework
 
@@ -77,6 +78,20 @@ Namespace Mkm.Wpf.UiTests
 
             Survoler(Trouver("Survol", page))
             TrouverAilleurs("Met à jour le cartouche du plan depuis 3DEXPERIENCE.")
+        End Sub
+
+        ' Le défaut vu par Mourad : survolé pendant que la molette faisait défiler la page, l'info-bulle restait à sa place,
+        ' détachée de son bouton. Comme mkm, la page qui défile la referme.
+        <Test>
+        Public Sub Tooltip_SeFermeQuandLaPageDefile()
+            Dim page = OuvrirLaDoc("tooltip")
+            Const Texte = "Met à jour le cartouche du plan depuis 3DEXPERIENCE."
+
+            Survoler(Trouver("Survol", page))
+            TrouverAilleurs(Texte)
+            Mouse.Scroll(-3)
+            Wait.UntilInputIsProcessed()
+            AttendreQue(Function() Referme(Texte), "la page a défilé : l'info-bulle refermée")
         End Sub
 
         <Test>
