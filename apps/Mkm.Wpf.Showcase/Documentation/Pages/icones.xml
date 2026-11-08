@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="utf-8"?>
+<page titre="Icônes" categorie="Pour commencer" types="Icon" jetons="icon">
+  <resume>Les icônes de mkm, dessinées par Tabler Icons sur une grille de 24 : chacune est nommée par son sens
+    (<c>Icons.Add</c>, <c>Icons.Close</c>) et prend la couleur du texte qui l'entoure.</resume>
+
+  <section titre="Employer une icône">
+    <p>Les composants qui ont une icône la prennent dans leur propriété <c>Icon</c> (ou <c>OnIcon</c>,
+      <c>TypeIcon</c>…). Seule, une icône se pose par le contrôle <c>Icon</c>, dont <c>Source</c> est la géométrie.</p>
+    <exemple><![CDATA[
+<mkm:Button Content="Ajouter" Icon="{x:Static mkm:Icons.Add}" />
+<mkm:Icon Source="{x:Static mkm:Icons.Drawings}" Width="32" Height="32" Foreground="{DynamicResource mkm.primary.color}" />
+]]></exemple>
+  </section>
+
+  <section titre="Toutes les icônes">
+    <p>Survolez une icône pour lire ce qu'on écrit en XAML.</p>
+    <exemple comportement="GalerieDIcones" etendu="oui"><![CDATA[
+<mkm:InputText x:Name="Filtre" Placeholder="Rechercher une icône" Width="280" HorizontalAlignment="Left" Margin="0,0,0,12" />
+<WrapPanel x:Name="Galerie" />
+]]></exemple>
+  </section>
+
+  <section titre="Accessibilité">
+    <p>Une icône est un dessin : les lecteurs d'écran ne la lisent pas. C'est le contrôle qui la porte qui doit être
+      nommé (un bouton d'icône seule, par son info-bulle ou <c>AutomationProperties.Name</c>).</p>
+  </section>
+</page>

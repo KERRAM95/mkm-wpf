@@ -1,8 +1,7 @@
 <!--
-    Fenêtre de la vitrine : sa barre (le choix du thème et de la langue), la liste des
-    composants à gauche, la page du composant choisi à droite (Pages/<Nom>Page.xaml), les notifications
-    au-dessus (Toast). Les textes viennent de Textes/Vitrine*.resx par {mkm:T} ; les
-    couleurs, la police et les tailles, du thème (mkm.<chemin>).
+    La fenêtre de la documentation de mkm-wpf, sur le modèle d'ui-kit : sa barre (le nom, le thème, la langue), le menu
+    des pages à gauche, rangées par catégorie, avec sa recherche ; la page choisie à droite (Documentation/), les
+    notifications au-dessus (Toast). Les couleurs, la police et les tailles viennent du thème (mkm.<chemin>).
 -->
 <Window x:Class="Mkm.Wpf.Showcase.MainWindow"
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
@@ -10,7 +9,7 @@
         xmlns:mkm="urn:mkm-wpf"
         xmlns:local="clr-namespace:Mkm.Wpf.Showcase"
         Title="{mkm:T showcase.title}"
-        Width="1100" Height="720"
+        Width="1280" Height="860"
         WindowStartupLocation="CenterScreen"
         Background="{DynamicResource mkm.content.background}"
         Foreground="{DynamicResource mkm.text.color}"
@@ -18,45 +17,60 @@
         FontSize="{DynamicResource mkm.font.size}">
     <Grid>
         <DockPanel>
-            <Border DockPanel.Dock="Top" Padding="12,6"
+            <Border DockPanel.Dock="Top" Padding="16,8"
                     BorderBrush="{DynamicResource mkm.content.border.color}" BorderThickness="0,0,0,1">
-                <StackPanel HorizontalAlignment="Right" Orientation="Horizontal">
-                    <TextBlock Margin="0,0,8,0" VerticalAlignment="Center" Text="{mkm:T showcase.theme}" />
-                    <!-- Les thèmes connus ; en choisir un change toute l'apparence, à chaud. -->
-                    <ComboBox x:Name="ChoixDuTheme" MinWidth="120" Margin="0,0,16,0"
-                              DisplayMemberPath="Name"
-                              ItemsSource="{x:Static mkm:Themes.All}"
-                              SelectionChanged="ChoixDuTheme_SelectionChanged" />
-                    <TextBlock Margin="0,0,8,0" VerticalAlignment="Center" Text="{mkm:T showcase.language}" />
-                    <!-- Les langues des textes de la vitrine ; en choisir une change tous les textes. -->
-                    <ComboBox MinWidth="140"
-                              DisplayMemberPath="NativeName"
-                              ItemsSource="{Binding Languages, Source={x:Static mkm:Localizer.Current}}"
-                              SelectedItem="{Binding Language, Source={x:Static mkm:Localizer.Current}}" />
-                </StackPanel>
+                <DockPanel>
+                    <StackPanel DockPanel.Dock="Right" Orientation="Horizontal">
+                        <TextBlock Margin="0,0,8,0" VerticalAlignment="Center" Text="{mkm:T showcase.theme}" />
+                        <!-- Les thèmes connus ; en choisir un change toute l'apparence, à chaud. -->
+                        <ComboBox x:Name="ChoixDuTheme" MinWidth="120" Margin="0,0,16,0"
+                                  DisplayMemberPath="Name"
+                                  ItemsSource="{x:Static mkm:Themes.All}"
+                                  SelectionChanged="ChoixDuTheme_SelectionChanged" />
+                        <TextBlock Margin="0,0,8,0" VerticalAlignment="Center" Text="{mkm:T showcase.language}" />
+                        <!-- La langue des textes propres aux composants (« Modifier », « Fermer »…) et de la vitrine. -->
+                        <ComboBox MinWidth="140"
+                                  DisplayMemberPath="NativeName"
+                                  ItemsSource="{Binding Languages, Source={x:Static mkm:Localizer.Current}}"
+                                  SelectedItem="{Binding Language, Source={x:Static mkm:Localizer.Current}}" />
+                    </StackPanel>
+                    <StackPanel Orientation="Horizontal" VerticalAlignment="Center">
+                        <TextBlock FontSize="18" FontWeight="Bold" Foreground="{DynamicResource mkm.primary.color}" Text="mkm-wpf" />
+                        <TextBlock Margin="10,0,0,0" VerticalAlignment="Bottom" Foreground="{DynamicResource mkm.text.muted.color}"
+                                   Text="Documentation des composants WPF de mkm" />
+                    </StackPanel>
+                </DockPanel>
             </Border>
-            <Border DockPanel.Dock="Left" Width="220"
+            <Border DockPanel.Dock="Left" Width="250"
                     BorderBrush="{DynamicResource mkm.content.border.color}" BorderThickness="0,0,1,0">
                 <DockPanel Margin="12">
-                    <TextBlock DockPanel.Dock="Top" Margin="0,0,0,8" FontWeight="Bold"
-                               Foreground="{DynamicResource mkm.primary.color}" Text="{mkm:T showcase.components}" />
-                    <!-- Un composant par entrée ; sa page s'ouvre à droite. -->
+                    <mkm:InputText x:Name="Recherche" DockPanel.Dock="Top" Margin="0,0,0,12"
+                                   Placeholder="Rechercher un composant" TextChanged="Recherche_TextChanged" />
+                    <!-- Une entrée par page, rangée dans sa catégorie ; sa page s'ouvre à droite. -->
                     <ListBox x:Name="Composants" BorderThickness="0" Background="Transparent"
+                             AutomationProperties.Name="Pages de la documentation"
+                             ScrollViewer.HorizontalScrollBarVisibility="Disabled"
                              SelectionChanged="Composants_SelectionChanged">
-                        <ListBoxItem Tag="ActionBar" Content="{mkm:T showcase.actionbar.title}" />
-                        <ListBoxItem Tag="Champs" Content="{mkm:T showcase.fields.title}" />
-                        <ListBoxItem Tag="Boutons" Content="{mkm:T showcase.nav.buttons}" />
-                        <ListBoxItem Tag="Conteneurs" Content="{mkm:T showcase.nav.containers}" />
-                        <ListBoxItem Tag="Retours" Content="{mkm:T showcase.nav.feedback}" />
-                        <ListBoxItem Tag="Attente" Content="{mkm:T showcase.nav.waiting}" />
-                        <ListBoxItem Tag="Saisie" Content="{mkm:T showcase.nav.inputs}" />
-                        <ListBoxItem Tag="Fiche" Content="{mkm:T showcase.nav.properties}" />
-                        <ListBoxItem Tag="Arbre" Content="{mkm:T showcase.nav.tree}" />
-                        <ListBoxItem Tag="Identite" Content="{mkm:T showcase.nav.identity}" />
-                        <ListBoxItem Tag="Tableau" Content="{mkm:T showcase.nav.table}" />
-                        <ListBoxItem Tag="Choix" Content="{mkm:T showcase.nav.choices}" />
-                        <ListBoxItem Tag="MiseEnPage" Content="{mkm:T showcase.nav.layout}" />
-                        <ListBoxItem Tag="Arborescence" Content="{mkm:T showcase.nav.structure}" />
+                        <ListBox.ItemContainerStyle>
+                            <Style TargetType="ListBoxItem">
+                                <Setter Property="AutomationProperties.AutomationId" Value="{Binding Automatisation}" />
+                                <Setter Property="Padding" Value="12,5" />
+                            </Style>
+                        </ListBox.ItemContainerStyle>
+                        <ListBox.ItemTemplate>
+                            <DataTemplate>
+                                <TextBlock Text="{Binding Titre}" TextTrimming="CharacterEllipsis" />
+                            </DataTemplate>
+                        </ListBox.ItemTemplate>
+                        <ListBox.GroupStyle>
+                            <GroupStyle>
+                                <GroupStyle.HeaderTemplate>
+                                    <DataTemplate>
+                                        <TextBlock Margin="4,14,0,4" FontWeight="Bold" Text="{Binding Name}" />
+                                    </DataTemplate>
+                                </GroupStyle.HeaderTemplate>
+                            </GroupStyle>
+                        </ListBox.GroupStyle>
                     </ListBox>
                 </DockPanel>
             </Border>

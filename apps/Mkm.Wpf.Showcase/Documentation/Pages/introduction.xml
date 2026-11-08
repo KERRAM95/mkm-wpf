@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="utf-8"?>
+<page titre="Introduction" categorie="Pour commencer">
+  <resume>mkm-wpf apporte aux applications de bureau WPF les composants de mkm, la bibliothèque d'interface des
+    applications web : la même apparence, les mêmes thèmes, le même comportement au clavier et pour les lecteurs
+    d'écran.</resume>
+
+  <section titre="Ce qu'est mkm-wpf">
+    <p>mkm est la bibliothèque de composants Vue des applications web (ui-kit). mkm-wpf en est la version de bureau :
+      une bibliothèque de contrôles WPF pour .NET Framework 4.8, écrite en VB.NET. Une application qui emploie les deux
+      se ressemble d'un bout à l'autre.</p>
+    <p>Chaque composant reprend celui de mkm : son nom (<c>Button</c>, <c>DataTable</c>, <c>ActionBar</c>), ses
+      propriétés (<c>Severity</c>, <c>Variant</c>, <c>Invalid</c>), ses jetons de thème et son accessibilité.</p>
+  </section>
+
+  <section titre="Lire cette documentation">
+    <p>Le menu de gauche range les composants comme ui-kit : Formulaire, Bouton, Données, Panneau, Superposition,
+      Menu, Messages, Divers. Chaque page a trois onglets :</p>
+    <liste>
+      <el><b>Fonctionnalités</b> : les usages du composant, chacun avec son exemple vivant et le code XAML qui le
+        produit, à copier tel quel ; puis son accessibilité (le clavier, le lecteur d'écran).</el>
+      <el><b>API</b> : ses propriétés, leurs types et leurs valeurs par défaut, ses évènements et ses méthodes, tirés
+        du code de la bibliothèque.</el>
+      <el><b>Thème</b> : ses jetons de thème, et leur valeur dans chaque thème.</el>
+    </liste>
+    <p>La barre du haut change le thème et la langue de toute la documentation, à chaud, comme une application peut le
+      faire.</p>
+  </section>
+
+  <section titre="Premier exemple">
+    <p>Une fois mkm-wpf installé (voir <lien page="installation">Installation</lien>), un composant s'écrit comme un
+      contrôle de WPF, préfixé par <c>mkm:</c>.</p>
+    <exemple><![CDATA[
+<StackPanel Width="280">
+    <TextBlock Text="Référence" Margin="0,0,0,4" />
+    <mkm:InputText Placeholder="ex. HS-1234" Margin="0,0,0,12" />
+    <mkm:Button Content="Enregistrer" Icon="{x:Static mkm:Icons.Download}" HorizontalAlignment="Left" />
+</StackPanel>
+]]></exemple>
+  </section>
+</page>

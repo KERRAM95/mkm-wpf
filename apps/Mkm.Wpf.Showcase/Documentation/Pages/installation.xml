@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="utf-8"?>
+<page titre="Installation" categorie="Pour commencer">
+  <resume>Référencer mkm-wpf, poser MkmResources dans App.xaml, puis écrire les composants avec le préfixe mkm.</resume>
+
+  <section titre="Référencer la bibliothèque">
+    <p>mkm-wpf est une bibliothèque .NET Framework 4.8 (<c>Mkm.Wpf.dll</c>), sans autre dépendance. Une application
+      la référence par son projet, en attendant son paquet NuGet.</p>
+    <code langage="xml"><![CDATA[
+<ItemGroup>
+    <ProjectReference Include="..\mkm-wpf\src\Mkm.Wpf\Mkm.Wpf.vbproj" />
+</ItemGroup>
+]]></code>
+  </section>
+
+  <section titre="Configurer l'application">
+    <p><c>MkmResources</c> se pose une fois dans <c>App.xaml</c> : il apporte le thème (les couleurs, la police, les
+      tailles), les styles de tous les composants et leurs textes. <c>Theme</c> choisit le thème (Dashboard par
+      défaut) ; <c>Language</c> impose une langue, sinon c'est celle de Windows.</p>
+    <code><![CDATA[
+<Application xmlns:mkm="urn:mkm-wpf">
+    <Application.Resources>
+        <ResourceDictionary>
+            <ResourceDictionary.MergedDictionaries>
+                <mkm:MkmResources Theme="Dashboard" />
+            </ResourceDictionary.MergedDictionaries>
+        </ResourceDictionary>
+    </Application.Resources>
+</Application>
+]]></code>
+    <p>Le thème et la langue se changent ensuite pendant que l'application tourne : voir
+      <lien page="theme">Thème</lien> et <lien page="langue">Langue</lien>.</p>
+  </section>
+
+  <section titre="Écrire un composant">
+    <p>L'espace de noms <c>urn:mkm-wpf</c> donne tous les composants, les icônes, le thème et les textes.</p>
+    <code><![CDATA[
+<Window xmlns:mkm="urn:mkm-wpf">
+    <mkm:Button Content="Enregistrer" Icon="{x:Static mkm:Icons.Download}" />
+</Window>
+]]></code>
+    <p>En VB, ils sont dans l'espace de noms <c>Mkm.Wpf.Controls</c>. Attention : VB ne distingue pas les majuscules,
+      et <c>Button</c>, <c>ToggleButton</c>, <c>RadioButton</c> ou <c>Menu</c> de mkm cachent ceux de WPF dès
+      qu'on importe <c>Mkm.Wpf.Controls</c>. Un alias lève le doute.</p>
+    <code langage="vb"><![CDATA[
+Imports BoutonDeMkm = Mkm.Wpf.Controls.Button
+
+Dim enregistrer As New BoutonDeMkm With {.Content = "Enregistrer", .Icon = Icons.Download}
+]]></code>
+  </section>
+</page>

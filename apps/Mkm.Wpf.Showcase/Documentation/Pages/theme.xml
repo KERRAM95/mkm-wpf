@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="utf-8"?>
+<page titre="Thème" categorie="Pour commencer" types="MkmResources ThemeDefinition Themes">
+  <resume>Deux thèmes, ceux de mkm : Dashboard et ARA. Un thème donne aux composants leurs couleurs, leur police et
+    leurs tailles, par des jetons ; il se choisit au démarrage et se change pendant que l'application tourne.</resume>
+
+  <section titre="Les thèmes">
+    <liste>
+      <el><b>Dashboard</b>, le thème par défaut : celui des tableaux de bord de mkm.</el>
+      <el><b>ARA</b> : le même dessin, aux couleurs d'ARA. Les deux thèmes ne diffèrent que par leurs couleurs.</el>
+    </liste>
+    <p>La barre du haut de cette documentation change de thème : toutes les pages le suivent aussitôt.</p>
+  </section>
+
+  <section titre="Choisir le thème">
+    <p>Au démarrage, par <c>MkmResources</c> dans <c>App.xaml</c> :</p>
+    <code><![CDATA[
+<mkm:MkmResources Theme="Ara" />
+]]></code>
+    <p>Pendant que l'application tourne, en VB : tous les composants changent d'apparence, sans redémarrer.</p>
+    <code langage="vb"><![CDATA[
+MkmResources.Current.Theme = "Ara"
+]]></code>
+  </section>
+
+  <section titre="Les jetons">
+    <p>Chaque valeur du thème est un jeton, rangé par composant (<c>button.primary.background</c>) ou commun
+      (<c>primary.color</c>, <c>content.border.color</c>, <c>font.size</c>). Chacun est une ressource WPF de clé
+      <c>mkm.&lt;jeton&gt;</c>, typée : un pinceau pour une couleur, un nombre pour une taille, une marge pour un
+      espacement. Une page de l'application les emploie par <c>DynamicResource</c>, et suit ainsi le thème.</p>
+    <exemple><![CDATA[
+<Border Padding="16" CornerRadius="6" BorderThickness="1"
+        Background="{DynamicResource mkm.content.hover.background}"
+        BorderBrush="{DynamicResource mkm.content.border.color}">
+    <TextBlock Text="Un cadre aux couleurs du thème" Foreground="{DynamicResource mkm.primary.color}" />
+</Border>
+]]></exemple>
+    <p>L'onglet Thème de chaque composant donne ses jetons et leur valeur dans chaque thème.</p>
+  </section>
+
+  <section titre="Ce que le thème ne fait pas">
+    <p>Il n'y a pas de mode sombre : mkm n'en a pas. Les couleurs de maturité (En cours, Validé, Obsolète…) ne sont pas
+      dans le thème : c'est la politique de chaque application, qui les donne aux composants (<c>MaturityColor</c>
+      d'IdCard, <c>Color</c> d'un état du StateGraph).</p>
+  </section>
+</page>

@@ -75,6 +75,19 @@ Namespace Mkm.Wpf.UiTests
             Return contenu
         End Function
 
+        ''' <summary>Ouvre une page neuve de la documentation par son identifiant (« button »), et la rend.</summary>
+        Protected Function OuvrirLaDoc(id As String) As AutomationElement
+            Dim entree = Trouver("nav-doc-" & id).AsListBoxItem()
+            If entree.IsSelected Then
+                Trouver("nav-doc-introduction").AsListBoxItem().Select()
+                Trouver("page-introduction")
+            End If
+            entree.Select()
+            Dim contenu = Trouver("page-" & id)
+            Wait.UntilInputIsProcessed()
+            Return contenu
+        End Function
+
         ' ---- Chercher ----
 
         ''' <summary>L'élément d'identifiant <paramref name="id"/> (son <c>x:Name</c>), attendu jusqu'au délai.</summary>

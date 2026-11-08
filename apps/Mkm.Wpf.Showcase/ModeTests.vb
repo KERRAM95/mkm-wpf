@@ -34,6 +34,8 @@ Namespace Mkm.Wpf.Showcase
                 If File.Exists(_journal) Then File.Delete(_journal)
             End If
             AddHandler application.DispatcherUnhandledException, AddressOf ErreurNonGeree
+            ' Un exemple de la documentation qui ne se lit pas fait échouer le scénario en cours, comme une erreur.
+            Documentation.Signalement.Sortie = Sub(texte) Ecrire(texte)
 
             ' Toute la fenêtre à l'écran, même petit (la CI a un écran de 1024 × 768).
             Dim ecran = SystemParameters.WorkArea
@@ -51,10 +53,14 @@ Namespace Mkm.Wpf.Showcase
 
         ' L'erreur s'écrit, la vitrine continue : le scénario en cours échoue, les suivants s'exécutent.
         Private Sub ErreurNonGeree(sender As Object, e As DispatcherUnhandledExceptionEventArgs)
-            If _journal IsNot Nothing Then
-                File.AppendAllText(_journal, $"{Date.Now:HH:mm:ss.fff} {e.Exception}{Environment.NewLine}{Environment.NewLine}")
-            End If
+            Ecrire(e.Exception.ToString())
             e.Handled = True
+        End Sub
+
+        Private Sub Ecrire(texte As String)
+            If _journal IsNot Nothing Then
+                File.AppendAllText(_journal, $"{Date.Now:HH:mm:ss.fff} {texte}{Environment.NewLine}{Environment.NewLine}")
+            End If
         End Sub
 
     End Module

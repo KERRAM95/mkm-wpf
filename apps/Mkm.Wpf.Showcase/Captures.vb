@@ -41,6 +41,8 @@ Namespace Mkm.Wpf.Showcase
             PresentationTraceSources.Refresh()
             PresentationTraceSources.DataBindingSource.Switch.Level = SourceLevels.Warning
             PresentationTraceSources.DataBindingSource.Listeners.Add(New Ecouteur(c))
+            ' Un exemple de la documentation qui ne se lit pas est une erreur des captures.
+            Documentation.Signalement.Sortie = Sub(texte) c.Noter("ERREUR " & texte)
             Try
                 c.Tout()
             Catch ex As Exception
@@ -79,6 +81,10 @@ Namespace Mkm.Wpf.Showcase
                 MkmResources.Current.Theme = theme.Name
                 For Each p In pages
                     Essayer($"{theme.Name}/{p.Key}", Sub() Enregistrer(Seule(p.Value.Invoke()), $"{theme.Name}/{p.Key}.png"))
+                Next
+                ' Chaque page de la documentation, en entier : ses fonctionnalités, son API et ses jetons à la suite.
+                For Each doc In Documentation.Catalogue.Pages
+                    Essayer($"{theme.Name}/doc-{doc.Id}", Sub() Enregistrer(Seule(New Documentation.PageDeDocumentation(doc, True)), $"{theme.Name}/doc-{doc.Id}.png"))
                 Next
                 Essayer($"{theme.Name}/fenetre", Sub() Fenetre(theme.Name))
                 Essayer($"{theme.Name}/scènes", Sub() Scenes(theme.Name))
@@ -235,7 +241,7 @@ Namespace Mkm.Wpf.Showcase
 
         ' Le menu « … » de la barre étroite de la page des choix, ouvert comme d'un clic sur son bouton.
         Private Sub MenuDeLaBarre(theme As String, fenetre As MainWindow)
-            fenetre.Composants.SelectedItem = fenetre.Composants.Items.OfType(Of ListBoxItem)().First(Function(i) Equals(i.Tag, "Choix"))
+            fenetre.Composants.SelectedItem = fenetre.Entrees.First(Function(e) e.Id = "Choix")
             Attendre(300)
             Dim barre = DirectCast(fenetre.Page.Content, ChoixPage).BarreEtroite
             Dim bouton = DirectCast(barre.Template.FindName("PART_Overflow", barre), System.Windows.Controls.Button)

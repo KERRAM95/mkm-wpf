@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="utf-8"?>
+<page titre="Langue" categorie="Pour commencer" types="Localizer ResxTextSource TextTable">
+  <resume>Les textes de l'application et ceux des composants (« Modifier », « Fermer », « Plus de commandes ») dans la
+    langue choisie, qui se change pendant que l'application tourne.</resume>
+
+  <section titre="Les textes des composants">
+    <p>Les composants ont leurs textes en anglais et en français. Sans réglage, ils prennent la langue de Windows ; la
+      barre du haut de cette documentation la change : le bouton ci-dessous suit.</p>
+    <exemple><![CDATA[
+<mkm:Button Content="{mkm:T locale.save}" />
+<mkm:Button Content="{mkm:T locale.cancel}" Severity="Secondary" />
+]]></exemple>
+  </section>
+
+  <section titre="Choisir la langue">
+    <p>Au démarrage, par <c>MkmResources</c> (<c>Language="fr"</c>), ou en VB, à tout moment :</p>
+    <code langage="vb"><![CDATA[
+Localizer.Current.Language = CultureInfo.GetCultureInfo("fr")
+]]></code>
+    <p><c>Localizer.Current.Languages</c> donne les langues que proposent les textes chargés : de quoi bâtir un
+      sélecteur de langue.</p>
+  </section>
+
+  <section titre="Les textes de l'application">
+    <p>L'application ajoute ses propres textes : un fichier <c>.resx</c> par langue (<c>Textes.resx</c>,
+      <c>Textes.fr.resx</c>), donnés au <c>Localizer</c> au démarrage. En XAML, <c>{mkm:T clé}</c> lie un texte, qui
+      change avec la langue ; en VB, <c>Localizer.Current.T(clé, paramètres)</c>.</p>
+    <code langage="vb"><![CDATA[
+Dim textes As New ResourceManager("Textes", GetType(Application).Assembly)
+Localizer.Current.AddSource(New ResxTextSource(textes, "en", "fr"))
+]]></code>
+    <code><![CDATA[
+<TextBlock Text="{mkm:T plan.title}" />
+]]></code>
+    <p>Une clé absente d'une langue prend le texte anglais ; absente partout, elle s'affiche telle quelle.</p>
+  </section>
+</page>

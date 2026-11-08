@@ -33,7 +33,7 @@ Namespace Mkm.Wpf.UiTests
         Public Shared ReadOnly Property Racine As String
             Get
                 If _racine Is Nothing Then
-                    Dim dossier = New DirectoryInfo(TestContext.CurrentContext.TestDirectory)
+                    Dim dossier = New DirectoryInfo(Path.GetDirectoryName(GetType(Vitrine).Assembly.Location))
                     While dossier IsNot Nothing AndAlso Not File.Exists(Path.Combine(dossier.FullName, "Mkm.Wpf.sln"))
                         dossier = dossier.Parent
                     End While

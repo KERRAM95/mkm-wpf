@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="utf-8"?>
+<page titre="Toast" categorie="Messages" types="Toast ToastMessage ToastPosition MessageSeverity" jetons="toast">
+  <resume>Toast montre des notifications par-dessus la fenêtre, en haut à droite : un titre, un détail, une icône
+    de gravité. Elles se ferment seules au bout de leur durée de vie, ou par leur croix.</resume>
+
+  <section titre="Import">
+    <p>Le Toast se pose une fois, au-dessus du contenu de la fenêtre : la dernière couche d'une <c>Grid</c>, qui
+      couvre toute la fenêtre. L'application lui ajoute ses notifications par son nom.</p>
+    <code><![CDATA[
+<Window xmlns:mkm="urn:mkm-wpf">
+    <Grid>
+        <!-- Le contenu de la fenêtre. -->
+        <DockPanel />
+        <!-- Les notifications, au-dessus de tout. -->
+        <mkm:Toast x:Name="Notifications" />
+    </Grid>
+</Window>
+]]></code>
+  </section>
+
+  <section titre="Basique">
+    <p><c>Add</c> ajoute une notification : sa gravité, son titre, son détail et sa durée de vie. Elle paraît en
+      relief une seconde, puis s'efface en fondu à la fin de sa vie.</p>
+    <exemple comportement="ToastBasique"><![CDATA[
+<mkm:Button x:Name="Notifier" Content="Ouvrir le plan" />
+]]></exemple>
+  </section>
+
+  <section titre="Gravité">
+    <p>La gravité (<c>MessageSeverity</c>) donne la couleur et l'icône : <c>Info</c>, <c>Success</c>, <c>Warn</c>,
+      <c>Error</c>, <c>Secondary</c> ou <c>Contrast</c>.</p>
+    <exemple comportement="ToastGravites"><![CDATA[
+<mkm:Button Content="Info" Severity="Info" Tag="Info" />
+<mkm:Button Content="Success" Severity="Success" Tag="Success" />
+<mkm:Button Content="Warn" Severity="Warn" Tag="Warn" />
+<mkm:Button Content="Error" Severity="Danger" Tag="Error" />
+]]></exemple>
+  </section>
+
+  <section titre="Jusqu'à sa croix">
+    <p>Sans durée de vie, la notification reste jusqu'à ce que l'utilisateur la ferme. <c>RemoveAll</c> les ferme
+      toutes.</p>
+    <exemple comportement="ToastDurable"><![CDATA[
+<mkm:Button x:Name="Durable" Content="Notification durable" Severity="Secondary" />
+<mkm:Button x:Name="ToutFermer" Content="Tout fermer" Severity="Secondary" Variant="Outlined" />
+]]></exemple>
+  </section>
+
+  <section titre="Position et durées">
+    <p><c>Position</c> place les notifications dans un coin de la fenêtre ou au milieu d'un bord.
+      <c>HighlightDuration</c> règle le temps du relief, <c>FadeOutDuration</c> celui du fondu ; survolée, une
+      notification attend que la souris la quitte (<c>LifeOnLeave</c>).</p>
+    <code><![CDATA[
+<mkm:Toast x:Name="Notifications" Position="BottomRight" HighlightDuration="0:0:1" FadeOutDuration="0:0:1" />
+]]></code>
+  </section>
+
+  <section titre="Accessibilité">
+    <h3>Lecteur d'écran</h3>
+    <p>Chaque notification est une région « vivante » : Narrateur l'annonce dès qu'elle paraît, sans que le clavier la
+      quitte (<c>AutomationProperties.LiveSetting</c> à <c>Assertive</c>, comme le rôle <c>alert</c> de mkm). Sa croix
+      se nomme « Fermer ».</p>
+    <h3>Clavier</h3>
+    <touches>
+      <touche nom="Tab">Amène le clavier sur la croix d'une notification.</touche>
+      <touche nom="Entrée">Ferme la notification, sa croix ayant le clavier.</touche>
+      <touche nom="Espace">Ferme la notification, sa croix ayant le clavier.</touche>
+    </touches>
+  </section>
+</page>

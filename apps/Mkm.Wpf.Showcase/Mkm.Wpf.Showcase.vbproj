@@ -12,4 +12,11 @@
     <ProjectReference Include="..\..\src\Mkm.Wpf\Mkm.Wpf.vbproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <!-- Les pages de la documentation (une par composant), lues au démarrage : doc/<id>.xml. -->
+    <EmbeddedResource Include="Documentation\Pages\*.xml" LogicalName="doc/%(Filename)%(Extension)" />
+    <!-- Le code des comportements d'exemple, compilé, et embarqué aussi pour être montré : comportement/<nom>.vb. -->
+    <EmbeddedResource Include="Documentation\Exemples\*.vb" LogicalName="comportement/%(Filename)%(Extension)" />
+  </ItemGroup>
+
 </Project>

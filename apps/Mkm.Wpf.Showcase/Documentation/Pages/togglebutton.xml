@@ -1,0 +1,75 @@
+<?xml version="1.0" encoding="utf-8"?>
+<page titre="ToggleButton" categorie="Formulaire" types="ToggleButton ToggleButtonSize" jetons="togglebutton">
+  <resume>Un bouton à bascule : enfoncé ou relâché à chaque clic, comme une case à cocher en forme de bouton. Son
+    libellé et son icône peuvent changer avec son état.</resume>
+
+  <section titre="Import">
+    <code><![CDATA[
+<Window xmlns:mkm="urn:mkm-wpf">
+    <mkm:ToggleButton Content="Verrouiller" />
+</Window>
+]]></code>
+  </section>
+
+  <section titre="Basique">
+    <p><c>IsChecked</c> dit s'il est enfoncé ; il change à chaque clic, et se lie à la propriété d'un modèle.</p>
+    <exemple><![CDATA[
+<mkm:ToggleButton Content="Afficher les cotes" />
+]]></exemple>
+  </section>
+
+  <section titre="Libellés et icônes d'état">
+    <p><c>OnLabel</c> et <c>OffLabel</c> donnent le libellé enfoncé et relâché, <c>OnIcon</c> et <c>OffIcon</c>
+      l'icône. Sans <c>OffIcon</c>, l'icône reste la même.</p>
+    <exemple><![CDATA[
+<mkm:ToggleButton OnLabel="Verrouillé" OffLabel="Déverrouillé"
+                  OnIcon="{x:Static mkm:Icons.Locked}" OffIcon="{x:Static mkm:Icons.Unlocked}" />
+]]></exemple>
+  </section>
+
+  <section titre="Icône seule">
+    <p>Sans libellé, le bouton est carré autour de son icône ; son info-bulle le nomme.</p>
+    <exemple><![CDATA[
+<mkm:ToggleButton OnIcon="{x:Static mkm:Icons.Pin}" ToolTip="Épingler" />
+<mkm:ToggleButton OnIcon="{x:Static mkm:Icons.Pin}" ToolTip="Épingler" IsChecked="True" />
+]]></exemple>
+  </section>
+
+  <section titre="Tailles">
+    <p><c>Size</c> : <c>Small</c>, <c>Normal</c> (par défaut) ou <c>Large</c>.</p>
+    <exemple><![CDATA[
+<mkm:ToggleButton Size="Small" Content="Small" OnIcon="{x:Static mkm:Icons.Check}" IsChecked="True" />
+<mkm:ToggleButton Content="Normal" OnIcon="{x:Static mkm:Icons.Check}" IsChecked="True" />
+<mkm:ToggleButton Size="Large" Content="Large" OnIcon="{x:Static mkm:Icons.Check}" IsChecked="True" />
+]]></exemple>
+  </section>
+
+  <section titre="Invalide">
+    <p><c>Invalid</c> le borde de la couleur des erreurs, quand le choix est obligatoire et manque.</p>
+    <exemple><![CDATA[
+<mkm:ToggleButton Content="Validé par le chef de projet" Invalid="True" />
+]]></exemple>
+  </section>
+
+  <section titre="Grisé">
+    <exemple><![CDATA[
+<mkm:ToggleButton Content="Enfoncé" IsChecked="True" IsEnabled="False" />
+<mkm:ToggleButton Content="Relâché" IsEnabled="False" />
+]]></exemple>
+  </section>
+
+  <section titre="Accessibilité">
+    <h3>Lecteur d'écran</h3>
+    <p>Narrateur le dit « bouton bascule », enfoncé ou non. Son nom est son libellé d'état (OnLabel ou OffLabel),
+      sinon son contenu, sinon son info-bulle. Comme le libellé change avec l'état, un nom fixe est souvent plus clair :
+      <c>AutomationProperties.Name</c>.</p>
+    <code><![CDATA[
+<mkm:ToggleButton OnLabel="Verrouillé" OffLabel="Déverrouillé" AutomationProperties.Name="Verrou du plan" />
+]]></code>
+    <h3>Clavier</h3>
+    <touches>
+      <touche nom="Tab">Amène le clavier sur le bouton.</touche>
+      <touche nom="Espace">Enfonce ou relâche le bouton.</touche>
+    </touches>
+  </section>
+</page>
