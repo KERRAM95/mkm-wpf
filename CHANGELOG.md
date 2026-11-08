@@ -324,7 +324,8 @@ Les évolutions notables de mkm-wpf, version par version. Le format suit
   - Card : un titre ou un sous-titre vides (liés à une chaîne vide)
     disparaissent, comme la page le disait.
   - Splitter : imbriqué dans un panneau d'un autre séparateur, sans bordure,
-    comme mkm.
+    comme mkm (IsNested) ; calculé par le séparateur, sans liaison à un
+    ancêtre qui écrivait une erreur de liaison pour chaque séparateur seul.
   - Divider : tirets (3 sur 2) et pointillés (1 sur 1) nets, au pas de mkm.
   - Tree : la flèche d'un nœud choisi prend sa couleur, et celle du survol
     choisi de mkm.

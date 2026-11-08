@@ -50,6 +50,12 @@ Namespace Mkm.Wpf.Controls
         Public Shared ReadOnly StepProperty As DependencyProperty = DependencyProperty.Register(
             NameOf([Step]), GetType(Double), GetType(Splitter), New FrameworkPropertyMetadata(5.0))
 
+        Private Shared ReadOnly IsNestedPropertyKey As DependencyPropertyKey = DependencyProperty.RegisterReadOnly(
+            NameOf(IsNested), GetType(Boolean), GetType(Splitter), New FrameworkPropertyMetadata(False))
+
+        ''' <summary>Vrai quand le séparateur est dans un panneau d'un autre séparateur : il n'a pas de bordure (mkm).</summary>
+        Public Shared ReadOnly IsNestedProperty As DependencyProperty = IsNestedPropertyKey.DependencyProperty
+
         Private ReadOnly _panneaux As New ObservableCollection(Of SplitterPanel)
         Private _disposition As SplitterLayout
 
@@ -64,6 +70,33 @@ Namespace Mkm.Wpf.Controls
         ''' <summary>Un séparateur sans panneau.</summary>
         Public Sub New()
             AddHandler _panneaux.CollectionChanged, AddressOf OnPanneauxChanged
+            AddHandler Loaded, Sub() Situer()
+        End Sub
+
+        ''' <summary>Vrai quand le séparateur est dans un panneau d'un autre séparateur : il n'a pas de bordure (mkm).</summary>
+        Public ReadOnly Property IsNested As Boolean
+            Get
+                Return CBool(GetValue(IsNestedProperty))
+            End Get
+        End Property
+
+        ''' <inheritdoc/>
+        Protected Overrides Sub OnVisualParentChanged(oldParent As DependencyObject)
+            MyBase.OnVisualParentChanged(oldParent)
+            Situer()
+        End Sub
+
+        ' Imbriqué : un SplitterPanel parmi ses ancêtres (dessin, sinon arbre logique). Calculé ici plutôt que lié dans le
+        ' style : une liaison à un ancêtre absent écrivait une erreur de liaison pour chaque séparateur non imbriqué.
+        Private Sub Situer()
+            Dim parent As DependencyObject = Me
+            Dim imbrique = False
+            Do
+                Dim suivant = If(TypeOf parent Is System.Windows.Media.Visual, System.Windows.Media.VisualTreeHelper.GetParent(parent), Nothing)
+                parent = If(suivant, LogicalTreeHelper.GetParent(parent))
+                If TypeOf parent Is SplitterPanel Then imbrique = True
+            Loop Until parent Is Nothing OrElse imbrique
+            SetValue(IsNestedPropertyKey, imbrique)
         End Sub
 
         ''' <summary>Les panneaux, dans l'ordre.</summary>

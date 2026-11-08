@@ -82,9 +82,9 @@
         </Setter>
         <Style.Triggers>
             <!-- Imbriqué dans un panneau d'un autre séparateur : sans bordure, comme mkm (.p-splitterpanel .p-splitter). -->
-            <DataTrigger Binding="{Binding RelativeSource={RelativeSource AncestorType={x:Type local:SplitterPanel}}, Converter={x:Static local:EstPresent.Instance}}" Value="True">
+            <Trigger Property="IsNested" Value="True">
                 <Setter Property="BorderThickness" Value="0" />
-            </DataTrigger>
+            </Trigger>
         </Style.Triggers>
     </Style>
 

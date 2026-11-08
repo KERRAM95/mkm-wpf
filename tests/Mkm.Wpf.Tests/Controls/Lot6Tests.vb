@@ -76,6 +76,20 @@ Namespace Mkm.Wpf.Tests.Controls
         End Function
 
         <Test>
+        Public Sub Splitter_ImbriqueSansBordure()
+            Dim dedans = Separateur(Double.NaN, Double.NaN)
+            dedans.Orientation = Orientation.Vertical
+            Dim dehors As New Splitter()
+            dehors.Panels.Add(New SplitterPanel With {.Content = New TextBlock With {.Text = "Panneau"}})
+            dehors.Panels.Add(New SplitterPanel With {.Content = dedans})
+            Pret(dehors, largeur:=406)
+            Assert.That(dehors.IsNested, [Is].False)
+            Assert.That(dehors.BorderThickness, [Is].Not.EqualTo(New Thickness(0)), "le séparateur extérieur garde sa bordure")
+            Assert.That(dedans.IsNested, [Is].True)
+            Assert.That(dedans.BorderThickness, [Is].EqualTo(New Thickness(0)), "imbriqué, sans bordure")
+        End Sub
+
+        <Test>
         Public Sub Splitter_LesPartsEtLesGouttieres()
             Dim s = Pret(Separateur(Double.NaN, Double.NaN), largeur:=406)
             Dim disposition = Partie(Of SplitterLayout)(s, "PART_Layout")
