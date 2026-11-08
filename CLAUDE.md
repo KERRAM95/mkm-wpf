@@ -326,6 +326,29 @@ l'anglais en repli (voir « Thème et langue »).
   contenu à sa largeur visible ; un `HorizontalAlignment="Center"` suffit à
   centrer.
 
+**L'accessibilité (UI Automation)**, relevée par les tests d'interaction :
+
+- **Un `Control`, un `ContentControl` ou un `Panel` n'a pas de pair
+  d'automatisation** : invisible aux lecteurs d'écran (et aux tests), son
+  `x:Name` et son `AutomationProperties.LiveSetting` avec lui. Tout contrôle de
+  mkm-wpf en a un (`PairDeConteneur` et ses rôles).
+- **Le pair d'un `ItemsControl` ne montre que ses éléments**, pas le reste de
+  son gabarit (les boutons de l'ActionBar, le « … » de la Toolbar) :
+  `PairDeConteneur` montre tout l'arbre visuel, et traverse les `ItemsControl`
+  simples d'un gabarit.
+- **Le pair du `DataGrid` est scellé** (`DataGridAutomationPeer`) : rien du
+  gabarit d'un DataTable hors titres et lignes n'y paraît (Header, Footer,
+  voile). Ce qui doit être lu passe par une propriété du tableau lui-même
+  (`ItemStatus` pendant un chargement).
+- **Une ligne de données se nomme par `ToString`** : sans lui, Narrateur lit le
+  nom de la classe.
+- **Un bouton sans libellé se nomme** : par `AutomationProperties.Name`, ou son
+  info-bulle (`PairDeBouton`). Un nom qui dépend d'un état se lie en code
+  (`MultiBinding`) : posé par un déclencheur du gabarit, il restait vide quand
+  l'état était vrai dès le départ.
+- **Une bascule qui replie se dit « développé / réduit »** (`ExpandCollapse`),
+  non « activée » : la légende du Fieldset.
+
 ## Vérifier
 
 **Sous Windows (référence)** : ouvrir `Mkm.Wpf.sln` dans Visual Studio 2022,
