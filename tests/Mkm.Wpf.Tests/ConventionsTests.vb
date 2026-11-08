@@ -300,6 +300,25 @@ Namespace Mkm.Wpf.Tests
             Assert.That(fautifs, [Is].Empty)
         End Sub
 
+        ''' <summary>
+        ''' Une partie de gabarit (une classe interne) n'hérite d'un contrôle de mkm que voulu : dans l'espace de noms des
+        ''' contrôles, « ToggleButton » est celui de mkm, et non celui de WPF. L'en-tête de l'accordéon et la légende du
+        ''' Fieldset en prenaient le style (24 px de haut, 12 px, son fond enfoncé) sous le leur.
+        ''' </summary>
+        <Test>
+        Public Sub ChaquePartieInterne_NHeriteDUnControleDeMkmQueVoulu()
+            Dim voulues As New HashSet(Of String) From {"ChevronDeSplitButton"}
+            Dim bibliotheque = Assembly.Load("Mkm.Wpf")
+            Dim fautifs = bibliotheque.GetTypes().
+                Where(Function(t) Not t.IsVisible AndAlso GetType(Control).IsAssignableFrom(t)).
+                Where(Function(t) t.BaseType IsNot Nothing AndAlso t.BaseType.Assembly Is bibliotheque AndAlso t.BaseType.IsPublic).
+                Where(Function(t) Not voulues.Contains(t.Name)).
+                Select(Function(t) $"{t.Name} hérite de {t.BaseType.FullName}").
+                ToList()
+
+            Assert.That(fautifs, [Is].Empty)
+        End Sub
+
         ' Le dossier de la bibliothèque dans les sources, en remontant depuis les tests ; Nothing hors du dépôt.
         Private Shared Function DossierDeLaBibliotheque() As String
             Dim dossier = New DirectoryInfo(TestContext.CurrentContext.TestDirectory)

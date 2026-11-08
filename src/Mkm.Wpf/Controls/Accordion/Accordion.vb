@@ -204,7 +204,7 @@ Namespace Mkm.Wpf.Controls
     ''' d'écran le disent « développé » ou « réduit » (ExpandCollapse), comme <c>aria-expanded</c> dans mkm.
     ''' </summary>
     Friend NotInheritable Class EnTeteDAccordeon
-        Inherits ToggleButton
+        Inherits System.Windows.Controls.Primitives.ToggleButton
 
         Protected Overrides Function OnCreateAutomationPeer() As AutomationPeer
             Return New PairDEnTete(Me)

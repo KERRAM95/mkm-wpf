@@ -12,7 +12,7 @@ Namespace Mkm.Wpf.Controls
     ''' quand le groupe est replié.
     ''' </summary>
     Friend NotInheritable Class FieldsetToggle
-        Inherits ToggleButton
+        Inherits System.Windows.Controls.Primitives.ToggleButton
 
         ''' <inheritdoc/>
         Protected Overrides Function OnCreateAutomationPeer() As AutomationPeer

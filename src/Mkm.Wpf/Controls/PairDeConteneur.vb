@@ -28,11 +28,15 @@ Namespace Mkm.Wpf.Controls
             _nom = nom
         End Sub
 
-        ''' <inheritdoc/>
+        ''' <summary>
+        ''' Le nom posé (AutomationProperties.Name, LabeledBy), sinon celui que donne le contrôle (son titre), et seulement
+        ''' ensuite le texte de son contenu : celui d'une carte nommait la carte.
+        ''' </summary>
         Protected Overrides Function GetNameCore() As String
-            Dim nom = MyBase.GetNameCore()
-            If String.IsNullOrEmpty(nom) AndAlso _nom IsNot Nothing Then nom = If(_nom(), String.Empty)
-            Return nom
+            Dim nom = AutomationProperties.GetName(Owner)
+            If String.IsNullOrEmpty(nom) Then nom = GetLabeledByCore()?.GetName()
+            If String.IsNullOrEmpty(nom) AndAlso _nom IsNot Nothing Then nom = _nom()
+            Return If(String.IsNullOrEmpty(nom), MyBase.GetNameCore(), nom)
         End Function
 
         ''' <inheritdoc/>
