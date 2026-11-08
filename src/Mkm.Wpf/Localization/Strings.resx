@@ -84,4 +84,19 @@
   <data name="aria.expand" xml:space="preserve">
     <value>Expand</value>
   </data>
+  <data name="locale.emptyMessage" xml:space="preserve">
+    <value>No available options</value>
+  </data>
+  <data name="locale.emptyFilterMessage" xml:space="preserve">
+    <value>No results found</value>
+  </data>
+  <data name="locale.selectionMessage" xml:space="preserve">
+    <value>{0} items selected</value>
+  </data>
+  <data name="aria.selectAll" xml:space="preserve">
+    <value>Select all</value>
+  </data>
+  <data name="aria.filter" xml:space="preserve">
+    <value>Filter</value>
+  </data>
 </root>

@@ -40,6 +40,7 @@
         <Setter Property="Foreground" Value="{DynamicResource mkm.chip.color}" />
         <Setter Property="Background" Value="{DynamicResource mkm.chip.background}" />
         <Setter Property="Padding" Value="{DynamicResource mkm.chip.padding}" />
+        <Setter Property="CornerRadius" Value="{DynamicResource mkm.chip.border.radius}" />
         <Setter Property="HorizontalAlignment" Value="Left" />
         <Setter Property="VerticalAlignment" Value="Center" />
         <Setter Property="SnapsToDevicePixels" Value="True" />
@@ -47,7 +48,7 @@
             <Setter.Value>
                 <ControlTemplate TargetType="{x:Type local:Chip}">
                     <Border Background="{TemplateBinding Background}" Padding="{TemplateBinding Padding}"
-                            CornerRadius="{DynamicResource mkm.chip.border.radius}">
+                            CornerRadius="{TemplateBinding CornerRadius}">
                         <local:GapStackPanel Orientation="Horizontal" Gap="{DynamicResource mkm.chip.gap}">
                             <Ellipse x:Name="Photo" Visibility="Collapsed" VerticalAlignment="Center"
                                      Margin="{DynamicResource mkm.chip.image.margin}"

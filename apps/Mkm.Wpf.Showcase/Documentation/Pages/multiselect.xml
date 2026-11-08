@@ -1,0 +1,96 @@
+<?xml version="1.0" encoding="utf-8"?>
+<page titre="MultiSelect" categorie="Formulaire" types="MultiSelect MultiSelectDisplay" jetons="multiselect">
+  <resume>Une liste déroulante à choix multiples : le champ montre les choix, la liste s'ouvre dessous, une case devant
+    chaque option.</resume>
+
+  <section titre="Import">
+    <code><![CDATA[
+<Window xmlns:mkm="urn:mkm-wpf">
+    <mkm:MultiSelect Placeholder="Maturités">
+        <ListBoxItem Content="Private" />
+    </mkm:MultiSelect>
+</Window>
+]]></code>
+  </section>
+
+  <section titre="Basique">
+    <p>MultiSelect est un <lien page="listbox">Listbox</lien> dont la liste s'ouvre sous un champ : ses options sont ses
+      éléments, ou une liste donnée par <c>ItemsSource</c> ; <c>SelectedItems</c> sont les choix. Le champ montre leurs
+      textes, séparés de virgules, dans l'ordre où ils ont été faits ; <c>Placeholder</c>, tant que rien n'est choisi.
+      La case en tête de la liste choisit tout, ou retire tout.</p>
+    <exemple><![CDATA[
+<mkm:MultiSelect x:Name="Maturites" Placeholder="Maturités" Width="260">
+    <ListBoxItem Content="Private" />
+    <ListBoxItem Content="In Work" />
+    <ListBoxItem Content="Frozen" />
+    <ListBoxItem Content="Released" />
+</mkm:MultiSelect>
+]]></exemple>
+  </section>
+
+  <section titre="Puces">
+    <p><c>Display="Chip"</c> montre chaque choix en <lien page="chip">Chip</lien> : sa croix le retire.</p>
+    <exemple><![CDATA[
+<mkm:MultiSelect Display="Chip" Placeholder="Types de documents" Width="320">
+    <ListBoxItem Content="Plans" IsSelected="True" />
+    <ListBoxItem Content="Pièces" IsSelected="True" />
+    <ListBoxItem Content="Assemblages" />
+    <ListBoxItem Content="Notices" />
+</mkm:MultiSelect>
+]]></exemple>
+  </section>
+
+  <section titre="Nombre de choix">
+    <p>Au-delà de <c>MaxSelectedLabels</c> choix, le champ les compte (« 3 éléments sélectionnés »).</p>
+    <exemple><![CDATA[
+<mkm:MultiSelect MaxSelectedLabels="2" Placeholder="Propriétaires" Width="260">
+    <ListBoxItem Content="M. Kerram" IsSelected="True" />
+    <ListBoxItem Content="J. Durand" IsSelected="True" />
+    <ListBoxItem Content="A. Martin" IsSelected="True" />
+    <ListBoxItem Content="L. Petit" />
+</mkm:MultiSelect>
+]]></exemple>
+  </section>
+
+  <section titre="Filtre">
+    <p><c>Filter</c> pose un champ de filtre en tête de la liste, comme celui du Listbox ; la case « tout
+      sélectionner » choisit alors les options montrées. <c>ShowToggleAll="False"</c> retire cette case.</p>
+    <exemple><![CDATA[
+<mkm:MultiSelect Filter="True" FilterPlaceholder="Filtrer" Placeholder="Références" Width="260">
+    <ListBoxItem Content="HS-00041" />
+    <ListBoxItem Content="HS-00042" />
+    <ListBoxItem Content="HS-00051" />
+    <ListBoxItem Content="HS-00052" />
+</mkm:MultiSelect>
+]]></exemple>
+  </section>
+
+  <section titre="Désactivé et refusé">
+    <p><c>IsEnabled="False"</c> grise le champ ; <c>Invalid</c> le borde de rouge.</p>
+    <exemple><![CDATA[
+<StackPanel Orientation="Horizontal">
+    <mkm:MultiSelect IsEnabled="False" Placeholder="Maturités" Width="200" Margin="0,0,12,0">
+        <ListBoxItem Content="Private" />
+    </mkm:MultiSelect>
+    <mkm:MultiSelect Invalid="True" Placeholder="Maturités" Width="200">
+        <ListBoxItem Content="Private" />
+    </mkm:MultiSelect>
+</StackPanel>
+]]></exemple>
+  </section>
+
+  <section titre="Accessibilité">
+    <h3>Lecteur d'écran</h3>
+    <p>Narrateur dit le MultiSelect « zone de liste déroulante », nommé par <c>AutomationProperties.Name</c>, sinon par
+      son texte d'aide ; sa valeur est le texte du champ, et il se dit « développé » ou « réduit ». Ses options sont des
+      éléments de liste, sélectionnés ou non ; la case de tête se nomme « Tout sélectionner ».</p>
+    <h3>Clavier</h3>
+    <touches>
+      <touche nom="Flèche bas">Ouvre la liste, le clavier sur le premier choix ; ouverte, passe à l'option suivante.</touche>
+      <touche nom="Entrée">Ouvre la liste.</touche>
+      <touche nom="Espace">Ouvre la liste ; ouverte, ajoute ou retire l'option.</touche>
+      <touche nom="Échap">Referme la liste ; le clavier revient au champ.</touche>
+      <touche nom="Tab">Referme la liste et passe à l'élément suivant.</touche>
+    </touches>
+  </section>
+</page>

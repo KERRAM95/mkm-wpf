@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="utf-8"?>
+<page titre="AutoComplete" categorie="Formulaire" types="AutoComplete AutoCompleteEventArgs" jetons="autocomplete">
+  <resume>Un champ qui propose des suggestions pendant la frappe : l'application les cherche, le champ les montre
+    dessous, on en choisit une au clavier ou à la souris.</resume>
+
+  <section titre="Import">
+    <code><![CDATA[
+<Window xmlns:mkm="urn:mkm-wpf">
+    <mkm:AutoComplete Complete="Reference_Complete" />
+</Window>
+]]></code>
+  </section>
+
+  <section titre="Basique">
+    <p>Pendant la frappe, après <c>Delay</c> millisecondes (300) et <c>MinLength</c> caractères (1), le champ lève
+      <c>Complete</c> : l'application cherche les suggestions du texte (<c>e.Query</c>) et les pose dans
+      <c>Suggestions</c>. La liste s'ouvre dessous ; ↓ et ↑ la parcourent, Entrée ou un clic choisissent :
+      <c>SelectedItem</c>, puis <c>ItemSelect</c>. Rien ne répond : « Aucun résultat ».</p>
+    <exemple comportement="AutoCompleteReferences" etendu="oui"><![CDATA[
+<mkm:AutoComplete x:Name="Reference" Placeholder="Référence (HS-…)" Width="260" />
+<TextBlock x:Name="Journal" Foreground="{DynamicResource mkm.text.muted.color}" Text="Cherchez une référence." />
+]]></exemple>
+  </section>
+
+  <section titre="Bouton">
+    <p><c>Dropdown</c> accole un bouton à droite du champ : il demande toutes les suggestions (<c>e.Query</c> est vide).
+      Alt+↓ fait de même au clavier.</p>
+    <exemple comportement="AutoCompleteReferences"><![CDATA[
+<mkm:AutoComplete x:Name="Maturite" Dropdown="True" Placeholder="Maturité" Width="260" />
+]]></exemple>
+  </section>
+
+  <section titre="Objets">
+    <p>Des suggestions qui sont des objets : <c>DisplayMemberPath</c> nomme la propriété qui les montre, et qui va dans
+      le champ quand on en choisit une.</p>
+    <code langage="vb"><![CDATA[
+Private Sub Piece_Complete(sender As Object, e As AutoCompleteEventArgs)
+    Piece.Suggestions = Pieces.Where(Function(p) p.Designation.Contains(e.Query)).ToList()
+End Sub
+]]></code>
+    <code><![CDATA[
+<mkm:AutoComplete x:Name="Piece" DisplayMemberPath="Designation" Complete="Piece_Complete" />
+]]></code>
+  </section>
+
+  <section titre="Accessibilité">
+    <h3>Lecteur d'écran</h3>
+    <p>Le champ est une <lien page="inputtext">InputText</lien> : Narrateur le dit « modifier », nommé par son libellé,
+      sinon par son texte d'aide. Les suggestions sont une liste à part, que le clavier parcourt sans quitter le champ.</p>
+    <h3>Clavier</h3>
+    <touches>
+      <touche nom="Flèche bas">Surligne la suggestion suivante.</touche>
+      <touche nom="Flèche haut">Surligne la suggestion précédente.</touche>
+      <touche nom="Entrée">Choisit la suggestion surlignée.</touche>
+      <touche nom="Tab">Choisit la suggestion surlignée et passe à l'élément suivant.</touche>
+      <touche nom="Échap">Referme les suggestions.</touche>
+      <touche nom="Alt+Flèche bas">Avec le bouton, demande toutes les suggestions.</touche>
+    </touches>
+  </section>
+</page>

@@ -1,0 +1,177 @@
+<!--
+    Le style d'AutoComplete, sur le champ à suggestions de mkm (styles/autocomplete) : son champ est une InputText de
+    mkm (le preset dashboard la dessine : 24 px, bordée de gris, bleue au clavier) ; les suggestions s'ouvrent dessous,
+    aussi larges que le champ au moins, dans un cadre ombré, 5 px sur 8 de retrait, grisée sous le pointeur et au
+    clavier ; « Aucun résultat » quand rien ne répond. Le bouton (dropdown) : 30 px, accolé à droite, gris, le chevron.
+-->
+<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+                    xmlns:local="clr-namespace:Mkm.Wpf.Controls"
+                    xmlns:loc="clr-namespace:Mkm.Wpf.Localization">
+
+    <!-- Une suggestion : elle ne prend pas le clavier, qui reste au champ ; surlignée au pointeur et aux flèches. -->
+    <Style x:Key="mkm.AutoComplete.Option" TargetType="{x:Type ListBoxItem}">
+        <Setter Property="Focusable" Value="False" />
+        <Setter Property="Padding" Value="{DynamicResource mkm.autocomplete.option.padding}" />
+        <Setter Property="Foreground" Value="{DynamicResource mkm.autocomplete.option.color}" />
+        <Setter Property="Background" Value="Transparent" />
+        <Setter Property="Cursor" Value="Hand" />
+        <Setter Property="SnapsToDevicePixels" Value="True" />
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="{x:Type ListBoxItem}">
+                    <Border Background="{TemplateBinding Background}" Padding="{TemplateBinding Padding}"
+                            CornerRadius="{DynamicResource mkm.autocomplete.option.border.radius}">
+                        <ContentPresenter VerticalAlignment="Center" />
+                    </Border>
+                    <ControlTemplate.Triggers>
+                        <Trigger Property="IsMouseOver" Value="True">
+                            <Setter Property="Background" Value="{DynamicResource mkm.autocomplete.option.focus.background}" />
+                            <Setter Property="Foreground" Value="{DynamicResource mkm.autocomplete.option.focus.color}" />
+                        </Trigger>
+                        <Trigger Property="IsSelected" Value="True">
+                            <Setter Property="Background" Value="{DynamicResource mkm.autocomplete.option.focus.background}" />
+                            <Setter Property="Foreground" Value="{DynamicResource mkm.autocomplete.option.focus.color}" />
+                        </Trigger>
+                    </ControlTemplate.Triggers>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+
+    <!-- Le bouton accolé : gris, plus foncé au survol et enfoncé, le chevron au milieu. -->
+    <Style x:Key="mkm.AutoComplete.Bouton" TargetType="{x:Type ButtonBase}">
+        <Setter Property="Focusable" Value="False" />
+        <Setter Property="Cursor" Value="Hand" />
+        <Setter Property="Width" Value="{DynamicResource mkm.autocomplete.dropdown.width}" />
+        <Setter Property="Background" Value="{DynamicResource mkm.autocomplete.dropdown.background}" />
+        <Setter Property="BorderBrush" Value="{DynamicResource mkm.autocomplete.dropdown.border.color}" />
+        <Setter Property="Foreground" Value="{DynamicResource mkm.autocomplete.dropdown.color}" />
+        <Setter Property="BorderThickness" Value="{DynamicResource mkm.autocomplete.dropdown.border.width}" />
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="{x:Type ButtonBase}">
+                    <Border x:Name="Fond" Background="{TemplateBinding Background}" BorderBrush="{TemplateBinding BorderBrush}"
+                            BorderThickness="{TemplateBinding BorderThickness}"
+                            CornerRadius="{DynamicResource mkm.autocomplete.dropdown.corner.radius}">
+                        <local:Icon Source="{x:Static local:InternalIcons.ChevronDown}" HorizontalAlignment="Center" VerticalAlignment="Center"
+                                    Width="{DynamicResource mkm.icon.size}" Height="{DynamicResource mkm.icon.size}" />
+                    </Border>
+                    <ControlTemplate.Triggers>
+                        <Trigger Property="IsMouseOver" Value="True">
+                            <Setter Property="Background" Value="{DynamicResource mkm.autocomplete.dropdown.hover.background}" />
+                            <Setter Property="BorderBrush" Value="{DynamicResource mkm.autocomplete.dropdown.hover.border.color}" />
+                            <Setter Property="Foreground" Value="{DynamicResource mkm.autocomplete.dropdown.hover.color}" />
+                        </Trigger>
+                        <Trigger Property="IsPressed" Value="True">
+                            <Setter Property="Background" Value="{DynamicResource mkm.autocomplete.dropdown.active.background}" />
+                            <Setter Property="BorderBrush" Value="{DynamicResource mkm.autocomplete.dropdown.active.border.color}" />
+                            <Setter Property="Foreground" Value="{DynamicResource mkm.autocomplete.dropdown.active.color}" />
+                        </Trigger>
+                    </ControlTemplate.Triggers>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+
+    <!-- Les réglages d'InputText (Themes : un style ne dérive que d'un style du même fichier). -->
+    <Style TargetType="{x:Type local:AutoComplete}">
+        <Setter Property="Height" Value="{DynamicResource mkm.inputtext.height}" />
+        <Setter Property="Padding" Value="{DynamicResource mkm.inputtext.padding}" />
+        <Setter Property="Background" Value="{DynamicResource mkm.inputtext.background}" />
+        <Setter Property="BorderBrush" Value="{DynamicResource mkm.inputtext.border.color}" />
+        <Setter Property="BorderThickness" Value="1" />
+        <Setter Property="CornerRadius" Value="{DynamicResource mkm.inputtext.border.radius}" />
+        <Setter Property="Foreground" Value="{DynamicResource mkm.inputtext.color}" />
+        <Setter Property="CaretBrush" Value="{DynamicResource mkm.inputtext.color}" />
+        <Setter Property="FontFamily" Value="{DynamicResource mkm.font.family}" />
+        <Setter Property="FontSize" Value="{DynamicResource mkm.inputtext.font.size}" />
+        <Setter Property="FocusVisualStyle" Value="{x:Null}" />
+        <Setter Property="KeyboardNavigation.TabNavigation" Value="None" />
+        <Setter Property="AllowDrop" Value="True" />
+        <Setter Property="SnapsToDevicePixels" Value="True" />
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="{x:Type local:AutoComplete}">
+                    <Grid x:Name="Racine">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="*" />
+                            <ColumnDefinition Width="Auto" />
+                        </Grid.ColumnDefinitions>
+                        <Border x:Name="Bord"
+                                Background="{TemplateBinding Background}"
+                                BorderBrush="{TemplateBinding BorderBrush}"
+                                BorderThickness="{TemplateBinding BorderThickness}"
+                                CornerRadius="{TemplateBinding CornerRadius}">
+                            <Grid>
+                                <TextBlock x:Name="Aide" Margin="{TemplateBinding Padding}" Padding="2,0,0,0" VerticalAlignment="Top"
+                                           IsHitTestVisible="False" Visibility="Collapsed" TextTrimming="CharacterEllipsis"
+                                           Foreground="{DynamicResource mkm.inputtext.placeholder.color}"
+                                           Text="{TemplateBinding Placeholder}" />
+                                <ScrollViewer x:Name="PART_ContentHost" Focusable="False"
+                                              HorizontalScrollBarVisibility="Hidden" VerticalScrollBarVisibility="Hidden" />
+                            </Grid>
+                        </Border>
+                        <Button x:Name="PART_DropDown" Grid.Column="1" Visibility="Collapsed"
+                                Style="{StaticResource mkm.AutoComplete.Bouton}" />
+                        <Popup x:Name="PART_Popup" Grid.ColumnSpan="2" AllowsTransparency="True" Focusable="False" StaysOpen="False"
+                               Placement="Bottom" PlacementTarget="{Binding ElementName=Racine}" PopupAnimation="None"
+                               VerticalOffset="{DynamicResource mkm.anchor.gutter}"
+                               IsOpen="{Binding IsDropDownOpen, RelativeSource={RelativeSource TemplatedParent}, Mode=TwoWay}">
+                            <Grid Margin="{DynamicResource mkm.multiselect.overlay.window.padding}"
+                                  MinWidth="{Binding ActualWidth, ElementName=Racine}">
+                                <Border Background="{DynamicResource mkm.autocomplete.overlay.background}"
+                                        CornerRadius="{DynamicResource mkm.autocomplete.overlay.border.radius}"
+                                        Effect="{DynamicResource mkm.autocomplete.overlay.shadow}" />
+                                <Border Background="{DynamicResource mkm.autocomplete.overlay.background}" BorderThickness="1"
+                                        BorderBrush="{DynamicResource mkm.autocomplete.overlay.border.color}"
+                                        CornerRadius="{DynamicResource mkm.autocomplete.overlay.border.radius}"
+                                        TextElement.Foreground="{DynamicResource mkm.autocomplete.overlay.color}">
+                                    <Grid>
+                                        <ListBox x:Name="PART_List" Focusable="False" BorderThickness="0" Background="Transparent"
+                                                 Padding="{DynamicResource mkm.autocomplete.list.padding}"
+                                                 MaxHeight="{DynamicResource mkm.autocomplete.list.max.height}"
+                                                 ItemContainerStyle="{StaticResource mkm.AutoComplete.Option}"
+                                                 DisplayMemberPath="{TemplateBinding DisplayMemberPath}"
+                                                 ScrollViewer.HorizontalScrollBarVisibility="Disabled" />
+                                        <TextBlock x:Name="Vide" Visibility="Collapsed" Margin="{DynamicResource mkm.autocomplete.empty.message.padding}"
+                                                   Text="{loc:T locale.emptyFilterMessage}" />
+                                    </Grid>
+                                </Border>
+                            </Grid>
+                        </Popup>
+                    </Grid>
+                    <ControlTemplate.Triggers>
+                        <Trigger Property="Text" Value="">
+                            <Setter TargetName="Aide" Property="Visibility" Value="Visible" />
+                        </Trigger>
+                        <Trigger Property="HasSuggestions" Value="False">
+                            <Setter TargetName="Vide" Property="Visibility" Value="Visible" />
+                            <Setter TargetName="PART_List" Property="Visibility" Value="Collapsed" />
+                        </Trigger>
+                        <Trigger Property="Dropdown" Value="True">
+                            <Setter TargetName="PART_DropDown" Property="Visibility" Value="Visible" />
+                            <Setter TargetName="Bord" Property="CornerRadius" Value="{DynamicResource mkm.autocomplete.input.dropdown.corner.radius}" />
+                        </Trigger>
+                        <Trigger Property="IsMouseOver" Value="True">
+                            <Setter Property="BorderBrush" Value="{DynamicResource mkm.inputtext.hover.border.color}" />
+                        </Trigger>
+                        <Trigger Property="IsKeyboardFocused" Value="True">
+                            <Setter Property="BorderBrush" Value="{DynamicResource mkm.inputtext.focus.border.color}" />
+                        </Trigger>
+                        <Trigger Property="Invalid" Value="True">
+                            <Setter Property="BorderBrush" Value="{DynamicResource mkm.inputtext.invalid.border.color}" />
+                            <Setter TargetName="Aide" Property="Foreground" Value="{DynamicResource mkm.inputtext.invalid.placeholder.color}" />
+                        </Trigger>
+                        <Trigger Property="IsEnabled" Value="False">
+                            <Setter Property="Background" Value="{DynamicResource mkm.inputtext.disabled.background}" />
+                            <Setter Property="Foreground" Value="{DynamicResource mkm.inputtext.disabled.color}" />
+                            <Setter Property="BorderBrush" Value="{DynamicResource mkm.inputtext.disabled.border.color}" />
+                        </Trigger>
+                    </ControlTemplate.Triggers>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+
+</ResourceDictionary>

@@ -1,0 +1,99 @@
+<?xml version="1.0" encoding="utf-8"?>
+<page titre="Listbox" categorie="Formulaire" types="Listbox" jetons="listbox">
+  <resume>Une liste d'options toujours visible, dans un cadre de champ : un choix, ou plusieurs, une coche, un filtre.</resume>
+
+  <section titre="Import">
+    <p>« Listbox » est aussi le nom de la liste de WPF (<c>ListBox</c>), et VB ne distingue pas la casse : dans un
+      fichier qui importe <c>Mkm.Wpf.Controls</c>, écrivez <c>System.Windows.Controls.ListBox</c> pour celle de WPF.</p>
+    <code><![CDATA[
+<Window xmlns:mkm="urn:mkm-wpf">
+    <mkm:Listbox>
+        <ListBoxItem Content="Private" />
+    </mkm:Listbox>
+</Window>
+]]></code>
+  </section>
+
+  <section titre="Basique">
+    <p>Listbox est un <c>ListBox</c> de WPF : ses options sont ses éléments (<c>ListBoxItem</c>), ou une liste donnée
+      par <c>ItemsSource</c> ; <c>SelectedItem</c> est le choix. Il défile au-delà de sa hauteur.</p>
+    <exemple><![CDATA[
+<mkm:Listbox x:Name="Maturites" Width="240">
+    <ListBoxItem Content="Private" />
+    <ListBoxItem Content="In Work" />
+    <ListBoxItem Content="Frozen" />
+    <ListBoxItem Content="Released" />
+    <ListBoxItem Content="Obsolete" />
+</mkm:Listbox>
+]]></exemple>
+  </section>
+
+  <section titre="Plusieurs choix">
+    <p><c>SelectionMode="Multiple"</c> : chaque clic ajoute ou retire une option ; <c>SelectedItems</c> sont les choix.
+      <c>Checkmark</c> pose une coche devant les options choisies.</p>
+    <exemple><![CDATA[
+<mkm:Listbox SelectionMode="Multiple" Checkmark="True" Width="240">
+    <ListBoxItem Content="Plans" IsSelected="True" />
+    <ListBoxItem Content="Pièces" />
+    <ListBoxItem Content="Assemblages" IsSelected="True" />
+    <ListBoxItem Content="Notices" />
+</mkm:Listbox>
+]]></exemple>
+  </section>
+
+  <section titre="Filtre">
+    <p><c>Filter</c> pose un champ en tête : seules restent les options qui contiennent son texte, sans égard à la casse
+      (<c>FilterText</c>, lié dans les deux sens). ↓ dans le champ passe aux options. Une liste vide le dit.</p>
+    <exemple><![CDATA[
+<mkm:Listbox x:Name="Filtree" Filter="True" FilterPlaceholder="Filtrer" Width="240" Height="180">
+    <ListBoxItem Content="Private" />
+    <ListBoxItem Content="In Work" />
+    <ListBoxItem Content="Frozen" />
+    <ListBoxItem Content="Released" />
+    <ListBoxItem Content="Obsolete" />
+</mkm:Listbox>
+]]></exemple>
+  </section>
+
+  <section titre="Lignes alternées">
+    <p><c>Striped</c> grise une option sur deux.</p>
+    <exemple><![CDATA[
+<mkm:Listbox Striped="True" Width="240">
+    <ListBoxItem Content="HS-00041" />
+    <ListBoxItem Content="HS-00042" />
+    <ListBoxItem Content="HS-00043" />
+    <ListBoxItem Content="HS-00044" />
+</mkm:Listbox>
+]]></exemple>
+  </section>
+
+  <section titre="Désactivée et refusée">
+    <p><c>IsEnabled="False"</c> grise la liste ; <c>Invalid</c> borde de rouge une liste dont le choix est refusé.</p>
+    <exemple><![CDATA[
+<StackPanel Orientation="Horizontal">
+    <mkm:Listbox IsEnabled="False" Width="160" Margin="0,0,12,0">
+        <ListBoxItem Content="Private" IsSelected="True" />
+        <ListBoxItem Content="In Work" />
+    </mkm:Listbox>
+    <mkm:Listbox Invalid="True" Width="160">
+        <ListBoxItem Content="Private" />
+        <ListBoxItem Content="In Work" />
+    </mkm:Listbox>
+</StackPanel>
+]]></exemple>
+  </section>
+
+  <section titre="Accessibilité">
+    <h3>Lecteur d'écran</h3>
+    <p>Narrateur dit la liste « liste », nommée par <c>AutomationProperties.Name</c>, et chaque option « élément de
+      liste », sélectionné ou non. Le champ du filtre se nomme « Filtrer ».</p>
+    <h3>Clavier</h3>
+    <touches>
+      <touche nom="Flèche bas">Passe à l'option suivante ; dans le filtre, entre dans la liste.</touche>
+      <touche nom="Flèche haut">Passe à l'option précédente.</touche>
+      <touche nom="Début">Passe à la première option.</touche>
+      <touche nom="Fin">Passe à la dernière option.</touche>
+      <touche nom="Espace">Choisit l'option ; à choix multiples, l'ajoute ou la retire.</touche>
+    </touches>
+  </section>
+</page>

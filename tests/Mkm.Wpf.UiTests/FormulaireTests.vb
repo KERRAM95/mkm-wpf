@@ -173,6 +173,56 @@ Namespace Mkm.Wpf.UiTests
             AttendreQue(Function() etat() = ToggleState.Off, "désactivé par Espace")
         End Sub
 
+        <Test>
+        Public Sub Listbox_UnClicChoisitEtLeFiltreNeGardeQueCeQuiRepond()
+            Dim page = OuvrirLaDoc("listbox")
+            Dim maturites = Trouver("Maturites", page)
+            Dim enCours = TrouverParNom("In Work", ControlType.ListItem, maturites)
+
+            Cliquer(enCours)
+            AttendreQue(Function() enCours.Patterns.SelectionItem.Pattern.IsSelected.Value, "« In Work » choisi")
+
+            Dim filtree = Trouver("Filtree", page)
+            Cliquer(TrouverParNom(T("aria.filter"), ControlType.Edit, filtree))
+            Ecrire("fro")
+            AttendreQue(Function() filtree.FindAllDescendants(Function(cf) cf.ByControlType(ControlType.ListItem)).Length = 1, "seule « Frozen » reste")
+            Taper(VirtualKeyShort.DOWN)
+            AttendreQue(Function() AFocus(TrouverParNom("Frozen", ControlType.ListItem, filtree)), "↓ : le clavier sur « Frozen »")
+        End Sub
+
+        <Test>
+        Public Sub MultiSelect_DesChoixAuClicEtAuClavier()
+            Dim page = OuvrirLaDoc("multiselect")
+            Dim maturites = Trouver("Maturites", page)
+            Dim etat = Function() maturites.Patterns.ExpandCollapse.Pattern.ExpandCollapseState.Value
+            Dim valeur = Function() maturites.Patterns.Value.Pattern.Value.Value
+
+            Assert.That(NomDe(maturites), [Is].EqualTo("Maturités"), "nommé par son texte d'aide")
+            Cliquer(maturites)
+            AttendreQue(Function() etat() = ExpandCollapseState.Expanded, "la liste ouverte")
+            Dim fige = Attendre(Function() If(maturites.FindFirstDescendant(Function(cf) cf.ByName("Frozen").And(cf.ByControlType(ControlType.ListItem))),
+                                             ChercherAilleurs("Frozen", ControlType.ListItem)), "« Frozen » dans la liste")
+            Cliquer(fige)
+            AttendreQue(Function() valeur() = "Frozen", "« Frozen » choisi")
+            Taper(VirtualKeyShort.HOME, VirtualKeyShort.SPACE)
+            AttendreQue(Function() valeur() = "Frozen, Private", "Début, Espace : « Private » ajouté")
+            Taper(VirtualKeyShort.ESCAPE)
+            AttendreQue(Function() etat() = ExpandCollapseState.Collapsed, "Échap referme la liste")
+        End Sub
+
+        <Test>
+        Public Sub AutoComplete_LaFrappeProposeEtLeClavierChoisit()
+            Dim page = OuvrirLaDoc("autocomplete")
+            Dim reference = Trouver("Reference", page)
+
+            Cliquer(reference)
+            Ecrire("hs-0004")
+            TrouverAilleurs("HS-00041", ControlType.ListItem)
+            Taper(VirtualKeyShort.DOWN, VirtualKeyShort.DOWN, VirtualKeyShort.RETURN)
+            AttendreQue(Function() NomDe(Trouver("Journal", page)) = "Choisie : HS-00041", "↓ ↓ Entrée : « HS-00041 »")
+            Assert.That(reference.Patterns.Value.Pattern.Value.Value, [Is].EqualTo("HS-00041"))
+        End Sub
+
     End Class
 
 End Namespace

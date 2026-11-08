@@ -128,6 +128,15 @@ Les évolutions notables de mkm-wpf, version par version. Le format suit
   `Popover` (dessous ou dessus, sa flèche vers son élément, Échap) ; `Button`
   gagne `CornerRadius` ; leurs jetons, leurs pages, leurs tests et leurs
   scénarios.
+- Le lot 14 (`docs/composants/listes-et-champs-composes.md`) : `Listbox`
+  (coche, lignes alternées, filtre), `MultiSelect` (virgules ou puces, « tout
+  sélectionner », filtre), `AutoComplete` (suggestions demandées à
+  l'application, bouton accolé), `IconField`, `InputGroup` et
+  `InputGroupAddon` ; `Chip` gagne `CornerRadius` ; leurs jetons, leurs pages,
+  leurs tests et leurs scénarios. La priorité 1 est faite.
+- Corrigé : la légende repliable du `Fieldset` héritait du ToggleButton de mkm
+  (12 px, non grasse, hauteur coupée) ; un test de convention l'empêche
+  désormais.
 - La documentation, sur le modèle d'ui-kit : la vitrine devient une page par
   composant, rangée par catégorie (Pour commencer, Formulaire, Bouton, Données,
   Panneau, Superposition, Menu, Messages, Divers), avec une recherche. Chaque

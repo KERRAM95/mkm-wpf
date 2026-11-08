@@ -1,0 +1,237 @@
+<!--
+    Le style de MultiSelect, sur la liste déroulante à choix multiples de mkm (styles/multiselect ; jetons de Nora en
+    pixels pour Dashboard, preset ara : le preset dashboard ne la redessine pas) : un champ (fond, bordure d'un pixel,
+    coins du thème ; 6 px sur 7 de retrait), les textes des choix séparés de virgules ou des puces, le texte gris tant
+    que rien n'est choisi, le chevron dans 30 px à droite ; la bordure plus foncée au survol, au bleu du thème au
+    clavier et liste ouverte. La liste s'ouvre dessous, aussi large que le champ au moins : un cadre ombré, en tête la
+    case « tout sélectionner » et le filtre, puis les options, une case cochée devant les choisies (6 px entre elles).
+-->
+<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+                    xmlns:local="clr-namespace:Mkm.Wpf.Controls"
+                    xmlns:loc="clr-namespace:Mkm.Wpf.Localization">
+
+    <!-- Toute la surface du champ ouvre la liste. -->
+    <Style x:Key="mkm.MultiSelect.Zone" TargetType="{x:Type ToggleButton}">
+        <Setter Property="Focusable" Value="False" />
+        <Setter Property="Cursor" Value="Hand" />
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="{x:Type ToggleButton}">
+                    <Border Background="Transparent" />
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+
+    <!-- Une option : sa case, cochée quand elle est choisie, et son texte. -->
+    <Style x:Key="mkm.MultiSelect.Option" TargetType="{x:Type ListBoxItem}">
+        <Setter Property="Padding" Value="{DynamicResource mkm.multiselect.option.padding}" />
+        <Setter Property="Foreground" Value="{DynamicResource mkm.multiselect.option.color}" />
+        <Setter Property="Background" Value="Transparent" />
+        <Setter Property="HorizontalContentAlignment" Value="Stretch" />
+        <Setter Property="FocusVisualStyle" Value="{x:Null}" />
+        <Setter Property="Cursor" Value="Hand" />
+        <Setter Property="SnapsToDevicePixels" Value="True" />
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="{x:Type ListBoxItem}">
+                    <Border x:Name="Fond" Background="{TemplateBinding Background}" Padding="{TemplateBinding Padding}"
+                            CornerRadius="{DynamicResource mkm.multiselect.option.border.radius}">
+                        <DockPanel>
+                            <local:Checkbox DockPanel.Dock="Left" Focusable="False" IsHitTestVisible="False" VerticalAlignment="Center"
+                                            Margin="{DynamicResource mkm.multiselect.option.checkbox.margin}"
+                                            IsChecked="{Binding IsSelected, RelativeSource={RelativeSource TemplatedParent}, Mode=OneWay}" />
+                            <ContentPresenter VerticalAlignment="Center" HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}" />
+                        </DockPanel>
+                    </Border>
+                    <ControlTemplate.Triggers>
+                        <Trigger Property="IsMouseOver" Value="True">
+                            <Setter Property="Background" Value="{DynamicResource mkm.multiselect.option.focus.background}" />
+                            <Setter Property="Foreground" Value="{DynamicResource mkm.multiselect.option.focus.color}" />
+                        </Trigger>
+                        <Trigger Property="IsKeyboardFocused" Value="True">
+                            <Setter Property="Background" Value="{DynamicResource mkm.multiselect.option.focus.background}" />
+                            <Setter Property="Foreground" Value="{DynamicResource mkm.multiselect.option.focus.color}" />
+                        </Trigger>
+                        <Trigger Property="IsSelected" Value="True">
+                            <Setter Property="Background" Value="{DynamicResource mkm.multiselect.option.selected.background}" />
+                            <Setter Property="Foreground" Value="{DynamicResource mkm.multiselect.option.selected.color}" />
+                        </Trigger>
+                        <MultiTrigger>
+                            <MultiTrigger.Conditions>
+                                <Condition Property="IsSelected" Value="True" />
+                                <Condition Property="IsKeyboardFocused" Value="True" />
+                            </MultiTrigger.Conditions>
+                            <Setter Property="Background" Value="{DynamicResource mkm.multiselect.option.selected.focus.background}" />
+                            <Setter Property="Foreground" Value="{DynamicResource mkm.multiselect.option.selected.focus.color}" />
+                        </MultiTrigger>
+                        <Trigger Property="IsEnabled" Value="False">
+                            <Setter TargetName="Fond" Property="Opacity" Value="{DynamicResource mkm.disabled.opacity}" />
+                        </Trigger>
+                    </ControlTemplate.Triggers>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+
+    <Style TargetType="{x:Type local:MultiSelect}">
+        <Setter Property="Background" Value="{DynamicResource mkm.multiselect.background}" />
+        <Setter Property="Foreground" Value="{DynamicResource mkm.multiselect.color}" />
+        <Setter Property="BorderBrush" Value="{DynamicResource mkm.multiselect.border.color}" />
+        <Setter Property="BorderThickness" Value="1" />
+        <Setter Property="Padding" Value="{DynamicResource mkm.multiselect.list.padding}" />
+        <Setter Property="FontFamily" Value="{DynamicResource mkm.font.family}" />
+        <Setter Property="FontSize" Value="{DynamicResource mkm.font.size}" />
+        <Setter Property="ItemContainerStyle" Value="{StaticResource mkm.MultiSelect.Option}" />
+        <Setter Property="ScrollViewer.HorizontalScrollBarVisibility" Value="Disabled" />
+        <Setter Property="ScrollViewer.VerticalScrollBarVisibility" Value="Auto" />
+        <Setter Property="KeyboardNavigation.TabNavigation" Value="None" />
+        <Setter Property="VerticalAlignment" Value="Center" />
+        <Setter Property="FocusVisualStyle" Value="{x:Null}" />
+        <Setter Property="SnapsToDevicePixels" Value="True" />
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="{x:Type local:MultiSelect}">
+                    <Grid x:Name="Racine">
+                        <Border x:Name="Bord" Background="{TemplateBinding Background}" BorderBrush="{TemplateBinding BorderBrush}"
+                                BorderThickness="{TemplateBinding BorderThickness}"
+                                CornerRadius="{DynamicResource mkm.multiselect.border.radius}">
+                            <DockPanel>
+                                <Border DockPanel.Dock="Right" Width="{DynamicResource mkm.multiselect.dropdown.width}">
+                                    <local:Icon Source="{x:Static local:InternalIcons.ChevronDown}" HorizontalAlignment="Center"
+                                                VerticalAlignment="Center" Width="{DynamicResource mkm.icon.size}"
+                                                Height="{DynamicResource mkm.icon.size}"
+                                                Foreground="{DynamicResource mkm.multiselect.dropdown.color}" />
+                                </Border>
+                                <Grid ClipToBounds="True">
+                                    <TextBlock x:Name="Aide" Visibility="Collapsed" Margin="{DynamicResource mkm.multiselect.label.padding}"
+                                               TextTrimming="CharacterEllipsis" Text="{TemplateBinding Placeholder}"
+                                               Foreground="{DynamicResource mkm.multiselect.placeholder.color}" />
+                                    <TextBlock x:Name="Libelle" Margin="{DynamicResource mkm.multiselect.label.padding}"
+                                               TextTrimming="CharacterEllipsis" Text="{TemplateBinding SelectionText}" />
+                                    <!-- La hauteur d'une ligne de texte, que le champ garde avec des puces. -->
+                                    <TextBlock Margin="{DynamicResource mkm.multiselect.label.padding}" Text=" " Visibility="Hidden" />
+                                </Grid>
+                            </DockPanel>
+                        </Border>
+                        <ToggleButton x:Name="PART_Field" Style="{StaticResource mkm.MultiSelect.Zone}" />
+                        <!-- Les puces, par-dessus la zone : leurs croix prennent le clic, l'espace entre elles l'y laisse. -->
+                        <ItemsControl x:Name="Puces" Visibility="Collapsed" Focusable="False" IsTabStop="False"
+                                      HorizontalAlignment="Left" VerticalAlignment="Center" ClipToBounds="True"
+                                      Margin="{DynamicResource mkm.multiselect.chips.padding}"
+                                      ItemsSource="{Binding SelectedChips, RelativeSource={RelativeSource TemplatedParent}}">
+                            <ItemsControl.ItemsPanel>
+                                <ItemsPanelTemplate>
+                                    <local:GapStackPanel Orientation="Horizontal" Gap="{DynamicResource mkm.multiselect.chips.gap}" />
+                                </ItemsPanelTemplate>
+                            </ItemsControl.ItemsPanel>
+                            <ItemsControl.ItemTemplate>
+                                <DataTemplate>
+                                    <local:Chip Removable="True" Content="{Binding}"
+                                                Padding="{DynamicResource mkm.multiselect.chip.padding}"
+                                                CornerRadius="{DynamicResource mkm.multiselect.chip.border.radius}" />
+                                </DataTemplate>
+                            </ItemsControl.ItemTemplate>
+                        </ItemsControl>
+                        <Popup x:Name="PART_Popup" AllowsTransparency="True" Focusable="False" StaysOpen="False"
+                               Placement="Bottom" PlacementTarget="{Binding ElementName=Racine}" PopupAnimation="None"
+                               VerticalOffset="{DynamicResource mkm.anchor.gutter}"
+                               IsOpen="{Binding IsDropDownOpen, RelativeSource={RelativeSource TemplatedParent}, Mode=TwoWay}">
+                            <Grid Margin="{DynamicResource mkm.multiselect.overlay.window.padding}"
+                                  MinWidth="{Binding ActualWidth, ElementName=Racine}">
+                                <Border Background="{DynamicResource mkm.multiselect.overlay.background}"
+                                        CornerRadius="{DynamicResource mkm.multiselect.overlay.border.radius}"
+                                        Effect="{DynamicResource mkm.multiselect.overlay.shadow}" />
+                                <Border Background="{DynamicResource mkm.multiselect.overlay.background}" BorderThickness="1"
+                                        BorderBrush="{DynamicResource mkm.multiselect.overlay.border.color}"
+                                        CornerRadius="{DynamicResource mkm.multiselect.overlay.border.radius}"
+                                        TextElement.Foreground="{DynamicResource mkm.multiselect.overlay.color}">
+                                    <DockPanel>
+                                        <DockPanel x:Name="EnTete" DockPanel.Dock="Top" Margin="{DynamicResource mkm.multiselect.list.header.padding}">
+                                            <local:Checkbox x:Name="PART_ToggleAll" DockPanel.Dock="Left" VerticalAlignment="Center"
+                                                            Margin="{DynamicResource mkm.multiselect.option.checkbox.margin}"
+                                                            AutomationProperties.Name="{loc:T aria.selectAll}" />
+                                            <local:IconField x:Name="Filtre" Visibility="Collapsed" Icon="{x:Static local:InternalIcons.Search}" IconPosition="Right">
+                                                <local:InputText x:Name="PART_Filter" Placeholder="{TemplateBinding FilterPlaceholder}"
+                                                                 AutomationProperties.Name="{loc:T aria.filter}"
+                                                                 Text="{Binding FilterText, RelativeSource={RelativeSource TemplatedParent}, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
+                                            </local:IconField>
+                                        </DockPanel>
+                                        <Grid>
+                                            <ScrollViewer x:Name="Defilement" Focusable="False" Padding="{TemplateBinding Padding}"
+                                                          MaxHeight="{DynamicResource mkm.multiselect.list.max.height}"
+                                                          HorizontalScrollBarVisibility="Disabled" VerticalScrollBarVisibility="Auto">
+                                                <ItemsPresenter KeyboardNavigation.DirectionalNavigation="Contained" />
+                                            </ScrollViewer>
+                                            <TextBlock x:Name="Vide" Visibility="Collapsed" Margin="{DynamicResource mkm.multiselect.empty.message.padding}"
+                                                       Text="{loc:T locale.emptyMessage}" />
+                                            <TextBlock x:Name="VideFiltre" Visibility="Collapsed" Margin="{DynamicResource mkm.multiselect.empty.message.padding}"
+                                                       Text="{loc:T locale.emptyFilterMessage}" />
+                                        </Grid>
+                                    </DockPanel>
+                                </Border>
+                            </Grid>
+                        </Popup>
+                    </Grid>
+                    <ControlTemplate.Triggers>
+                        <Trigger Property="HasSelection" Value="False">
+                            <Setter TargetName="Aide" Property="Visibility" Value="Visible" />
+                            <Setter TargetName="Libelle" Property="Visibility" Value="Collapsed" />
+                        </Trigger>
+                        <MultiTrigger>
+                            <MultiTrigger.Conditions>
+                                <Condition Property="Display" Value="Chip" />
+                                <Condition Property="HasSelection" Value="True" />
+                            </MultiTrigger.Conditions>
+                            <Setter TargetName="Libelle" Property="Visibility" Value="Hidden" />
+                            <Setter TargetName="Puces" Property="Visibility" Value="Visible" />
+                        </MultiTrigger>
+                        <Trigger Property="ShowToggleAll" Value="False">
+                            <Setter TargetName="PART_ToggleAll" Property="Visibility" Value="Collapsed" />
+                        </Trigger>
+                        <Trigger Property="Filter" Value="True">
+                            <Setter TargetName="Filtre" Property="Visibility" Value="Visible" />
+                        </Trigger>
+                        <MultiTrigger>
+                            <MultiTrigger.Conditions>
+                                <Condition Property="ShowToggleAll" Value="False" />
+                                <Condition Property="Filter" Value="False" />
+                            </MultiTrigger.Conditions>
+                            <Setter TargetName="EnTete" Property="Visibility" Value="Collapsed" />
+                        </MultiTrigger>
+                        <Trigger Property="IsEmpty" Value="True">
+                            <Setter TargetName="Vide" Property="Visibility" Value="Visible" />
+                        </Trigger>
+                        <MultiDataTrigger>
+                            <MultiDataTrigger.Conditions>
+                                <Condition Binding="{Binding IsEmpty, RelativeSource={RelativeSource Self}}" Value="True" />
+                                <Condition Binding="{Binding Filter, RelativeSource={RelativeSource Self}}" Value="True" />
+                            </MultiDataTrigger.Conditions>
+                            <Setter TargetName="Vide" Property="Visibility" Value="Collapsed" />
+                            <Setter TargetName="VideFiltre" Property="Visibility" Value="Visible" />
+                        </MultiDataTrigger>
+                        <Trigger Property="IsMouseOver" Value="True">
+                            <Setter Property="BorderBrush" Value="{DynamicResource mkm.multiselect.hover.border.color}" />
+                        </Trigger>
+                        <Trigger Property="IsKeyboardFocusWithin" Value="True">
+                            <Setter Property="BorderBrush" Value="{DynamicResource mkm.multiselect.focus.border.color}" />
+                        </Trigger>
+                        <Trigger Property="IsDropDownOpen" Value="True">
+                            <Setter Property="BorderBrush" Value="{DynamicResource mkm.multiselect.focus.border.color}" />
+                        </Trigger>
+                        <Trigger Property="Invalid" Value="True">
+                            <Setter Property="BorderBrush" Value="{DynamicResource mkm.multiselect.invalid.border.color}" />
+                            <Setter TargetName="Aide" Property="Foreground" Value="{DynamicResource mkm.multiselect.invalid.placeholder.color}" />
+                        </Trigger>
+                        <Trigger Property="IsEnabled" Value="False">
+                            <Setter Property="Background" Value="{DynamicResource mkm.multiselect.disabled.background}" />
+                            <Setter TargetName="Libelle" Property="Foreground" Value="{DynamicResource mkm.multiselect.disabled.color}" />
+                        </Trigger>
+                    </ControlTemplate.Triggers>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+
+</ResourceDictionary>

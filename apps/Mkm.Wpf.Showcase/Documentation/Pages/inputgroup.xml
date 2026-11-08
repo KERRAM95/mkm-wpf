@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="utf-8"?>
+<page titre="InputGroup" categorie="Formulaire" types="InputGroup InputGroupAddon" jetons="inputgroup">
+  <resume>Des champs, des compléments et des boutons accolés sur une ligne : une unité, un préfixe, une case, un
+    bouton qui agit sur le champ.</resume>
+
+  <section titre="Import">
+    <code><![CDATA[
+<Window xmlns:mkm="urn:mkm-wpf">
+    <mkm:InputGroup>
+        <mkm:InputGroupAddon>€</mkm:InputGroupAddon>
+        <mkm:InputText />
+    </mkm:InputGroup>
+</Window>
+]]></code>
+  </section>
+
+  <section titre="Basique">
+    <p>Les éléments du groupe se suivent sans écart ; seuls le premier et le dernier ont les coins du groupe. Un
+      <c>InputGroupAddon</c> est un complément : un texte ou une icône sur le fond d'un champ. Les champs se partagent
+      la largeur du groupe ; les compléments et les boutons gardent la leur.</p>
+    <exemple><![CDATA[
+<StackPanel Width="320">
+    <mkm:InputGroup Margin="0,0,0,12">
+        <mkm:InputGroupAddon>
+            <mkm:Icon Source="{x:Static mkm:Icons.Person}" />
+        </mkm:InputGroupAddon>
+        <mkm:InputText Placeholder="Propriétaire" />
+    </mkm:InputGroup>
+    <mkm:InputGroup x:Name="Prix">
+        <mkm:InputGroupAddon>€</mkm:InputGroupAddon>
+        <mkm:InputText Placeholder="Prix" />
+        <mkm:InputGroupAddon>HT</mkm:InputGroupAddon>
+    </mkm:InputGroup>
+</StackPanel>
+]]></exemple>
+  </section>
+
+  <section titre="Plusieurs compléments">
+    <p>Deux compléments qui se suivent gardent un trait entre eux.</p>
+    <exemple><![CDATA[
+<mkm:InputGroup Width="320">
+    <mkm:InputGroupAddon>
+        <mkm:Icon Source="{x:Static mkm:Icons.Document}" />
+    </mkm:InputGroupAddon>
+    <mkm:InputGroupAddon>HS-</mkm:InputGroupAddon>
+    <mkm:InputText Placeholder="Numéro" />
+</mkm:InputGroup>
+]]></exemple>
+  </section>
+
+  <section titre="Bouton">
+    <p>Un <lien page="button">Button</lien> se pose au bout du groupe, ses coins avec ceux du groupe.</p>
+    <exemple><![CDATA[
+<mkm:InputGroup Width="320">
+    <mkm:InputText Placeholder="Référence" />
+    <mkm:Button Content="Chercher" Icon="{x:Static mkm:Icons.Search}" />
+</mkm:InputGroup>
+]]></exemple>
+  </section>
+
+  <section titre="Accessibilité">
+    <h3>Lecteur d'écran</h3>
+    <p>Narrateur dit le groupe « groupe », nommé par <c>AutomationProperties.Name</c> ; ses champs et ses boutons gardent
+      leur nom. Un complément se lit comme un texte : nommez le champ pour qu'il dise aussi son unité.</p>
+    <h3>Clavier</h3>
+    <p>Tab passe d'un champ ou d'un bouton du groupe au suivant ; les compléments ne prennent pas le clavier.</p>
+  </section>
+</page>

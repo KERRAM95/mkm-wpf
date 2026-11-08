@@ -18,9 +18,9 @@ Namespace Mkm.Wpf.Controls
     ''' &lt;/mkm:SelectButton&gt;
     ''' </code>
     ''' </summary>
-    ''' <remarks>C'est un <see cref="ListBox"/> : <c>ItemsSource</c>, <c>SelectedItem</c>, <c>SelectedItems</c>, les flèches.</remarks>
+    ''' <remarks>C'est un <see cref="System.Windows.Controls.ListBox"/> : <c>ItemsSource</c>, <c>SelectedItem</c>, <c>SelectedItems</c>, les flèches.</remarks>
     Public Class SelectButton
-        Inherits ListBox
+        Inherits System.Windows.Controls.ListBox
 
         ''' <summary>Vrai (par défaut) si un clic sur le choix l'enlève, ne laissant aucun choix.</summary>
         Public Shared ReadOnly AllowEmptyProperty As DependencyProperty = DependencyProperty.Register(

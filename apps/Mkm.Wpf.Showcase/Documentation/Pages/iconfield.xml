@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="utf-8"?>
+<page titre="IconField" categorie="Formulaire" types="IconField IconFieldPosition" jetons="iconfield">
+  <resume>Une icône dans un champ : une loupe devant une recherche, une unité, un cadenas. Le champ recule son texte
+    pour lui laisser la place.</resume>
+
+  <section titre="Import">
+    <code><![CDATA[
+<Window xmlns:mkm="urn:mkm-wpf">
+    <mkm:IconField Icon="{x:Static mkm:Icons.Search}">
+        <mkm:InputText />
+    </mkm:IconField>
+</Window>
+]]></code>
+  </section>
+
+  <section titre="Basique">
+    <p>Le champ est le contenu de l'IconField ; <c>Icon</c> est son icône, à gauche. Elle ne prend pas les clics, qui
+      vont au champ.</p>
+    <exemple><![CDATA[
+<mkm:IconField Icon="{x:Static mkm:Icons.Search}" Width="260">
+    <mkm:InputText x:Name="Recherche" Placeholder="Rechercher un plan" />
+</mkm:IconField>
+]]></exemple>
+  </section>
+
+  <section titre="Position">
+    <p><c>IconPosition="Right"</c> la pose à droite, après le texte.</p>
+    <exemple><![CDATA[
+<mkm:IconField Icon="{x:Static mkm:Icons.Locked}" IconPosition="Right" Width="260">
+    <mkm:InputText Text="HS-00042" IsReadOnly="True" />
+</mkm:IconField>
+]]></exemple>
+  </section>
+
+  <section titre="Accessibilité">
+    <h3>Lecteur d'écran</h3>
+    <p>L'icône est un dessin : Narrateur ne la lit pas. Le champ garde son nom (son libellé, sinon son texte d'aide) ;
+      si l'icône porte un sens, dites-le dans ce nom.</p>
+    <h3>Clavier</h3>
+    <p>Celui du champ : l'icône ne prend pas le clavier.</p>
+  </section>
+</page>

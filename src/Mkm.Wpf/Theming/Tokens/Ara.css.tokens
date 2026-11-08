@@ -337,3 +337,44 @@ popover.above.margin = 0 0 {popover.gutter} 0
 popover.arrow.width = 20px
 popover.arrow.margin = 1px 0 0 5px
 popover.arrow.flipped.margin = 0 0 1px 5px
+
+# iconfield : l'icône à form.field.padding.x du bord ; le champ recule son texte de deux retraits et de l'icône
+# (calc(form.field.padding.x × 2 + icon.size) chez mkm : 7 × 2 + 16 = 30 px), du côté de l'icône.
+iconfield.icon.start.margin = 0 0 0 {form.field.padding.x}
+iconfield.icon.end.margin = 0 {form.field.padding.x} 0 0
+iconfield.start.padding = {inputtext.padding.y} {inputtext.padding.x} {inputtext.padding.y} 30px
+iconfield.end.padding = {inputtext.padding.y} 30px {inputtext.padding.y} {inputtext.padding.x}
+
+# inputgroup : les coins du groupe, à gauche sur le premier élément, à droite sur le dernier, aucun au milieu ;
+# un complément bordé en haut et en bas, à gauche s'il est le premier ou suit un complément, à droite s'il est le
+# dernier (border-block et border-inline chez mkm).
+inputgroup.first.corner.radius = {inputgroup.addon.border.radius} 0 0 {inputgroup.addon.border.radius}
+inputgroup.last.corner.radius = 0 {inputgroup.addon.border.radius} {inputgroup.addon.border.radius} 0
+inputgroup.middle.corner.radius = 0
+inputgroup.addon.border.width = 1px 0 1px 0
+inputgroup.addon.start.border.width = 1px 0 1px 1px
+inputgroup.addon.end.border.width = 1px 1px 1px 0
+inputgroup.addon.both.border.width = 1px 1px 1px 1px
+
+# listbox : la coche de l'option choisie, ses gouttières en marge (gutter.start et gutter.end sont des nombres).
+listbox.checkmark.margin = 0 {listbox.checkmark.gutter.end} 0 {listbox.checkmark.gutter.start}
+
+# multiselect : le libellé du champ, padding.y sur padding.x ; avec des puces, leur moitié autour et entre elles
+# (calc(padding / 2) chez mkm), chaque puce à la moitié du retrait vertical, aux coins du champ ; la case d'une option
+# à option.gap de son texte ; la liste haute de 14rem au plus (scrollHeight de mkm, en pixels de Dashboard) ; la
+# place de l'ombre autour de la liste (mesure de mkm-wpf, comme tooltip.window.padding).
+multiselect.label.padding = {multiselect.padding.y} {multiselect.padding.x}
+multiselect.chips.padding = 3px 3.5px
+multiselect.chips.gap = 3px
+multiselect.chip.padding = 3px {chip.padding.y} 3px {chip.padding.x}
+multiselect.option.checkbox.margin = 0 {multiselect.option.gap} 0 0
+multiselect.list.max.height = 168px
+multiselect.overlay.window.padding = 0 2px 3px 2px
+
+# autocomplete : avec le bouton, le champ perd ses coins de droite et le bouton ceux de gauche et sa bordure gauche
+# (border-inline-start: 0 chez mkm) ; les suggestions hautes de 14rem au plus (scrollHeight de mkm, en pixels de
+# Dashboard).
+autocomplete.input.dropdown.corner.radius = {inputtext.border.radius} 0 0 {inputtext.border.radius}
+autocomplete.dropdown.corner.radius = 0 {autocomplete.dropdown.border.radius} {autocomplete.dropdown.border.radius} 0
+autocomplete.dropdown.border.width = 1px 1px 1px 0
+autocomplete.list.max.height = 168px

@@ -36,6 +36,9 @@ Namespace Mkm.Wpf.Controls
         Public Shared ReadOnly RemovableProperty As DependencyProperty = DependencyProperty.Register(
             NameOf(Removable), GetType(Boolean), GetType(Chip), New FrameworkPropertyMetadata(False))
 
+        ''' <summary>Les coins de la puce : ceux du thème (chip.border.radius) par défaut.</summary>
+        Public Shared ReadOnly CornerRadiusProperty As DependencyProperty = System.Windows.Controls.Border.CornerRadiusProperty.AddOwner(GetType(Chip))
+
         ''' <summary>Levé quand la croix retire la puce, qui se cache.</summary>
         Public Shared ReadOnly RemoveEvent As RoutedEvent = EventManager.RegisterRoutedEvent(
             NameOf(Remove), RoutingStrategy.Bubble, GetType(RoutedEventHandler), GetType(Chip))
@@ -46,6 +49,16 @@ Namespace Mkm.Wpf.Controls
             DefaultStyleKeyProperty.OverrideMetadata(GetType(Chip), New FrameworkPropertyMetadata(GetType(Chip)))
             FocusableProperty.OverrideMetadata(GetType(Chip), New FrameworkPropertyMetadata(False))
         End Sub
+
+        ''' <summary>Les coins de la puce.</summary>
+        Public Property CornerRadius As CornerRadius
+            Get
+                Return DirectCast(GetValue(CornerRadiusProperty), CornerRadius)
+            End Get
+            Set(value As CornerRadius)
+                SetValue(CornerRadiusProperty, value)
+            End Set
+        End Property
 
         ''' <summary>Son icône, devant le texte.</summary>
         Public Property Icon As Object

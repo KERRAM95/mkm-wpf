@@ -1,0 +1,36 @@
+<!--
+    Le style d'IconField, sur IconField et InputIcon de mkm (styles/iconfield) : l'icône de 16 px (icon.size), grise
+    (iconfield.icon.color), au milieu de la hauteur, à 7 px du bord (form.field.padding.x) ; le champ recule son texte de
+    30 px (deux retraits et l'icône). Elle ne prend pas les clics : ils vont au champ.
+-->
+<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+                    xmlns:local="clr-namespace:Mkm.Wpf.Controls">
+
+    <Style TargetType="{x:Type local:IconField}">
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="{x:Type local:IconField}">
+                    <Grid>
+                        <ContentPresenter />
+                        <local:Icon x:Name="Icone" Source="{TemplateBinding Icon}" IsHitTestVisible="False"
+                                    HorizontalAlignment="Left" VerticalAlignment="Center"
+                                    Margin="{DynamicResource mkm.iconfield.icon.start.margin}"
+                                    Width="{DynamicResource mkm.icon.size}" Height="{DynamicResource mkm.icon.size}"
+                                    Foreground="{DynamicResource mkm.iconfield.icon.color}" />
+                    </Grid>
+                    <ControlTemplate.Triggers>
+                        <Trigger Property="IconPosition" Value="Right">
+                            <Setter TargetName="Icone" Property="HorizontalAlignment" Value="Right" />
+                            <Setter TargetName="Icone" Property="Margin" Value="{DynamicResource mkm.iconfield.icon.end.margin}" />
+                        </Trigger>
+                        <Trigger Property="Icon" Value="{x:Null}">
+                            <Setter TargetName="Icone" Property="Visibility" Value="Collapsed" />
+                        </Trigger>
+                    </ControlTemplate.Triggers>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+
+</ResourceDictionary>

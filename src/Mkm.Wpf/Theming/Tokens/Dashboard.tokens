@@ -553,6 +553,73 @@ actionbar.dropdown.button.hover.background = #f1f5f9
 actionbar.dropdown.icon.size = 12px
 actionbar.dropdown.icon.color = #64748b
 
+# autocomplete
+autocomplete.background = {form.field.background}
+autocomplete.disabled.background = {form.field.disabled.background}
+autocomplete.filled.background = {form.field.filled.background}
+autocomplete.filled.hover.background = {form.field.filled.hover.background}
+autocomplete.filled.focus.background = {form.field.filled.focus.background}
+autocomplete.border.color = {form.field.border.color}
+autocomplete.hover.border.color = {form.field.hover.border.color}
+autocomplete.focus.border.color = {form.field.focus.border.color}
+autocomplete.invalid.border.color = {form.field.invalid.border.color}
+autocomplete.color = {form.field.color}
+autocomplete.disabled.color = {form.field.disabled.color}
+autocomplete.placeholder.color = {form.field.placeholder.color}
+autocomplete.invalid.placeholder.color = {form.field.invalid.placeholder.color}
+autocomplete.shadow = {form.field.shadow}
+autocomplete.padding.x = {form.field.padding.x}
+autocomplete.padding.y = {form.field.padding.y}
+autocomplete.border.radius = {form.field.border.radius}
+autocomplete.focus.ring.width = {form.field.focus.ring.width}
+autocomplete.focus.ring.style = {form.field.focus.ring.style}
+autocomplete.focus.ring.color = {form.field.focus.ring.color}
+autocomplete.focus.ring.offset = {form.field.focus.ring.offset}
+autocomplete.focus.ring.shadow = {form.field.focus.ring.shadow}
+autocomplete.transition.duration = {form.field.transition.duration}
+autocomplete.overlay.background = {overlay.select.background}
+autocomplete.overlay.border.color = {overlay.select.border.color}
+autocomplete.overlay.border.radius = {overlay.select.border.radius}
+autocomplete.overlay.color = {overlay.select.color}
+autocomplete.overlay.shadow = {overlay.select.shadow}
+autocomplete.list.padding = {list.padding}
+autocomplete.list.gap = {list.gap}
+autocomplete.option.focus.background = {list.option.focus.background}
+autocomplete.option.selected.background = {list.option.selected.background}
+autocomplete.option.selected.focus.background = {list.option.selected.focus.background}
+autocomplete.option.color = {list.option.color}
+autocomplete.option.focus.color = {list.option.focus.color}
+autocomplete.option.selected.color = {list.option.selected.color}
+autocomplete.option.selected.focus.color = {list.option.selected.focus.color}
+autocomplete.option.padding = {list.option.padding}
+autocomplete.option.border.radius = {list.option.border.radius}
+autocomplete.option.group.background = {list.option.group.background}
+autocomplete.option.group.color = {list.option.group.color}
+autocomplete.option.group.font.weight = {list.option.group.font.weight}
+autocomplete.option.group.padding = {list.option.group.padding}
+autocomplete.dropdown.width = 30px
+autocomplete.dropdown.sm.width = 24px
+autocomplete.dropdown.lg.width = 36px
+autocomplete.dropdown.background = {form.field.background}
+autocomplete.dropdown.color = {form.field.icon.color}
+autocomplete.dropdown.hover.color = {form.field.icon.color}
+autocomplete.dropdown.active.color = {form.field.icon.color}
+autocomplete.dropdown.border.color = {form.field.border.color}
+autocomplete.dropdown.hover.border.color = {form.field.border.color}
+autocomplete.dropdown.active.border.color = {form.field.border.color}
+autocomplete.dropdown.border.radius = {form.field.border.radius}
+autocomplete.dropdown.focus.ring.width = {focus.ring.width}
+autocomplete.dropdown.focus.ring.style = {focus.ring.style}
+autocomplete.dropdown.focus.ring.color = {focus.ring.color}
+autocomplete.dropdown.focus.ring.offset = {focus.ring.offset}
+autocomplete.dropdown.focus.ring.shadow = {focus.ring.shadow}
+autocomplete.dropdown.hover.background = {surface.200}
+autocomplete.dropdown.active.background = {surface.300}
+autocomplete.chip.border.radius = {border.radius.xs}
+autocomplete.chip.focus.background = {surface.300}
+autocomplete.chip.focus.color = {surface.900}
+autocomplete.empty.message.padding = {list.option.padding}
+
 # avatar
 avatar.width = 24px
 avatar.height = 24px
@@ -1192,6 +1259,9 @@ fieldset.toggle.icon.color = {text.muted.color}
 fieldset.toggle.icon.hover.color = {text.hover.muted.color}
 fieldset.content.padding = 0
 
+# iconfield
+iconfield.icon.color = {form.field.icon.color}
+
 # idcard
 idcard.background = transparent
 idcard.color = {text.color}
@@ -1232,6 +1302,14 @@ idcard.facet.padding = 8px
 idcard.facet.icon.size = 16px
 idcard.facet.invalid.color = #ea4f37
 idcard.facet.content.padding = 0
+
+# inputgroup
+inputgroup.addon.background = {form.field.background}
+inputgroup.addon.border.color = {form.field.border.color}
+inputgroup.addon.color = {form.field.icon.color}
+inputgroup.addon.border.radius = {form.field.border.radius}
+inputgroup.addon.padding = 6px
+inputgroup.addon.min.width = 30px
 
 # inputnumber
 inputnumber.transition.duration = {transition.duration}
@@ -1279,6 +1357,38 @@ inputtext.sm.padding.y = {form.field.sm.padding.y}
 inputtext.lg.font.size = {form.field.lg.font.size}
 inputtext.lg.padding.x = {form.field.lg.padding.x}
 inputtext.lg.padding.y = {form.field.lg.padding.y}
+
+# listbox
+listbox.background = {form.field.background}
+listbox.disabled.background = {form.field.disabled.background}
+listbox.border.color = {form.field.border.color}
+listbox.invalid.border.color = {form.field.invalid.border.color}
+listbox.color = {form.field.color}
+listbox.disabled.color = {form.field.disabled.color}
+listbox.shadow = {form.field.shadow}
+listbox.border.radius = {form.field.border.radius}
+listbox.transition.duration = {form.field.transition.duration}
+listbox.list.padding = {list.padding}
+listbox.list.gap = {list.gap}
+listbox.list.header.padding = {list.header.padding}
+listbox.option.focus.background = {list.option.focus.background}
+listbox.option.selected.background = {list.option.selected.background}
+listbox.option.selected.focus.background = {list.option.selected.focus.background}
+listbox.option.color = {list.option.color}
+listbox.option.focus.color = {list.option.focus.color}
+listbox.option.selected.color = {list.option.selected.color}
+listbox.option.selected.focus.color = {list.option.selected.focus.color}
+listbox.option.padding = {list.option.padding}
+listbox.option.border.radius = {list.option.border.radius}
+listbox.option.striped.background = {surface.100}
+listbox.option.group.background = {list.option.group.background}
+listbox.option.group.color = {list.option.group.color}
+listbox.option.group.font.weight = {list.option.group.font.weight}
+listbox.option.group.padding = {list.option.group.padding}
+listbox.checkmark.color = {list.option.color}
+listbox.checkmark.gutter.start = -4.5px
+listbox.checkmark.gutter.end = 4.5px
+listbox.empty.message.padding = {list.option.padding}
 
 # menu
 menu.background = {content.background}
@@ -1391,6 +1501,64 @@ message.contrast.close.button.focus.ring.shadow = none
 message.contrast.outlined.color = {surface.900}
 message.contrast.outlined.border.color = {surface.900}
 message.contrast.simple.color = {surface.900}
+
+# multiselect
+multiselect.background = {form.field.background}
+multiselect.disabled.background = {form.field.disabled.background}
+multiselect.filled.background = {form.field.filled.background}
+multiselect.filled.hover.background = {form.field.filled.hover.background}
+multiselect.filled.focus.background = {form.field.filled.focus.background}
+multiselect.border.color = {form.field.border.color}
+multiselect.hover.border.color = {form.field.hover.border.color}
+multiselect.focus.border.color = {form.field.focus.border.color}
+multiselect.invalid.border.color = {form.field.invalid.border.color}
+multiselect.color = {form.field.color}
+multiselect.disabled.color = {form.field.disabled.color}
+multiselect.placeholder.color = {form.field.placeholder.color}
+multiselect.invalid.placeholder.color = {form.field.invalid.placeholder.color}
+multiselect.shadow = {form.field.shadow}
+multiselect.padding.x = {form.field.padding.x}
+multiselect.padding.y = {form.field.padding.y}
+multiselect.border.radius = {form.field.border.radius}
+multiselect.focus.ring.width = {form.field.focus.ring.width}
+multiselect.focus.ring.style = {form.field.focus.ring.style}
+multiselect.focus.ring.color = {form.field.focus.ring.color}
+multiselect.focus.ring.offset = {form.field.focus.ring.offset}
+multiselect.focus.ring.shadow = {form.field.focus.ring.shadow}
+multiselect.transition.duration = {form.field.transition.duration}
+multiselect.sm.font.size = {form.field.sm.font.size}
+multiselect.sm.padding.x = {form.field.sm.padding.x}
+multiselect.sm.padding.y = {form.field.sm.padding.y}
+multiselect.lg.font.size = {form.field.lg.font.size}
+multiselect.lg.padding.x = {form.field.lg.padding.x}
+multiselect.lg.padding.y = {form.field.lg.padding.y}
+multiselect.dropdown.width = 30px
+multiselect.dropdown.color = {form.field.icon.color}
+multiselect.overlay.background = {overlay.select.background}
+multiselect.overlay.border.color = {overlay.select.border.color}
+multiselect.overlay.border.radius = {overlay.select.border.radius}
+multiselect.overlay.color = {overlay.select.color}
+multiselect.overlay.shadow = {overlay.select.shadow}
+multiselect.list.padding = {list.padding}
+multiselect.list.gap = {list.gap}
+multiselect.list.header.padding = {list.header.padding}
+multiselect.option.focus.background = {list.option.focus.background}
+multiselect.option.selected.background = {list.option.selected.background}
+multiselect.option.selected.focus.background = {list.option.selected.focus.background}
+multiselect.option.color = {list.option.color}
+multiselect.option.focus.color = {list.option.focus.color}
+multiselect.option.selected.color = {list.option.selected.color}
+multiselect.option.selected.focus.color = {list.option.selected.focus.color}
+multiselect.option.padding = {list.option.padding}
+multiselect.option.border.radius = {list.option.border.radius}
+multiselect.option.gap = 6px
+multiselect.option.group.background = {list.option.group.background}
+multiselect.option.group.color = {list.option.group.color}
+multiselect.option.group.font.weight = {list.option.group.font.weight}
+multiselect.option.group.padding = {list.option.group.padding}
+multiselect.chip.border.radius = {border.radius.xs}
+multiselect.clear.icon.color = {form.field.icon.color}
+multiselect.empty.message.padding = {list.option.padding}
 
 # overlaybadge
 overlaybadge.outline.width = 2px
