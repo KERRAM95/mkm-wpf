@@ -1,0 +1,86 @@
+<!--
+    Le style d'InputChips, sur le champ à puces de mkm (styles/inputchips ; jetons de Nora en pixels, dans les deux
+    thèmes) : le cadre des champs (fond, bordure d'un pixel, coins du thème ; la bordure plus foncée au survol, au bleu
+    du thème au clavier) ; dedans, les puces (coins de 2 px, 3 px de retrait en hauteur) à 3 px l'une de l'autre, puis
+    la saisie, sans cadre, qui prend la place restante ; le texte gris tant que rien n'est saisi.
+-->
+<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+                    xmlns:local="clr-namespace:Mkm.Wpf.Controls">
+
+    <!-- La saisie : un TextBox sans cadre, sur le fond du champ. -->
+    <Style x:Key="mkm.InputChips.Saisie" TargetType="{x:Type TextBox}">
+        <Setter Property="Background" Value="Transparent" />
+        <Setter Property="BorderThickness" Value="0" />
+        <Setter Property="Padding" Value="0" />
+        <Setter Property="MinWidth" Value="{DynamicResource mkm.inputchips.input.min.width}" />
+        <Setter Property="VerticalAlignment" Value="Center" />
+        <Setter Property="FocusVisualStyle" Value="{x:Null}" />
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="{x:Type TextBox}">
+                    <ScrollViewer x:Name="PART_ContentHost" Focusable="False" Background="Transparent"
+                                  HorizontalScrollBarVisibility="Hidden" VerticalScrollBarVisibility="Hidden" />
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+
+    <Style TargetType="{x:Type local:InputChips}">
+        <Setter Property="Background" Value="{DynamicResource mkm.inputchips.background}" />
+        <Setter Property="Foreground" Value="{DynamicResource mkm.inputchips.color}" />
+        <Setter Property="BorderBrush" Value="{DynamicResource mkm.inputchips.border.color}" />
+        <Setter Property="BorderThickness" Value="1" />
+        <Setter Property="Padding" Value="{DynamicResource mkm.inputchips.input.padding}" />
+        <Setter Property="MinHeight" Value="{DynamicResource mkm.inputtext.height}" />
+        <Setter Property="FontFamily" Value="{DynamicResource mkm.font.family}" />
+        <Setter Property="FontSize" Value="{DynamicResource mkm.inputtext.font.size}" />
+        <Setter Property="Cursor" Value="IBeam" />
+        <Setter Property="SnapsToDevicePixels" Value="True" />
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="{x:Type local:InputChips}">
+                    <Border Background="{TemplateBinding Background}" BorderBrush="{TemplateBinding BorderBrush}"
+                            BorderThickness="{TemplateBinding BorderThickness}" Padding="{TemplateBinding Padding}"
+                            CornerRadius="{DynamicResource mkm.inputchips.border.radius}">
+                        <Grid>
+                            <TextBlock x:Name="Aide" Visibility="Collapsed" IsHitTestVisible="False" VerticalAlignment="Center"
+                                       Padding="2,0,0,0" TextTrimming="CharacterEllipsis" Text="{TemplateBinding Placeholder}"
+                                       Foreground="{DynamicResource mkm.inputchips.placeholder.color}" />
+                            <local:GapWrapPanel x:Name="PART_Chips" Gap="{DynamicResource mkm.inputchips.gap}">
+                                <TextBox x:Name="PART_Input" Style="{StaticResource mkm.InputChips.Saisie}"
+                                         Foreground="{TemplateBinding Foreground}" CaretBrush="{TemplateBinding Foreground}" />
+                            </local:GapWrapPanel>
+                        </Grid>
+                    </Border>
+                    <ControlTemplate.Triggers>
+                        <MultiTrigger>
+                            <MultiTrigger.Conditions>
+                                <Condition Property="HasValues" Value="False" />
+                                <Condition SourceName="PART_Input" Property="Text" Value="" />
+                            </MultiTrigger.Conditions>
+                            <Setter TargetName="Aide" Property="Visibility" Value="Visible" />
+                        </MultiTrigger>
+                        <Trigger Property="IsMaxedOut" Value="True">
+                            <Setter TargetName="PART_Input" Property="IsReadOnly" Value="True" />
+                        </Trigger>
+                        <Trigger Property="IsMouseOver" Value="True">
+                            <Setter Property="BorderBrush" Value="{DynamicResource mkm.inputchips.hover.border.color}" />
+                        </Trigger>
+                        <Trigger Property="IsKeyboardFocusWithin" Value="True">
+                            <Setter Property="BorderBrush" Value="{DynamicResource mkm.inputchips.focus.border.color}" />
+                        </Trigger>
+                        <Trigger Property="Invalid" Value="True">
+                            <Setter Property="BorderBrush" Value="{DynamicResource mkm.inputchips.invalid.border.color}" />
+                        </Trigger>
+                        <Trigger Property="IsEnabled" Value="False">
+                            <Setter Property="Background" Value="{DynamicResource mkm.inputchips.disabled.background}" />
+                            <Setter Property="Foreground" Value="{DynamicResource mkm.inputchips.disabled.color}" />
+                        </Trigger>
+                    </ControlTemplate.Triggers>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+
+</ResourceDictionary>

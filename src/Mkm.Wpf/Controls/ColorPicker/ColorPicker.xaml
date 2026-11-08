@@ -1,0 +1,160 @@
+<!--
+    Le style de ColorPicker, sur le choix de couleur de mkm (styles/colorpicker ; jetons de Nora en pixels, dans les
+    deux thèmes) : un carré de 18 px de la couleur, aux coins des champs ; ouvert (ou en place), un panneau sombre de
+    193 sur 166 : le carré des nuances de 150 px (la teinte, blanchie à gauche, noircie en bas) et sa poignée ronde de
+    10 px, la bande des teintes de 17 px et sa poignée de 21 sur 10 ; au clavier, l'anneau du focus.
+-->
+<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+                    xmlns:local="clr-namespace:Mkm.Wpf.Controls">
+
+    <!-- Une partie du panneau qui prend le clavier : l'anneau du focus autour. -->
+    <Style x:Key="mkm.ColorPicker.Partie" TargetType="{x:Type ContentControl}">
+        <Setter Property="Focusable" Value="True" />
+        <Setter Property="FocusVisualStyle" Value="{x:Null}" />
+        <Setter Property="Cursor" Value="Hand" />
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="{x:Type ContentControl}">
+                    <Grid>
+                        <ContentPresenter />
+                        <Rectangle x:Name="Anneau" Visibility="Collapsed" Margin="-2" IsHitTestVisible="False"
+                                   Stroke="{DynamicResource mkm.colorpicker.preview.focus.ring.color}"
+                                   StrokeThickness="{DynamicResource mkm.colorpicker.preview.focus.ring.width}" />
+                    </Grid>
+                    <ControlTemplate.Triggers>
+                        <Trigger Property="local:FocusVisible.IsVisible" Value="True">
+                            <Setter TargetName="Anneau" Property="Visibility" Value="Visible" />
+                        </Trigger>
+                    </ControlTemplate.Triggers>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+
+    <Style TargetType="{x:Type local:PanneauDeCouleur}">
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="{x:Type local:PanneauDeCouleur}">
+                    <Border Width="193" Height="166" Background="{DynamicResource mkm.colorpicker.panel.background}"
+                            BorderBrush="{DynamicResource mkm.colorpicker.panel.border.color}" BorderThickness="1"
+                            CornerRadius="{DynamicResource mkm.colorpicker.panel.border.radius}">
+                        <Canvas>
+                            <ContentControl x:Name="PART_Selector" Style="{StaticResource mkm.ColorPicker.Partie}"
+                                            Canvas.Left="8" Canvas.Top="8" Width="150" Height="150">
+                                <Grid ClipToBounds="False">
+                                    <Rectangle Fill="{Binding HueBrush, RelativeSource={RelativeSource AncestorType={x:Type local:PanneauDeCouleur}}}" />
+                                    <Rectangle>
+                                        <Rectangle.Fill>
+                                            <LinearGradientBrush StartPoint="0,0" EndPoint="1,0">
+                                                <GradientStop Offset="0" Color="#FFFFFFFF" />
+                                                <GradientStop Offset="1" Color="#00FFFFFF" />
+                                            </LinearGradientBrush>
+                                        </Rectangle.Fill>
+                                    </Rectangle>
+                                    <Rectangle>
+                                        <Rectangle.Fill>
+                                            <LinearGradientBrush StartPoint="0,1" EndPoint="0,0">
+                                                <GradientStop Offset="0" Color="#FF000000" />
+                                                <GradientStop Offset="1" Color="#00000000" />
+                                            </LinearGradientBrush>
+                                        </Rectangle.Fill>
+                                    </Rectangle>
+                                    <Canvas>
+                                        <Ellipse x:Name="PART_ColorHandle" Width="10" Height="10" Margin="-5,-5,0,0" Opacity="0.85"
+                                                 StrokeThickness="1" Stroke="{DynamicResource mkm.colorpicker.handle.color}"
+                                                 IsHitTestVisible="False" />
+                                    </Canvas>
+                                </Grid>
+                            </ContentControl>
+                            <ContentControl x:Name="PART_Hue" Style="{StaticResource mkm.ColorPicker.Partie}"
+                                            Canvas.Left="167" Canvas.Top="8" Width="17" Height="150">
+                                <Grid>
+                                    <Rectangle Opacity="0.85">
+                                        <Rectangle.Fill>
+                                            <LinearGradientBrush StartPoint="0,1" EndPoint="0,0">
+                                                <GradientStop Offset="0" Color="#FFFF0000" />
+                                                <GradientStop Offset="0.17" Color="#FFFFFF00" />
+                                                <GradientStop Offset="0.33" Color="#FF00FF00" />
+                                                <GradientStop Offset="0.5" Color="#FF00FFFF" />
+                                                <GradientStop Offset="0.67" Color="#FF0000FF" />
+                                                <GradientStop Offset="0.83" Color="#FFFF00FF" />
+                                                <GradientStop Offset="1" Color="#FFFF0000" />
+                                            </LinearGradientBrush>
+                                        </Rectangle.Fill>
+                                    </Rectangle>
+                                    <Canvas>
+                                        <Border x:Name="PART_HueHandle" Width="21" Height="10" Margin="-2,-5,0,0" Opacity="0.85"
+                                                BorderThickness="2" BorderBrush="{DynamicResource mkm.colorpicker.handle.color}"
+                                                IsHitTestVisible="False" />
+                                    </Canvas>
+                                </Grid>
+                            </ContentControl>
+                        </Canvas>
+                    </Border>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+
+    <!-- Le carré de la couleur : un bouton. -->
+    <Style x:Key="mkm.ColorPicker.Apercu" TargetType="{x:Type Button}">
+        <Setter Property="Width" Value="{DynamicResource mkm.colorpicker.preview.width}" />
+        <Setter Property="Height" Value="{DynamicResource mkm.colorpicker.preview.height}" />
+        <Setter Property="Cursor" Value="Hand" />
+        <Setter Property="FocusVisualStyle" Value="{x:Null}" />
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="{x:Type Button}">
+                    <Grid>
+                        <Border Background="{TemplateBinding Background}" CornerRadius="{DynamicResource mkm.colorpicker.preview.border.radius}" />
+                        <Border x:Name="Anneau" Visibility="Collapsed" Margin="-2" BorderThickness="{DynamicResource mkm.colorpicker.preview.ring.border.width}"
+                                BorderBrush="{DynamicResource mkm.colorpicker.preview.focus.ring.color}"
+                                CornerRadius="{DynamicResource mkm.colorpicker.preview.border.radius}" />
+                    </Grid>
+                    <ControlTemplate.Triggers>
+                        <Trigger Property="local:FocusVisible.IsVisible" Value="True">
+                            <Setter TargetName="Anneau" Property="Visibility" Value="Visible" />
+                        </Trigger>
+                    </ControlTemplate.Triggers>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+
+    <Style TargetType="{x:Type local:ColorPicker}">
+        <Setter Property="HorizontalAlignment" Value="Left" />
+        <Setter Property="VerticalAlignment" Value="Center" />
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="{x:Type local:ColorPicker}">
+                    <Grid x:Name="Racine">
+                        <Button x:Name="PART_Preview" Style="{StaticResource mkm.ColorPicker.Apercu}" Background="{TemplateBinding ColorBrush}" />
+                        <ContentPresenter x:Name="PART_InlineHost" Visibility="Collapsed" />
+                        <Popup x:Name="PART_Popup" AllowsTransparency="True" Focusable="False" StaysOpen="False" Placement="Bottom"
+                               PlacementTarget="{Binding ElementName=PART_Preview}" PopupAnimation="None"
+                               VerticalOffset="{DynamicResource mkm.anchor.gutter}"
+                               IsOpen="{Binding IsDropDownOpen, RelativeSource={RelativeSource TemplatedParent}, Mode=TwoWay}">
+                            <Grid Margin="{DynamicResource mkm.colorpicker.overlay.window.padding}">
+                                <Border Background="{DynamicResource mkm.colorpicker.panel.background}"
+                                        CornerRadius="{DynamicResource mkm.colorpicker.panel.border.radius}"
+                                        Effect="{DynamicResource mkm.colorpicker.panel.shadow}" />
+                                <ContentPresenter x:Name="PART_PanelHost" />
+                            </Grid>
+                        </Popup>
+                    </Grid>
+                    <ControlTemplate.Triggers>
+                        <Trigger Property="Inline" Value="True">
+                            <Setter TargetName="PART_Preview" Property="Visibility" Value="Collapsed" />
+                            <Setter TargetName="PART_InlineHost" Property="Visibility" Value="Visible" />
+                        </Trigger>
+                        <Trigger Property="IsEnabled" Value="False">
+                            <Setter TargetName="Racine" Property="Opacity" Value="{DynamicResource mkm.disabled.opacity}" />
+                        </Trigger>
+                    </ControlTemplate.Triggers>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+
+</ResourceDictionary>

@@ -866,6 +866,22 @@ chip.remove.icon.focus.ring.offset = {focus.ring.offset}
 chip.remove.icon.focus.ring.shadow = {form.field.focus.ring.shadow}
 chip.remove.icon.color = {surface.900}
 
+# colorpicker
+colorpicker.transition.duration = {transition.duration}
+colorpicker.preview.width = 18px
+colorpicker.preview.height = 18px
+colorpicker.preview.border.radius = {form.field.border.radius}
+colorpicker.preview.focus.ring.width = {focus.ring.width}
+colorpicker.preview.focus.ring.style = {focus.ring.style}
+colorpicker.preview.focus.ring.color = {focus.ring.color}
+colorpicker.preview.focus.ring.offset = {focus.ring.offset}
+colorpicker.preview.focus.ring.shadow = {focus.ring.shadow}
+colorpicker.panel.shadow = {overlay.popover.shadow}
+colorpicker.panel.border.radius = {overlay.popover.border.radius}
+colorpicker.panel.background = {surface.800}
+colorpicker.panel.border.color = {surface.900}
+colorpicker.handle.color = {surface.0}
+
 # confirmdialog
 confirmdialog.icon.size = 24px
 confirmdialog.icon.color = {overlay.modal.color}
@@ -1198,6 +1214,25 @@ fieldset.toggle.icon.color = {text.muted.color}
 fieldset.toggle.icon.hover.color = {text.hover.muted.color}
 fieldset.content.padding = 0
 
+# floatlabel
+floatlabel.color = {form.field.float.label.color}
+floatlabel.focus.color = {form.field.float.label.focus.color}
+floatlabel.active.color = {form.field.float.label.active.color}
+floatlabel.invalid.color = {form.field.float.label.invalid.color}
+floatlabel.transition.duration = 0.2s
+floatlabel.position.x = {form.field.padding.x}
+floatlabel.position.y = {form.field.padding.y}
+floatlabel.font.weight = 500
+floatlabel.active.font.size = 9px
+floatlabel.active.font.weight = 400
+floatlabel.over.active.top = -15px
+floatlabel.in.input.padding.top = 18px
+floatlabel.in.input.padding.bottom = {form.field.padding.y}
+floatlabel.in.active.top = {form.field.padding.y}
+floatlabel.on.border.radius = {border.radius.xs}
+floatlabel.on.active.background = {form.field.background}
+floatlabel.on.active.padding = 0 1.5px
+
 # iconfield
 iconfield.icon.color = {form.field.icon.color}
 
@@ -1297,6 +1332,32 @@ inplace.focus.ring.shadow = {focus.ring.shadow}
 inplace.transition.duration = {transition.duration}
 inplace.display.hover.background = {content.hover.background}
 inplace.display.hover.color = {content.hover.color}
+
+# inputchips
+inputchips.background = {form.field.background}
+inputchips.disabled.background = {form.field.disabled.background}
+inputchips.filled.background = {form.field.filled.background}
+inputchips.filled.focus.background = {form.field.filled.focus.background}
+inputchips.border.color = {form.field.border.color}
+inputchips.hover.border.color = {form.field.hover.border.color}
+inputchips.focus.border.color = {form.field.focus.border.color}
+inputchips.invalid.border.color = {form.field.invalid.border.color}
+inputchips.color = {form.field.color}
+inputchips.disabled.color = {form.field.disabled.color}
+inputchips.placeholder.color = {form.field.placeholder.color}
+inputchips.shadow = {form.field.shadow}
+inputchips.padding.x = {form.field.padding.x}
+inputchips.padding.y = {form.field.padding.y}
+inputchips.border.radius = {form.field.border.radius}
+inputchips.focus.ring.width = {form.field.focus.ring.width}
+inputchips.focus.ring.style = {form.field.focus.ring.style}
+inputchips.focus.ring.color = {form.field.focus.ring.color}
+inputchips.focus.ring.offset = {form.field.focus.ring.offset}
+inputchips.focus.ring.shadow = {form.field.focus.ring.shadow}
+inputchips.transition.duration = {form.field.transition.duration}
+inputchips.chip.border.radius = {border.radius.xs}
+inputchips.chip.focus.background = {surface.300}
+inputchips.chip.color = {surface.900}
 
 # inputgroup
 inputgroup.addon.background = {form.field.background}

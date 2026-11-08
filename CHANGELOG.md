@@ -161,6 +161,12 @@ Les évolutions notables de mkm-wpf, version par version. Le format suit
   leurs scénarios.
 - Image : les boutons de l'aperçu prennent enfin leur style (un type à eux,
   au lieu d'une clé que l'application ne voyait pas).
+- Le lot 20 (`docs/composants/puces-libelles-et-couleur.md`) : `InputChips`
+  (des valeurs en puces), `FloatLabel` (le libellé qui s'envole : au-dessus,
+  dedans, sur la bordure) et `IftaLabel` (toujours dans le champ),
+  `ColorPicker` (nuances et teintes, en place ou dans un panneau) ; leurs
+  jetons, leurs pages, leurs tests et leurs scénarios. L'import des jetons
+  suit aussi les renvois écrits en camelCase.
 - Info-bulle et Popover : la page qui défile les referme, comme mkm.
 - Le zoom de toute l'interface (`docs/fondations/zoom.md`) :
   `MkmResources.Zoom` (80 à 200 %), `ZoomIn`, `ZoomOut`, `ResetZoom`,

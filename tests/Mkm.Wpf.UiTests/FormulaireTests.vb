@@ -382,6 +382,46 @@ Namespace Mkm.Wpf.UiTests
             AttendreQue(Function() quantite.Patterns.Value.Pattern.Value.Value = "123", "pint : « 123 »")
         End Sub
 
+        <Test>
+        Public Sub InputChips_EntreeAjouteUnePuceEtRetourArriereLaRetire()
+            Dim page = OuvrirLaDoc("inputchips")
+            Dim champ = Trouver("MotsCles", page)
+            Cliquer(TrouverParNom("Mots-clés", ControlType.Edit, champ))
+            Ecrire("acier")
+            Taper(VirtualKeyShort.RETURN)
+            Ecrire("inox")
+            Taper(VirtualKeyShort.RETURN)
+            Attendre(Function() champ.FindFirstDescendant(Function(cf) cf.ByName("inox")), "la puce « inox »")
+            Taper(VirtualKeyShort.BACK)
+            AttendreQue(Function() champ.FindFirstDescendant(Function(cf) cf.ByName("inox")) Is Nothing, "Retour arrière retire « inox »")
+            Assert.That(champ.FindFirstDescendant(Function(cf) cf.ByName("acier")), [Is].Not.Null)
+        End Sub
+
+        <Test>
+        Public Sub FloatLabel_LeLibelleNommeLeChampEtSEnvole()
+            Dim page = OuvrirLaDoc("floatlabel")
+            Dim cadre = Exemple(page, "basique")
+            Dim champ = Trouver("Reference", cadre)
+            Assert.That(NomDe(champ), [Is].EqualTo("Référence"), "le libellé nomme le champ")
+            Dim libelle = TrouverParNom("Référence", ControlType.Text, cadre)
+            Assert.That(libelle.BoundingRectangle.Top, [Is].GreaterThan(champ.BoundingRectangle.Top), "posé dans le champ")
+            Cliquer(champ)
+            AttendreQue(Function() libelle.BoundingRectangle.Bottom <= champ.BoundingRectangle.Top + 1, "envolé au-dessus du champ")
+        End Sub
+
+        <Test>
+        Public Sub ColorPicker_LePanneauChangeLaCouleur()
+            Dim page = OuvrirLaDoc("colorpicker")
+            Dim apercu = TrouverParNom("Couleur du repère", ControlType.Button, Exemple(page, "basique"))
+            Cliquer(apercu)
+            Dim nuance = TrouverAilleurs(T("aria.colorSelector"))
+            Dim cadre = nuance.BoundingRectangle
+            Mouse.Click(New System.Drawing.Point(cadre.Right - 2, cadre.Top + 2))
+            AttendreQue(Function() NomDe(Trouver("Code", page)) <> "#3b82f6", "la couleur a changé")
+            Taper(VirtualKeyShort.ESCAPE)
+            AttendreQue(Function() Referme(T("aria.colorSelector")), "Échap referme le panneau")
+        End Sub
+
     End Class
 
 End Namespace

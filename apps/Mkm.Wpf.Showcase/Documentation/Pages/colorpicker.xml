@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="utf-8"?>
+<page titre="ColorPicker" categorie="Formulaire" types="ColorPicker" jetons="colorpicker">
+  <resume>Un choix de couleur : un carré de la couleur qui, cliqué, ouvre un panneau des nuances et des teintes.</resume>
+
+  <section titre="Import">
+    <code><![CDATA[
+<Window xmlns:mkm="urn:mkm-wpf">
+    <mkm:ColorPicker Value="3b82f6" />
+</Window>
+]]></code>
+  </section>
+
+  <section titre="Basique">
+    <p><c>Value</c> est la couleur en hexadécimal, sans dièse, comme mkm (« ff0000 » par défaut) ; <c>Color</c>, la même en
+      <c>Color</c> de WPF. Un clic sur le carré ouvre le panneau : le carré des nuances (saturation et luminosité) et la
+      bande des teintes ; Échap ou Entrée le referment.</p>
+    <exemple><![CDATA[
+<StackPanel Orientation="Horizontal">
+    <mkm:ColorPicker x:Name="Couleur" Value="3b82f6" AutomationProperties.Name="Couleur du repère" />
+    <TextBlock x:Name="Code" Margin="12,0,0,0" VerticalAlignment="Center"
+               Text="{Binding Value, ElementName=Couleur, StringFormat='#{0}'}" />
+</StackPanel>
+]]></exemple>
+  </section>
+
+  <section titre="En place">
+    <p><c>Inline</c> montre le panneau à la place du carré.</p>
+    <exemple><![CDATA[
+<mkm:ColorPicker Inline="True" Value="16a34a" />
+]]></exemple>
+  </section>
+
+  <section titre="Accessibilité">
+    <h3>Lecteur d'écran</h3>
+    <p>Le carré est un bouton, « Choisir une couleur » (ou nommé par <c>AutomationProperties.Name</c>), qui dit la couleur
+      (« #3b82f6 ») ; dans le panneau, « Nuance » et « Teinte ».</p>
+    <h3>Clavier</h3>
+    <touches>
+      <touche nom="Entrée">Ouvre le panneau ; dans le panneau, le referme.</touche>
+      <touche nom="Flèches">Dans les nuances, déplacent la poignée d'un pixel (Maj : de dix) ; dans les teintes, ↑ et ↓.</touche>
+      <touche nom="Tab">Passe des nuances aux teintes.</touche>
+      <touche nom="Échap">Referme le panneau.</touche>
+    </touches>
+  </section>
+</page>

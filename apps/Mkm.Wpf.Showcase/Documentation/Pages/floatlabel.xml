@@ -1,0 +1,75 @@
+<?xml version="1.0" encoding="utf-8"?>
+<page titre="FloatLabel" categorie="Formulaire" types="FloatLabel FloatLabelVariant" jetons="floatlabel">
+  <resume>Un libellé flottant : posé dans le champ vide, il s'envole, plus petit, quand le champ prend le clavier ou une
+    valeur.</resume>
+
+  <section titre="Import">
+    <code><![CDATA[
+<Window xmlns:mkm="urn:mkm-wpf">
+    <mkm:FloatLabel Label="Référence">
+        <mkm:InputText />
+    </mkm:FloatLabel>
+</Window>
+]]></code>
+  </section>
+
+  <section titre="Basique">
+    <p>Le champ est le contenu du FloatLabel : InputText, Textarea, Password, InputNumber, Select, MultiSelect, TreeSelect,
+      CascadeSelect, AutoComplete. Le libellé s'envole au-dessus du champ quand il a le clavier ou une valeur ; il le
+      nomme pour les lecteurs d'écran.</p>
+    <exemple><![CDATA[
+<mkm:FloatLabel x:Name="Libelle" Label="Référence" Width="260" HorizontalAlignment="Left" Margin="0,16,0,0">
+    <mkm:InputText x:Name="Reference" />
+</mkm:FloatLabel>
+]]></exemple>
+  </section>
+
+  <section titre="Variantes">
+    <p><c>Variant</c> : <c>Over</c> au-dessus du champ (par défaut), <c>In</c> en haut dans le champ (qui s'agrandit),
+      <c>On</c> sur sa bordure.</p>
+    <exemple><![CDATA[
+<StackPanel Orientation="Horizontal" Margin="0,16,0,0">
+    <mkm:FloatLabel Label="Au-dessus" Width="180" Margin="0,0,12,0">
+        <mkm:InputText Text="HS-00042" />
+    </mkm:FloatLabel>
+    <mkm:FloatLabel Label="Dedans" Variant="In" Width="180" Margin="0,0,12,0">
+        <mkm:InputText Text="HS-00042" />
+    </mkm:FloatLabel>
+    <mkm:FloatLabel Label="Sur la bordure" Variant="On" Width="180">
+        <mkm:InputText Text="HS-00042" />
+    </mkm:FloatLabel>
+</StackPanel>
+]]></exemple>
+  </section>
+
+  <section titre="Autres champs">
+    <exemple><![CDATA[
+<StackPanel Orientation="Horizontal" Margin="0,16,0,0">
+    <mkm:FloatLabel Label="Maturité" Width="180" Margin="0,0,12,0">
+        <mkm:Select>
+            <ComboBoxItem Content="In Work" />
+            <ComboBoxItem Content="Released" />
+        </mkm:Select>
+    </mkm:FloatLabel>
+    <mkm:FloatLabel Label="Mot de passe" Width="180">
+        <mkm:Password Feedback="False" />
+    </mkm:FloatLabel>
+</StackPanel>
+]]></exemple>
+  </section>
+
+  <section titre="Refusé">
+    <p>Un champ refusé (<c>Invalid</c>) rougit le libellé.</p>
+    <exemple><![CDATA[
+<mkm:FloatLabel Label="Référence" Width="260" HorizontalAlignment="Left" Margin="0,16,0,0">
+    <mkm:InputText Invalid="True" />
+</mkm:FloatLabel>
+]]></exemple>
+  </section>
+
+  <section titre="Accessibilité">
+    <h3>Lecteur d'écran</h3>
+    <p>Le libellé nomme le champ (<c>AutomationProperties.LabeledBy</c>), comme l'attribut <c>for</c> d'un libellé chez
+      mkm ; un nom donné au champ passe avant.</p>
+  </section>
+</page>

@@ -20,7 +20,7 @@ const THEMES = {
     Dashboard: { dossier: 'dashboard', etend: 'nora', rem: 12 },
     Ara: { dossier: 'ara' }
 };
-const COMPOSANTS = ['accordion', 'actionbar', 'autocomplete', 'avatar', 'badge', 'blockui', 'breadcrumb', 'button', 'card', 'cascadeselect', 'checkbox', 'chip', 'confirmdialog', 'contextmenu', 'datatable', 'datepicker', 'dialog', 'divider', 'drawer', 'emptycontent', 'fieldset', 'iconfield', 'idcard', 'image', 'imagecompare', 'inplace', 'inputgroup', 'inputnumber', 'inputotp', 'inputtext', 'knob', 'listbox', 'menu', 'message', 'multiselect', 'overlaybadge', 'paginator', 'panel', 'password', 'popover', 'progressbar', 'progressspinner', 'propertypanel', 'radiobutton', 'rating', 'scrollpanel', 'select', 'selectbutton', 'skeleton', 'slider', 'splitbutton', 'splitter', 'stategraph', 'stepper', 'tabs', 'tag', 'textarea', 'tieredmenu', 'timeline', 'toast', 'togglebutton', 'toggleswitch', 'toolbar', 'tooltip', 'tree', 'treegrid', 'treeselect', 'triptych', 'welcomepanel'];
+const COMPOSANTS = ['accordion', 'actionbar', 'autocomplete', 'avatar', 'badge', 'blockui', 'breadcrumb', 'button', 'card', 'cascadeselect', 'checkbox', 'chip', 'colorpicker', 'confirmdialog', 'contextmenu', 'datatable', 'datepicker', 'dialog', 'divider', 'drawer', 'emptycontent', 'fieldset', 'floatlabel', 'iconfield', 'idcard', 'image', 'imagecompare', 'inplace', 'inputchips', 'inputgroup', 'inputnumber', 'inputotp', 'inputtext', 'knob', 'listbox', 'menu', 'message', 'multiselect', 'overlaybadge', 'paginator', 'panel', 'password', 'popover', 'progressbar', 'progressspinner', 'propertypanel', 'radiobutton', 'rating', 'scrollpanel', 'select', 'selectbutton', 'skeleton', 'slider', 'splitbutton', 'splitter', 'stategraph', 'stepper', 'tabs', 'tag', 'textarea', 'tieredmenu', 'timeline', 'toast', 'togglebutton', 'toggleswitch', 'toolbar', 'tooltip', 'tree', 'treegrid', 'treeselect', 'triptych', 'welcomepanel'];
 
 const [racine, ...demandes] = process.argv.slice(2);
 if (!racine) {
@@ -35,7 +35,8 @@ const mots = (cle) => cle.replace(/([a-z0-9])([A-Z])/g, '$1.$2').toLowerCase();
 
 function aplatir(noeud, chemin, lignes) {
     if (typeof noeud === 'string' || typeof noeud === 'number') {
-        const valeur = String(noeud);
+        // Un renvoi écrit en camelCase dans mkm (« {overlay.popover.borderRadius} ») suit la même règle que les clés.
+        const valeur = String(noeud).replace(/\{([^}]+)\}/g, (_, renvoi) => `{${renvoi.split('.').map(mots).join('.')}}`);
         if (/[\r\n]/.test(valeur)) throw new Error(`${chemin.join('.')} : une valeur sur plusieurs lignes n'est pas un jeton`);
         lignes.push([chemin.join('.'), valeur]);
         return;

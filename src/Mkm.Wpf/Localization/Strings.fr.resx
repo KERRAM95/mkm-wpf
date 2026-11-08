@@ -165,4 +165,13 @@
   <data name="aria.otpLabel" xml:space="preserve">
     <value>Caractère {0} sur {1}</value>
   </data>
+  <data name="aria.chooseColor" xml:space="preserve">
+    <value>Choisir une couleur</value>
+  </data>
+  <data name="aria.colorSelector" xml:space="preserve">
+    <value>Nuance</value>
+  </data>
+  <data name="aria.hue" xml:space="preserve">
+    <value>Teinte</value>
+  </data>
 </root>

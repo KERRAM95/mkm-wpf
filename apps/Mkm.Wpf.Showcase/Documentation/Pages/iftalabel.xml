@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="utf-8"?>
+<page titre="IftaLabel" categorie="Formulaire" types="IftaLabel" jetons="floatlabel">
+  <resume>Un libellé dans le champ : toujours en haut, dans le champ, plus petit ; le texte saisi dessous.</resume>
+
+  <section titre="Import">
+    <code><![CDATA[
+<Window xmlns:mkm="urn:mkm-wpf">
+    <mkm:IftaLabel Label="Référence">
+        <mkm:InputText />
+    </mkm:IftaLabel>
+</Window>
+]]></code>
+  </section>
+
+  <section titre="Basique">
+    <p>IftaLabel est un <lien page="floatlabel">FloatLabel</lien> toujours envolé, dans le champ : le champ
+      s'agrandit pour lui.</p>
+    <exemple><![CDATA[
+<StackPanel Orientation="Horizontal">
+    <mkm:IftaLabel Label="Référence" Width="200" Margin="0,0,12,0">
+        <mkm:InputText x:Name="Reference" />
+    </mkm:IftaLabel>
+    <mkm:IftaLabel Label="Quantité" Width="200">
+        <mkm:InputText Text="12" />
+    </mkm:IftaLabel>
+</StackPanel>
+]]></exemple>
+  </section>
+
+  <section titre="Refusé">
+    <exemple><![CDATA[
+<mkm:IftaLabel Label="Référence" Width="200" HorizontalAlignment="Left">
+    <mkm:InputText Invalid="True" />
+</mkm:IftaLabel>
+]]></exemple>
+  </section>
+
+  <section titre="Accessibilité">
+    <h3>Lecteur d'écran</h3>
+    <p>Comme FloatLabel, le libellé nomme le champ.</p>
+  </section>
+</page>

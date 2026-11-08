@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="utf-8"?>
+<page titre="InputChips" categorie="Formulaire" types="InputChips InputChipsEventArgs" jetons="inputchips">
+  <resume>Un champ à puces : chaque valeur saisie, validée par Entrée, devient une puce, que sa croix retire.</resume>
+
+  <section titre="Import">
+    <code><![CDATA[
+<Window xmlns:mkm="urn:mkm-wpf">
+    <mkm:InputChips Placeholder="Mots-clés" />
+</Window>
+]]></code>
+  </section>
+
+  <section titre="Basique">
+    <p><c>Value</c> est la liste des valeurs (une <c>ObservableCollection(Of String)</c>), liée dans les deux sens. Entrée
+      ajoute la saisie ; Retour arrière, la saisie vide, retire la dernière puce ; la croix d'une puce la retire.
+      <c>Add</c> et <c>Remove</c> le disent.</p>
+    <exemple><![CDATA[
+<mkm:InputChips x:Name="MotsCles" Placeholder="Mots-clés" Width="320" HorizontalAlignment="Left" />
+]]></exemple>
+  </section>
+
+  <section titre="Séparateur">
+    <p><c>Separator</c> : tapé ou collé, il valide aussi la valeur (« acier, inox, alu » donne trois puces).</p>
+    <exemple><![CDATA[
+<mkm:InputChips Separator="," Placeholder="Matières, séparées de virgules" Width="320" HorizontalAlignment="Left" />
+]]></exemple>
+  </section>
+
+  <section titre="Limite et doublons">
+    <p><c>Max</c> borne le nombre de puces ; <c>AllowDuplicate="False"</c> refuse une valeur déjà là ; <c>AddOnBlur</c>
+      valide aussi la saisie en quittant le champ.</p>
+    <exemple><![CDATA[
+<mkm:InputChips Max="3" AllowDuplicate="False" AddOnBlur="True" Placeholder="Trois au plus" Width="320"
+                HorizontalAlignment="Left" />
+]]></exemple>
+  </section>
+
+  <section titre="Désactivé et refusé">
+    <exemple><![CDATA[
+<StackPanel Orientation="Horizontal">
+    <mkm:InputChips IsEnabled="False" Placeholder="Mots-clés" Width="200" Margin="0,0,12,0" />
+    <mkm:InputChips Invalid="True" Placeholder="Mots-clés" Width="200" />
+</StackPanel>
+]]></exemple>
+  </section>
+
+  <section titre="Accessibilité">
+    <h3>Lecteur d'écran</h3>
+    <p>Narrateur dit le champ « groupe », nommé par <c>AutomationProperties.Name</c>, sinon par son texte d'aide ; ses
+      puces, puis la saisie, « modifier », du même nom. La croix d'une puce se nomme « Retirer ».</p>
+    <h3>Clavier</h3>
+    <touches>
+      <touche nom="Entrée">Ajoute la saisie en puce.</touche>
+      <touche nom="Retour arrière">La saisie vide, retire la dernière puce.</touche>
+    </touches>
+  </section>
+</page>

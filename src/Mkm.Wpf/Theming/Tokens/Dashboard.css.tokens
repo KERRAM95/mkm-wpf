@@ -422,3 +422,23 @@ password.input.toggle.padding = 4px 30px 4px 6px
 password.toggle.margin = 0 {form.field.padding.x} 0 0
 password.placeholder.margin = 5px 7px 5px 7px
 password.overlay.window.padding = 0 2px 3px 2px
+
+# inputchips : le cadre des champs ; dedans, puces et saisie à padding.y / 2 l'une de l'autre et du bord (calc chez
+# mkm) ; la saisie, 40 px au moins.
+inputchips.input.padding = 3px {inputchips.padding.x} 3px {inputchips.padding.x}
+inputchips.gap = 3px
+inputchips.chip.padding = 3px {chip.padding.x} 3px {chip.padding.x}
+inputchips.input.min.width = 40px
+
+# floatlabel : le libellé à position.x du bord (plus la bordure) ; envolé, au-dessus (over.active.top), en haut dans
+# le champ (in.active.top plus la bordure), ou sur la bordure (centré sur elle : la moitié de sa hauteur, 9 px) ; le
+# champ « in » descend son texte sous lui (in.input.padding.top).
+floatlabel.label.margin = 8px 0 0 0
+floatlabel.over.active.margin = 8px -15px 0 0
+floatlabel.in.active.margin = 8px 7px 0 0
+floatlabel.on.active.margin = 6px -5px 0 0
+floatlabel.in.input.all.padding = 18px 6px 6px 6px
+
+# colorpicker : l'anneau du carré en épaisseur ; la place de l'ombre du panneau.
+colorpicker.preview.ring.border.width = {colorpicker.preview.focus.ring.width} {colorpicker.preview.focus.ring.width}
+colorpicker.overlay.window.padding = 0 2px 3px 2px
