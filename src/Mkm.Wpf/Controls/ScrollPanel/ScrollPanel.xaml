@@ -9,7 +9,9 @@
                     xmlns:local="clr-namespace:Mkm.Wpf.Controls">
 
     <Style TargetType="{x:Type local:ScrollPanel}">
-        <Setter Property="Focusable" Value="False" />
+        <!-- La zone prend le clavier (les flèches, Page haut et bas la font défiler), comme les barres de mkm. -->
+        <Setter Property="Focusable" Value="True" />
+        <Setter Property="FocusVisualStyle" Value="{x:Null}" />
         <Setter Property="Template">
             <Setter.Value>
                 <ControlTemplate TargetType="{x:Type local:ScrollPanel}">
@@ -18,19 +20,31 @@
                                                 CanContentScroll="{TemplateBinding CanContentScroll}"
                                                 Content="{TemplateBinding Content}" ContentTemplate="{TemplateBinding ContentTemplate}" />
                         <ScrollBar x:Name="PART_VerticalScrollBar" HorizontalAlignment="Right" Orientation="Vertical" Opacity="0"
-                                   Cursor="Arrow" Minimum="0"
+                                   IsHitTestVisible="False" Cursor="Arrow" Minimum="0"
                                    Maximum="{TemplateBinding ScrollableHeight}" ViewportSize="{TemplateBinding ViewportHeight}"
                                    Value="{Binding VerticalOffset, Mode=OneWay, RelativeSource={RelativeSource TemplatedParent}}"
                                    Visibility="{TemplateBinding ComputedVerticalScrollBarVisibility}" />
                         <ScrollBar x:Name="PART_HorizontalScrollBar" VerticalAlignment="Bottom" Orientation="Horizontal" Opacity="0"
-                                   Cursor="Arrow" Minimum="0"
+                                   IsHitTestVisible="False" Cursor="Arrow" Minimum="0"
                                    Maximum="{TemplateBinding ScrollableWidth}" ViewportSize="{TemplateBinding ViewportWidth}"
                                    Value="{Binding HorizontalOffset, Mode=OneWay, RelativeSource={RelativeSource TemplatedParent}}"
                                    Visibility="{TemplateBinding ComputedHorizontalScrollBarVisibility}" />
+                        <Rectangle x:Name="Anneau" Visibility="Collapsed" IsHitTestVisible="False"
+                                   Stroke="{DynamicResource mkm.scrollpanel.bar.focus.ring.color}"
+                                   StrokeThickness="{DynamicResource mkm.scrollpanel.bar.focus.ring.width}" />
                     </Grid>
                     <ControlTemplate.Triggers>
-                        <!-- Les barres paraissent au survol de la zone (et quand on en tire une). -->
+                        <!-- Les barres paraissent (et prennent la souris) au survol de la zone et quand on en tire une ;
+                             invisibles, leur gouttière ne prend pas le clic destiné au contenu. -->
                         <Trigger Property="IsMouseOver" Value="True">
+                            <Setter TargetName="PART_VerticalScrollBar" Property="Opacity" Value="1" />
+                            <Setter TargetName="PART_HorizontalScrollBar" Property="Opacity" Value="1" />
+                            <Setter TargetName="PART_VerticalScrollBar" Property="IsHitTestVisible" Value="True" />
+                            <Setter TargetName="PART_HorizontalScrollBar" Property="IsHitTestVisible" Value="True" />
+                        </Trigger>
+                        <!-- Au clavier, l'anneau et les barres. -->
+                        <Trigger Property="local:FocusVisible.IsVisible" Value="True">
+                            <Setter TargetName="Anneau" Property="Visibility" Value="Visible" />
                             <Setter TargetName="PART_VerticalScrollBar" Property="Opacity" Value="1" />
                             <Setter TargetName="PART_HorizontalScrollBar" Property="Opacity" Value="1" />
                         </Trigger>

@@ -49,6 +49,8 @@
     <p>C'est un <c>ScrollViewer</c> de WPF : un lecteur d'écran le fait défiler (Scroll) et lit son contenu.</p>
     <h3>Clavier</h3>
     <touches>
+      <touche nom="Tab">Amène le clavier sur la zone (son anneau et ses barres paraissent), même si son contenu n'a rien
+        de focalisable.</touche>
       <touche nom="Flèches">Font défiler la zone qui a le clavier, ou celle de l'élément qui l'a.</touche>
       <touche nom="Page préc., Page suiv.">Font défiler d'une page.</touche>
       <touche nom="Début, Fin">Mènent au début ou à la fin.</touche>

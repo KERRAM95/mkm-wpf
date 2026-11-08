@@ -325,7 +325,8 @@
                                 CornerRadius="{DynamicResource mkm.datepicker.input.border.radius}">
                             <DatePickerTextBox x:Name="PART_TextBox" Style="{StaticResource MkmDatePickerChamp}" />
                         </Border>
-                        <Button x:Name="PART_Button" Grid.Column="1" Focusable="False" Cursor="Hand"
+                        <!-- Le bouton du calendrier prend le clavier (Tab), comme mkm ; son anneau au clavier seulement. -->
+                        <Button x:Name="PART_Button" Grid.Column="1" Cursor="Hand" FocusVisualStyle="{x:Null}"
                                 Width="{DynamicResource mkm.datepicker.dropdown.width}"
                                 AutomationProperties.Name="{loc:T aria.chooseDate}">
                             <Button.Template>
@@ -334,11 +335,19 @@
                                             Background="{DynamicResource mkm.datepicker.dropdown.background}"
                                             BorderBrush="{DynamicResource mkm.datepicker.dropdown.border.color}"
                                             CornerRadius="{DynamicResource mkm.datepicker.dropdown.radius}">
-                                        <local:Icon x:Name="Calendrier" Source="{x:Static local:InternalIcons.Calendar}"
-                                                    Width="{DynamicResource mkm.icon.size}" Height="{DynamicResource mkm.icon.size}"
-                                                    Foreground="{DynamicResource mkm.datepicker.dropdown.color}" />
+                                        <Grid>
+                                            <local:Icon x:Name="Calendrier" Source="{x:Static local:InternalIcons.Calendar}"
+                                                        Width="{DynamicResource mkm.icon.size}" Height="{DynamicResource mkm.icon.size}"
+                                                        Foreground="{DynamicResource mkm.datepicker.dropdown.color}" />
+                                            <Rectangle x:Name="Anneau" Margin="1" Visibility="Collapsed" IsHitTestVisible="False" RadiusX="2" RadiusY="2"
+                                                       Stroke="{DynamicResource mkm.datepicker.dropdown.focus.ring.color}"
+                                                       StrokeThickness="{DynamicResource mkm.datepicker.dropdown.focus.ring.width}" />
+                                        </Grid>
                                     </Border>
                                     <ControlTemplate.Triggers>
+                                        <Trigger Property="local:FocusVisible.IsVisible" Value="True">
+                                            <Setter TargetName="Anneau" Property="Visibility" Value="Visible" />
+                                        </Trigger>
                                         <Trigger Property="IsMouseOver" Value="True">
                                             <Setter TargetName="Fond" Property="Background" Value="{DynamicResource mkm.datepicker.dropdown.hover.background}" />
                                             <Setter TargetName="Fond" Property="BorderBrush" Value="{DynamicResource mkm.datepicker.dropdown.hover.border.color}" />

@@ -291,6 +291,11 @@ Les évolutions notables de mkm-wpf, version par version. Le format suit
     (l'élément désigné, sinon la croix).
   - Drawer : PanelWidth et PanelHeight règlent la taille du panneau (la
     section « Size » de mkm).
+  - DatePicker : le bouton du calendrier prend le clavier (Tab), avec son
+    anneau, comme mkm et comme la page le disait.
+  - ScrollPanel : la zone prend le clavier, même sans rien de focalisable
+    dedans (les flèches la font défiler, l'anneau et les barres paraissent) ;
+    invisibles, les barres ne prennent plus le clic destiné au contenu.
   - InputOtp, ColorPicker, Terminal, Password : la langue n'est suivie que
     tant que le contrôle est chargé (l'abonnement à vie le gardait en
     mémoire).
