@@ -75,7 +75,9 @@ Namespace Mkm.Wpf.Tests.Controls
 
             ' La case de WPF, que la colonne fabrique, et non celle de mkm : VB confond CheckBox et Checkbox.
             Assert.That(colonne.ElementStyle.TargetType Is GetType(System.Windows.Controls.CheckBox), [Is].True)
-            Assert.That(colonne.EditingElementStyle Is caseDeMkm, [Is].True)
+            Assert.That(colonne.EditingElementStyle.BasedOn Is caseDeMkm, [Is].True)
+            ' La case est nommée par l'en-tête de sa colonne, pour les lecteurs d'écran.
+            Assert.That(colonne.ElementStyle.Setters.OfType(Of Setter)().Any(Function(s) s.Property Is System.Windows.Automation.AutomationProperties.NameProperty), [Is].True)
         End Sub
 
         <Test>
