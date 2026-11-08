@@ -224,7 +224,10 @@ Namespace Mkm.Wpf.Showcase.Documentation
             Jeton(cadre, Border.BackgroundProperty, "content.background")
             Dim comportement = CStr(xml.Attribute("comportement"))
             Try
-                Dim racine = DirectCast(XamlReader.Parse(EnveloppeOuvrante & xaml & EnveloppeFermante), FrameworkElement)
+                ' Les chemins d'un exemple (« /Images/photo.png ») sont ceux des ressources de l'application, comme dans une
+                ' application qui les écrit en XAML compilé.
+                Dim contexte As New ParserContext With {.BaseUri = New Uri("pack://application:,,,/")}
+                Dim racine = DirectCast(XamlReader.Parse(EnveloppeOuvrante & xaml & EnveloppeFermante, contexte), FrameworkElement)
                 If CStr(xml.Attribute("etendu")) = "oui" Then
                     ' Un exemple qui prend toute la largeur (un tableau, une mise en page) : ses éléments l'un sous l'autre.
                     Dim enfants = DirectCast(racine, System.Windows.Controls.Panel).Children.Cast(Of UIElement)().ToList()

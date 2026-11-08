@@ -32,11 +32,11 @@
     <p><c>Image</c> remplit l'avatar, recadrée, à la place du texte : une photo de la personne, un fichier ou une
       ressource de l'application. Avec un <lien page="badge">OverlayBadge</lien>, une pastille sur son coin.</p>
     <exemple><![CDATA[
-<mkm:Avatar Image="pack://application:,,,/Mkm.Wpf.Showcase;component/Documentation/Images/amyelsner.png" Shape="Circle" Size="XLarge" Margin="0,0,8,0" />
-<mkm:Avatar Image="pack://application:,,,/Mkm.Wpf.Showcase;component/Documentation/Images/asiyajavayant.png" Shape="Circle" Size="Large" Margin="0,0,8,0" />
-<mkm:Avatar Image="pack://application:,,,/Mkm.Wpf.Showcase;component/Documentation/Images/onyamalimba.png" Shape="Circle" Margin="0,0,24,0" />
+<mkm:Avatar Image="/Images/amyelsner.png" Shape="Circle" Size="XLarge" Margin="0,0,8,0" />
+<mkm:Avatar Image="/Images/asiyajavayant.png" Shape="Circle" Size="Large" Margin="0,0,8,0" />
+<mkm:Avatar Image="/Images/onyamalimba.png" Shape="Circle" Margin="0,0,24,0" />
 <mkm:OverlayBadge Value="4" Severity="Danger">
-    <mkm:Avatar x:Name="Photo" Image="pack://application:,,,/Mkm.Wpf.Showcase;component/Documentation/Images/walter.jpg" Size="XLarge" AutomationProperties.Name="Walter" />
+    <mkm:Avatar x:Name="Photo" Image="/Images/walter.jpg" Size="XLarge" AutomationProperties.Name="Walter" />
 </mkm:OverlayBadge>
 ]]></exemple>
   </section>
@@ -59,11 +59,11 @@
       les personnes d'une équipe, d'un document.</p>
     <exemple><![CDATA[
 <mkm:AvatarGroup x:Name="Equipe">
-    <mkm:Avatar Image="pack://application:,,,/Mkm.Wpf.Showcase;component/Documentation/Images/amyelsner.png" Shape="Circle" Size="Large" />
-    <mkm:Avatar Image="pack://application:,,,/Mkm.Wpf.Showcase;component/Documentation/Images/asiyajavayant.png" Shape="Circle" Size="Large" />
-    <mkm:Avatar Image="pack://application:,,,/Mkm.Wpf.Showcase;component/Documentation/Images/onyamalimba.png" Shape="Circle" Size="Large" />
-    <mkm:Avatar Image="pack://application:,,,/Mkm.Wpf.Showcase;component/Documentation/Images/ionibowcher.png" Shape="Circle" Size="Large" />
-    <mkm:Avatar Image="pack://application:,,,/Mkm.Wpf.Showcase;component/Documentation/Images/xuxuefeng.png" Shape="Circle" Size="Large" />
+    <mkm:Avatar Image="/Images/amyelsner.png" Shape="Circle" Size="Large" />
+    <mkm:Avatar Image="/Images/asiyajavayant.png" Shape="Circle" Size="Large" />
+    <mkm:Avatar Image="/Images/onyamalimba.png" Shape="Circle" Size="Large" />
+    <mkm:Avatar Image="/Images/ionibowcher.png" Shape="Circle" Size="Large" />
+    <mkm:Avatar Image="/Images/xuxuefeng.png" Shape="Circle" Size="Large" />
     <mkm:Avatar Label="+2" Shape="Circle" Size="Large" />
 </mkm:AvatarGroup>
 ]]></exemple>
