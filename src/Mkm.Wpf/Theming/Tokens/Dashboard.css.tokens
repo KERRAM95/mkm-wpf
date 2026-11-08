@@ -297,3 +297,9 @@ scrollpanel.bar.hover.background = {surface.400}
 
 # skeleton : 12 px de haut par défaut (1rem, la hauteur que mkm lui donne sans Height).
 skeleton.height = 12px
+
+# overlaybadge : le contour de la pastille, en épaisseur de bordure (outline.width est un nombre).
+overlaybadge.border.width = {overlaybadge.outline.width} {overlaybadge.outline.width}
+
+# toggleswitch : la bordure de la piste (« slider » chez mkm), en épaisseur (border.width est un nombre).
+toggleswitch.slider.border.width = {toggleswitch.border.width} {toggleswitch.border.width}

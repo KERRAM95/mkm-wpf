@@ -517,6 +517,59 @@ actionbar.dropdown.button.hover.background = #f1f5f9
 actionbar.dropdown.icon.size = 12px
 actionbar.dropdown.icon.color = #64748b
 
+# avatar
+avatar.width = 24px
+avatar.height = 24px
+avatar.font.size = 12px
+avatar.background = {content.hover.background}
+avatar.color = {content.color}
+avatar.border.radius = {content.border.radius}
+avatar.icon.size = 12px
+avatar.group.border.color = {content.background}
+avatar.group.offset = -9px
+avatar.lg.width = 36px
+avatar.lg.height = 36px
+avatar.lg.font.size = 18px
+avatar.lg.icon.size = 18px
+avatar.lg.group.offset = -12px
+avatar.xl.width = 48px
+avatar.xl.height = 48px
+avatar.xl.font.size = 24px
+avatar.xl.icon.size = 24px
+avatar.xl.group.offset = -18px
+
+# badge
+badge.border.radius = {border.radius.md}
+badge.padding = 0 6px
+badge.font.size = 9px
+badge.font.weight = 700
+badge.min.width = 18px
+badge.height = 18px
+badge.dot.size = 6px
+badge.sm.font.size = 7.5px
+badge.sm.min.width = 15px
+badge.sm.height = 15px
+badge.lg.font.size = 10.5px
+badge.lg.min.width = 21px
+badge.lg.height = 21px
+badge.xl.font.size = 12px
+badge.xl.min.width = 24px
+badge.xl.height = 24px
+badge.primary.background = {primary.color}
+badge.primary.color = {primary.contrast.color}
+badge.secondary.background = {surface.200}
+badge.secondary.color = {surface.700}
+badge.success.background = {green.600}
+badge.success.color = {surface.0}
+badge.info.background = {sky.600}
+badge.info.color = {surface.0}
+badge.warn.background = {orange.600}
+badge.warn.color = {surface.0}
+badge.danger.background = {red.600}
+badge.danger.color = {surface.0}
+badge.contrast.background = {surface.950}
+badge.contrast.color = {surface.0}
+
 # blockui
 blockui.border.radius = {content.border.radius}
 
@@ -733,6 +786,26 @@ checkbox.icon.checked.hover.color = #ffffff
 checkbox.icon.disabled.color = #ffffff
 checkbox.icon.sm.size = 12px
 checkbox.icon.lg.size = 16px
+
+# chip
+chip.border.radius = 16px
+chip.padding.x = 9px
+chip.padding.y = 6px
+chip.gap = 6px
+chip.transition.duration = {transition.duration}
+chip.background = {surface.200}
+chip.color = {surface.900}
+chip.image.width = 24px
+chip.image.height = 24px
+chip.icon.size = 12px
+chip.icon.color = {surface.900}
+chip.remove.icon.size = 12px
+chip.remove.icon.focus.ring.width = {focus.ring.width}
+chip.remove.icon.focus.ring.style = {focus.ring.style}
+chip.remove.icon.focus.ring.color = {focus.ring.color}
+chip.remove.icon.focus.ring.offset = {focus.ring.offset}
+chip.remove.icon.focus.ring.shadow = {form.field.focus.ring.shadow}
+chip.remove.icon.color = {surface.900}
 
 # confirmdialog
 confirmdialog.icon.size = 24px
@@ -1252,6 +1325,10 @@ message.contrast.close.button.focus.ring.shadow = none
 message.contrast.outlined.color = {surface.900}
 message.contrast.outlined.border.color = {surface.900}
 message.contrast.simple.color = {surface.900}
+
+# overlaybadge
+overlaybadge.outline.width = 2px
+overlaybadge.outline.color = {content.background}
 
 # panel
 panel.background = {content.background}

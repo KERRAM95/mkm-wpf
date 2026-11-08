@@ -25,13 +25,14 @@
                         <Grid VerticalAlignment="Center"
                               Width="{DynamicResource mkm.toggleswitch.width}" Height="{DynamicResource mkm.toggleswitch.height}">
                             <!-- L'anneau du focus, 1 px autour de la piste (outline et outline-offset de mkm). -->
-                            <Border x:Name="Anneau" Margin="-2" Visibility="Collapsed"
-                                    CornerRadius="{DynamicResource mkm.toggleswitch.border.radius}"
-                                    BorderBrush="{DynamicResource mkm.toggleswitch.focus.ring.color}"
-                                    BorderThickness="{DynamicResource mkm.toggleswitch.focus.ring.width}" />
+                            <!-- Des coins plus grands que la moitié de la hauteur : les bouts ronds de la piste. Un Rectangle,
+                                 dont le trait (StrokeThickness) prend la largeur de l'anneau, un nombre. -->
+                            <Rectangle x:Name="Anneau" Margin="-2" Visibility="Collapsed" RadiusX="999" RadiusY="999"
+                                       Stroke="{DynamicResource mkm.toggleswitch.focus.ring.color}"
+                                       StrokeThickness="{DynamicResource mkm.toggleswitch.focus.ring.width}" />
                             <Border x:Name="Piste"
                                     CornerRadius="{DynamicResource mkm.toggleswitch.border.radius}"
-                                    BorderThickness="{DynamicResource mkm.toggleswitch.border.width}"
+                                    BorderThickness="{DynamicResource mkm.toggleswitch.slider.border.width}"
                                     Background="{DynamicResource mkm.toggleswitch.background}"
                                     BorderBrush="{DynamicResource mkm.toggleswitch.border.color}" />
                             <!-- La poignée, à « gap » du bord de l'interrupteur, comme le inset de mkm. -->
