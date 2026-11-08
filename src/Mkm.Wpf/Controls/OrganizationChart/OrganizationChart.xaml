@@ -47,7 +47,8 @@
             <Setter.Value>
                 <ControlTemplate TargetType="{x:Type local:OrganizationChartNode}">
                     <StackPanel>
-                        <Grid HorizontalAlignment="Center">
+                        <!-- Au-dessus du trait qui descend : la bascule, à cheval sur le bas du nœud, reste visible et cliquable. -->
+                        <Grid HorizontalAlignment="Center" Panel.ZIndex="1">
                             <Border x:Name="PART_Node" Background="{DynamicResource mkm.organizationchart.node.background}"
                                     BorderBrush="{DynamicResource mkm.organizationchart.node.border.color}" BorderThickness="1"
                                     CornerRadius="{DynamicResource mkm.organizationchart.node.border.radius}"
@@ -67,7 +68,7 @@
                                             Height="{DynamicResource mkm.organizationchart.node.toggle.icon.size}" />
                             </Button>
                         </Grid>
-                        <Rectangle x:Name="Descente" Width="1" HorizontalAlignment="Center"
+                        <Rectangle x:Name="Descente" Width="1" HorizontalAlignment="Center" IsHitTestVisible="False"
                                    Height="{DynamicResource mkm.organizationchart.connector.height}"
                                    Fill="{DynamicResource mkm.organizationchart.connector.color}" />
                         <ItemsPresenter x:Name="Enfants" HorizontalAlignment="Center" />
