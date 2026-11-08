@@ -31,18 +31,25 @@ Namespace Mkm.Wpf.Controls
         ''' <summary>Un groupe vide ; une fois dessinés, les champs sans coins à eux sont équarris (Placer).</summary>
         Public Sub New()
             AddHandler Loaded, Sub() Dispatcher.BeginInvoke(Threading.DispatcherPriority.Loaded, New System.Action(AddressOf Placer))
-            ' Un champ pas encore dessiné (son gabarit, ou celui de ses champs, à venir) : de nouveau après la mise en page.
-            AddHandler LayoutUpdated, Sub()
-                                          If Not _aRefaire Then Return
-                                          _aRefaire = False
-                                          _apresLaMiseEnPage = True
-                                          Try
-                                              Placer()
-                                          Finally
-                                              _apresLaMiseEnPage = False
-                                          End Try
-                                      End Sub
         End Sub
+
+        ''' <summary>
+        ''' Les champs mesurés ont leur gabarit (et ceux de leurs champs) : leurs coins sont équarris une fois de plus, s'il le
+        ''' faut (un champ rangé avant d'avoir son dessin).
+        ''' </summary>
+        Protected Overrides Function MeasureOverride(constraint As Size) As Size
+            Dim taille = MyBase.MeasureOverride(constraint)
+            If _aRefaire Then
+                _aRefaire = False
+                _apresLaMiseEnPage = True
+                Try
+                    Placer()
+                Finally
+                    _apresLaMiseEnPage = False
+                End Try
+            End If
+            Return taille
+        End Function
 
         ' Les gabarits imbriqués (le bouton d'un Select, le champ d'un InputNumber) ne sont là qu'après la mise en page :
         ' chaque rangement en demande un de plus, une fois celle-ci faite.
