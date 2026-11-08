@@ -137,6 +137,7 @@ Namespace Mkm.Wpf.UiTests
             Montrer(zone)
             Dim defilement = zone.Patterns.Scroll.Pattern
 
+            Assert.That(defilement.VerticallyScrollable.Value, [Is].True, "le texte dépasse la hauteur de la zone")
             Assert.That(defilement.VerticalScrollPercent.Value, [Is].EqualTo(0).Within(0.1))
             Survoler(zone)
             Mouse.Scroll(-2)

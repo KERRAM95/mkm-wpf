@@ -268,17 +268,32 @@ Namespace Mkm.Wpf.UiTests
             Next
         End Sub
 
-        ' Vrai quand ce qui est sous le milieu de l'élément appartient à une autre fenêtre que la principale (la liste
-        ' ouverte d'un Select, un menu) : on remonte jusqu'à la première fenêtre native.
+        ' Vrai quand l'élément est dans une autre fenêtre de la vitrine que la principale (la liste ouverte d'un Select,
+        ' un menu) : ce qui est sous son milieu est lui (ou l'un de ses enfants), et sa fenêtre native, de la vitrine,
+        ' n'est pas la principale. Sous le bas de l'écran, c'est la barre des tâches : une autre application, non.
         Private Shared Function EstDansUneFenetreFlottante(element As AutomationElement) As Boolean
             If element.IsOffscreen Then Return False
             Dim touche = Vitrine.Automation.FromPoint(Centre(element))
-            Dim marcheur = Vitrine.Automation.TreeWalkerFactory.GetRawViewWalker()
+            If touche Is Nothing OrElse touche.Properties.ProcessId.ValueOrDefault <> Vitrine.Processus Then Return False
+            Dim controle = Vitrine.Automation.TreeWalkerFactory.GetControlViewWalker()
+            Dim estLui = False
+            Dim courant = touche
+            For i = 1 To 20
+                If courant Is Nothing Then Exit For
+                If courant.Equals(element) Then
+                    estLui = True
+                    Exit For
+                End If
+                courant = controle.GetParent(courant)
+            Next
+            If Not estLui Then Return False
+            Dim brut = Vitrine.Automation.TreeWalkerFactory.GetRawViewWalker()
+            courant = touche
             For i = 1 To 60
-                If touche Is Nothing Then Return False
-                Dim fenetreNative = touche.Properties.NativeWindowHandle.ValueOrDefault
+                If courant Is Nothing Then Return False
+                Dim fenetreNative = courant.Properties.NativeWindowHandle.ValueOrDefault
                 If fenetreNative <> IntPtr.Zero Then Return fenetreNative <> Fenetre.Properties.NativeWindowHandle.ValueOrDefault
-                touche = marcheur.GetParent(touche)
+                courant = brut.GetParent(courant)
             Next
             Return False
         End Function

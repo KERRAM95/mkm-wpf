@@ -36,9 +36,9 @@
       Il défile dans les deux sens.</p>
     <exemple><![CDATA[
 <Border Width="320" BorderThickness="1" BorderBrush="{DynamicResource mkm.content.border.color}">
-    <mkm:ScrollPanel x:Name="Zone" Height="140">
+    <mkm:ScrollPanel x:Name="Zone" Height="100">
         <TextBlock Margin="12" Width="420" TextWrapping="Wrap"
-                   Text="Les notes du plan HS-00042. Casser les angles vifs. Tolérances générales ISO 2768-mK. Rayons non cotés : 1 mm. Cordon de soudure continu, gorge de 3 mm, sur tout le pourtour du carter. Traitement de surface : zingage, 8 µm au moins. Les cotes encadrées sont des cotes de contrôle. Les filetages sont à protéger avant traitement. Révision B : cotes reprises au contrôle de réception." />
+                   Text="Les notes du plan HS-00042. Casser les angles vifs. Tolérances générales ISO 2768-mK. Rayons non cotés : 1 mm. Cordon de soudure continu, gorge de 3 mm, sur tout le pourtour du carter. Traitement de surface : zingage, 8 µm au moins. Les cotes encadrées sont des cotes de contrôle. Les filetages sont à protéger avant traitement. Révision B : cotes reprises au contrôle de réception. Révision C : tolérance du perçage de l'axe resserrée à H7. Les pièces de la série 2026 suivent la révision C ; celles de la série 2025 restent à la révision B jusqu'à épuisement du stock." />
     </mkm:ScrollPanel>
 </Border>
 ]]></exemple>
