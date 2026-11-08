@@ -41,11 +41,11 @@ Namespace Mkm.Wpf.Controls
 
         ''' <summary>La liste source.</summary>
         Public Shared ReadOnly SourceProperty As DependencyProperty = DependencyProperty.Register(
-            NameOf(Source), GetType(IList), GetType(PickList), New FrameworkPropertyMetadata(Nothing))
+            NameOf(Source), GetType(IList), GetType(PickList), New FrameworkPropertyMetadata(Nothing, AddressOf OnListeChanged))
 
         ''' <summary>La liste cible.</summary>
         Public Shared ReadOnly TargetProperty As DependencyProperty = DependencyProperty.Register(
-            NameOf(Target), GetType(IList), GetType(PickList), New FrameworkPropertyMetadata(Nothing))
+            NameOf(Target), GetType(IList), GetType(PickList), New FrameworkPropertyMetadata(Nothing, AddressOf OnListeChanged))
 
         ''' <summary>Le gabarit d'un élément, dans les deux listes.</summary>
         Public Shared ReadOnly ItemTemplateProperty As DependencyProperty = ItemsControl.ItemTemplateProperty.AddOwner(GetType(PickList))
@@ -84,6 +84,11 @@ Namespace Mkm.Wpf.Controls
         Shared Sub New()
             DefaultStyleKeyProperty.OverrideMetadata(GetType(PickList), New FrameworkPropertyMetadata(GetType(PickList)))
             FocusableProperty.OverrideMetadata(GetType(PickList), New FrameworkPropertyMetadata(False))
+        End Sub
+
+        ''' <summary>Deux listes vides.</summary>
+        Public Sub New()
+            [AddHandler](Selector.SelectionChangedEvent, New SelectionChangedEventHandler(AddressOf Choix_Change))
         End Sub
 
         ''' <summary>La liste source.</summary>
@@ -213,6 +218,37 @@ Namespace Mkm.Wpf.Controls
                 _boutons(nom) = bouton
                 AddHandler bouton.Click, AddressOf Bouton_Click
             Next
+            Griser()
+        End Sub
+
+        ' Un bouton qui n'aurait rien à faire passer est grisé, comme mkm : sans choix, ou une liste vide.
+        Private Sub Griser()
+            Dim actif As New Dictionary(Of String, Boolean) From {
+                {"PART_MoveToTarget", _source IsNot Nothing AndAlso _source.SelectedItems.Count > 0},
+                {"PART_MoveAllToTarget", Source IsNot Nothing AndAlso Source.Count > 0},
+                {"PART_MoveToSource", _cible IsNot Nothing AndAlso _cible.SelectedItems.Count > 0},
+                {"PART_MoveAllToSource", Target IsNot Nothing AndAlso Target.Count > 0}}
+            For Each paire In _boutons
+                paire.Value.IsEnabled = actif(paire.Key)
+            Next
+        End Sub
+
+        Private Sub Choix_Change(sender As Object, e As SelectionChangedEventArgs)
+            Griser()
+        End Sub
+
+        Private Sub Liste_CollectionChanged(sender As Object, e As System.Collections.Specialized.NotifyCollectionChangedEventArgs)
+            Griser()
+        End Sub
+
+        ' Les listes suivies (abonnement faible) : un élément ajouté ou retiré par l'application change les boutons.
+        Private Shared Sub OnListeChanged(d As DependencyObject, e As DependencyPropertyChangedEventArgs)
+            Dim choix = DirectCast(d, PickList)
+            Dim avant = TryCast(e.OldValue, System.Collections.Specialized.INotifyCollectionChanged)
+            If avant IsNot Nothing Then System.Collections.Specialized.CollectionChangedEventManager.RemoveHandler(avant, AddressOf choix.Liste_CollectionChanged)
+            Dim apres = TryCast(e.NewValue, System.Collections.Specialized.INotifyCollectionChanged)
+            If apres IsNot Nothing Then System.Collections.Specialized.CollectionChangedEventManager.AddHandler(apres, AddressOf choix.Liste_CollectionChanged)
+            choix.Griser()
         End Sub
 
         Private Sub Bouton_Click(sender As Object, e As RoutedEventArgs)

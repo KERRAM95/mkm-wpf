@@ -71,6 +71,11 @@ Namespace Mkm.Wpf.Controls
             FocusableProperty.OverrideMetadata(GetType(OrderList), New FrameworkPropertyMetadata(False))
         End Sub
 
+        ''' <summary>Une liste ordonnable vide.</summary>
+        Public Sub New()
+            [AddHandler](Selector.SelectionChangedEvent, New SelectionChangedEventHandler(AddressOf Choix_Change))
+        End Sub
+
         ''' <summary>Les éléments.</summary>
         Public Property ItemsSource As IList
             Get
@@ -183,6 +188,19 @@ Namespace Mkm.Wpf.Controls
                 _boutons(nom) = bouton
                 AddHandler bouton.Click, AddressOf Bouton_Click
             Next
+            Griser()
+        End Sub
+
+        ' Sans élément choisi, les quatre boutons sont grisés, comme mkm.
+        Private Sub Griser()
+            Dim aucun = _liste Is Nothing OrElse _liste.SelectedItems.Count = 0
+            For Each bouton In _boutons.Values
+                bouton.IsEnabled = Not aucun
+            Next
+        End Sub
+
+        Private Sub Choix_Change(sender As Object, e As SelectionChangedEventArgs)
+            Griser()
         End Sub
 
         Private Sub Bouton_Click(sender As Object, e As RoutedEventArgs)

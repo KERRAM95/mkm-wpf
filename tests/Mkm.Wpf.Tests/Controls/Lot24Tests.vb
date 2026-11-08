@@ -59,6 +59,18 @@ Namespace Mkm.Wpf.Tests.Controls
         End Function
 
         <Test>
+        Public Sub OrganizationChart_UnChoixPoseAvantLesNoeudsLesMarque()
+            Dim racine As New OrganizationChartNode With {.Header = "Direction"}
+            Dim production As New OrganizationChartNode With {.Header = "Production"}
+            racine.Items.Add(production)
+            Dim organigramme As New OrganizationChart With {.Selectable = True, .SelectedItem = production}
+            organigramme.Items.Add(racine)
+            Pret(organigramme)
+            Assert.That(production.IsSelected, [Is].True, "marqué à sa création")
+            Assert.That(racine.IsSelected, [Is].False)
+        End Sub
+
+        <Test>
         Public Sub OrganizationChart_LesEnfantsSousLeurParent()
             Dim organigramme = UnOrganigramme()
             Dim racine = DirectCast(organigramme.Items(0), OrganizationChartNode)

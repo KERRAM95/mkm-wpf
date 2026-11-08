@@ -65,6 +65,7 @@
       <touche nom="Tab">Passe d'un nœud cliquable à l'autre, et à leurs boutons.</touche>
       <touche nom="Entrée">Choisit le nœud, ou le retire.</touche>
       <touche nom="Espace">Comme Entrée.</touche>
+      <touche nom="Entrée ou Espace, sur la bascule">Replie ou déplie les enfants du nœud.</touche>
     </touches>
   </section>
 </page>

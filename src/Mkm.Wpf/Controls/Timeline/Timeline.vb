@@ -13,9 +13,9 @@ Namespace Mkm.Wpf.Controls
         Right
         ''' <summary>Un évènement d'un côté, le suivant de l'autre.</summary>
         Alternate
-        ''' <summary>Le contenu au-dessus de la ligne horizontale.</summary>
+        ''' <summary>Le contenu sous la ligne horizontale, l'opposé au-dessus (par défaut en ligne).</summary>
         Top
-        ''' <summary>Le contenu au-dessous de la ligne horizontale.</summary>
+        ''' <summary>Le contenu au-dessus de la ligne horizontale.</summary>
         Bottom
     End Enum
 
@@ -160,7 +160,7 @@ Namespace Mkm.Wpf.Controls
 
         Private Shared ReadOnly IsReversedPropertyKey As DependencyPropertyKey = DependencyProperty.RegisterReadOnly(
             NameOf(IsReversed), GetType(Boolean), GetType(TimelineEvent), New FrameworkPropertyMetadata(False))
-        ''' <summary>Vrai quand son contenu et son opposé sont échangés (Align Right, Top, ou un sur deux en Alternate).</summary>
+        ''' <summary>Vrai quand son contenu et son opposé sont échangés (Align Right, Bottom, ou un sur deux en Alternate).</summary>
         Public Shared ReadOnly IsReversedProperty As DependencyProperty = IsReversedPropertyKey.DependencyProperty
 
         Private Shared ReadOnly IsLastPropertyKey As DependencyPropertyKey = DependencyProperty.RegisterReadOnly(

@@ -254,6 +254,14 @@ Les évolutions notables de mkm-wpf, version par version. Le format suit
     n'est plus élargie.
   - DataView : une liste qui rétrécit ramène à la dernière page (la vue
     paraissait vide) ; abonnement faible à la liste.
+  - OrderList, PickList : un bouton qui n'aurait rien à faire passer est
+    grisé (sans choix, ou une liste vide), comme mkm ; boutons à droite, la
+    touche Tab passe par la liste d'abord.
+  - OrganizationChart : le chevron dans le sens de mkm (vers le bas,
+    déplié) ; un choix posé avant la création des nœuds les marque ; un
+    nœud à l'en-tête composé se nomme par ses textes.
+  - Timeline : la documentation de TimelineAlign Top et Bottom remise à
+    l'endroit.
   - InputOtp, ColorPicker, Terminal, Password : la langue n'est suivie que
     tant que le contrôle est chargé (l'abonnement à vie le gardait en
     mémoire).

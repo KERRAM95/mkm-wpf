@@ -12,7 +12,7 @@
         <Setter Property="Template">
             <Setter.Value>
                 <ControlTemplate TargetType="{x:Type local:OrderList}">
-                    <DockPanel>
+                    <DockPanel KeyboardNavigation.TabNavigation="Local">
                         <local:GapStackPanel x:Name="Boutons" DockPanel.Dock="Left" VerticalAlignment="Center"
                                              Gap="{DynamicResource mkm.orderlist.controls.gap}" Margin="{DynamicResource mkm.orderlist.controls.margin}">
                             <local:Button x:Name="PART_MoveUp" Severity="Secondary" Icon="{x:Static local:InternalIcons.AngleUp}"
@@ -34,6 +34,9 @@
                     <ControlTemplate.Triggers>
                         <Trigger Property="ControlsPosition" Value="Right">
                             <Setter TargetName="Boutons" Property="DockPanel.Dock" Value="Right" />
+                            <!-- À droite, la touche Tab passe par la liste avant les boutons, comme mkm. -->
+                            <Setter TargetName="PART_List" Property="KeyboardNavigation.TabIndex" Value="0" />
+                            <Setter TargetName="Boutons" Property="KeyboardNavigation.TabIndex" Value="1" />
                             <Setter TargetName="Boutons" Property="Margin" Value="{DynamicResource mkm.orderlist.controls.right.margin}" />
                         </Trigger>
                         <Trigger Property="ShowControls" Value="False">

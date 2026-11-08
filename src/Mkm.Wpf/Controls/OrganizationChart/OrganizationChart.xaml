@@ -63,7 +63,7 @@
                             <Button x:Name="PART_Toggle" Style="{StaticResource mkm.OrganizationChart.Bascule}" Visibility="Collapsed"
                                     VerticalAlignment="Bottom" HorizontalAlignment="Center"
                                     Margin="{DynamicResource mkm.organizationchart.node.toggle.button.margin}">
-                                <local:Icon x:Name="Chevron" Source="{x:Static local:InternalIcons.ChevronUp}"
+                                <local:Icon x:Name="Chevron" Source="{x:Static local:InternalIcons.ChevronDown}"
                                             Width="{DynamicResource mkm.organizationchart.node.toggle.icon.size}"
                                             Height="{DynamicResource mkm.organizationchart.node.toggle.icon.size}" />
                             </Button>
@@ -81,7 +81,7 @@
                         <Trigger Property="IsExpanded" Value="False">
                             <Setter TargetName="Descente" Property="Visibility" Value="Collapsed" />
                             <Setter TargetName="Enfants" Property="Visibility" Value="Collapsed" />
-                            <Setter TargetName="Chevron" Property="Source" Value="{x:Static local:InternalIcons.ChevronDown}" />
+                            <Setter TargetName="Chevron" Property="Source" Value="{x:Static local:InternalIcons.ChevronUp}" />
                         </Trigger>
                         <MultiTrigger>
                             <MultiTrigger.Conditions>

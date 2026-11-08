@@ -65,7 +65,31 @@ Namespace Mkm.Wpf.Tests.Controls
             Assert.That(etapes, [Is].EqualTo({"C", "A", "B"}))
         End Sub
 
+        <Test>
+        Public Sub OrderList_SansChoixSesBoutonsSontGrises()
+            Dim etapes As New ObservableCollection(Of String) From {"Créer", "Coter", "Valider"}
+            Dim liste = Pret(New OrderList With {.ItemsSource = etapes})
+            Dim monter = DirectCast(liste.Template.FindName("PART_MoveUp", liste), UIElement)
+            Assert.That(monter.IsEnabled, [Is].False, "rien de choisi")
+            Choisir(liste, "Coter")
+            Assert.That(monter.IsEnabled, [Is].True)
+        End Sub
+
         ' ---- PickList ----
+
+        <Test>
+        Public Sub PickList_UnBoutonSansRienAFairePasserEstGrise()
+            Dim source As New ObservableCollection(Of String) From {"Achats"}
+            Dim cible As New ObservableCollection(Of String)
+            Dim choix = Pret(New PickList With {.Source = source, .Target = cible})
+            Dim bouton = Function(nom As String) DirectCast(choix.Template.FindName(nom, choix), UIElement).IsEnabled
+            Assert.That(bouton("PART_MoveToTarget"), [Is].False, "rien de choisi")
+            Assert.That(bouton("PART_MoveAllToTarget"), [Is].True)
+            Assert.That(bouton("PART_MoveAllToSource"), [Is].False, "la cible est vide")
+            choix.MoveAllToTarget()
+            Assert.That(bouton("PART_MoveAllToSource"), [Is].True)
+            Assert.That(bouton("PART_MoveAllToTarget"), [Is].False)
+        End Sub
 
         <Test>
         Public Sub PickList_LesElementsPassentDUneListeALAutre()

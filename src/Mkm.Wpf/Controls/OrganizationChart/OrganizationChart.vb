@@ -1,3 +1,4 @@
+Imports System.Collections.Generic
 Imports System.Linq
 Imports System.Windows
 Imports System.Windows.Automation
@@ -99,6 +100,12 @@ Namespace Mkm.Wpf.Controls
         Protected Overrides Function GetContainerForItemOverride() As DependencyObject
             Return New OrganizationChartNode()
         End Function
+
+        ''' <summary>Un nœud créé après le choix (lié au chargement, sous un parent replié) se marque lui aussi.</summary>
+        Protected Overrides Sub PrepareContainerForItemOverride(element As DependencyObject, item As Object)
+            MyBase.PrepareContainerForItemOverride(element, item)
+            TryCast(element, OrganizationChartNode)?.MarquerLeChoix()
+        End Sub
 
         ' Le nœud choisi se marque ; les autres non.
         Private Shared Sub OnSelectedItemChanged(d As DependencyObject, e As DependencyPropertyChangedEventArgs)
@@ -208,6 +215,19 @@ Namespace Mkm.Wpf.Controls
         End Function
 
         ''' <inheritdoc/>
+        Protected Overrides Sub PrepareContainerForItemOverride(element As DependencyObject, item As Object)
+            MyBase.PrepareContainerForItemOverride(element, item)
+            TryCast(element, OrganizationChartNode)?.MarquerLeChoix()
+        End Sub
+
+        ' Marqué si sa donnée est le choix de l'organigramme.
+        Friend Sub MarquerLeChoix()
+            Dim racine = Organigramme()
+            If racine Is Nothing Then Return
+            SetValue(IsSelectedPropertyKey, racine.SelectedItem IsNot Nothing AndAlso Equals(DonneeDe(Me), racine.SelectedItem))
+        End Sub
+
+        ''' <inheritdoc/>
         Public Overrides Sub OnApplyTemplate()
             If _cadre IsNot Nothing Then
                 RemoveHandler _cadre.MouseLeftButtonUp, AddressOf Cadre_MouseLeftButtonUp
@@ -309,8 +329,23 @@ Namespace Mkm.Wpf.Controls
             Protected Overrides Function GetNameCore() As String
                 Dim nom = MyBase.GetNameCore()
                 If Not String.IsNullOrEmpty(nom) Then Return nom
-                Return If(Noeud.Header?.ToString(), String.Empty)
+                Dim texte = TryCast(Noeud.Header, String)
+                If texte IsNot Nothing Then Return texte
+                ' Un en-tête composé (une personne, une fiche) : ses textes, pas le nom de sa classe.
+                Dim cadre = TryCast(Noeud.Template?.FindName("PART_Node", Noeud), DependencyObject)
+                Dim textes As New List(Of String)
+                Collecter(If(cadre, TryCast(Noeud.Header, DependencyObject)), textes)
+                Return If(textes.Count > 0, String.Join(" ", textes), If(Noeud.Header?.ToString(), String.Empty))
             End Function
+
+            Private Shared Sub Collecter(element As DependencyObject, textes As List(Of String))
+                If element Is Nothing Then Return
+                Dim bloc = TryCast(element, TextBlock)
+                If bloc IsNot Nothing AndAlso Not String.IsNullOrWhiteSpace(bloc.Text) Then textes.Add(bloc.Text)
+                For i = 0 To Media.VisualTreeHelper.GetChildrenCount(element) - 1
+                    Collecter(Media.VisualTreeHelper.GetChild(element, i), textes)
+                Next
+            End Sub
 
             Public Overrides Function GetPattern(patternInterface As PatternInterface) As Object
                 If patternInterface = PatternInterface.ExpandCollapse AndAlso Noeud.HasItems Then Return Me
