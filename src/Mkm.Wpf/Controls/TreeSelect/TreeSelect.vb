@@ -491,6 +491,15 @@ Namespace Mkm.Wpf.Controls
                 Return If(String.IsNullOrEmpty(nom), If(Champ.Placeholder, String.Empty), nom)
             End Function
 
+            ' La zone qui ouvre l'arbre n'est que la surface du champ : seule la croix (« Effacer ») est un enfant.
+            Protected Overrides Function GetChildrenCore() As Collections.Generic.List(Of AutomationPeer)
+                Dim enfants = MyBase.GetChildrenCore()
+                If enfants Is Nothing Then Return Nothing
+                Dim zone = Champ._champ
+                enfants.RemoveAll(Function(p) TypeOf p Is UIElementAutomationPeer AndAlso DirectCast(p, UIElementAutomationPeer).Owner Is zone)
+                Return If(enfants.Count = 0, Nothing, enfants)
+            End Function
+
             Public Overrides Function GetPattern(patternInterface As PatternInterface) As Object
                 If patternInterface = PatternInterface.ExpandCollapse OrElse patternInterface = PatternInterface.Value Then Return Me
                 Return MyBase.GetPattern(patternInterface)

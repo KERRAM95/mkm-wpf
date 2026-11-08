@@ -371,6 +371,11 @@ Namespace Mkm.Wpf.Controls
                 Return If(String.IsNullOrEmpty(nom), If(Champ.Placeholder, String.Empty), nom)
             End Function
 
+            ' La zone qui ouvre la liste n'est que la surface du champ.
+            Protected Overrides Function GetChildrenCore() As Collections.Generic.List(Of AutomationPeer)
+                Return Nothing
+            End Function
+
             Public Overrides Function GetPattern(patternInterface As PatternInterface) As Object
                 If patternInterface = PatternInterface.ExpandCollapse OrElse patternInterface = PatternInterface.Value Then Return Me
                 Return MyBase.GetPattern(patternInterface)
