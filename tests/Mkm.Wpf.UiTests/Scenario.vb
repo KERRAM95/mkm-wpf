@@ -244,6 +244,9 @@ Namespace Mkm.Wpf.UiTests
         End Sub
 
         Private Shared Sub Defiler(element As AutomationElement)
+            ' Déjà sous la souris (un élément d'une liste ouverte, au-dessus de la page) : faire défiler la page fermerait
+            ' la liste, comme mkm.
+            If EstCliquable(element) Then Return
             Dim defileur = AncetreQuiDefile(element)
             If defileur Is Nothing Then Return
             Dim defilement = defileur.Patterns.Scroll.Pattern
@@ -264,6 +267,19 @@ Namespace Mkm.Wpf.UiTests
                 If defilement.VerticalScrollPercent.ValueOrDefault = avant Then Exit For
             Next
         End Sub
+
+        ' Vrai quand le milieu de l'élément est à l'écran et que c'est bien lui (ou un de ses enfants) qui s'y trouve.
+        Private Shared Function EstCliquable(element As AutomationElement) As Boolean
+            If element.IsOffscreen Then Return False
+            Dim touche = Vitrine.Automation.FromPoint(Centre(element))
+            Dim marcheur = Vitrine.Automation.TreeWalkerFactory.GetControlViewWalker()
+            For i = 1 To 20
+                If touche Is Nothing Then Return False
+                If touche.Equals(element) Then Return True
+                touche = marcheur.GetParent(touche)
+            Next
+            Return False
+        End Function
 
         ' Le premier ancêtre qui défile verticalement (le ScrollViewer de la page).
         Private Shared Function AncetreQuiDefile(element As AutomationElement) As AutomationElement
