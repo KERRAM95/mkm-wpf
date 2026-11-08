@@ -280,6 +280,17 @@ l'anglais en repli (voir « Thème et langue »).
   de gabarit rend alors `Nothing`, sans bruit). Écrire le nom complet
   (`System.Windows.Controls.Primitives.ToggleButton`) ; `ConventionsTests`
   vérifie le type de chaque partie annoncée d'un gabarit.
+- **Une propriété héritée suit le parent logique** avant le parent visuel : posée
+  sur le cadre d'une fenêtre flottante ou d'un sous-menu, elle n'atteint pas les
+  éléments qui s'y dessinent mais appartiennent à la liste (la commande d'une
+  liste de l'ActionBar, l'élément d'un sous-menu). La poser sur chaque élément
+  (`PrepareContainerForItemOverride`).
+- **Une valeur locale bat les déclencheurs d'un gabarit** qui visent le contrôle
+  lui-même (sans `TargetName`) : une couleur posée en code (`SetResourceReference`)
+  les rend muets. La faire porter par un élément du gabarit, que les déclencheurs
+  visent ; et ne pas écraser une valeur que l'application a posée (`Habillage`).
+- **`IsKeyboardFocused` est vrai aussi après un clic** : pour un anneau du focus
+  au clavier seulement (`:focus-visible`), `FocusVisible.IsVisible`.
 - **Un `MenuItem` survolé prend le focus**, et un `MenuBase` où le focus entre
   passe en mode menu et capture la souris : bon pour un menu qui s'ouvre, mauvais
   pour un menu posé dans la page (un champ perdrait le focus au survol). `Menu` et

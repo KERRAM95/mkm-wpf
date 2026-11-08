@@ -75,6 +75,9 @@ Namespace Mkm.Wpf.Controls
             _icone.SetResourceReference(MarginProperty, ThemeResources.Prefix & "confirmdialog.icon.margin")
             _icone.SetBinding(Mkm.Wpf.Controls.Icon.SourceProperty, New Binding(NameOf(MessageIcon)) With {.Source = Me})
             Dim question As New ContentPresenter With {.VerticalAlignment = VerticalAlignment.Center}
+            ' Une fenêtre à la taille de son contenu se mesure sur une largeur infinie : sans largeur maximale, une longue
+            ' question ne passerait jamais à la ligne.
+            question.SetResourceReference(MaxWidthProperty, ThemeResources.Prefix & "confirmdialog.message.max.width")
             question.SetBinding(ContentPresenter.ContentProperty, New Binding(NameOf(Message)) With {.Source = Me})
             Dim enLignes As New Style(GetType(TextBlock))
             enLignes.Setters.Add(New Setter(TextBlock.TextWrappingProperty, TextWrapping.Wrap))
@@ -168,7 +171,7 @@ Namespace Mkm.Wpf.Controls
         ''' </summary>
         Public Shared Function Confirm(owner As Window, message As Object, Optional header As String = Nothing,
                                        Optional icon As Object = Nothing) As Boolean
-            Dim demande As New ConfirmDialog With {.Message = message, .Title = header, .MessageIcon = icon}
+            Dim demande As New ConfirmDialog With {.Message = message, .Title = If(header, String.Empty), .MessageIcon = icon}
             If owner IsNot Nothing Then demande.Owner = owner
             Return demande.ShowDialog().GetValueOrDefault()
         End Function

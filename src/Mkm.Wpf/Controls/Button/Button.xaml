@@ -25,7 +25,10 @@
         <Setter Property="Template">
             <Setter.Value>
                 <ControlTemplate TargetType="{x:Type local:Button}">
+                    <!-- La couleur du texte et de l'icône est portée par le cadre : la gravité la pose sur le bouton en
+                         valeur locale, que les déclencheurs ne pourraient pas remplacer ; ici, ils le peuvent. -->
                     <Border x:Name="Fond"
+                            TextElement.Foreground="{TemplateBinding Foreground}"
                             Background="{TemplateBinding Background}"
                             BorderBrush="{TemplateBinding BorderBrush}"
                             BorderThickness="{TemplateBinding BorderThickness}"
@@ -56,7 +59,7 @@
                         <Trigger Property="IsMouseOver" Value="True">
                             <Setter TargetName="Fond" Property="Background" Value="{Binding HoverBackground, RelativeSource={RelativeSource TemplatedParent}}" />
                             <Setter TargetName="Fond" Property="BorderBrush" Value="{Binding HoverBorderBrush, RelativeSource={RelativeSource TemplatedParent}}" />
-                            <Setter Property="Foreground" Value="{Binding HoverForeground, RelativeSource={RelativeSource TemplatedParent}}" />
+                            <Setter TargetName="Fond" Property="TextElement.Foreground" Value="{Binding HoverForeground, RelativeSource={RelativeSource TemplatedParent}}" />
                         </Trigger>
                         <Trigger Property="IsFocusVisible" Value="True">
                             <Setter TargetName="Fond" Property="Background" Value="{Binding FocusBackground, RelativeSource={RelativeSource TemplatedParent}}" />
@@ -65,7 +68,7 @@
                         <Trigger Property="IsPressed" Value="True">
                             <Setter TargetName="Fond" Property="Background" Value="{Binding PressedBackground, RelativeSource={RelativeSource TemplatedParent}}" />
                             <Setter TargetName="Fond" Property="BorderBrush" Value="{Binding PressedBorderBrush, RelativeSource={RelativeSource TemplatedParent}}" />
-                            <Setter Property="Foreground" Value="{Binding PressedForeground, RelativeSource={RelativeSource TemplatedParent}}" />
+                            <Setter TargetName="Fond" Property="TextElement.Foreground" Value="{Binding PressedForeground, RelativeSource={RelativeSource TemplatedParent}}" />
                         </Trigger>
                         <!-- Le bouton « lite » de 3DEXPERIENCE : en texte et d'icône seule, sans fond ni bordure,
                              gris, du gris du texte au survol et au clavier, bleu clair enfoncé. -->
@@ -76,7 +79,7 @@
                             </MultiTrigger.Conditions>
                             <Setter TargetName="Fond" Property="Background" Value="Transparent" />
                             <Setter TargetName="Fond" Property="BorderThickness" Value="0" />
-                            <Setter Property="Foreground" Value="{DynamicResource mkm.button.icon.color}" />
+                            <Setter TargetName="Fond" Property="TextElement.Foreground" Value="{DynamicResource mkm.button.icon.color}" />
                         </MultiTrigger>
                         <MultiTrigger>
                             <MultiTrigger.Conditions>
@@ -84,7 +87,7 @@
                                 <Condition Property="IsIconOnly" Value="True" />
                                 <Condition Property="IsMouseOver" Value="True" />
                             </MultiTrigger.Conditions>
-                            <Setter Property="Foreground" Value="{DynamicResource mkm.button.icon.hover.color}" />
+                            <Setter TargetName="Fond" Property="TextElement.Foreground" Value="{DynamicResource mkm.button.icon.hover.color}" />
                         </MultiTrigger>
                         <MultiTrigger>
                             <MultiTrigger.Conditions>
@@ -92,7 +95,7 @@
                                 <Condition Property="IsIconOnly" Value="True" />
                                 <Condition Property="IsFocusVisible" Value="True" />
                             </MultiTrigger.Conditions>
-                            <Setter Property="Foreground" Value="{DynamicResource mkm.button.icon.hover.color}" />
+                            <Setter TargetName="Fond" Property="TextElement.Foreground" Value="{DynamicResource mkm.button.icon.hover.color}" />
                         </MultiTrigger>
                         <MultiTrigger>
                             <MultiTrigger.Conditions>
@@ -100,7 +103,7 @@
                                 <Condition Property="IsIconOnly" Value="True" />
                                 <Condition Property="IsPressed" Value="True" />
                             </MultiTrigger.Conditions>
-                            <Setter Property="Foreground" Value="{DynamicResource mkm.button.icon.active.color}" />
+                            <Setter TargetName="Fond" Property="TextElement.Foreground" Value="{DynamicResource mkm.button.icon.active.color}" />
                         </MultiTrigger>
                         <Trigger Property="IsEnabled" Value="False">
                             <Setter TargetName="Fond" Property="Opacity" Value="{DynamicResource mkm.disabled.opacity}" />

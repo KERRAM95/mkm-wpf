@@ -57,6 +57,9 @@ Namespace Mkm.Wpf.Controls
     Public Class Message
         Inherits ContentControl
 
+        ' Les couleurs et les mesures de la gravité ; une valeur posée par l'application l'emporte.
+        Private ReadOnly _habillage As New Habillage(Me)
+
         ''' <summary>La gravité du message.</summary>
         Public Shared ReadOnly SeverityProperty As DependencyProperty = DependencyProperty.Register(
             NameOf(Severity), GetType(MessageSeverity), GetType(Message),
@@ -320,18 +323,18 @@ Namespace Mkm.Wpf.Controls
                     Lier(BackgroundProperty, $"message.{g}.background")
                     Lier(BorderBrushProperty, $"message.{g}.border.color")
                     Lier(ForegroundProperty, $"message.{g}.color")
-                    SetValue(BorderThicknessProperty, New Thickness(Epaisseur("message.border.width")))
+                    _habillage.Poser(BorderThicknessProperty, New Thickness(Epaisseur("message.border.width")))
                     Lier(ShadowProperty, $"message.{g}.shadow")
                 Case MessageVariant.Outlined
-                    SetValue(BackgroundProperty, Brushes.Transparent)
+                    _habillage.Poser(BackgroundProperty, Brushes.Transparent)
                     Lier(BorderBrushProperty, $"message.{g}.outlined.border.color")
                     Lier(ForegroundProperty, $"message.{g}.outlined.color")
-                    SetValue(BorderThicknessProperty, New Thickness(Epaisseur("message.outlined.border.width")))
+                    _habillage.Poser(BorderThicknessProperty, New Thickness(Epaisseur("message.outlined.border.width")))
                     ClearValue(ShadowProperty)
                 Case Else
-                    SetValue(BackgroundProperty, Brushes.Transparent)
-                    SetValue(BorderBrushProperty, Brushes.Transparent)
-                    SetValue(BorderThicknessProperty, New Thickness(0))
+                    _habillage.Poser(BackgroundProperty, Brushes.Transparent)
+                    _habillage.Poser(BorderBrushProperty, Brushes.Transparent)
+                    _habillage.Poser(BorderThicknessProperty, New Thickness(0))
                     Lier(ForegroundProperty, $"message.{g}.simple.color")
                     Lier(PaddingProperty, "message.simple.content.padding")
                     ClearValue(ShadowProperty)
@@ -345,7 +348,7 @@ Namespace Mkm.Wpf.Controls
         End Function
 
         Private Sub Lier(propriete As DependencyProperty, chemin As String)
-            SetResourceReference(propriete, ThemeResources.Prefix & chemin)
+            _habillage.Lier(propriete, chemin)
         End Sub
 
     End Class

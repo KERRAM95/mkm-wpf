@@ -1,4 +1,5 @@
 Imports System.Windows
+Imports System.Windows.Input
 
 Namespace Mkm.Wpf.Controls
 
@@ -21,8 +22,35 @@ Namespace Mkm.Wpf.Controls
         Public Shared ReadOnly InvalidProperty As DependencyProperty = DependencyProperty.Register(
             NameOf(Invalid), GetType(Boolean), GetType(Checkbox), New FrameworkPropertyMetadata(False))
 
+        Private Shared ReadOnly IsFocusVisiblePropertyKey As DependencyPropertyKey = DependencyProperty.RegisterReadOnly(
+            NameOf(IsFocusVisible), GetType(Boolean), GetType(Checkbox), New FrameworkPropertyMetadata(False))
+        ''' <summary>
+        ''' Vrai quand la case a le focus du clavier, et non celui d'un clic (le <c>:focus-visible</c> de mkm) : cliquée à
+        ''' la souris, elle ne garde pas l'allure survolée une fois la souris partie.
+        ''' </summary>
+        Public Shared ReadOnly IsFocusVisibleProperty As DependencyProperty = IsFocusVisiblePropertyKey.DependencyProperty
+
         Shared Sub New()
             DefaultStyleKeyProperty.OverrideMetadata(GetType(Checkbox), New FrameworkPropertyMetadata(GetType(Checkbox)))
+        End Sub
+
+        ''' <summary>Vrai quand la case a le focus du clavier, et non celui d'un clic.</summary>
+        Public ReadOnly Property IsFocusVisible As Boolean
+            Get
+                Return CBool(GetValue(IsFocusVisibleProperty))
+            End Get
+        End Property
+
+        ''' <inheritdoc/>
+        Protected Overrides Sub OnGotKeyboardFocus(e As KeyboardFocusChangedEventArgs)
+            MyBase.OnGotKeyboardFocus(e)
+            SetValue(IsFocusVisiblePropertyKey, InputManager.Current.MostRecentInputDevice Is Keyboard.PrimaryDevice)
+        End Sub
+
+        ''' <inheritdoc/>
+        Protected Overrides Sub OnLostKeyboardFocus(e As KeyboardFocusChangedEventArgs)
+            MyBase.OnLostKeyboardFocus(e)
+            SetValue(IsFocusVisiblePropertyKey, False)
         End Sub
 
         ''' <summary>Vrai quand la valeur est fausse.</summary>

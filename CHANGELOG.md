@@ -114,6 +114,28 @@ Les évolutions notables de mkm-wpf, version par version. Le format suit
 
 ### Corrigé
 
+- La relecture des lots 1 à 4 :
+  - ActionBar : les commandes d'une liste ouverte n'avaient pas la forme de lignes
+    de menu ; Début et Fin faisaient défiler la rangée sans déplacer le focus ;
+    une section cachée restait montrée ; un repli réécrivait la section voulue ;
+    la tabulation passait par le bouton de repli avant les onglets ;
+  - Button : les couleurs du texte au survol et enfoncé, et tout le gris du bouton
+    « lite », étaient sans effet ; une valeur posée par l'application (couleur,
+    retrait) est désormais gardée, comme pour Message et Toast (`Habillage`) ;
+  - Checkbox, Tree, PropertyPanel : l'anneau du focus ne paraît qu'au clavier
+    (`FocusVisible`) ; le titre d'une section fermée de la fiche était noir ;
+  - ConfirmDialog : `Confirm` sans titre levait une exception ; une longue question
+    ne passait pas à la ligne ;
+  - MenuIcons : la colonne d'icône d'un sous-menu ne suivait pas ses éléments ;
+  - BlockUI : le focus ne quittait pas le contenu voilé, et le voile avalait toutes
+    les touches (Tab, Alt+F4) ;
+  - info-bulle : le décalage était compté deux fois ; Toast : une notification fermée
+    sous le pointeur revivait ; Fieldset : replié sans bascule, le contenu restait ;
+  - InputNumber : le point du pavé numérique en français, le curseur gardé après une
+    flèche, l'arrondi comme l'affichage ; SelectButton : `AllowEmpty` tenu en choix
+    multiple et au Ctrl+clic ; IdCard : une chaîne vide ne s'affiche plus ; Tree :
+    les enfants d'un nœud sont virtualisés.
+
 - Le contrôle qualité des lots 5 à 9 :
   - `Menu` et `TieredMenu` : le survol prenait le focus (un champ le perdait) et
     le `Menu` capturait la souris en mode menu ;

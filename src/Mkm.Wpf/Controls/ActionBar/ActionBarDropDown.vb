@@ -128,6 +128,21 @@ Namespace Mkm.Wpf.Controls
             MettreAJour()
         End Sub
 
+        ''' <summary>
+        ''' Une commande de la liste en prend la forme (une ligne de menu) : posée sur elle, car une propriété héritée suit
+        ''' le parent logique (la liste), et non le cadre de la fenêtre flottante où elle se dessine.
+        ''' </summary>
+        Protected Overrides Sub PrepareContainerForItemOverride(element As DependencyObject, item As Object)
+            MyBase.PrepareContainerForItemOverride(element, item)
+            SetIsInList(element, True)
+        End Sub
+
+        ''' <inheritdoc/>
+        Protected Overrides Sub ClearContainerForItemOverride(element As DependencyObject, item As Object)
+            MyBase.ClearContainerForItemOverride(element, item)
+            element.ClearValue(IsInListProperty)
+        End Sub
+
         ''' <inheritdoc/>
         Protected Overrides Sub OnItemsChanged(e As NotifyCollectionChangedEventArgs)
             MyBase.OnItemsChanged(e)

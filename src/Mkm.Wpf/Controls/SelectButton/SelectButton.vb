@@ -139,17 +139,38 @@ Namespace Mkm.Wpf.Controls
             SetValue(IsLastPropertyKey, dernier)
         End Sub
 
-        ' Comme allowEmpty de mkm : un clic sur le seul choix l'enlève (en choix multiple, WPF le fait déjà).
+        ' Comme allowEmpty de mkm : un clic sur le seul choix l'enlève (en choix multiple, WPF le fait déjà) ; sans
+        ' AllowEmpty, le dernier choix ne s'enlève ni d'un clic, ni d'un Ctrl+clic, ni en choix multiple.
         ''' <inheritdoc/>
         Protected Overrides Sub OnMouseLeftButtonDown(e As MouseButtonEventArgs)
             Dim groupe = TryCast(ItemsControl.ItemsControlFromItemContainer(Me), SelectButton)
-            If IsSelected AndAlso groupe IsNot Nothing AndAlso groupe.SelectionMode = SelectionMode.Single AndAlso groupe.AllowEmpty Then
-                Focus()
-                IsSelected = False
+            If IsSelected AndAlso groupe IsNot Nothing Then
+                If Not groupe.AllowEmpty AndAlso groupe.SelectedItems.Count <= 1 Then
+                    Focus()
+                    e.Handled = True
+                    Return
+                End If
+                If groupe.SelectionMode = SelectionMode.Single AndAlso groupe.AllowEmpty Then
+                    Focus()
+                    ' SetCurrentValue garde une liaison d'IsSelected (un ItemContainerStyle).
+                    SetCurrentValue(IsSelectedProperty, False)
+                    e.Handled = True
+                    Return
+                End If
+            End If
+            MyBase.OnMouseLeftButtonDown(e)
+        End Sub
+
+        ''' <inheritdoc/>
+        Protected Overrides Sub OnKeyDown(e As KeyEventArgs)
+            ' Espace sur le dernier choix, sans AllowEmpty : il reste choisi.
+            Dim groupe = TryCast(ItemsControl.ItemsControlFromItemContainer(Me), SelectButton)
+            If e.Key = System.Windows.Input.Key.Space AndAlso IsSelected AndAlso groupe IsNot Nothing AndAlso
+               Not groupe.AllowEmpty AndAlso groupe.SelectedItems.Count <= 1 Then
                 e.Handled = True
                 Return
             End If
-            MyBase.OnMouseLeftButtonDown(e)
+            MyBase.OnKeyDown(e)
         End Sub
 
     End Class

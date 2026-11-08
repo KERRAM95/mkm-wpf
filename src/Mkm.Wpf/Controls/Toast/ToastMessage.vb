@@ -21,6 +21,9 @@ Namespace Mkm.Wpf.Controls
     Public Class ToastMessage
         Inherits Control
 
+        ' Les couleurs et les mesures de la gravité ; une valeur posée par l'application l'emporte.
+        Private ReadOnly _habillage As New Habillage(Me)
+
         ''' <summary>Le nom de la croix dans le gabarit.</summary>
         Public Const PartCloseButton As String = "PART_CloseButton"
 
@@ -240,7 +243,8 @@ Namespace Mkm.Wpf.Controls
         Protected Overrides Sub OnMouseLeave(e As MouseEventArgs)
             MyBase.OnMouseLeave(e)
             SetValue(IsHighlightedPropertyKey, False)
-            If Life <= TimeSpan.Zero Then Return
+            ' Fermée sous le pointeur, la notification reçoit encore la sortie de la souris : elle ne revit pas.
+            If Hote Is Nothing OrElse Life <= TimeSpan.Zero Then Return
             Dim part = Hote?.LifeOnLeave
             If part.HasValue Then _reste = TimeSpan.FromTicks(CLng(Life.Ticks * part.Value))
             Vivre()
@@ -361,14 +365,14 @@ Namespace Mkm.Wpf.Controls
                 Lier(BandBrushProperty, $"toast.{g}.border.color")
                 Lier(IconForegroundProperty, $"toast.{g}.border.color")
             Else
-                SetValue(BandBrushProperty, Brushes.Transparent)
+                _habillage.Poser(BandBrushProperty, Brushes.Transparent)
                 Lier(IconForegroundProperty, $"toast.{g}.color")
             End If
             SetValue(DisplayIconPropertyKey, If(Icon, icone))
         End Sub
 
         Private Sub Lier(propriete As DependencyProperty, chemin As String)
-            SetResourceReference(propriete, ThemeResources.Prefix & chemin)
+            _habillage.Lier(propriete, chemin)
         End Sub
 
     End Class

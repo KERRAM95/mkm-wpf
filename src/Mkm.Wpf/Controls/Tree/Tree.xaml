@@ -127,7 +127,8 @@
                             <Setter TargetName="Fond" Property="TextElement.Foreground" Value="{DynamicResource mkm.tree.node.selected.color}" />
                             <Setter TargetName="Icone" Property="Foreground" Value="{DynamicResource mkm.tree.node.icon.selected.color}" />
                         </Trigger>
-                        <Trigger Property="IsKeyboardFocused" Value="True">
+                        <!-- Au clavier seulement (:focus-visible) : un clic donne aussi le focus au nœud. -->
+                        <Trigger Property="local:FocusVisible.IsVisible" Value="True">
                             <Setter TargetName="Anneau" Property="Visibility" Value="Visible" />
                         </Trigger>
                         <Trigger Property="IsEnabled" Value="False">
@@ -137,6 +138,19 @@
                 </ControlTemplate>
             </Setter.Value>
         </Setter>
+        <!-- Ses enfants virtualisés, comme ceux d'un TreeViewItem de WPF (Aero2) : un nœud de milliers d'enfants ne les
+             crée pas tous. -->
+        <Style.Triggers>
+            <Trigger Property="VirtualizingPanel.IsVirtualizing" Value="True">
+                <Setter Property="ItemsPanel">
+                    <Setter.Value>
+                        <ItemsPanelTemplate>
+                            <VirtualizingStackPanel />
+                        </ItemsPanelTemplate>
+                    </Setter.Value>
+                </Setter>
+            </Trigger>
+        </Style.Triggers>
     </Style>
 
 </ResourceDictionary>

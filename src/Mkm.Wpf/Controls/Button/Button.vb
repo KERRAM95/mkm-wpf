@@ -41,6 +41,9 @@ Namespace Mkm.Wpf.Controls
     Public Class Button
         Inherits System.Windows.Controls.Button
 
+        ' Les couleurs et les mesures de la gravité ; une valeur posée par l'application l'emporte.
+        Private ReadOnly _habillage As New Habillage(Me)
+
         ''' <summary>L'icône, avant le libellé : une géométrie de <see cref="Icons"/> ou une image.</summary>
         Public Shared ReadOnly IconProperty As DependencyProperty = DependencyProperty.Register(
             NameOf(Icon), GetType(Object), GetType(Button), New FrameworkPropertyMetadata(Nothing, AddressOf OnFormeChanged))
@@ -263,7 +266,7 @@ Namespace Mkm.Wpf.Controls
                     Lier(PressedForegroundProperty, $"button.{g}.active.color")
 
                 Case ButtonVariant.Outlined
-                    SetValue(BackgroundProperty, Brushes.Transparent)
+                    _habillage.Poser(BackgroundProperty, Brushes.Transparent)
                     Lier(BorderBrushProperty, $"button.outlined.{g}.border.color")
                     Lier(ForegroundProperty, $"button.outlined.{g}.color")
                     Lier(HoverBackgroundProperty, $"button.outlined.{g}.hover.background")
@@ -276,35 +279,35 @@ Namespace Mkm.Wpf.Controls
                     Lier(FocusBorderBrushProperty, $"button.outlined.{g}.border.color")
 
                 Case ButtonVariant.Text
-                    SetValue(BackgroundProperty, Brushes.Transparent)
-                    SetValue(BorderBrushProperty, Brushes.Transparent)
+                    _habillage.Poser(BackgroundProperty, Brushes.Transparent)
+                    _habillage.Poser(BorderBrushProperty, Brushes.Transparent)
                     Lier(ForegroundProperty, $"button.text.{g}.color")
                     Lier(HoverBackgroundProperty, $"button.text.{g}.hover.background")
-                    SetValue(HoverBorderBrushProperty, Brushes.Transparent)
+                    _habillage.Poser(HoverBorderBrushProperty, Brushes.Transparent)
                     Lier(HoverForegroundProperty, $"button.text.{g}.color")
                     Lier(PressedBackgroundProperty, $"button.text.{g}.active.background")
-                    SetValue(PressedBorderBrushProperty, Brushes.Transparent)
+                    _habillage.Poser(PressedBorderBrushProperty, Brushes.Transparent)
                     Lier(PressedForegroundProperty, $"button.text.{g}.color")
                     Lier(FocusBackgroundProperty, $"button.text.{g}.hover.background")
-                    SetValue(FocusBorderBrushProperty, Brushes.Transparent)
+                    _habillage.Poser(FocusBorderBrushProperty, Brushes.Transparent)
 
                 Case ButtonVariant.Link
-                    SetValue(BackgroundProperty, Brushes.Transparent)
-                    SetValue(BorderBrushProperty, Brushes.Transparent)
+                    _habillage.Poser(BackgroundProperty, Brushes.Transparent)
+                    _habillage.Poser(BorderBrushProperty, Brushes.Transparent)
                     Lier(ForegroundProperty, "button.link.color")
-                    SetValue(HoverBackgroundProperty, Brushes.Transparent)
-                    SetValue(HoverBorderBrushProperty, Brushes.Transparent)
+                    _habillage.Poser(HoverBackgroundProperty, Brushes.Transparent)
+                    _habillage.Poser(HoverBorderBrushProperty, Brushes.Transparent)
                     Lier(HoverForegroundProperty, "button.link.hover.color")
-                    SetValue(PressedBackgroundProperty, Brushes.Transparent)
-                    SetValue(PressedBorderBrushProperty, Brushes.Transparent)
+                    _habillage.Poser(PressedBackgroundProperty, Brushes.Transparent)
+                    _habillage.Poser(PressedBorderBrushProperty, Brushes.Transparent)
                     Lier(PressedForegroundProperty, "button.link.active.color")
-                    SetValue(FocusBackgroundProperty, Brushes.Transparent)
-                    SetValue(FocusBorderBrushProperty, Brushes.Transparent)
+                    _habillage.Poser(FocusBackgroundProperty, Brushes.Transparent)
+                    _habillage.Poser(FocusBorderBrushProperty, Brushes.Transparent)
             End Select
         End Sub
 
         Private Sub Lier(propriete As DependencyProperty, jeton As String)
-            SetResourceReference(propriete, ThemeResources.Prefix & jeton)
+            _habillage.Lier(propriete, jeton)
         End Sub
 
     End Class

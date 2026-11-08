@@ -1,7 +1,9 @@
 Imports System.Windows
 Imports System.Windows.Controls
 Imports System.Windows.Input
+Imports System.Windows.Media
 Imports System.Windows.Media.Animation
+Imports System.Windows.Threading
 Imports Mkm.Wpf.Theming
 
 Namespace Mkm.Wpf.Controls
@@ -37,6 +39,7 @@ Namespace Mkm.Wpf.Controls
             NameOf(Overlay), GetType(Object), GetType(BlockUI), New FrameworkPropertyMetadata(Nothing))
 
         Private _voile As FrameworkElement
+        Private _contenu As FrameworkElement
 
         Shared Sub New()
             DefaultStyleKeyProperty.OverrideMetadata(GetType(BlockUI), New FrameworkPropertyMetadata(GetType(BlockUI)))
@@ -67,20 +70,31 @@ Namespace Mkm.Wpf.Controls
         Public Overrides Sub OnApplyTemplate()
             MyBase.OnApplyTemplate()
             _voile = TryCast(GetTemplateChild(PartMask), FrameworkElement)
+            _contenu = TryCast(GetTemplateChild("Contenu"), FrameworkElement)
         End Sub
 
-        ' Le clavier n'atteint plus le contenu voilé : ses touches et sa saisie s'arrêtent ici.
+        ' Le clavier n'atteint plus le contenu voilé : ses touches et sa saisie s'arrêtent ici. Celles du voile et de ce qu'il
+        ' montre (un bouton Annuler) passent : Tab en sort, Alt+F4 ferme la fenêtre.
         ''' <inheritdoc/>
         Protected Overrides Sub OnPreviewKeyDown(e As KeyEventArgs)
-            If Blocked Then e.Handled = True
+            If Blocked AndAlso DansLeContenu(e.OriginalSource) Then e.Handled = True
             MyBase.OnPreviewKeyDown(e)
         End Sub
 
         ''' <inheritdoc/>
         Protected Overrides Sub OnPreviewTextInput(e As TextCompositionEventArgs)
-            If Blocked Then e.Handled = True
+            If Blocked AndAlso DansLeContenu(e.OriginalSource) Then e.Handled = True
             MyBase.OnPreviewTextInput(e)
         End Sub
+
+        Private Function DansLeContenu(source As Object) As Boolean
+            Dim element = TryCast(source, DependencyObject)
+            While element IsNot Nothing AndAlso element IsNot Me
+                If element Is _contenu Then Return True
+                element = If(TypeOf element Is Visual, VisualTreeHelper.GetParent(element), LogicalTreeHelper.GetParent(element))
+            End While
+            Return False
+        End Function
 
         Private Shared Sub OnBlockedChanged(d As DependencyObject, e As DependencyPropertyChangedEventArgs)
             DirectCast(d, BlockUI).Voiler(CBool(e.NewValue))
@@ -97,8 +111,12 @@ Namespace Mkm.Wpf.Controls
             If TypeOf duree Is Duration Then
                 _voile.BeginAnimation(OpacityProperty, New DoubleAnimation(0, 1, DirectCast(duree, Duration)))
             End If
-            ' Le focus quitte le contenu voilé.
-            If IsKeyboardFocusWithin Then _voile.Focus()
+            ' Le focus quitte le contenu voilé, une fois le voile paru (ses déclencheurs passent après ce rappel, et un
+            ' élément replié ne prend pas le focus).
+            Dispatcher.BeginInvoke(DispatcherPriority.Input, New Action(
+                Sub()
+                    If Blocked AndAlso DansLeContenu(Keyboard.FocusedElement) Then _voile?.Focus()
+                End Sub))
         End Sub
 
     End Class

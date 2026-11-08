@@ -99,6 +99,7 @@ Namespace Mkm.Wpf.Controls
 
         Private _commandes As ItemsControl
         Private _defilement As ScrollViewer
+        Private _parRepli As Boolean
         Private _precedent As ButtonBase
         Private _suivant As ButtonBase
         Private _repli As ButtonBase
@@ -251,7 +252,8 @@ Namespace Mkm.Wpf.Controls
         Protected Overrides Sub OnSelectionChanged(e As SelectionChangedEventArgs)
             MyBase.OnSelectionChanged(e)
             Dim section = TryCast(SelectedItem, ActionBarSection)
-            If section IsNot Nothing AndAlso Not String.Equals(section.Key, ActiveSection, StringComparison.Ordinal) Then
+            ' Un repli (la section voulue absente ou cachée) ne réécrit pas la clé voulue : elle reviendra avec sa section.
+            If section IsNot Nothing AndAlso Not _parRepli AndAlso Not String.Equals(section.Key, ActiveSection, StringComparison.Ordinal) Then
                 SetCurrentValue(ActiveSectionProperty, section.Key)
             End If
             MontrerLaSection()
@@ -270,8 +272,9 @@ Namespace Mkm.Wpf.Controls
         End Sub
 
         ''' <inheritdoc/>
-        Protected Overrides Sub OnKeyDown(e As KeyEventArgs)
-            MyBase.OnKeyDown(e)
+        Protected Overrides Sub OnPreviewKeyDown(e As KeyEventArgs)
+            MyBase.OnPreviewKeyDown(e)
+            ' Avant le défilement de la rangée, qui prendrait Début et Fin pour lui (ScrollViewer.OnKeyDown).
             If e.Handled OrElse (e.Key <> Key.Home AndAlso e.Key <> Key.End) Then Return
 
             ' Début et Fin : la première et la dernière commande de la rangée.
@@ -314,12 +317,25 @@ Namespace Mkm.Wpf.Controls
             Dim voulue = sections.FirstOrDefault(Function(s) s.Key IsNot Nothing AndAlso
                                                              String.Equals(s.Key, ActiveSection, StringComparison.Ordinal) AndAlso
                                                              s.Visibility <> Visibility.Collapsed)
-            If voulue Is Nothing Then
+            Dim repli = voulue Is Nothing
+            If repli Then
                 Dim actuelle = TryCast(SelectedItem, ActionBarSection)
-                If actuelle IsNot Nothing AndAlso sections.Contains(actuelle) Then Return
+                If actuelle IsNot Nothing AndAlso sections.Contains(actuelle) AndAlso actuelle.Visibility <> Visibility.Collapsed Then Return
                 voulue = sections.FirstOrDefault(Function(s) s.Visibility <> Visibility.Collapsed)
             End If
-            If voulue IsNot Nothing AndAlso Not Equals(SelectedItem, voulue) Then SetCurrentValue(SelectedItemProperty, voulue)
+            If voulue Is Nothing OrElse Equals(SelectedItem, voulue) Then Return
+            _parRepli = repli
+            Try
+                SetCurrentValue(SelectedItemProperty, voulue)
+            Finally
+                _parRepli = False
+            End Try
+        End Sub
+
+        ''' <summary>Une section cachée ou montrée : la section montrée peut changer (la voulue revient, ou une autre la remplace).</summary>
+        Friend Sub SectionVisibiliteChangee()
+            ChoisirLaSection()
+            MettreAJourEtat()
         End Sub
 
         ' Les commandes de la section choisie passent dans la rangée.

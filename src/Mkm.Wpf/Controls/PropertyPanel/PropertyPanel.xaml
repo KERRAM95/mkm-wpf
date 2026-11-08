@@ -83,6 +83,13 @@
                         <ToggleButton x:Name="Entete" Cursor="Hand" FocusVisualStyle="{x:Null}"
                                       IsChecked="{Binding IsExpanded, RelativeSource={RelativeSource TemplatedParent}, Mode=TwoWay}"
                                       AutomationProperties.Name="{Binding Header, RelativeSource={RelativeSource TemplatedParent}}">
+                            <!-- La couleur du titre par un style, et non un attribut : les déclencheurs du gabarit la
+                                 changent au survol et ouvert ; le style du thème de Windows (le noir) ne la pose plus. -->
+                            <ToggleButton.Style>
+                                <Style TargetType="{x:Type ToggleButton}">
+                                    <Setter Property="Foreground" Value="{DynamicResource mkm.propertypanel.section.header.color}" />
+                                </Style>
+                            </ToggleButton.Style>
                             <ToggleButton.Template>
                                 <ControlTemplate TargetType="{x:Type ToggleButton}">
                                     <Grid>
@@ -124,7 +131,7 @@
                                             <Setter TargetName="Fleche" Property="Foreground" Value="{DynamicResource mkm.propertypanel.section.header.toggle.icon.active.color}" />
                                             <Setter Property="Foreground" Value="{DynamicResource mkm.propertypanel.section.header.hover.color}" />
                                         </Trigger>
-                                        <Trigger Property="IsKeyboardFocused" Value="True">
+                                        <Trigger Property="local:FocusVisible.IsVisible" Value="True">
                                             <Setter TargetName="Fond" Property="Background" Value="{DynamicResource mkm.propertypanel.section.header.focus.background}" />
                                             <Setter TargetName="Anneau" Property="Visibility" Value="Visible" />
                                         </Trigger>

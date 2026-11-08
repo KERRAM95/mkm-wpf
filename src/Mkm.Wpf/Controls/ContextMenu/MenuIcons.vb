@@ -49,8 +49,13 @@ Namespace Mkm.Wpf.Controls
         Private Shared Sub SousMenuOuvert(sender As Object, e As RoutedEventArgs)
             If e.OriginalSource IsNot sender Then Return
             Dim element = DirectCast(sender, MenuItem)
-            Dim cadre = TryCast(element.Template?.FindName("SousMenu", element), FrameworkElement)
-            If cadre IsNot Nothing Then SetHasIcons(cadre, OntDesIcones(element))
+            ' Posée sur chaque élément du sous-menu : une propriété héritée suit le parent logique (l'élément qui ouvre le
+            ' sous-menu, et au-dessus le menu), non le cadre du sous-menu où ils se dessinent.
+            Dim garder = OntDesIcones(element)
+            For i = 0 To element.Items.Count - 1
+                Dim enfant = If(TryCast(element.Items(i), MenuItem), TryCast(element.ItemContainerGenerator.ContainerFromIndex(i), MenuItem))
+                If enfant IsNot Nothing Then SetHasIcons(enfant, garder)
+            Next
         End Sub
 
         Private Shared Function OntDesIcones(liste As ItemsControl) As Boolean

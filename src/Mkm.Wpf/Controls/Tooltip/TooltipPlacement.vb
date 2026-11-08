@@ -23,19 +23,20 @@ Namespace Mkm.Wpf.Controls
         ''' </summary>
         Public Shared ReadOnly Property Top As New CustomPopupPlacementCallback(AddressOf AuDessus)
 
+        ' Le décalage (HorizontalOffset, VerticalOffset) est déjà appliqué par la fenêtre flottante : pas ici.
         Private Shared Function AuDessus(popupSize As Size, targetSize As Size, offset As Point) As CustomPopupPlacement()
             Dim x = (targetSize.Width - popupSize.Width) / 2
             Return {
-                New CustomPopupPlacement(New Point(x, -popupSize.Height - offset.Y), PopupPrimaryAxis.Vertical),
-                New CustomPopupPlacement(New Point(x, targetSize.Height + offset.Y), PopupPrimaryAxis.Vertical)
+                New CustomPopupPlacement(New Point(x, -popupSize.Height), PopupPrimaryAxis.Vertical),
+                New CustomPopupPlacement(New Point(x, targetSize.Height), PopupPrimaryAxis.Vertical)
             }
         End Function
 
         Private Shared Function ADroite(popupSize As Size, targetSize As Size, offset As Point) As CustomPopupPlacement()
             Dim y = (targetSize.Height - popupSize.Height) / 2
             Return {
-                New CustomPopupPlacement(New Point(targetSize.Width + offset.X, y), PopupPrimaryAxis.Horizontal),
-                New CustomPopupPlacement(New Point(-popupSize.Width - offset.X, y), PopupPrimaryAxis.Horizontal)
+                New CustomPopupPlacement(New Point(targetSize.Width, y), PopupPrimaryAxis.Horizontal),
+                New CustomPopupPlacement(New Point(-popupSize.Width, y), PopupPrimaryAxis.Horizontal)
             }
         End Function
 

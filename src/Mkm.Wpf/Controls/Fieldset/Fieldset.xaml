@@ -100,14 +100,11 @@
                             <Setter TargetName="Bascule" Property="Visibility" Value="Visible" />
                             <Setter TargetName="PART_Legend" Property="Padding" Value="0" />
                         </Trigger>
-                        <MultiTrigger>
-                            <MultiTrigger.Conditions>
-                                <Condition Property="Toggleable" Value="True" />
-                                <Condition Property="IsCollapsed" Value="True" />
-                            </MultiTrigger.Conditions>
+                        <!-- Replié, le contenu disparaît, que le groupe ait sa bascule ou non (le v-show de mkm). -->
+                        <Trigger Property="IsCollapsed" Value="True">
                             <Setter TargetName="Contenu" Property="Visibility" Value="Collapsed" />
                             <Setter TargetName="Signe" Property="Source" Value="{x:Static local:Icons.Add}" />
-                        </MultiTrigger>
+                        </Trigger>
                         <Trigger SourceName="Bascule" Property="IsMouseOver" Value="True">
                             <Setter TargetName="PART_Legend" Property="Background" Value="{DynamicResource mkm.fieldset.legend.hover.background}" />
                             <Setter TargetName="PART_Legend" Property="TextElement.Foreground" Value="{DynamicResource mkm.fieldset.legend.hover.color}" />

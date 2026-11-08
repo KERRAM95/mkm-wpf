@@ -319,19 +319,23 @@ Namespace Mkm.Wpf.Controls
         End Function
 
         Private Function Borner(nombre As Double) As Double
-            Dim arrondi = Math.Round(nombre, Math.Max(0, Math.Min(15, Math.Max(MinFractionDigits, MaxFractionDigits))))
+            ' Arrondi comme l'affichage (au-dessus pour une moitié), et non au pair : la valeur suit ce qu'on lit.
+            Dim arrondi = Math.Round(nombre, Math.Max(0, Math.Min(15, Math.Max(MinFractionDigits, MaxFractionDigits))), MidpointRounding.AwayFromZero)
             Return Math.Max(Minimum, Math.Min(Maximum, arrondi))
         End Function
 
         ' Le texte du champ, celui du nombre ; sans réécrire ce que l'utilisateur est en train de taper.
         Private Sub Ecrire()
             If _champ Is Nothing Then Return
+            ' Le curseur garde sa place, comptée depuis la fin : une flèche ou un bouton ne le renvoie pas au début.
+            Dim depuisLaFin = If(_champ.IsKeyboardFocused, _champ.Text.Length - _champ.CaretIndex, -1)
             _ecritParLeCode = True
             Try
                 _champ.Text = Format(Value)
             Finally
                 _ecritParLeCode = False
             End Try
+            If depuisLaFin >= 0 Then _champ.CaretIndex = Math.Max(0, _champ.Text.Length - depuisLaFin)
         End Sub
 
         Private Sub ChampModifie(sender As Object, e As TextChangedEventArgs)
@@ -349,7 +353,17 @@ Namespace Mkm.Wpf.Controls
 
         ' Que des chiffres, le séparateur décimal s'il y a des décimales, le moins s'il y a des nombres négatifs.
         Private Sub ChampSaisi(sender As Object, e As TextCompositionEventArgs)
-            Dim format = Culture().NumberFormat
+            Dim culture = Me.Culture()
+            Dim format = culture.NumberFormat
+            ' En français, le point du pavé numérique vaut la virgule (l'isDecimalSign de mkm) : il l'écrit.
+            If MaxFractionDigits > 0 AndAlso culture.TwoLetterISOLanguageName = "fr" AndAlso (e.Text = "." OrElse e.Text = ",") AndAlso
+               e.Text <> format.NumberDecimalSeparator Then
+                e.Handled = True
+                Dim debut = _champ.SelectionStart
+                _champ.SelectedText = format.NumberDecimalSeparator
+                _champ.Select(debut + format.NumberDecimalSeparator.Length, 0)
+                Return
+            End If
             For Each c In e.Text
                 Dim admis = Char.IsDigit(c) OrElse
                     (MaxFractionDigits > 0 AndAlso format.NumberDecimalSeparator.Contains(c)) OrElse

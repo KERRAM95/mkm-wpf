@@ -283,3 +283,7 @@ welcomepanel.separator.vertical.margin = 5px 0
 # treegrid (styles/treegrid) : l'icône d'un nœud à 7 px de sa case, son libellé à 7 px d'elle et du bord droit.
 treegrid.node.icon.margin = 0 0 0 {treegrid.body.cell.gap}
 treegrid.node.label.margin = 0 {treegrid.body.cell.gap} 0 {treegrid.body.cell.gap}
+
+# confirmdialog : la question passe à la ligne à 420 px (mesure de mkm-wpf : une fenêtre à la taille de son contenu se
+# mesure sur une largeur infinie ; 420 px, comme le bloc de l'écran vide).
+confirmdialog.message.max.width = 420px

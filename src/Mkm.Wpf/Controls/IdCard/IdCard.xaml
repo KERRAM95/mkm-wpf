@@ -151,16 +151,28 @@
                         <Trigger Property="Revision" Value="{x:Null}">
                             <Setter TargetName="Revision" Property="Visibility" Value="Collapsed" />
                         </Trigger>
+                        <Trigger Property="Revision" Value="">
+                            <Setter TargetName="Revision" Property="Visibility" Value="Collapsed" />
+                        </Trigger>
                         <Trigger Property="Owner" Value="{x:Null}">
                             <Setter TargetName="Proprietaire" Property="Visibility" Value="Collapsed" />
                         </Trigger>
+                        <Trigger Property="Owner" Value="">
+                            <Setter TargetName="Proprietaire" Property="Visibility" Value="Collapsed" />
+                        </Trigger>
                         <Trigger Property="Type" Value="{x:Null}">
+                            <Setter TargetName="LeType" Property="Visibility" Value="Collapsed" />
+                        </Trigger>
+                        <Trigger Property="Type" Value="">
                             <Setter TargetName="LeType" Property="Visibility" Value="Collapsed" />
                         </Trigger>
                         <Trigger Property="TypeIcon" Value="{x:Null}">
                             <Setter TargetName="IconeDuType" Property="Visibility" Value="Collapsed" />
                         </Trigger>
                         <Trigger Property="Maturity" Value="{x:Null}">
+                            <Setter TargetName="Maturite" Property="Visibility" Value="Collapsed" />
+                        </Trigger>
+                        <Trigger Property="Maturity" Value="">
                             <Setter TargetName="Maturite" Property="Visibility" Value="Collapsed" />
                         </Trigger>
                         <Trigger Property="Collapsible" Value="False">

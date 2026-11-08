@@ -358,8 +358,19 @@
                                 <Border x:Name="EnTete" DockPanel.Dock="Top" BorderThickness="0,0,0,1"
                                         Padding="{DynamicResource mkm.actionbar.header.padding}"
                                         BorderBrush="{DynamicResource mkm.actionbar.header.border.color}">
-                                    <DockPanel>
-                                        <Button x:Name="PART_Toggle" DockPanel.Dock="Right"
+                                    <!-- Les onglets, puis le bouton de repli : l'ordre de la tabulation, comme dans mkm. -->
+                                    <Grid>
+                                        <Grid.ColumnDefinitions>
+                                            <ColumnDefinition Width="*" />
+                                            <ColumnDefinition Width="Auto" />
+                                            <ColumnDefinition Width="Auto" />
+                                        </Grid.ColumnDefinitions>
+                                        <!-- Les onglets descendent d'un pixel sur le filet de l'en-tête. -->
+                                        <ItemsPresenter x:Name="Onglets" Margin="0,0,0,-1"
+                                                        KeyboardNavigation.TabNavigation="Once"
+                                                        KeyboardNavigation.DirectionalNavigation="Cycle" />
+                                        <Rectangle Grid.Column="1" Width="{DynamicResource mkm.actionbar.header.gap}" />
+                                        <Button x:Name="PART_Toggle" Grid.Column="2"
                                                 Style="{StaticResource mkm.ActionBar.Toggle}"
                                                 AutomationProperties.Name="{loc:T actionBar.hideCommands}">
                                             <local:Icon x:Name="IconeDuRepli"
@@ -367,12 +378,7 @@
                                                         Height="{DynamicResource mkm.actionbar.toggle.icon.size}"
                                                         Source="{x:Static local:Icons.ChevronDown}" />
                                         </Button>
-                                        <Rectangle DockPanel.Dock="Right" Width="{DynamicResource mkm.actionbar.header.gap}" />
-                                        <!-- Les onglets descendent d'un pixel sur le filet de l'en-tête. -->
-                                        <ItemsPresenter x:Name="Onglets" Margin="0,0,0,-1"
-                                                        KeyboardNavigation.TabNavigation="Once"
-                                                        KeyboardNavigation.DirectionalNavigation="Cycle" />
-                                    </DockPanel>
+                                    </Grid>
                                 </Border>
                                 <Grid x:Name="Rangee">
                                     <ScrollViewer x:Name="PART_Scroll" Focusable="False" CanContentScroll="False"

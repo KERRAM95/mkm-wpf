@@ -45,7 +45,7 @@
                             <Setter TargetName="Boite" Property="Background" Value="{DynamicResource mkm.checkbox.hover.background}" />
                             <Setter TargetName="Boite" Property="BorderBrush" Value="{DynamicResource mkm.checkbox.hover.border.color}" />
                         </Trigger>
-                        <Trigger Property="IsKeyboardFocused" Value="True">
+                        <Trigger Property="IsFocusVisible" Value="True">
                             <Setter TargetName="Boite" Property="Background" Value="{DynamicResource mkm.checkbox.hover.background}" />
                             <Setter TargetName="Boite" Property="BorderBrush" Value="{DynamicResource mkm.checkbox.focus.border.color}" />
                         </Trigger>
@@ -76,7 +76,7 @@
                         <MultiTrigger>
                             <MultiTrigger.Conditions>
                                 <Condition Property="IsChecked" Value="True" />
-                                <Condition Property="IsKeyboardFocused" Value="True" />
+                                <Condition Property="IsFocusVisible" Value="True" />
                             </MultiTrigger.Conditions>
                             <Setter TargetName="Boite" Property="Background" Value="{DynamicResource mkm.checkbox.checked.hover.background}" />
                             <Setter TargetName="Boite" Property="BorderBrush" Value="{DynamicResource mkm.checkbox.checked.focus.border.color}" />

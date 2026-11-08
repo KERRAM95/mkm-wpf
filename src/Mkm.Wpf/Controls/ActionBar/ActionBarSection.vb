@@ -70,7 +70,7 @@ Namespace Mkm.Wpf.Controls
 
         ' Une section cachée n'a plus d'onglet : la barre revoit les siens.
         Private Shared Sub OnVisibilityChanged(d As DependencyObject, e As DependencyPropertyChangedEventArgs)
-            DirectCast(d, ActionBarSection).ParentBar?.MettreAJourEtat()
+            DirectCast(d, ActionBarSection).ParentBar?.SectionVisibiliteChangee()
         End Sub
 
         ''' <inheritdoc/>
