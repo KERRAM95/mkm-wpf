@@ -13,12 +13,10 @@ Namespace Mkm.Wpf.Showcase.Documentation.Exemples
         End Sub
 
 #Region "Exemple"
-        ' Fermé (par sa croix ou au bout de sa vie), le message est caché ; le remontrer, c'est le rendre visible.
+        ' Fermé (par sa croix ou au bout de sa vie), le message est caché ; le remontrer, c'est le rendre visible :
+        ' il est réannoncé et sa vie repart.
         Private Shared Sub Remontrer(message As Message)
             message.Visibility = Visibility.Visible
-            ' Une vie neuve : la poser de nouveau relance son compte.
-            message.Life = TimeSpan.Zero
-            message.Life = TimeSpan.FromSeconds(5)
         End Sub
 #End Region
 

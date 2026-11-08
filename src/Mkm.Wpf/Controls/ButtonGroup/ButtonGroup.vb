@@ -1,3 +1,4 @@
+Imports System.Collections.Generic
 Imports System.Linq
 Imports System.Windows
 Imports System.Windows.Automation.Peers
@@ -60,13 +61,41 @@ Namespace Mkm.Wpf.Controls
         ''' <inheritdoc/>
         Protected Overrides Sub PrepareContainerForItemOverride(element As DependencyObject, item As Object)
             MyBase.PrepareContainerForItemOverride(element, item)
+            ' La visibilité du bouton suivie par une liaison sur lui-même (sans abonnement qui le retiendrait).
+            Dim bouton = TryCast(element, UIElement)
+            If bouton IsNot Nothing Then
+                System.Windows.Data.BindingOperations.SetBinding(bouton, VisibiliteSuivieProperty,
+                                             New Data.Binding(NameOf(UIElement.Visibility)) With {.Source = bouton})
+            End If
             Ranger()
         End Sub
 
+        ''' <inheritdoc/>
+        Protected Overrides Sub ClearContainerForItemOverride(element As DependencyObject, item As Object)
+            System.Windows.Data.BindingOperations.ClearBinding(element, VisibiliteSuivieProperty)
+            MyBase.ClearContainerForItemOverride(element, item)
+        End Sub
+
+        ' Un bouton caché ou montré change la place des autres (le dernier visible prend les coins de droite).
+        Private Shared ReadOnly VisibiliteSuivieProperty As DependencyProperty = DependencyProperty.RegisterAttached(
+            "VisibiliteSuivie", GetType(Visibility), GetType(ButtonGroup),
+            New PropertyMetadata(Visibility.Visible, Sub(d, e) TryCast(ItemsControl.ItemsControlFromItemContainer(d), ButtonGroup)?.Ranger()))
+
+        ' Les boutons du groupe : ses éléments, ou les conteneurs de ses données (ItemsSource).
+        Private Function ListeDesBoutons() As List(Of UIElement)
+            Dim liste As New List(Of UIElement)
+            For i = 0 To Items.Count - 1
+                Dim bouton = If(TryCast(ItemContainerGenerator.ContainerFromIndex(i), UIElement), TryCast(Items(i), UIElement))
+                If bouton IsNot Nothing Then liste.Add(bouton)
+            Next
+            Return liste
+        End Function
+
         ' Chaque bouton visible prend sa place : le premier, ceux du milieu, le dernier.
         Friend Sub Ranger()
-            Dim boutons = Items.OfType(Of UIElement)().Where(Function(b) b.Visibility <> Visibility.Collapsed).ToList()
-            For Each element In Items.OfType(Of UIElement)()
+            Dim tous = ListeDesBoutons()
+            Dim boutons = tous.Where(Function(b) b.Visibility <> Visibility.Collapsed).ToList()
+            For Each element In tous
                 element.ClearValue(PositionProperty)
             Next
             If boutons.Count < 2 Then Return

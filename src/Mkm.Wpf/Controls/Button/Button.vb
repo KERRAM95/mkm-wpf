@@ -78,6 +78,8 @@ Namespace Mkm.Wpf.Controls
         Public Shared ReadOnly FocusBackgroundProperty As DependencyProperty = Pinceau(NameOf(FocusBackground))
         ''' <summary>La bordure au focus du clavier.</summary>
         Public Shared ReadOnly FocusBorderBrushProperty As DependencyProperty = Pinceau(NameOf(FocusBorderBrush))
+        ''' <summary>L'anneau au focus du clavier.</summary>
+        Public Shared ReadOnly FocusRingBrushProperty As DependencyProperty = Pinceau(NameOf(FocusRingBrush))
 
         Private Shared ReadOnly IsFocusVisiblePropertyKey As DependencyPropertyKey = DependencyProperty.RegisterReadOnly(
             NameOf(IsFocusVisible), GetType(Boolean), GetType(Button), New FrameworkPropertyMetadata(False))
@@ -208,6 +210,13 @@ Namespace Mkm.Wpf.Controls
             End Get
         End Property
 
+        ''' <summary>L'anneau au focus du clavier, de la couleur de la gravité.</summary>
+        Public ReadOnly Property FocusRingBrush As Brush
+            Get
+                Return DirectCast(GetValue(FocusRingBrushProperty), Brush)
+            End Get
+        End Property
+
         ''' <summary>Vrai quand le bouton a le focus du clavier.</summary>
         Public ReadOnly Property IsFocusVisible As Boolean
             Get
@@ -264,6 +273,7 @@ Namespace Mkm.Wpf.Controls
         ' Les couleurs de chaque état, prises aux jetons de mkm selon la gravité et la forme.
         Private Sub Colorer()
             Dim g = Severity.ToString().ToLowerInvariant()
+            Lier(FocusRingBrushProperty, $"button.{g}.focus.ring.color")
             Select Case [Variant]
                 Case ButtonVariant.Filled
                     Lier(BackgroundProperty, $"button.{g}.background")

@@ -72,7 +72,7 @@ d'icône seule se nomme par son `ToolTip` ou `AutomationProperties.Name`.
 
 ## Écarts avec mkm
 
-- Un lien n'est pas souligné au survol ; les couleurs changent sans transition.
+- Les couleurs changent sans transition.
 - Le libellé de la case fait partie d'elle (le survoler allume la case).
 
 ## La vitrine et les tests

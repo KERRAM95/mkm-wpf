@@ -48,6 +48,21 @@ Namespace Mkm.Wpf.Tests.Controls
             Assert.That(ButtonGroup.GetPosition(boutons(0)), [Is].EqualTo(ButtonGroupPosition.None), "seul, il reprend sa forme")
         End Sub
 
+        <Test>
+        Public Sub ButtonGroup_UnBoutonCacheOuMontreReplaceLesAutres()
+            Dim groupe As New ButtonGroup()
+            Dim boutons = {"Enregistrer", "Supprimer", "Annuler"}.Select(Function(t) New Global.Mkm.Wpf.Controls.Button With {.Content = t}).ToList()
+            For Each b In boutons
+                groupe.Items.Add(b)
+            Next
+            Pret(groupe)
+            boutons(2).Visibility = Visibility.Collapsed
+            Assert.That(ButtonGroup.GetPosition(boutons(1)), [Is].EqualTo(ButtonGroupPosition.Last), "le nouveau dernier prend les coins de droite")
+            boutons(2).Visibility = Visibility.Visible
+            Assert.That(boutons.Select(Function(b) ButtonGroup.GetPosition(b)),
+                        [Is].EqualTo({ButtonGroupPosition.First, ButtonGroupPosition.Middle, ButtonGroupPosition.Last}))
+        End Sub
+
         ' ---- Dock ----
 
         <Test>

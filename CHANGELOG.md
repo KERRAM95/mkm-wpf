@@ -209,6 +209,13 @@ Les évolutions notables de mkm-wpf, version par version. Le format suit
     ils changent) ; l'exemple espace ses actions de 6 px, comme mkm.
   - Terminal : chaque réponse est annoncée aux lecteurs d'écran ; la police
     du thème, comme mkm.
+  - Button : l'anneau du clavier de mkm (1 px, à 1 px au-dehors, de la
+    couleur de la gravité ; le focus d'un lien était invisible) ; un lien se
+    souligne au survol.
+  - Message : la croix prend la couleur du message (elle était noire) ;
+    remontré, il est réannoncé et sa vie repart.
+  - ButtonGroup : un bouton caché ou montré replace les autres (coins et
+    bordures) ; un groupe lié par ItemsSource est rangé lui aussi.
   - InputOtp, ColorPicker, Terminal, Password : la langue n'est suivie que
     tant que le contrôle est chargé (l'abonnement à vie le gardait en
     mémoire).

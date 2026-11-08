@@ -5,7 +5,9 @@
     tient une ligne, coupé de points de suspension. Les couleurs de chaque état viennent de la gravité
     et de la forme (Button.Colorer) ; ce gabarit ne connaît que repos, survol, focus clavier et enfoncé.
 
-    Écarts avec mkm : un lien n'est pas souligné au survol ; les couleurs changent sans transition.
+    Au clavier, un anneau d'un pixel, à un pixel au-dehors, de la couleur de la gravité (button.<g>.focus.ring.color).
+
+    Écarts avec mkm : les couleurs changent sans transition.
 -->
 <ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
                     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
@@ -28,6 +30,7 @@
                 <ControlTemplate TargetType="{x:Type local:Button}">
                     <!-- La couleur du texte et de l'icône est portée par le cadre : la gravité la pose sur le bouton en
                          valeur locale, que les déclencheurs ne pourraient pas remplacer ; ici, ils le peuvent. -->
+                    <Grid>
                     <Border x:Name="Fond"
                             TextElement.Foreground="{TemplateBinding Foreground}"
                             Background="{TemplateBinding Background}"
@@ -43,11 +46,28 @@
                                 <ContentPresenter.Resources>
                                     <Style TargetType="{x:Type TextBlock}">
                                         <Setter Property="TextTrimming" Value="CharacterEllipsis" />
+                                        <Style.Triggers>
+                                            <!-- Un lien se souligne au survol, comme mkm. -->
+                                            <MultiDataTrigger>
+                                                <MultiDataTrigger.Conditions>
+                                                    <Condition Binding="{Binding Variant, RelativeSource={RelativeSource AncestorType={x:Type local:Button}}}" Value="Link" />
+                                                    <Condition Binding="{Binding IsMouseOver, RelativeSource={RelativeSource AncestorType={x:Type local:Button}}}" Value="True" />
+                                                </MultiDataTrigger.Conditions>
+                                                <Setter Property="TextDecorations" Value="Underline" />
+                                            </MultiDataTrigger>
+                                        </Style.Triggers>
                                     </Style>
                                 </ContentPresenter.Resources>
                             </ContentPresenter>
                         </StackPanel>
                     </Border>
+                    <!-- L'anneau du clavier : 1 px, à 1 px au-dehors, de la couleur de la gravité (outline de mkm). -->
+                    <Rectangle x:Name="Anneau" Margin="-2" Visibility="Collapsed" IsHitTestVisible="False" SnapsToDevicePixels="True"
+                               RadiusX="{Binding CornerRadius.TopLeft, RelativeSource={RelativeSource TemplatedParent}}"
+                               RadiusY="{Binding CornerRadius.TopLeft, RelativeSource={RelativeSource TemplatedParent}}"
+                               Stroke="{Binding FocusRingBrush, RelativeSource={RelativeSource TemplatedParent}}"
+                               StrokeThickness="{DynamicResource mkm.button.focus.ring.width}" />
+                    </Grid>
                     <ControlTemplate.Triggers>
                         <Trigger Property="HasIcon" Value="True">
                             <Setter TargetName="Icone" Property="Visibility" Value="Visible" />
@@ -63,6 +83,7 @@
                             <Setter TargetName="Fond" Property="TextElement.Foreground" Value="{Binding HoverForeground, RelativeSource={RelativeSource TemplatedParent}}" />
                         </Trigger>
                         <Trigger Property="IsFocusVisible" Value="True">
+                            <Setter TargetName="Anneau" Property="Visibility" Value="Visible" />
                             <Setter TargetName="Fond" Property="Background" Value="{Binding FocusBackground, RelativeSource={RelativeSource TemplatedParent}}" />
                             <Setter TargetName="Fond" Property="BorderBrush" Value="{Binding FocusBorderBrush, RelativeSource={RelativeSource TemplatedParent}}" />
                         </Trigger>

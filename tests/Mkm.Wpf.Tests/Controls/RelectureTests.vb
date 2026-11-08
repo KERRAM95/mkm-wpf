@@ -86,6 +86,15 @@ Namespace Mkm.Wpf.Tests.Controls
         End Sub
 
         <Test>
+        Public Sub Button_LAnneauDuClavier_ALaCouleurDeLaGravite()
+            Dim bouton = Pret(New BoutonDeMkm With {.Content = "Supprimer", .Severity = ButtonSeverity.Danger})
+            Assert.That(bouton.FocusRingBrush, [Is].SameAs(Ressource("button.danger.focus.ring.color")))
+            Dim anneau = Partie(Of Shapes.Rectangle)(bouton, "Anneau")
+            Assert.That(anneau.Visibility, [Is].EqualTo(Visibility.Collapsed), "au repos, pas d'anneau")
+            Assert.That(anneau.Margin, [Is].EqualTo(New Thickness(-2)), "à un pixel au-dehors")
+        End Sub
+
+        <Test>
         Public Sub Message_UneValeurDeLApplicationLEmporteSurLaGravite()
             Dim message As New Message With {.Padding = New Thickness(0)}
             message.Severity = MessageSeverity.Warn

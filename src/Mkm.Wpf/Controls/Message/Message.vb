@@ -132,6 +132,10 @@ Namespace Mkm.Wpf.Controls
             Colorer()
             AddHandler Loaded, AddressOf AuChargement
             AddHandler Unloaded, Sub() Arreter()
+            ' Remontré (caché par sa croix ou au bout de sa vie), il est réannoncé et sa vie repart.
+            AddHandler IsVisibleChanged, Sub(s, e)
+                                             If CBool(e.NewValue) AndAlso IsLoaded Then AuChargement(Me, Nothing)
+                                         End Sub
         End Sub
 
         ''' <summary>La gravité du message.</summary>

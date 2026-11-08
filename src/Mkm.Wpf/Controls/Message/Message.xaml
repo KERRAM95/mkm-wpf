@@ -37,7 +37,9 @@
                                             Foreground="{TemplateBinding IconForeground}"
                                             Source="{TemplateBinding Icon}" />
                                 <Rectangle x:Name="EcartIcone" DockPanel.Dock="Left" Width="{DynamicResource mkm.message.content.gap}" />
+                                <!-- La croix de la couleur du message (sans quoi le style de Windows la ferait noire). -->
                                 <Button x:Name="PART_CloseButton" DockPanel.Dock="Right" VerticalAlignment="Top"
+                                        Foreground="{TemplateBinding Foreground}"
                                         Visibility="Collapsed" Cursor="Hand" FocusVisualStyle="{x:Null}"
                                         Margin="{DynamicResource mkm.message.close.button.margin}"
                                         Width="{DynamicResource mkm.message.close.button.width}"

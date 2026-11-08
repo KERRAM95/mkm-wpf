@@ -61,7 +61,8 @@
 
   <section titre="Fermeture et durée de vie">
     <p><c>Closable</c> ajoute la croix qui ferme le message ; <c>Life</c> le ferme seul au bout du temps donné
-      (jamais par défaut). Fermé, le message est caché : le rendre visible le fait reparaître.</p>
+      (jamais par défaut). Fermé, le message est caché : le rendre visible le fait reparaître, réannoncé, pour une vie
+      neuve.</p>
     <exemple comportement="MessageEphemere" etendu="oui"><![CDATA[
 <mkm:Message x:Name="Ephemere" Severity="Success" Closable="True" Life="0:0:5"
              Icon="{x:Static mkm:Icons.Success}" Content="Le cartouche est à jour. Ce message se ferme dans 5 secondes." />
