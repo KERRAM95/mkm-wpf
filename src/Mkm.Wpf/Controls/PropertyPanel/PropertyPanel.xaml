@@ -80,17 +80,17 @@
             <Setter.Value>
                 <ControlTemplate TargetType="{x:Type local:PropertySection}">
                     <StackPanel>
-                        <ToggleButton x:Name="Entete" Cursor="Hand" FocusVisualStyle="{x:Null}"
+                        <local:EnTeteDeSection x:Name="Entete" Cursor="Hand" FocusVisualStyle="{x:Null}"
                                       IsChecked="{Binding IsExpanded, RelativeSource={RelativeSource TemplatedParent}, Mode=TwoWay}"
                                       AutomationProperties.Name="{Binding Header, RelativeSource={RelativeSource TemplatedParent}}">
                             <!-- La couleur du titre par un style, et non un attribut : les déclencheurs du gabarit la
                                  changent au survol et ouvert ; le style du thème de Windows (le noir) ne la pose plus. -->
-                            <ToggleButton.Style>
+                            <local:EnTeteDeSection.Style>
                                 <Style TargetType="{x:Type ToggleButton}">
                                     <Setter Property="Foreground" Value="{DynamicResource mkm.propertypanel.section.header.color}" />
                                 </Style>
-                            </ToggleButton.Style>
-                            <ToggleButton.Template>
+                            </local:EnTeteDeSection.Style>
+                            <local:EnTeteDeSection.Template>
                                 <ControlTemplate TargetType="{x:Type ToggleButton}">
                                     <Grid>
                                         <Border x:Name="Fond"
@@ -137,12 +137,12 @@
                                         </Trigger>
                                     </ControlTemplate.Triggers>
                                 </ControlTemplate>
-                            </ToggleButton.Template>
+                            </local:EnTeteDeSection.Template>
                             <ContentPresenter Content="{Binding Header, RelativeSource={RelativeSource TemplatedParent}}"
                                               ContentTemplate="{Binding HeaderTemplate, RelativeSource={RelativeSource TemplatedParent}}"
                                               TextElement.FontSize="{DynamicResource mkm.propertypanel.section.header.font.size}"
                                               TextElement.FontWeight="{DynamicResource mkm.propertypanel.section.header.font.weight}" />
-                        </ToggleButton>
+                        </local:EnTeteDeSection>
                         <ItemsPresenter x:Name="Contenu" Visibility="Collapsed"
                                         Margin="{DynamicResource mkm.propertypanel.section.content.padding}" />
                     </StackPanel>

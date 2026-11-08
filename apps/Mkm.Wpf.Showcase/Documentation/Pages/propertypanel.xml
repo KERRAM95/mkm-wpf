@@ -104,7 +104,7 @@
 
   <section titre="Accessibilité">
     <h3>Lecteur d'écran</h3>
-    <p>L'en-tête d'une section est un bouton bascule nommé par son en-tête, enfoncé quand la section est dépliée.
+    <p>L'en-tête d'une section est un bouton nommé par son en-tête, « développé » ou « réduit » (aria-expanded de mkm).
       Chaque propriété est un groupe nommé par son libellé : son éditeur y est annoncé avec lui. Le bouton Modifier se
       nomme « Modifier », les autres disent « Enregistrer » et « Annuler ».</p>
     <h3>Clavier</h3>
@@ -112,6 +112,10 @@
       <touche nom="Tab">Amène le clavier sur l'en-tête de section suivant, ou sur l'éditeur suivant.</touche>
       <touche nom="Entrée">Replie ou déplie la section dont l'en-tête a le clavier.</touche>
       <touche nom="Espace">Replie ou déplie la section dont l'en-tête a le clavier.</touche>
+      <touche nom="Flèche bas">Passe à l'en-tête de section suivant (en boucle).</touche>
+      <touche nom="Flèche haut">Passe à l'en-tête de section précédent (en boucle).</touche>
+      <touche nom="Début">Au premier en-tête de section.</touche>
+      <touche nom="Fin">Au dernier en-tête de section.</touche>
     </touches>
   </section>
 </page>

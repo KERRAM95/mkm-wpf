@@ -244,6 +244,30 @@ Namespace Mkm.Wpf.Controls
             Next
         End Sub
 
+        ''' <summary>Les flèches haut et bas, Début et Fin passent d'un en-tête de section à l'autre, comme mkm.</summary>
+        Protected Overrides Sub OnKeyDown(e As System.Windows.Input.KeyEventArgs)
+            MyBase.OnKeyDown(e)
+            If e.Handled Then Return
+            Dim entetes As New System.Collections.Generic.List(Of UIElement)
+            For i = 0 To Items.Count - 1
+                Dim section = TryCast(If(TryCast(Items(i), PropertySection), ItemContainerGenerator.ContainerFromIndex(i)), PropertySection)
+                Dim entete = TryCast(section?.Template?.FindName("Entete", section), UIElement)
+                If entete IsNot Nothing AndAlso entete.IsVisible AndAlso entete.IsEnabled Then entetes.Add(entete)
+            Next
+            Dim ici = entetes.FindIndex(Function(t) t.IsKeyboardFocused)
+            If ici < 0 Then Return
+            Dim cible As Integer
+            Select Case e.Key
+                Case System.Windows.Input.Key.Down : cible = (ici + 1) Mod entetes.Count
+                Case System.Windows.Input.Key.Up : cible = (ici - 1 + entetes.Count) Mod entetes.Count
+                Case System.Windows.Input.Key.Home : cible = 0
+                Case System.Windows.Input.Key.End : cible = entetes.Count - 1
+                Case Else : Return
+            End Select
+            entetes(cible).Focus()
+            e.Handled = True
+        End Sub
+
         ''' <inheritdoc/>
         Public Overrides Sub OnApplyTemplate()
             MyBase.OnApplyTemplate()
