@@ -121,13 +121,25 @@ Namespace Mkm.Wpf.Tests.Controls
             Assert.That(groupe.GetName(), [Is].EqualTo("Enregistrer"))
         End Sub
 
+        <Test>
+        Public Sub SplitButton_LeClicDUneActionRemonteAuBoutonPartage()
+            Dim partage = Pret(New SplitButton With {.Content = "Enregistrer"})
+            Dim action As New MenuItem With {.Header = "Enregistrer sous…"}
+            partage.Items.Add(action)
+            Dim recu As Object = Nothing
+            partage.AddHandler(MenuItem.ClickEvent, New RoutedEventHandler(Sub(s, e) recu = e.OriginalSource))
+
+            action.RaiseEvent(New RoutedEventArgs(MenuItem.ClickEvent, action))
+            Assert.That(recu, [Is].SameAs(action))
+        End Sub
+
         ' ---- Popover ----
 
         <Test>
         Public Sub Popover_NePrendPasDePlaceDansLaPage()
             Dim fenetre = Pret(New Popover With {.Content = New TextBlock With {.Text = "Lien du document"}})
-            Assert.That(fenetre.ActualWidth, [Is].EqualTo(0))
-            Assert.That(fenetre.ActualHeight, [Is].EqualTo(0))
+            Assert.That(fenetre.DesiredSize.Width, [Is].EqualTo(0))
+            Assert.That(fenetre.DesiredSize.Height, [Is].EqualTo(0))
             Assert.That(fenetre.IsOpen, [Is].False)
             Assert.That(Partie(Of Popup)(fenetre, "PART_Popup").StaysOpen, [Is].False, "un clic ailleurs le ferme")
         End Sub

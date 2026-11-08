@@ -50,7 +50,7 @@ Namespace Mkm.Wpf.Controls
         Private _fleche As FrameworkElement
         Private _fenetre As Window
         ' Le moment où un clic sur l'élément l'a fermé : le Click de ce même clic ne doit pas le rouvrir.
-        Private _fermeSurLaCible As Integer = Integer.MinValue
+        Private _fermeSurLaCible As Date = Date.MinValue
 
         Shared Sub New()
             DefaultStyleKeyProperty.OverrideMetadata(GetType(Popover), New FrameworkPropertyMetadata(GetType(Popover)))
@@ -128,7 +128,7 @@ Namespace Mkm.Wpf.Controls
         Public Sub Toggle(Optional cible As UIElement = Nothing)
             If IsOpen Then
                 Hide()
-            ElseIf Environment.TickCount - _fermeSurLaCible > 400 Then
+            ElseIf (Date.UtcNow - _fermeSurLaCible).TotalMilliseconds > 400 Then
                 Show(cible)
             End If
         End Sub
@@ -189,7 +189,7 @@ Namespace Mkm.Wpf.Controls
             If _fenetre IsNot Nothing Then RemoveHandler _fenetre.PreviewKeyDown, AddressOf Fenetre_PreviewKeyDown
             _fenetre = Nothing
             If Target IsNot Nothing AndAlso Target.IsMouseOver AndAlso Mouse.LeftButton = MouseButtonState.Pressed Then
-                _fermeSurLaCible = Environment.TickCount
+                _fermeSurLaCible = Date.UtcNow
             End If
             SetCurrentValue(IsOpenProperty, False)
             Me.RaiseEvent(New RoutedEventArgs(ClosedEvent, Me))

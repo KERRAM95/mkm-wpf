@@ -15,8 +15,9 @@
   <section titre="Basique">
     <p>Le libellé (<c>Content</c>) et l'icône (<c>Icon</c>) sont ceux du bouton principal ; son clic est le
       <c>Click</c> du bouton partagé. Les éléments du bouton partagé sont ceux du menu : des <c>MenuItem</c> et des
-      <c>Separator</c> de WPF, avec leur <c>Click</c> ou leur <c>Command</c>. <c>IsDropDownOpen</c> dit si le menu
-      est ouvert.</p>
+      <c>Separator</c> de WPF, avec leur <c>Click</c> ou leur <c>Command</c> ; le clic d'une action remonte aussi au
+      bouton partagé (<c>MenuItem.Click</c>), qui peut les écouter toutes. <c>IsDropDownOpen</c> dit si le menu est
+      ouvert.</p>
     <exemple comportement="SplitButtonJournal" etendu="oui"><![CDATA[
 <mkm:SplitButton x:Name="Enregistrer" Content="Enregistrer" Icon="{x:Static mkm:Icons.Download}">
     <MenuItem Header="Enregistrer sous…" />

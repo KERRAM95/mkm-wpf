@@ -62,6 +62,7 @@ Namespace Mkm.Wpf.Controls
             _menu.PlacementTarget = Me
             AddHandler _menu.Opened, AddressOf OnMenuOuvert
             AddHandler _menu.Closed, AddressOf OnMenuFerme
+            _menu.AddHandler(MenuItem.ClickEvent, New RoutedEventHandler(AddressOf Menu_Click))
             ' Le menu hérite du contexte de données du bouton.
             _menu.SetBinding(DataContextProperty, New Data.Binding(NameOf(DataContext)) With {.Source = Me})
         End Sub
@@ -160,6 +161,13 @@ Namespace Mkm.Wpf.Controls
         Private Sub Bouton_Click(sender As Object, e As RoutedEventArgs)
             e.Handled = True
             Me.RaiseEvent(New RoutedEventArgs(ClickEvent, Me))
+        End Sub
+
+        ' Le clic d'une action du menu remonte au bouton partagé et à la page, comme celui d'un menu posé dans la page :
+        ' le menu, une fenêtre à part, ne le leur transmet pas.
+        Private Sub Menu_Click(sender As Object, e As RoutedEventArgs)
+            e.Handled = True
+            Me.RaiseEvent(New RoutedEventArgs(MenuItem.ClickEvent, e.OriginalSource))
         End Sub
 
         Private Sub Chevron_Click(sender As Object, e As RoutedEventArgs)
