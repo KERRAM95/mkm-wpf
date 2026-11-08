@@ -189,12 +189,35 @@ Namespace Mkm.Wpf.Controls
         Public Sub Expand(node As Object)
             If node Is Nothing OrElse Not _deplies.Add(node) Then Return
             Reconstruire()
+            Decrire(TryCast(ItemContainerGenerator.ContainerFromItem(node), DataGridRow), node)
         End Sub
 
         ''' <summary>Replie un nœud : ses descendants disparaissent.</summary>
         Public Sub Collapse(node As Object)
             If node Is Nothing OrElse Not _deplies.Remove(node) Then Return
             Reconstruire()
+            Decrire(TryCast(ItemContainerGenerator.ContainerFromItem(node), DataGridRow), node)
+        End Sub
+
+        ''' <inheritdoc/>
+        Protected Overrides Sub PrepareContainerForItemOverride(element As DependencyObject, item As Object)
+            MyBase.PrepareContainerForItemOverride(element, item)
+            Decrire(TryCast(element, DataGridRow), item)
+        End Sub
+
+        ' Pour les lecteurs d'écran, une ligne dit sa place parmi ses sœurs (aria-posinset, aria-setsize de mkm), son
+        ' niveau et, si elle a des enfants, si elle est dépliée (aria-level, aria-expanded) : WPF n'a pas de niveau ni
+        ' d'ExpandCollapse pour une ligne de grille, son état les porte.
+        Private Sub Decrire(ligne As DataGridRow, noeud As Object)
+            If ligne Is Nothing Then Return
+            Dim info = GetRowInfo(noeud)
+            If info Is Nothing Then Return
+            Dim soeurs = If(info.Parent Is Nothing, Racines(), EnfantsDe(info.Parent))
+            System.Windows.Automation.AutomationProperties.SetPositionInSet(ligne, soeurs.IndexOf(noeud) + 1)
+            System.Windows.Automation.AutomationProperties.SetSizeOfSet(ligne, soeurs.Count)
+            Dim etat = Localization.Localizer.Current.T("aria.level", info.Level)
+            If info.HasChildren Then etat &= ", " & Localization.Localizer.Current.T(If(IsExpanded(noeud), "aria.expanded", "aria.collapsed"))
+            System.Windows.Automation.AutomationProperties.SetItemStatus(ligne, etat)
         End Sub
 
         ''' <summary>Déplie un nœud replié, replie un nœud déplié.</summary>
@@ -249,8 +272,14 @@ Namespace Mkm.Wpf.Controls
         ''' <inheritdoc/>
         Protected Overrides Sub OnPreviewKeyDown(e As KeyEventArgs)
             MyBase.OnPreviewKeyDown(e)
-            If e.Handled OrElse (e.Key <> Key.Right AndAlso e.Key <> Key.Left) Then Return
-            If TypeOf e.OriginalSource Is TextBox Then Return
+            If e.Handled OrElse TypeOf e.OriginalSource Is TextBox Then Return
+            ' Début et Fin : la première et la dernière ligne, comme mkm (le DataGrid irait à une cellule de la ligne).
+            If (e.Key = Key.Home OrElse e.Key = Key.End) AndAlso Keyboard.Modifiers = ModifierKeys.None AndAlso _rangees.Count > 0 Then
+                Aller(If(e.Key = Key.Home, _rangees(0), _rangees(_rangees.Count - 1)))
+                e.Handled = True
+                Return
+            End If
+            If e.Key <> Key.Right AndAlso e.Key <> Key.Left Then Return
             Dim noeud = If(CurrentItem, SelectedItem)
             Dim info = GetRowInfo(noeud)
             If info Is Nothing Then Return

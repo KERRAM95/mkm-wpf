@@ -93,7 +93,8 @@
     <h3>Lecteur d'écran</h3>
     <p>C'est un tableau pour Narrateur, comme le <lien page="datatable">DataTable</lien> : il lit les titres des
       colonnes et chaque cellule avec le titre de sa colonne. La case qui déplie un nœud est un bouton nommé « Déplier »
-      ou « Replier » selon son état.</p>
+      ou « Replier » selon son état. Chaque ligne dit sa place parmi ses sœurs (« 2 sur 5 »), et son état son niveau et,
+      si elle a des enfants, « Développé » ou « Réduit ».</p>
     <h3>Clavier</h3>
     <touches>
       <touche nom="Tab">Amène le clavier sur les titres triables, puis dans la grille, puis hors de la grille.</touche>
@@ -101,7 +102,8 @@
       <touche nom="Flèche bas, flèche haut">Passent à la ligne suivante ou précédente ; la sélection suit.</touche>
       <touche nom="Flèche droite">Déplie le nœud replié, puis descend à son premier enfant.</touche>
       <touche nom="Flèche gauche">Replie le nœud déplié, puis remonte à son parent.</touche>
-      <touche nom="Début, Fin">Vont à la première ou à la dernière cellule ; avec Ctrl, de la grille.</touche>
+      <touche nom="Début, Fin">Vont à la première ou à la dernière ligne, comme mkm ; avec Ctrl, à la première ou à la dernière
+        cellule de la grille.</touche>
       <touche nom="Page préc., Page suiv.">Montent ou descendent d'une page.</touche>
       <touche nom="Maj + flèches">Étendent la sélection, en sélection multiple.</touche>
       <touche nom="Ctrl + A">Choisit toutes les lignes, en sélection multiple.</touche>

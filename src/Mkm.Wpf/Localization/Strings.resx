@@ -123,6 +123,15 @@
   <data name="aria.resizeDialog" xml:space="preserve">
     <value>Resize dialog</value>
   </data>
+  <data name="aria.expanded" xml:space="preserve">
+    <value>Expanded</value>
+  </data>
+  <data name="aria.collapsed" xml:space="preserve">
+    <value>Collapsed</value>
+  </data>
+  <data name="aria.level" xml:space="preserve">
+    <value>Level {0}</value>
+  </data>
   <data name="aria.page" xml:space="preserve">
     <value>Page {0}</value>
   </data>

@@ -311,6 +311,9 @@ Les évolutions notables de mkm-wpf, version par version. Le format suit
     le disait ; un sous-menu devient une liste de l'ActionBar.
   - Galleria : les flèches des vignettes changent l'image montrée, comme
     mkm ; une navigation de l'utilisateur arrête la lecture automatique.
+  - TreeGrid : chaque ligne dit aux lecteurs d'écran sa place parmi ses
+    sœurs, son niveau et, si elle a des enfants, si elle est dépliée ; Début
+    et Fin vont à la première et à la dernière ligne, comme mkm.
   - InputOtp, ColorPicker, Terminal, Password : la langue n'est suivie que
     tant que le contrôle est chargé (l'abonnement à vie le gardait en
     mémoire).
