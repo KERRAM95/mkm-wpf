@@ -97,6 +97,11 @@ Namespace Mkm.Wpf.Controls
             Colorer()
         End Sub
 
+        ''' <summary>Son info-bulle le nomme pour les lecteurs d'écran quand il n'a pas de libellé (icône seule).</summary>
+        Protected Overrides Function OnCreateAutomationPeer() As System.Windows.Automation.Peers.AutomationPeer
+            Return New PairDeBouton(Me)
+        End Function
+
         Private Shared Function Pinceau(nom As String) As DependencyProperty
             Return DependencyProperty.Register(nom, GetType(Brush), GetType(Button), New FrameworkPropertyMetadata(Nothing))
         End Function

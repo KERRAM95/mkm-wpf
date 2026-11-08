@@ -10,6 +10,11 @@ Namespace Mkm.Wpf.Controls
     Public Class PropertySection
         Inherits HeaderedItemsControl
 
+        ''' <summary>Tout son arbre visuel pour les lecteurs d'écran et l'automatisation, gabarit compris.</summary>
+        Protected Overrides Function OnCreateAutomationPeer() As System.Windows.Automation.Peers.AutomationPeer
+            Return New PairDeConteneur(Me, System.Windows.Automation.Peers.AutomationControlType.Group)
+        End Function
+
         ''' <summary>Vrai quand la section montre ses propriétés.</summary>
         Public Shared ReadOnly IsExpandedProperty As DependencyProperty = DependencyProperty.Register(
             NameOf(IsExpanded), GetType(Boolean), GetType(PropertySection),

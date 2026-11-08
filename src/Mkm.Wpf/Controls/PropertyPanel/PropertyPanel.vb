@@ -38,6 +38,11 @@ Namespace Mkm.Wpf.Controls
     Public Class PropertyPanel
         Inherits ItemsControl
 
+        ''' <summary>Tout son arbre visuel pour les lecteurs d'écran et l'automatisation, gabarit compris.</summary>
+        Protected Overrides Function OnCreateAutomationPeer() As System.Windows.Automation.Peers.AutomationPeer
+            Return New PairDeConteneur(Me, System.Windows.Automation.Peers.AutomationControlType.Group)
+        End Function
+
         ''' <summary>Le bouton Modifier dans le gabarit.</summary>
         Public Const PartEditButton As String = "PART_EditButton"
         ''' <summary>Le bouton Enregistrer dans le gabarit.</summary>

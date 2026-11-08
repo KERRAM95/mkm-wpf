@@ -39,6 +39,11 @@ Namespace Mkm.Wpf.Controls
     Public Class ActionBar
         Inherits Selector
 
+        ''' <summary>Tout son arbre visuel pour les lecteurs d'écran et l'automatisation, gabarit compris.</summary>
+        Protected Overrides Function OnCreateAutomationPeer() As System.Windows.Automation.Peers.AutomationPeer
+            Return New PairDeConteneur(Me, System.Windows.Automation.Peers.AutomationControlType.ToolBar)
+        End Function
+
         ' Une flèche avance des trois quarts de la largeur visible : le dernier quart reste en vue (mkm).
         Private Const RatioDeDefilement As Double = 0.75
 

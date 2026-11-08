@@ -50,7 +50,7 @@
 
             <TextBlock Style="{StaticResource Titre}" Text="{mkm:T showcase.inputs.confirm}" />
             <StackPanel Orientation="Horizontal">
-                <mkm:Button Content="{mkm:T showcase.inputs.ask}" Click="Demander_Click" />
+                <mkm:Button x:Name="Demander" Content="{mkm:T showcase.inputs.ask}" Click="Demander_Click" />
                 <TextBlock x:Name="Reponse" Margin="12,0,0,0" VerticalAlignment="Center"
                            Foreground="{DynamicResource mkm.text.muted.color}" />
             </StackPanel>

@@ -18,6 +18,11 @@ Namespace Mkm.Wpf.Controls
     Public Class ActionBarSection
         Inherits HeaderedItemsControl
 
+        ''' <summary>Tout son arbre visuel pour les lecteurs d'écran et l'automatisation, gabarit compris.</summary>
+        Protected Overrides Function OnCreateAutomationPeer() As System.Windows.Automation.Peers.AutomationPeer
+            Return New PairDeSection(Me)
+        End Function
+
         ''' <summary>La clé de la section, que <see cref="ActionBar.ActiveSection"/> désigne.</summary>
         Public Shared ReadOnly KeyProperty As DependencyProperty = DependencyProperty.Register(
             NameOf(Key), GetType(String), GetType(ActionBarSection), New FrameworkPropertyMetadata(Nothing))

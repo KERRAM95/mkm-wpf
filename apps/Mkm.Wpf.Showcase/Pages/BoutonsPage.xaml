@@ -80,7 +80,7 @@
             </WrapPanel>
 
             <TextBlock Style="{StaticResource Titre}" Text="{mkm:T showcase.buttons.checkboxes}" />
-            <mkm:Checkbox Content="{mkm:T showcase.buttons.unchecked}" />
+            <mkm:Checkbox x:Name="CaseVide" Content="{mkm:T showcase.buttons.unchecked}" />
             <mkm:Checkbox Content="{mkm:T showcase.buttons.checked}" IsChecked="True" />
             <mkm:Checkbox Content="{mkm:T showcase.buttons.indeterminate}" IsThreeState="True" IsChecked="{x:Null}" />
             <mkm:Checkbox Content="{mkm:T showcase.buttons.invalid}" Invalid="True" />

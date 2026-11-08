@@ -111,9 +111,26 @@ Les évolutions notables de mkm-wpf, version par version. Le format suit
   (clé `internal` du manifeste).
 - La vitrine : les pages Attente et aide, Texte date et confirmation, Fiche de
   propriétés, Arbre et menu.
+- Les tests d'interaction `Mkm.Wpf.UiTests` (FlaUI) : la vitrine lancée en mode
+  `--tests`, puis pilotée à la souris et au clavier comme par un utilisateur ;
+  chaque page s'ouvre sans erreur, chaque commande a un nom pour les lecteurs
+  d'écran, et des scénarios par composant. Une capture et l'arbre
+  d'automatisation de chaque échec (`docs/fondations/tests-d-interaction.md`).
 
 ### Corrigé
 
+- L'accessibilité, relevée en écrivant les tests d'interaction :
+  - les contrôles qui contiennent des commandes (ActionBar et ses sections et
+    listes, Toolbar, Toast, EmptyContent, PropertyPanel, WelcomePanel, Menu,
+    MenuGroup, TieredMenu) cachaient leur gabarit aux lecteurs d'écran : les
+    commandes de l'ActionBar, le bouton « … » de la Toolbar, les actions d'un
+    écran vide n'y paraissaient pas ;
+  - une section de l'ActionBar se dit onglet, choisi ou non ;
+  - un Button ou un ToggleButton d'icône seule prend le nom de son info-bulle ;
+    un ToggleButton, celui de son libellé d'état (OnLabel, OffLabel) ;
+  - le bouton plier/déplier d'un nœud de la TreeGrid a un nom ;
+  - les actions du StateGraph sont des boutons, qu'un lecteur d'écran lance ;
+  - une entrée du WelcomePanel se dit choisie ou non.
 - La relecture des lots 1 à 4 :
   - ActionBar : les commandes d'une liste ouverte n'avaient pas la forme de lignes
     de menu ; Début et Fin faisaient défiler la rangée sans déplacer le focus ;

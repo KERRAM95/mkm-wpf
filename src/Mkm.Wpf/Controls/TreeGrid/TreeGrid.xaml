@@ -67,7 +67,8 @@
                 <ControlTemplate TargetType="{x:Type local:TreeGridCell}">
                     <DockPanel Background="{TemplateBinding Background}">
                         <Button x:Name="PART_Toggle" DockPanel.Dock="Left" VerticalAlignment="Center"
-                                Margin="{TemplateBinding Indent}" Style="{StaticResource mkm.TreeGrid.Bascule}">
+                                Margin="{TemplateBinding Indent}" Style="{StaticResource mkm.TreeGrid.Bascule}"
+                                AutomationProperties.Name="{loc:T aria.expand}">
                             <local:Icon x:Name="Signe" Source="{x:Static local:InternalIcons.Plus}" StrokeThickness="3.43"
                                         Width="{DynamicResource mkm.treegrid.node.toggle.button.icon.size}"
                                         Height="{DynamicResource mkm.treegrid.node.toggle.button.icon.size}" />
@@ -89,6 +90,7 @@
                         </Trigger>
                         <Trigger Property="IsExpanded" Value="True">
                             <Setter TargetName="Signe" Property="Source" Value="{x:Static local:InternalIcons.Minus}" />
+                            <Setter TargetName="PART_Toggle" Property="AutomationProperties.Name" Value="{loc:T aria.collapse}" />
                         </Trigger>
                         <Trigger Property="Icon" Value="{x:Null}">
                             <Setter TargetName="Icone" Property="Visibility" Value="Collapsed" />

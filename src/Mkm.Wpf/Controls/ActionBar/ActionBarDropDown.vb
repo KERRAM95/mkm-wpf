@@ -26,6 +26,11 @@ Namespace Mkm.Wpf.Controls
     Public Class ActionBarDropDown
         Inherits ItemsControl
 
+        ''' <summary>Tout son arbre visuel pour les lecteurs d'écran et l'automatisation, gabarit compris.</summary>
+        Protected Overrides Function OnCreateAutomationPeer() As System.Windows.Automation.Peers.AutomationPeer
+            Return New PairDeConteneur(Me, System.Windows.Automation.Peers.AutomationControlType.Group)
+        End Function
+
         Private Shared ReadOnly ShownItemPropertyKey As DependencyPropertyKey = DependencyProperty.RegisterReadOnly(
             NameOf(ShownItem), GetType(UIElement), GetType(ActionBarDropDown), New FrameworkPropertyMetadata(Nothing))
 

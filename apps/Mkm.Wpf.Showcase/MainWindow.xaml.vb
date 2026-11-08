@@ -1,3 +1,5 @@
+Imports System.Linq
+Imports System.Windows.Automation
 Imports System.Windows.Controls
 Imports Mkm.Wpf.Theming
 
@@ -10,6 +12,10 @@ Namespace Mkm.Wpf.Showcase
 
         Public Sub New()
             InitializeComponent()
+            ' Chaque entrée de la liste se trouve par « nav-<page> » (lecteurs d'écran, tests d'interaction).
+            For Each entree In Composants.Items.OfType(Of ListBoxItem)()
+                AutomationProperties.SetAutomationId(entree, "nav-" & CStr(entree.Tag))
+            Next
             ChoixDuTheme.SelectedItem = Themes.Find(MkmResources.Current.Theme)
             Composants.SelectedIndex = 0
         End Sub

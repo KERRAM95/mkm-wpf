@@ -114,7 +114,7 @@
                     <TextBlock Style="{StaticResource Libelle}" Text="{mkm:T showcase.identity.mass}" />
                     <mkm:InputNumber Value="1234.5" MinFractionDigits="2" MaxFractionDigits="2" Suffix=" kg" />
                     <TextBlock Style="{StaticResource Libelle}" Text="{mkm:T showcase.identity.sheets}" />
-                    <mkm:InputNumber Value="1" Minimum="1" Maximum="10" MaxFractionDigits="0" ShowButtons="True" />
+                    <mkm:InputNumber x:Name="Feuilles" Value="1" Minimum="1" Maximum="10" MaxFractionDigits="0" ShowButtons="True" />
                     <TextBlock Style="{StaticResource Libelle}" Text="{mkm:T showcase.identity.quantity}" />
                     <mkm:InputNumber Value="3" Minimum="0" MaxFractionDigits="0" ShowButtons="True" ButtonLayout="Horizontal" />
                 </StackPanel>

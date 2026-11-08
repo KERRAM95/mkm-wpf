@@ -26,10 +26,10 @@
 
             <TextBlock Style="{StaticResource Titre}" Text="Triptych, WelcomePanel" />
             <Border Style="{StaticResource Cadre}" Height="360">
-                <mkm:Triptych LeftVisible="True" LeftSize="220" RightVisible="True" RightSize="250"
+                <mkm:Triptych x:Name="Disposition" LeftVisible="True" LeftSize="220" RightVisible="True" RightSize="250"
                               ShowLeftToggle="True" ShowRightCloseIcon="True">
                     <mkm:Triptych.Left>
-                        <mkm:WelcomePanel Title="HS CART" Description="{mkm:T showcase.layout.description}" Selection="recents">
+                        <mkm:WelcomePanel x:Name="Accueil" Title="HS CART" Description="{mkm:T showcase.layout.description}" Selection="recents">
                             <mkm:WelcomePanelSection Header="{mkm:T showcase.layout.drawings}">
                                 <mkm:WelcomePanelItem Key="recents" Icon="{x:Static mkm:Icons.History}" Content="{mkm:T showcase.layout.recent}" />
                                 <mkm:WelcomePanelItem Key="tous" Icon="{x:Static mkm:Icons.Drawings}" Content="{mkm:T showcase.layout.allDrawings}" />
@@ -73,7 +73,7 @@
             </Border>
 
             <TextBlock Style="{StaticResource Titre}" Text="Splitter" />
-            <mkm:Splitter Height="90">
+            <mkm:Splitter x:Name="Partage" Height="90">
                 <mkm:SplitterPanel Size="25" MinSize="10" Padding="8"><TextBlock Text="25 %" /></mkm:SplitterPanel>
                 <mkm:SplitterPanel Size="50" Padding="8"><TextBlock Text="50 %" /></mkm:SplitterPanel>
                 <mkm:SplitterPanel Size="25" Padding="8"><TextBlock Text="25 %" /></mkm:SplitterPanel>

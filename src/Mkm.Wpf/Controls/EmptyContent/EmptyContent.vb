@@ -33,6 +33,11 @@ Namespace Mkm.Wpf.Controls
     Public Class EmptyContent
         Inherits ItemsControl
 
+        ''' <summary>Tout son arbre visuel pour les lecteurs d'écran et l'automatisation, gabarit compris.</summary>
+        Protected Overrides Function OnCreateAutomationPeer() As System.Windows.Automation.Peers.AutomationPeer
+            Return New PairDeConteneur(Me, System.Windows.Automation.Peers.AutomationControlType.Group)
+        End Function
+
         ''' <summary>Le titre, en gras.</summary>
         Public Shared ReadOnly TitleProperty As DependencyProperty = DependencyProperty.Register(
             NameOf(Title), GetType(String), GetType(EmptyContent), New FrameworkPropertyMetadata(Nothing))

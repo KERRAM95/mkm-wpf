@@ -37,6 +37,11 @@ Namespace Mkm.Wpf.Controls
     Public Class Toolbar
         Inherits ItemsControl
 
+        ''' <summary>Tout son arbre visuel pour les lecteurs d'écran et l'automatisation, gabarit compris.</summary>
+        Protected Overrides Function OnCreateAutomationPeer() As System.Windows.Automation.Peers.AutomationPeer
+            Return New PairDeConteneur(Me, System.Windows.Automation.Peers.AutomationControlType.ToolBar)
+        End Function
+
         ''' <summary>Le contenu du début de la barre, à gauche.</summary>
         Public Shared ReadOnly StartProperty As DependencyProperty = DependencyProperty.Register(
             NameOf(Start), GetType(Object), GetType(Toolbar), New FrameworkPropertyMetadata(Nothing))

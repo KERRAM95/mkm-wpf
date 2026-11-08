@@ -44,6 +44,10 @@ Namespace Mkm.Wpf.Showcase
                                                             Shutdown(99)
                                                         End Sub
                 Dispatcher.BeginInvoke(New Action(Sub() Shutdown(Captures.Executer(dossier))), DispatcherPriority.ApplicationIdle)
+            ElseIf Array.IndexOf(e.Args, "--tests") >= 0 Then
+                ' --tests [dossier] : la vitrine pilotée par les tests d'interaction (tests/Mkm.Wpf.UiTests).
+                Dim j = Array.IndexOf(e.Args, "--tests")
+                ModeTests.Demarrer(Me, If(j + 1 < e.Args.Length, e.Args(j + 1), Nothing))
             Else
                 ' La fenêtre de la vitrine (pas de StartupUri : le mode captures n'en ouvre pas).
                 Dim fenetre As New MainWindow()

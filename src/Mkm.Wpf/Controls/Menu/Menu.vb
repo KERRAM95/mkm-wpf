@@ -31,6 +31,11 @@ Namespace Mkm.Wpf.Controls
     Public Class Menu
         Inherits MenuBase
 
+        ''' <summary>Tout son arbre visuel pour les lecteurs d'écran et l'automatisation, gabarit compris.</summary>
+        Protected Overrides Function OnCreateAutomationPeer() As System.Windows.Automation.Peers.AutomationPeer
+            Return New PairDeConteneur(Me, System.Windows.Automation.Peers.AutomationControlType.Menu)
+        End Function
+
         ''' <summary>Un contenu au-dessus de la liste.</summary>
         Public Shared ReadOnly StartProperty As DependencyProperty = DependencyProperty.Register(
             NameOf(Start), GetType(Object), GetType(Menu), New FrameworkPropertyMetadata(Nothing))
@@ -101,6 +106,11 @@ Namespace Mkm.Wpf.Controls
     Public Class MenuGroup
         Inherits HeaderedItemsControl
 
+        ''' <summary>Tout son arbre visuel pour les lecteurs d'écran et l'automatisation, gabarit compris.</summary>
+        Protected Overrides Function OnCreateAutomationPeer() As System.Windows.Automation.Peers.AutomationPeer
+            Return New PairDeConteneur(Me, System.Windows.Automation.Peers.AutomationControlType.Group)
+        End Function
+
         Shared Sub New()
             DefaultStyleKeyProperty.OverrideMetadata(GetType(MenuGroup), New FrameworkPropertyMetadata(GetType(MenuGroup)))
             FocusableProperty.OverrideMetadata(GetType(MenuGroup), New FrameworkPropertyMetadata(False))
@@ -151,6 +161,11 @@ Namespace Mkm.Wpf.Controls
     ''' <remarks>Le menu à étages qui s'ouvre d'un bouton est un <see cref="ContextMenu"/> de WPF, aux sous-menus déjà de mkm.</remarks>
     Public Class TieredMenu
         Inherits MenuBase
+
+        ''' <summary>Tout son arbre visuel pour les lecteurs d'écran et l'automatisation, gabarit compris.</summary>
+        Protected Overrides Function OnCreateAutomationPeer() As System.Windows.Automation.Peers.AutomationPeer
+            Return New PairDeConteneur(Me, System.Windows.Automation.Peers.AutomationControlType.Menu)
+        End Function
 
         Shared Sub New()
             DefaultStyleKeyProperty.OverrideMetadata(GetType(TieredMenu), New FrameworkPropertyMetadata(GetType(TieredMenu)))

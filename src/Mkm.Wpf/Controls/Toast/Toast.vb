@@ -59,6 +59,11 @@ Namespace Mkm.Wpf.Controls
     Public Class Toast
         Inherits ItemsControl
 
+        ''' <summary>Tout son arbre visuel pour les lecteurs d'écran et l'automatisation, gabarit compris.</summary>
+        Protected Overrides Function OnCreateAutomationPeer() As System.Windows.Automation.Peers.AutomationPeer
+            Return New PairDeConteneur(Me, System.Windows.Automation.Peers.AutomationControlType.Pane)
+        End Function
+
         ''' <summary>Où ranger les notifications.</summary>
         Public Shared ReadOnly PositionProperty As DependencyProperty = DependencyProperty.Register(
             NameOf(Position), GetType(ToastPosition), GetType(Toast), New FrameworkPropertyMetadata(ToastPosition.TopRight))

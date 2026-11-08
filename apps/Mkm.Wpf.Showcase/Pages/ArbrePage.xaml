@@ -66,7 +66,7 @@
 
             <TextBlock Style="{StaticResource Titre}" Text="Menu, TieredMenu" />
             <StackPanel Orientation="Horizontal">
-                <mkm:Menu>
+                <mkm:Menu x:Name="MenuPose">
                     <mkm:MenuGroup Header="{mkm:T showcase.tree.drawing}">
                         <MenuItem Header="{mkm:T showcase.layout.open}" Icon="{x:Static mkm:Icons.Open}" InputGestureText="Ctrl+O" />
                         <MenuItem Header="{mkm:T showcase.tree.export}" Icon="{x:Static mkm:Icons.Export}" />
@@ -78,7 +78,7 @@
                     <Separator />
                     <MenuItem Header="{mkm:T showcase.actionbar.settings}" Icon="{x:Static mkm:Icons.Settings}" />
                 </mkm:Menu>
-                <mkm:TieredMenu Margin="24,0,0,0" VerticalAlignment="Top">
+                <mkm:TieredMenu x:Name="MenuAEtages" Margin="24,0,0,0" VerticalAlignment="Top">
                     <MenuItem Header="{mkm:T showcase.tree.export}" Icon="{x:Static mkm:Icons.Export}">
                         <MenuItem Header="PDF" />
                         <MenuItem Header="DXF" />

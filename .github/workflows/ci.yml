@@ -20,7 +20,7 @@ concurrency:
 jobs:
   windows:
     runs-on: windows-latest
-    timeout-minutes: 20
+    timeout-minutes: 30
     steps:
       - uses: actions/checkout@v6
 
@@ -32,7 +32,14 @@ jobs:
         run: dotnet build Mkm.Wpf.sln --configuration Release --no-restore
 
       - name: Tests
-        run: dotnet test Mkm.Wpf.sln --configuration Release --no-build --logger trx --results-directory TestResults
+        run: dotnet test tests/Mkm.Wpf.Tests/Mkm.Wpf.Tests.vbproj --configuration Release --no-build --logger trx --results-directory TestResults
+
+      # La vitrine pilotée comme par un utilisateur (FlaUI) : voir docs/fondations/tests-d-interaction.md.
+      # Les captures et les arbres d'automatisation des échecs vont dans TestResults/ui.
+      - name: Tests d'interaction
+        if: ${{ !cancelled() && steps.compilation.outcome == 'success' }}
+        timeout-minutes: 15
+        run: dotnet test tests/Mkm.Wpf.UiTests/Mkm.Wpf.UiTests.vbproj --configuration Release --no-build --logger trx --logger "console;verbosity=normal" --results-directory TestResults
 
       - name: Résultats des tests
         if: always()

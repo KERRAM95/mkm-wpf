@@ -32,8 +32,8 @@
 
             <TextBlock Style="{StaticResource Titre}" Text="RadioButton" />
             <StackPanel Orientation="Horizontal">
-                <mkm:RadioButton GroupName="vue" Content="{mkm:T showcase.identity.drawingChoice}" IsChecked="True" />
-                <mkm:RadioButton GroupName="vue" Content="{mkm:T showcase.identity.articleChoice}" />
+                <mkm:RadioButton x:Name="RadioPlan" GroupName="vue" Content="{mkm:T showcase.identity.drawingChoice}" IsChecked="True" />
+                <mkm:RadioButton x:Name="RadioArticle" GroupName="vue" Content="{mkm:T showcase.identity.articleChoice}" />
                 <mkm:RadioButton GroupName="vue" Content="{mkm:T showcase.identity.both}" />
             </StackPanel>
             <TextBlock Style="{StaticResource Libelle}" Text="{mkm:T showcase.choices.states}" />
@@ -54,7 +54,7 @@
                 <mkm:ToggleButton OnLabel="{mkm:T showcase.choices.locked}" OffLabel="{mkm:T showcase.choices.unlocked}"
                                   OnIcon="{x:Static mkm:Icons.Locked}" OffIcon="{x:Static mkm:Icons.Unlocked}" IsChecked="True" />
                 <mkm:ToggleButton OnLabel="{mkm:T showcase.choices.locked}" OffLabel="{mkm:T showcase.choices.unlocked}"
-                                  OnIcon="{x:Static mkm:Icons.Locked}" OffIcon="{x:Static mkm:Icons.Unlocked}" />
+                                  OnIcon="{x:Static mkm:Icons.Locked}" OffIcon="{x:Static mkm:Icons.Unlocked}" x:Name="Verrou" />
                 <mkm:ToggleButton Content="{mkm:T showcase.choices.labels}" />
                 <mkm:ToggleButton OnIcon="{x:Static mkm:Icons.Pin}" IsChecked="True" ToolTip="{mkm:T showcase.choices.pin}" />
                 <mkm:ToggleButton OnIcon="{x:Static mkm:Icons.Pin}" ToolTip="{mkm:T showcase.choices.pin}" />

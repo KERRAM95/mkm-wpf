@@ -17,7 +17,7 @@
             <ItemsControl x:Name="Journal" />
         </DockPanel>
 
-        <mkm:ActionBar ActiveSection="edit" ButtonBase.Click="Commande_Click">
+        <mkm:ActionBar x:Name="Barre" ActiveSection="edit" ButtonBase.Click="Commande_Click">
             <mkm:ActionBar.FixedItems>
                 <mkm:ActionBarButton Label="{mkm:T showcase.actionbar.save}" Icon="{x:Static mkm:Icons.Download}" />
             </mkm:ActionBar.FixedItems>

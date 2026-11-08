@@ -50,7 +50,7 @@
             <TextBlock Margin="0,0,0,8" TextWrapping="Wrap" Foreground="{DynamicResource mkm.text.muted.color}"
                        Text="{mkm:T showcase.feedback.toastHint}" />
             <WrapPanel>
-                <mkm:Button Content="Info" Severity="Info" Tag="Info" Click="Notifier_Click" />
+                <mkm:Button x:Name="NotifierInfo" Content="Info" Severity="Info" Tag="Info" Click="Notifier_Click" />
                 <mkm:Button Content="Success" Severity="Success" Tag="Success" Click="Notifier_Click" />
                 <mkm:Button Content="Warn" Severity="Warn" Tag="Warn" Click="Notifier_Click" />
                 <mkm:Button Content="Error" Severity="Danger" Tag="Error" Click="Notifier_Click" />
@@ -60,7 +60,7 @@
 
             <TextBlock Style="{StaticResource Titre}" Text="{mkm:T showcase.feedback.dialogs}" />
             <WrapPanel>
-                <mkm:Button Content="{mkm:T showcase.feedback.open}" Click="Renommer_Click" />
+                <mkm:Button x:Name="Renommer" Content="{mkm:T showcase.feedback.open}" Click="Renommer_Click" />
                 <mkm:Button Content="{mkm:T showcase.feedback.openResizable}" Severity="Secondary" Click="Etirable_Click" />
             </WrapPanel>
             <TextBlock x:Name="Resultat" Foreground="{DynamicResource mkm.text.muted.color}" />

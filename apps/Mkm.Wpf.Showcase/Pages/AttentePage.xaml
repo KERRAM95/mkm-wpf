@@ -46,12 +46,12 @@
                 </mkm:BlockUI.Overlay>
                 <mkm:Fieldset Header="{mkm:T showcase.containers.drawing}">
                     <StackPanel>
-                        <mkm:InputText Text="HS-00042" Margin="0,0,0,8" />
+                        <mkm:InputText x:Name="ChampVoile" Text="HS-00042" Margin="0,0,0,8" />
                         <mkm:InputText Text="{mkm:T showcase.fields.designationValue}" />
                     </StackPanel>
                 </mkm:Fieldset>
             </mkm:BlockUI>
-            <mkm:Button Margin="0,8,0,0" HorizontalAlignment="Left" Content="{mkm:T showcase.waiting.blockNow}" Click="Bloquer_Click" />
+            <mkm:Button x:Name="Bloquer" Margin="0,8,0,0" HorizontalAlignment="Left" Content="{mkm:T showcase.waiting.blockNow}" Click="Bloquer_Click" />
 
             <TextBlock Style="{StaticResource Titre}" Text="{mkm:T showcase.waiting.tooltips}" />
             <StackPanel Orientation="Horizontal">

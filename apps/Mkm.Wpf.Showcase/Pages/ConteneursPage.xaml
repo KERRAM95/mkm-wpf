@@ -24,7 +24,7 @@
 
             <TextBlock Style="{StaticResource Titre}" Text="{mkm:T showcase.containers.group}" />
             <Border BorderThickness="1" BorderBrush="{DynamicResource mkm.content.border.color}">
-                <mkm:Tabs Height="140">
+                <mkm:Tabs x:Name="Onglets" Height="140">
                     <mkm:Tab Header="{mkm:T showcase.containers.titleBlock}">
                         <TextBlock TextWrapping="Wrap" Text="{mkm:T showcase.containers.titleBlockText}" />
                     </mkm:Tab>
@@ -61,7 +61,7 @@
                     <mkm:InputText Text="{mkm:T showcase.fields.designationValue}" />
                 </StackPanel>
             </mkm:Fieldset>
-            <mkm:Fieldset Margin="0,16,0,0" Header="{mkm:T showcase.containers.toggleable}" Toggleable="True">
+            <mkm:Fieldset x:Name="Repliable" Margin="0,16,0,0" Header="{mkm:T showcase.containers.toggleable}" Toggleable="True">
                 <mkm:Checkbox Content="{mkm:T showcase.containers.option}" IsChecked="True" />
             </mkm:Fieldset>
             <mkm:Fieldset Margin="0,16,0,0" Header="{mkm:T showcase.containers.collapsed}" Toggleable="True" IsCollapsed="True">

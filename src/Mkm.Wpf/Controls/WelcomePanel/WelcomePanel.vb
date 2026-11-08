@@ -35,6 +35,11 @@ Namespace Mkm.Wpf.Controls
     Public Class WelcomePanel
         Inherits ItemsControl
 
+        ''' <summary>Tout son arbre visuel pour les lecteurs d'écran et l'automatisation, gabarit compris.</summary>
+        Protected Overrides Function OnCreateAutomationPeer() As System.Windows.Automation.Peers.AutomationPeer
+            Return New PairDeConteneur(Me, System.Windows.Automation.Peers.AutomationControlType.Group)
+        End Function
+
         ''' <summary>Le titre, en haut.</summary>
         Public Shared ReadOnly TitleProperty As DependencyProperty = DependencyProperty.Register(
             NameOf(Title), GetType(String), GetType(WelcomePanel), New FrameworkPropertyMetadata(Nothing))
@@ -246,6 +251,11 @@ Namespace Mkm.Wpf.Controls
     Public Class WelcomePanelSection
         Inherits HeaderedItemsControl
 
+        ''' <summary>Tout son arbre visuel pour les lecteurs d'écran et l'automatisation, gabarit compris.</summary>
+        Protected Overrides Function OnCreateAutomationPeer() As System.Windows.Automation.Peers.AutomationPeer
+            Return New PairDeConteneur(Me, System.Windows.Automation.Peers.AutomationControlType.Group)
+        End Function
+
         ''' <summary>Vrai quand le panneau est replié : la rubrique perd son libellé.</summary>
         Public Shared ReadOnly IsCollapsedProperty As DependencyProperty = WelcomePanel.IsCollapsedProperty.AddOwner(
             GetType(WelcomePanelSection), New FrameworkPropertyMetadata(False, FrameworkPropertyMetadataOptions.Inherits))
@@ -382,7 +392,12 @@ Namespace Mkm.Wpf.Controls
         End Property
 
         Friend Sub Marquer(choisie As Boolean)
+            Dim avant = IsSelected
             SetValue(IsSelectedPropertyKey, choisie)
+            ' Dit aux lecteurs d'écran qui suivent l'entrée qu'elle devient (ou n'est plus) la choisie.
+            If avant <> choisie AndAlso AutomationPeer.ListenerExists(AutomationEvents.PropertyChanged) Then
+                UIElementAutomationPeer.FromElement(Me)?.RaisePropertyChangedEvent(SelectionItemPatternIdentifiers.IsSelectedProperty, avant, choisie)
+            End If
         End Sub
 
         ''' <summary>Choisit l'entrée comme un clic : son évènement <c>Click</c> et sa <c>Command</c>.</summary>
@@ -426,7 +441,7 @@ Namespace Mkm.Wpf.Controls
     ''' </summary>
     Public Class WelcomePanelItemAutomationPeer
         Inherits ButtonBaseAutomationPeer
-        Implements IInvokeProvider
+        Implements IInvokeProvider, ISelectionItemProvider
 
         ''' <summary>Le pair d'une entrée.</summary>
         Public Sub New(owner As WelcomePanelItem)
@@ -446,6 +461,8 @@ Namespace Mkm.Wpf.Controls
         ''' <inheritdoc/>
         Public Overrides Function GetPattern(patternInterface As PatternInterface) As Object
             If patternInterface = PatternInterface.Invoke Then Return Me
+            ' Une entrée qui peut devenir la choisie (une rubrique, non une action) se dit choisie ou non.
+            If patternInterface = PatternInterface.SelectionItem AndAlso DirectCast(Owner, WelcomePanelItem).IsSelectable Then Return Me
             Return MyBase.GetPattern(patternInterface)
         End Function
 
@@ -454,6 +471,39 @@ Namespace Mkm.Wpf.Controls
             If Not IsEnabled() Then Throw New ElementNotEnabledException()
             Dim entree = DirectCast(Owner, WelcomePanelItem)
             entree.Dispatcher.BeginInvoke(DispatcherPriority.Input, New Action(AddressOf entree.Lancer))
+        End Sub
+
+        ' Choisie : la rubrique montrée.
+        Private ReadOnly Property IsSelected As Boolean Implements ISelectionItemProvider.IsSelected
+            Get
+                Return DirectCast(Owner, WelcomePanelItem).IsSelected
+            End Get
+        End Property
+
+        ' Le panneau d'accueil de l'entrée.
+        Private ReadOnly Property SelectionContainer As IRawElementProviderSimple Implements ISelectionItemProvider.SelectionContainer
+            Get
+                Dim parent = System.Windows.Media.VisualTreeHelper.GetParent(Owner)
+                While parent IsNot Nothing AndAlso Not TypeOf parent Is WelcomePanel
+                    parent = System.Windows.Media.VisualTreeHelper.GetParent(parent)
+                End While
+                Dim panneau = TryCast(parent, WelcomePanel)
+                Return If(panneau Is Nothing, Nothing, ProviderFromPeer(UIElementAutomationPeer.CreatePeerForElement(panneau)))
+            End Get
+        End Property
+
+        ' Choisir une entrée, c'est la cliquer.
+        Private Sub [Select]() Implements ISelectionItemProvider.Select
+            Invoke()
+        End Sub
+
+        Private Sub AddToSelection() Implements ISelectionItemProvider.AddToSelection
+            Invoke()
+        End Sub
+
+        ' Une seule entrée choisie : on en choisit une autre.
+        Private Sub RemoveFromSelection() Implements ISelectionItemProvider.RemoveFromSelection
+            If IsSelected Then Throw New InvalidOperationException()
         End Sub
 
     End Class

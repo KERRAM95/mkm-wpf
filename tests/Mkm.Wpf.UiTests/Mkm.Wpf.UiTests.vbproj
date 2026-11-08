@@ -1,0 +1,32 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <!--
+    Les tests d'interaction : la vitrine lancée, puis pilotée comme par un utilisateur (souris, clavier) par
+    l'automatisation de l'interface de Windows (FlaUI). Voir docs/fondations/tests-d-interaction.md.
+  -->
+  <PropertyGroup>
+    <!-- Vide : chaque fichier ecrit son espace de noms en entier. -->
+    <RootNamespace></RootNamespace>
+    <IsPackable>false</IsPackable>
+    <IsTestProject>true</IsTestProject>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Microsoft.NET.Test.Sdk" />
+    <PackageReference Include="NUnit" />
+    <PackageReference Include="NUnit3TestAdapter" />
+    <PackageReference Include="FlaUI.Core" />
+    <PackageReference Include="FlaUI.UIA3" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <!-- Les rectangles et les captures de FlaUI. -->
+    <Reference Include="System.Drawing" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <!-- La vitrine se compile avant les tests, qui la lancent ; ils n'en référencent pas le code. -->
+    <ProjectReference Include="..\..\apps\Mkm.Wpf.Showcase\Mkm.Wpf.Showcase.vbproj" ReferenceOutputAssembly="false" />
+  </ItemGroup>
+
+</Project>

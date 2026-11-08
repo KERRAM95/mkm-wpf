@@ -81,6 +81,11 @@ Namespace Mkm.Wpf.Controls
             MettreAJour()
         End Sub
 
+        ''' <summary>Son libellé d'état le nomme pour les lecteurs d'écran, sinon son contenu, sinon son info-bulle.</summary>
+        Protected Overrides Function OnCreateAutomationPeer() As System.Windows.Automation.Peers.AutomationPeer
+            Return New PairDeBascule(Me)
+        End Function
+
         ''' <summary>Le libellé du bouton enfoncé.</summary>
         Public Property OnLabel As String
             Get
@@ -205,8 +210,16 @@ Namespace Mkm.Wpf.Controls
         ' Enfoncé, le libellé et l'icône « on » ; relâché ou indéterminé, les « off », l'icône « on » à défaut.
         Private Sub MettreAJour()
             Dim enfonce = IsChecked.GetValueOrDefault()
+            Dim avant = TryCast(CurrentLabel, String)
             SetValue(CurrentLabelPropertyKey, If(Content, If(enfonce, OnLabel, OffLabel)))
             SetValue(CurrentIconPropertyKey, If(enfonce, OnIcon, If(OffIcon, OnIcon)))
+            ' Le nouveau libellé, dit aux lecteurs d'écran qui suivent le bouton.
+            Dim apres = TryCast(CurrentLabel, String)
+            If Not String.Equals(avant, apres) AndAlso
+               System.Windows.Automation.Peers.AutomationPeer.ListenerExists(System.Windows.Automation.Peers.AutomationEvents.PropertyChanged) Then
+                System.Windows.Automation.Peers.UIElementAutomationPeer.FromElement(Me)?.RaisePropertyChangedEvent(
+                    System.Windows.Automation.AutomationElementIdentifiers.NameProperty, If(avant, String.Empty), If(apres, String.Empty))
+            End If
         End Sub
 
     End Class

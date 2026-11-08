@@ -42,7 +42,7 @@
                 <StackPanel Width="280">
                     <TextBlock Style="{StaticResource Titre}" Text="Select" />
                     <TextBlock Style="{StaticResource Libelle}" Text="{mkm:T showcase.fields.maturity}" />
-                    <mkm:Select Placeholder="{mkm:T showcase.fields.choose}">
+                    <mkm:Select x:Name="Maturite" Placeholder="{mkm:T showcase.fields.choose}">
                         <ComboBoxItem Content="Private" />
                         <ComboBoxItem Content="In Work" />
                         <ComboBoxItem Content="Frozen" />

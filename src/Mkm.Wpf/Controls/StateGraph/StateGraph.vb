@@ -370,7 +370,7 @@ Namespace Mkm.Wpf.Controls
             _traits(a.To) = trait
             If a.To = _survolee OrElse a.To = Pending Then Activer(trait)
 
-            Dim nom As New TextBlock With {
+            Dim nom As New NomDAction With {.Lancement = Sub() InvokeAction(a),
                 .FontSize = Nombre("label.font.size", 12), .Foreground = Pinceau("label.color"),
                 .Focusable = Pending Is Nothing, .Cursor = If(Pending Is Nothing, Cursors.Hand, Cursors.Arrow),
                 .IsHitTestVisible = Pending Is Nothing, .Tag = a, .FocusVisualStyle = Nothing}
@@ -488,6 +488,61 @@ Namespace Mkm.Wpf.Controls
             fond.Children.Add(barres)
             Return fond
         End Function
+
+    End Class
+
+    ''' <summary>
+    ''' Le nom d'une action du StateGraph : un bouton pour les lecteurs d'écran, qu'ils lancent comme un clic. Un simple
+    ''' texte, ils l'auraient lu sans dire qu'il s'actionne.
+    ''' </summary>
+    Friend NotInheritable Class NomDAction
+        Inherits TextBlock
+
+        ''' <summary>Ce que fait l'action.</summary>
+        Friend Property Lancement As System.Action
+
+        ''' <inheritdoc/>
+        Protected Overrides Function OnCreateAutomationPeer() As System.Windows.Automation.Peers.AutomationPeer
+            Return New PairDAction(Me)
+        End Function
+
+    End Class
+
+    ''' <summary>Le pair d'automatisation d'un nom d'action : un bouton qu'on lance (Invoke).</summary>
+    Friend NotInheritable Class PairDAction
+        Inherits System.Windows.Automation.Peers.TextBlockAutomationPeer
+        Implements System.Windows.Automation.Provider.IInvokeProvider
+
+        Friend Sub New(proprietaire As NomDAction)
+            MyBase.New(proprietaire)
+        End Sub
+
+        ''' <inheritdoc/>
+        Protected Overrides Function GetAutomationControlTypeCore() As System.Windows.Automation.Peers.AutomationControlType
+            Return System.Windows.Automation.Peers.AutomationControlType.Button
+        End Function
+
+        ''' <inheritdoc/>
+        Protected Overrides Function GetClassNameCore() As String
+            Return "StateGraphAction"
+        End Function
+
+        ''' <summary>Une action ne se lance pas pendant qu'une autre attend sa fin (<c>Pending</c>).</summary>
+        Protected Overrides Function IsEnabledCore() As Boolean
+            Return MyBase.IsEnabledCore() AndAlso DirectCast(Owner, UIElement).IsHitTestVisible
+        End Function
+
+        ''' <inheritdoc/>
+        Public Overrides Function GetPattern(patternInterface As System.Windows.Automation.Peers.PatternInterface) As Object
+            If patternInterface = System.Windows.Automation.Peers.PatternInterface.Invoke Then Return Me
+            Return MyBase.GetPattern(patternInterface)
+        End Function
+
+        ''' <summary>Lance l'action.</summary>
+        Public Sub Invoke() Implements System.Windows.Automation.Provider.IInvokeProvider.Invoke
+            If Not IsEnabled() Then Throw New System.Windows.Automation.ElementNotEnabledException()
+            DirectCast(Owner, NomDAction).Lancement?.Invoke()
+        End Sub
 
     End Class
 
