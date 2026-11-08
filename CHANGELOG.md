@@ -323,6 +323,11 @@ Les évolutions notables de mkm-wpf, version par version. Le format suit
     disparaissent, comme la page le disait.
   - Splitter : imbriqué dans un panneau d'un autre séparateur, sans bordure,
     comme mkm.
+  - Divider : tirets (3 sur 2) et pointillés (1 sur 1) nets, au pas de mkm.
+  - Tree : la flèche d'un nœud choisi prend sa couleur, et celle du survol
+    choisi de mkm.
+  - ConfirmDialog : DefaultFocus (Accept ou Reject) choisit le bouton qui a
+    le clavier à l'ouverture ; un jeton écrit deux fois retiré.
   - InputOtp, ColorPicker, Terminal, Password : la langue n'est suivie que
     tant que le contrôle est chargé (l'abonnement à vie le gardait en
     mémoire).

@@ -163,9 +163,6 @@ textarea.padding = {textarea.padding.y} {textarea.padding.x}
 # confirmdialog (styles/confirmdialog) : l'icône et la question à 12 px l'une de l'autre (gap du contenu).
 confirmdialog.icon.margin = 0 {confirmdialog.content.gap} 0 0
 
-# confirmdialog (styles/confirmdialog) : l'icône et la question à 12 px l'une de l'autre (gap du contenu).
-confirmdialog.icon.margin = 0 {confirmdialog.content.gap} 0 0
-
 # datepicker (styles/datepicker) : le champ d'InputText, ses coins de droite carrés, accolé au bouton du calendrier
 # bordé sauf à gauche ; le panneau 2 px sous le champ (absolutePosition de PrimeVue) ; chaque jour un cercle (50 %
 # de 24 px) ; les flèches de l'en-tête, des boutons ronds d'icône seule. datepicker.panel.window.padding est une

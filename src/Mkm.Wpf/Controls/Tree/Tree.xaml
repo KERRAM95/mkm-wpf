@@ -72,6 +72,19 @@
                             <Setter TargetName="Fond" Property="Background" Value="{DynamicResource mkm.tree.node.toggle.button.hover.background}" />
                             <Setter Property="Foreground" Value="{DynamicResource mkm.tree.node.toggle.button.hover.color}" />
                         </Trigger>
+                        <!-- Sur un nœud choisi, la flèche prend sa couleur ; survolée, le fond du contenu et la couleur
+                             principale (selected.hover de mkm). -->
+                        <DataTrigger Binding="{Binding IsSelected, RelativeSource={RelativeSource AncestorType={x:Type TreeViewItem}}}" Value="True">
+                            <Setter Property="Foreground" Value="{DynamicResource mkm.tree.node.selected.color}" />
+                        </DataTrigger>
+                        <MultiDataTrigger>
+                            <MultiDataTrigger.Conditions>
+                                <Condition Binding="{Binding IsSelected, RelativeSource={RelativeSource AncestorType={x:Type TreeViewItem}}}" Value="True" />
+                                <Condition Binding="{Binding IsMouseOver, RelativeSource={RelativeSource Self}}" Value="True" />
+                            </MultiDataTrigger.Conditions>
+                            <Setter TargetName="Fond" Property="Background" Value="{DynamicResource mkm.tree.node.toggle.button.selected.hover.background}" />
+                            <Setter Property="Foreground" Value="{DynamicResource mkm.tree.node.toggle.button.selected.hover.color}" />
+                        </MultiDataTrigger>
                     </ControlTemplate.Triggers>
                 </ControlTemplate>
             </Setter.Value>

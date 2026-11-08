@@ -8,6 +8,14 @@ Imports Mkm.Wpf.Theming
 
 Namespace Mkm.Wpf.Controls
 
+    ''' <summary>Le bouton d'un <see cref="ConfirmDialog"/> qui a le clavier à l'ouverture.</summary>
+    Public Enum ConfirmDialogFocus
+        ''' <summary>Le bouton d'acceptation (Oui), par défaut.</summary>
+        Accept
+        ''' <summary>Le bouton de refus (Non) : pour une suppression, Entrée ne la lance pas par mégarde.</summary>
+        Reject
+    End Enum
+
     ''' <summary>
     ''' La demande de confirmation de mkm (<c>ConfirmDialog</c>) : un <see cref="Dialog"/> qui pose une question,
     ''' une icône de 24 px devant elle, 12 px entre elles, et deux boutons, Non puis Oui (les textes de la
@@ -88,8 +96,26 @@ Namespace Mkm.Wpf.Controls
             contenu.Children.Add(question)
             Content = contenu
 
-            AddHandler Loaded, Sub() _accepter.Focus()
+            AddHandler Loaded, Sub()
+                                   Dim bouton = If(DefaultFocus = ConfirmDialogFocus.Reject, _refuser, _accepter)
+                                   bouton.Focus()
+                               End Sub
         End Sub
+
+        ''' <summary>Le bouton qui a le clavier à l'ouverture : Oui (par défaut) ou Non, pour une question dangereuse (le
+        ''' defaultFocus « reject » de mkm).</summary>
+        Public Shared ReadOnly DefaultFocusProperty As DependencyProperty = DependencyProperty.Register(
+            NameOf(DefaultFocus), GetType(ConfirmDialogFocus), GetType(ConfirmDialog), New FrameworkPropertyMetadata(ConfirmDialogFocus.Accept))
+
+        ''' <summary>Le bouton qui a le clavier à l'ouverture : Oui (par défaut) ou Non.</summary>
+        Public Property DefaultFocus As ConfirmDialogFocus
+            Get
+                Return DirectCast(GetValue(DefaultFocusProperty), ConfirmDialogFocus)
+            End Get
+            Set(value As ConfirmDialogFocus)
+                SetValue(DefaultFocusProperty, value)
+            End Set
+        End Property
 
         ''' <summary>La question.</summary>
         Public Property Message As Object

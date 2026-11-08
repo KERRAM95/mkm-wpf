@@ -43,11 +43,12 @@ End If
   <section titre="Accessibilité">
     <h3>Lecteur d'écran</h3>
     <p>La demande est une fenêtre modale : Narrateur la dit « boîte de dialogue », nommée par son titre, puis lit la
-      question. À l'ouverture, le clavier est sur Oui, et les deux boutons sont nommés par leur libellé.</p>
+      question. À l'ouverture, le clavier est sur Oui (<c>DefaultFocus="Reject"</c> : sur Non, pour une question
+      dangereuse, comme le defaultFocus de mkm), et les deux boutons sont nommés par leur libellé.</p>
     <h3>Clavier</h3>
     <touches>
       <touche nom="Tab">Passe d'un bouton à l'autre.</touche>
-      <touche nom="Entrée">Lance le bouton qui a le clavier : Oui, à l'ouverture.</touche>
+      <touche nom="Entrée">Lance le bouton qui a le clavier : Oui à l'ouverture, sauf <c>DefaultFocus="Reject"</c>.</touche>
       <touche nom="Espace">Lance le bouton qui a le clavier.</touche>
       <touche nom="Échap">Refuse la demande.</touche>
     </touches>
