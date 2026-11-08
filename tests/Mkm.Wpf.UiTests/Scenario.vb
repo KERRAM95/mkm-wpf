@@ -1,4 +1,4 @@
-Imports System
+﻿Imports System
 Imports System.Collections.Generic
 Imports System.Diagnostics
 Imports Point = System.Drawing.Point
@@ -246,15 +246,18 @@ Namespace Mkm.Wpf.UiTests
         Private Shared Sub Defiler(element As AutomationElement)
             ' Un élément d'une liste ou d'un menu ouverts (une fenêtre flottante, au-dessus de la page) : faire défiler la
             ' page fermerait la liste, comme mkm.
-            If EstDansUneFenetreFlottante(element) Then Return
+            If EstDansUneFenetreFlottante(element) OrElse EstDansUneListeOuverte(element) Then Return
             Dim defileur = AncetreQuiDefile(element)
             If defileur Is Nothing Then Return
             Dim defilement = defileur.Patterns.Scroll.Pattern
+            ' Un champ à liste : de la place dessous pour sa liste, qu'elle s'ouvre dans la fenêtre et non sur la barre
+            ' des tâches.
+            Dim dessous = If(element.ControlType = ControlType.ComboBox, 200, 0)
             For essai = 1 To 200
                 Dim zone = defileur.BoundingRectangle
                 Dim r = element.BoundingRectangle
                 Dim pas As ScrollAmount
-                If r.Bottom > zone.Bottom AndAlso r.Top > zone.Top Then
+                If r.Bottom + dessous > zone.Bottom AndAlso r.Top > zone.Top Then
                     pas = If(r.Top > zone.Bottom, ScrollAmount.LargeIncrement, ScrollAmount.SmallIncrement)
                 ElseIf r.Top < zone.Top AndAlso r.Bottom < zone.Bottom Then
                     pas = If(r.Bottom < zone.Top, ScrollAmount.LargeDecrement, ScrollAmount.SmallDecrement)
@@ -294,6 +297,20 @@ Namespace Mkm.Wpf.UiTests
                 Dim fenetreNative = courant.Properties.NativeWindowHandle.ValueOrDefault
                 If fenetreNative <> IntPtr.Zero Then Return fenetreNative <> Fenetre.Properties.NativeWindowHandle.ValueOrDefault
                 courant = brut.GetParent(courant)
+            Next
+            Return False
+        End Function
+
+        ' Vrai pour un élément de la liste ouverte d'un champ (ComboBox) : la page qui défile la refermerait.
+        Private Shared Function EstDansUneListeOuverte(element As AutomationElement) As Boolean
+            Dim marcheur = Vitrine.Automation.TreeWalkerFactory.GetControlViewWalker()
+            Dim parent = marcheur.GetParent(element)
+            For i = 1 To 6
+                If parent Is Nothing OrElse parent.ControlType = ControlType.Window Then Return False
+                If parent.ControlType = ControlType.ComboBox AndAlso parent.Patterns.ExpandCollapse.IsSupported Then
+                    Return parent.Patterns.ExpandCollapse.Pattern.ExpandCollapseState.ValueOrDefault = ExpandCollapseState.Expanded
+                End If
+                parent = marcheur.GetParent(parent)
             Next
             Return False
         End Function
