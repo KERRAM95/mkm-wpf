@@ -73,12 +73,15 @@ Namespace Mkm.Wpf.Controls
                 End Get
             End Property
 
+            ' Le clic, levé tout de suite (Invoke le différerait) : le panneau, qui l'écoute, change d'état.
             Public Sub Expand() Implements IExpandCollapseProvider.Expand
-                If Bouton.IsCollapsed Then DirectCast(Me, IInvokeProvider).Invoke()
+                If Not IsEnabled() Then Throw New ElementNotEnabledException()
+                If Bouton.IsCollapsed Then Bouton.RaiseEvent(New RoutedEventArgs(System.Windows.Controls.Primitives.ButtonBase.ClickEvent, Bouton))
             End Sub
 
             Public Sub Collapse() Implements IExpandCollapseProvider.Collapse
-                If Not Bouton.IsCollapsed Then DirectCast(Me, IInvokeProvider).Invoke()
+                If Not IsEnabled() Then Throw New ElementNotEnabledException()
+                If Not Bouton.IsCollapsed Then Bouton.RaiseEvent(New RoutedEventArgs(System.Windows.Controls.Primitives.ButtonBase.ClickEvent, Bouton))
             End Sub
 
         End Class

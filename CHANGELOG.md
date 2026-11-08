@@ -305,6 +305,10 @@ Les évolutions notables de mkm-wpf, version par version. Le format suit
     les gardaient, arrondis au milieu du groupe).
   - MegaMenu : les liens d'une colonne ont le retrait des liens de mkm, celui
     du libellé de leur groupe (ils avaient celui du menu de 3DEXPERIENCE).
+  - Registre de commandes : les menus, barres et ActionBar créés suivent la
+    visibilité des commandes (une commande cachée à la création paraît quand
+    la vue ou le contexte changent) et leurs traits avec elles, comme la page
+    le disait ; un sous-menu devient une liste de l'ActionBar.
   - InputOtp, ColorPicker, Terminal, Password : la langue n'est suivie que
     tant que le contrôle est chargé (l'abonnement à vie le gardait en
     mémoire).

@@ -364,8 +364,9 @@ Namespace Mkm.Wpf.Commands
             Return If(d.LabelFor IsNot Nothing, d.LabelFor(context), d.Label)
         End Function
 
-        ' Les éléments d'une disposition, les commandes cachées laissées de côté ; ni trait en tête ni en queue, ni deux de
-        ' suite.
+        ' Les éléments d'une disposition : toutes ses commandes, cachées comprises (leur visibilité est liée : une commande
+        ' cachée à la création peut paraître plus tard) ; ni trait en tête ni en queue, ni deux de suite. Les traits
+        ' suivent ensuite les commandes visibles (TraitsSuivis).
         Private Function Entrees(layout As IEnumerable(Of Object)) As IList(Of Object)
             Dim resultat As New List(Of Object)
             For Each entree In layout
@@ -373,7 +374,8 @@ Namespace Mkm.Wpf.Commands
                 If cle = Separator Then
                     If resultat.Count > 0 AndAlso Not Equals(resultat(resultat.Count - 1), Separator) Then resultat.Add(Separator)
                 ElseIf cle IsNot Nothing Then
-                    If GetVisible(Item(cle), _contexte) Then resultat.Add(cle)
+                    Dim unused = Item(cle)
+                    resultat.Add(cle)
                 ElseIf TypeOf entree Is CommandSubmenu Then
                     Dim sous = DirectCast(entree, CommandSubmenu)
                     If sous.DefaultCommand IsNot Nothing Then Dim unused = Item(sous.DefaultCommand)
@@ -388,6 +390,13 @@ Namespace Mkm.Wpf.Commands
             Return resultat
         End Function
 
+        ' La commande que montre un élément (sa visibilité), Nothing pour un trait ou un sous-menu.
+        Private Function CommandeDe(entree As Object) As RegisteredCommand
+            Dim cle = TryCast(entree, String)
+            If cle Is Nothing OrElse cle = Separator Then Return Nothing
+            Return Item(cle)
+        End Function
+
         Private Shared Sub Lier(cible As DependencyObject, propriete As DependencyProperty, commande As RegisteredCommand, chemin As String)
             BindingOperations.SetBinding(cible, propriete, New Binding(chemin) With {.Source = commande, .Mode = BindingMode.OneWay})
         End Sub
@@ -396,9 +405,10 @@ Namespace Mkm.Wpf.Commands
         Public Function CreateMenuItems(layout As IEnumerable(Of Object)) As IList(Of Control)
             If layout Is Nothing Then Throw New ArgumentNullException(NameOf(layout))
             Dim resultat As New List(Of Control)
+            Dim suivis As New TraitsSuivis()
             For Each entree In Entrees(layout)
                 If Equals(entree, Separator) Then
-                    resultat.Add(New System.Windows.Controls.Separator())
+                    resultat.Add(suivis.Trait(New System.Windows.Controls.Separator()))
                 ElseIf TypeOf entree Is CommandSubmenu Then
                     Dim sous = DirectCast(entree, CommandSubmenu)
                     Dim element As New MenuItem With {.Header = sous.Label, .Icon = sous.Icon}
@@ -410,11 +420,12 @@ Namespace Mkm.Wpf.Commands
                     For Each enfant In CreateMenuItems(sous.Items)
                         element.Items.Add(enfant)
                     Next
-                    resultat.Add(element)
+                    resultat.Add(suivis.Element(element, Nothing))
                 Else
-                    resultat.Add(ElementDeMenu(Item(CStr(entree))))
+                    resultat.Add(suivis.Element(ElementDeMenu(Item(CStr(entree))), Item(CStr(entree))))
                 End If
             Next
+            suivis.Ranger()
             Return resultat
         End Function
 
@@ -435,9 +446,10 @@ Namespace Mkm.Wpf.Commands
         Public Function CreateToolbarItems(layout As IEnumerable(Of Object)) As IList(Of UIElement)
             If layout Is Nothing Then Throw New ArgumentNullException(NameOf(layout))
             Dim resultat As New List(Of UIElement)
+            Dim suivis As New TraitsSuivis()
             For Each entree In Entrees(layout)
                 If Equals(entree, Separator) Then
-                    resultat.Add(New ToolbarSeparator())
+                    resultat.Add(suivis.Trait(New ToolbarSeparator()))
                     Continue For
                 End If
                 Dim cle = If(TryCast(entree, String), TryCast(entree, CommandSubmenu)?.DefaultCommand)
@@ -448,8 +460,9 @@ Namespace Mkm.Wpf.Commands
                 Lier(bouton, Mkm.Wpf.Controls.Button.IconProperty, commande, NameOf(RegisteredCommand.Icon))
                 Lier(bouton, FrameworkElement.ToolTipProperty, commande, NameOf(RegisteredCommand.ToolTip))
                 Lier(bouton, UIElement.VisibilityProperty, commande, NameOf(RegisteredCommand.Visibility))
-                resultat.Add(bouton)
+                resultat.Add(suivis.Element(bouton, commande))
             Next
+            suivis.Ranger()
             Return resultat
         End Function
 
@@ -460,12 +473,23 @@ Namespace Mkm.Wpf.Commands
         Public Function CreateActionBarItems(layout As IEnumerable(Of Object)) As IList(Of UIElement)
             If layout Is Nothing Then Throw New ArgumentNullException(NameOf(layout))
             Dim resultat As New List(Of UIElement)
+            Dim suivis As New TraitsSuivis()
             For Each entree In Entrees(layout)
                 If Equals(entree, Separator) Then
-                    resultat.Add(New ActionBarSeparator())
+                    resultat.Add(suivis.Trait(New ActionBarSeparator()))
                     Continue For
                 End If
-                Dim cle = If(TryCast(entree, String), TryCast(entree, CommandSubmenu)?.DefaultCommand)
+                ' Un sous-menu : une liste de l'ActionBar, ses commandes dedans (sans traits), comme mkm.
+                Dim sous = TryCast(entree, CommandSubmenu)
+                If sous IsNot Nothing Then
+                    Dim liste As New ActionBarDropDown()
+                    For Each enfant In CreateActionBarItems(sous.Items).Where(Function(e) TypeOf e IsNot ActionBarSeparator)
+                        liste.Items.Add(enfant)
+                    Next
+                    If liste.Items.Count > 0 Then resultat.Add(suivis.Element(liste, Nothing))
+                    Continue For
+                End If
+                Dim cle = TryCast(entree, String)
                 If cle Is Nothing Then Continue For
                 Dim commande = Item(cle)
                 Dim element As FrameworkElement
@@ -482,8 +506,9 @@ Namespace Mkm.Wpf.Commands
                     Lier(element, System.Windows.Controls.Primitives.ToggleButton.IsCheckedProperty, commande, NameOf(RegisteredCommand.IsChecked))
                 End If
                 Lier(element, UIElement.VisibilityProperty, commande, NameOf(RegisteredCommand.Visibility))
-                resultat.Add(element)
+                resultat.Add(suivis.Element(element, commande))
             Next
+            suivis.Ranger()
             Return resultat
         End Function
 
@@ -496,6 +521,65 @@ Namespace Mkm.Wpf.Commands
             For Each cle In _ordre
                 Dim commande = _commandes(cle)
                 If commande.Gesture IsNot Nothing Then element.InputBindings.Add(New KeyBinding(commande, commande.Gesture))
+            Next
+        End Sub
+
+    End Class
+
+    ''' <summary>
+    ''' Les traits d'une liste d'éléments créée par le registre : un trait ne paraît qu'entre deux éléments visibles, et
+    ''' jamais deux de suite, quand des commandes se cachent ou paraissent (après un changement de contexte ou de vue).
+    ''' Chaque trait le retient ; les commandes sont écoutées par un abonnement faible.
+    ''' </summary>
+    Friend NotInheritable Class TraitsSuivis
+
+        Private ReadOnly _elements As New List(Of KeyValuePair(Of UIElement, RegisteredCommand))
+        Private ReadOnly _traits As New HashSet(Of UIElement)
+
+        Private Shared ReadOnly RetenuProperty As DependencyProperty = DependencyProperty.RegisterAttached(
+            "Retenu", GetType(TraitsSuivis), GetType(TraitsSuivis), New PropertyMetadata(Nothing))
+
+        Friend Function Trait(Of T As UIElement)(cible As T) As T
+            _elements.Add(New KeyValuePair(Of UIElement, RegisteredCommand)(cible, Nothing))
+            _traits.Add(cible)
+            cible.SetValue(RetenuProperty, Me)
+            Return cible
+        End Function
+
+        Friend Function Element(Of T As UIElement)(cible As T, commande As RegisteredCommand) As T
+            _elements.Add(New KeyValuePair(Of UIElement, RegisteredCommand)(cible, commande))
+            If commande IsNot Nothing Then PropertyChangedEventManager.AddHandler(commande, AddressOf Commande_Change, NameOf(RegisteredCommand.Visibility))
+            Return cible
+        End Function
+
+        Private Sub Commande_Change(sender As Object, e As PropertyChangedEventArgs)
+            Ranger()
+        End Sub
+
+        Private Shared Function Visible(paire As KeyValuePair(Of UIElement, RegisteredCommand)) As Boolean
+            Return If(paire.Value Is Nothing, True, paire.Value.Visibility = Visibility.Visible)
+        End Function
+
+        ' Un trait paraît après un élément visible, s'il en reste un visible après lui avant le trait suivant.
+        Friend Sub Ranger()
+            Dim vuAvant = False
+            For i = 0 To _elements.Count - 1
+                Dim paire = _elements(i)
+                If _traits.Contains(paire.Key) Then
+                    Dim apres = False
+                    For j = i + 1 To _elements.Count - 1
+                        If _traits.Contains(_elements(j).Key) Then Continue For
+                        If Visible(_elements(j)) Then
+                            apres = True
+                            Exit For
+                        End If
+                    Next
+                    Dim montre = vuAvant AndAlso apres
+                    paire.Key.Visibility = If(montre, Visibility.Visible, Visibility.Collapsed)
+                    If montre Then vuAvant = False
+                ElseIf Visible(paire) Then
+                    vuAvant = True
+                End If
             Next
         End Sub
 

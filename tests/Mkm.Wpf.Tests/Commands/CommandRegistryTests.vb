@@ -83,14 +83,21 @@ Namespace Mkm.Wpf.Tests.Commands
             Dim r = Registre()
 
             Dim elements = r.CreateMenuItems({"-", "enregistrer", "-", "-", "cartouche", "-", "verrouiller", "-"})
+            Dim visibles = Function() elements.Where(Function(e) e.Visibility = Visibility.Visible).Select(Function(e) If(TypeOf e Is MenuItem, CStr(DirectCast(e, MenuItem).Header), "-")).ToArray()
 
-            Assert.That(elements.Select(Function(e) e.GetType().Name), [Is].EqualTo({"MenuItem", "Separator", "MenuItem"}),
-                        "ni trait en tête ni en queue, ni deux de suite ; la commande cachée laissée de côté")
+            Assert.That(elements.Select(Function(e) e.GetType().Name), [Is].EqualTo({"MenuItem", "Separator", "MenuItem", "Separator", "MenuItem"}),
+                        "ni trait en tête ni en queue, ni deux de suite ; la commande cachée gardée, repliée")
+            Assert.That(visibles(), [Is].EqualTo({"Enregistrer", "-", "Verrouiller"}), "un seul trait entre deux commandes visibles")
             Dim enregistrer = DirectCast(elements(0), MenuItem)
             Assert.That(enregistrer.Header, [Is].EqualTo("Enregistrer"))
             Assert.That(enregistrer.InputGestureText, [Is].EqualTo("Ctrl+S"))
             Assert.That(enregistrer.Command, [Is].SameAs(r("enregistrer")))
-            Dim verrou = DirectCast(elements(2), MenuItem)
+
+            ' Une autre vue fait paraître la commande cachée, et le trait qui la sépare.
+            r.View = "plan"
+            Assert.That(visibles(), [Is].EqualTo({"Enregistrer", "-", "Cartouche", "-", "Verrouiller"}))
+
+            Dim verrou = DirectCast(elements(4), MenuItem)
             Assert.That(verrou.IsCheckable, [Is].True)
 
             r.Execute("verrouiller")
