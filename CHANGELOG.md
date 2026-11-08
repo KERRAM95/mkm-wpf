@@ -226,6 +226,14 @@ Les évolutions notables de mkm-wpf, version par version. Le format suit
     dans une rangée plus haute ; il suit le champ d'un IconField (et se
     décale après son icône) et d'un DatePicker ; une hauteur ou un retrait
     posés par l'application ne sont plus effacés.
+  - Menu, TieredMenu : leurs traits ont le style de mkm (ils gardaient le
+    gris de WPF, avec 2 px de marge) ; le menu n'est qu'un arrêt de la
+    touche Tab, sans cadre pointillé ; idem pour la colonne d'un MegaMenu et
+    la barre d'un Menubar.
+  - Tous les menus : Espace ouvre le sous-menu ou choisit l'élément, comme
+    Entrée (mkm) ; un élément qui se coche n'a que sa coche, sans icône ;
+    le menu contextuel fait 90 px au moins, ombre non comprise.
+  - PanelMenu : les éléments d'un panneau gardent leur retrait de 12 px.
   - InputOtp, ColorPicker, Terminal, Password : la langue n'est suivie que
     tant que le contrôle est chargé (l'abonnement à vie le gardait en
     mémoire).

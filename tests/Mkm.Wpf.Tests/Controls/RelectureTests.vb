@@ -95,6 +95,20 @@ Namespace Mkm.Wpf.Tests.Controls
         End Sub
 
         <Test>
+        Public Sub Menu_SesTraitsOntLeStyleDesMenusEtIlNEstQuUnArret()
+            For Each menu In New System.Windows.Controls.Primitives.MenuBase() {New Global.Mkm.Wpf.Controls.Menu(), New TieredMenu()}
+                Dim trait As New Separator()
+                menu.Items.Add(New MenuItem With {.Header = "Ouvrir"})
+                menu.Items.Add(trait)
+                menu.Items.Add(New MenuItem With {.Header = "Fermer"})
+                Pret(menu)
+                Assert.That(trait.Style, [Is].SameAs(Application.Current.TryFindResource(MenuItem.SeparatorStyleKey)), menu.GetType().Name)
+                Assert.That(menu.IsTabStop, [Is].False, "le menu lui-même n'est pas un arrêt")
+                Assert.That(System.Windows.Input.KeyboardNavigation.GetTabNavigation(menu), [Is].EqualTo(System.Windows.Input.KeyboardNavigationMode.Once), "un seul arrêt")
+            Next
+        End Sub
+
+        <Test>
         Public Sub Message_UneValeurDeLApplicationLEmporteSurLaGravite()
             Dim message As New Message With {.Padding = New Thickness(0)}
             message.Severity = MessageSeverity.Warn

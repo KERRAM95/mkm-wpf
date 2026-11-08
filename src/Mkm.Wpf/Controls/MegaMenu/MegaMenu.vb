@@ -171,6 +171,12 @@ Namespace Mkm.Wpf.Controls
             Return New MenuItem()
         End Function
 
+        ''' <summary>Un trait de colonne prend le style des menus de mkm.</summary>
+        Protected Overrides Sub PrepareContainerForItemOverride(element As DependencyObject, item As Object)
+            MyBase.PrepareContainerForItemOverride(element, item)
+            Colonne.StylerLeTrait(element)
+        End Sub
+
         ''' <summary>Un groupe pour les lecteurs d'écran.</summary>
         Protected Overrides Function OnCreateAutomationPeer() As System.Windows.Automation.Peers.AutomationPeer
             Return New PairDeConteneur(Me, System.Windows.Automation.Peers.AutomationControlType.Group)

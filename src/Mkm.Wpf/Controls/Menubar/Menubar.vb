@@ -32,6 +32,9 @@ Namespace Mkm.Wpf.Controls
 
         Shared Sub New()
             DefaultStyleKeyProperty.OverrideMetadata(GetType(Menubar), New FrameworkPropertyMetadata(GetType(Menubar)))
+            ' Un seul arrêt de la touche Tab pour toute la barre, comme mkm ; les flèches vont d'un élément à l'autre.
+            System.Windows.Input.KeyboardNavigation.TabNavigationProperty.OverrideMetadata(GetType(Menubar),
+                New FrameworkPropertyMetadata(System.Windows.Input.KeyboardNavigationMode.Once))
         End Sub
 
         Public Sub New()

@@ -46,6 +46,7 @@ Namespace Mkm.Wpf.Controls
 
         Shared Sub New()
             DefaultStyleKeyProperty.OverrideMetadata(GetType(Menu), New FrameworkPropertyMetadata(GetType(Menu)))
+            Colonne.UnSeulArret(GetType(Menu))
         End Sub
 
         ''' <summary>Un menu vide.</summary>
@@ -97,6 +98,12 @@ Namespace Mkm.Wpf.Controls
             Colonne.Poser(Me)
         End Sub
 
+        ''' <summary>Les traits prennent le style des menus de mkm (MenuBase ne le fait pas, à la différence du Menu de WPF).</summary>
+        Protected Overrides Sub PrepareContainerForItemOverride(element As DependencyObject, item As Object)
+            MyBase.PrepareContainerForItemOverride(element, item)
+            Colonne.StylerLeTrait(element)
+        End Sub
+
     End Class
 
     ''' <summary>
@@ -130,10 +137,7 @@ Namespace Mkm.Wpf.Controls
         Protected Overrides Sub PrepareContainerForItemOverride(element As DependencyObject, item As Object)
             MyBase.PrepareContainerForItemOverride(element, item)
             ' Le trait d'un groupe : celui des menus (un menu le pose lui-même sur les siens).
-            Dim trait = TryCast(element, Separator)
-            If trait IsNot Nothing AndAlso trait.ReadLocalValue(StyleProperty) Is DependencyProperty.UnsetValue Then
-                trait.SetResourceReference(StyleProperty, MenuItem.SeparatorStyleKey)
-            End If
+            Colonne.StylerLeTrait(element)
         End Sub
 
         ''' <inheritdoc/>
@@ -169,6 +173,7 @@ Namespace Mkm.Wpf.Controls
 
         Shared Sub New()
             DefaultStyleKeyProperty.OverrideMetadata(GetType(TieredMenu), New FrameworkPropertyMetadata(GetType(TieredMenu)))
+            Colonne.UnSeulArret(GetType(TieredMenu))
         End Sub
 
         ''' <summary>Un menu à étages vide.</summary>
@@ -207,11 +212,33 @@ Namespace Mkm.Wpf.Controls
             Colonne.Poser(Me)
         End Sub
 
+        ''' <summary>Les traits prennent le style des menus de mkm (MenuBase ne le fait pas, à la différence du Menu de WPF).</summary>
+        Protected Overrides Sub PrepareContainerForItemOverride(element As DependencyObject, item As Object)
+            MyBase.PrepareContainerForItemOverride(element, item)
+            Colonne.StylerLeTrait(element)
+        End Sub
+
     End Class
 
     ' La colonne d'icône d'un menu posé dans la page : gardée si un élément de la liste (ou d'un groupe) a une icône ou
     ' se coche, comme à l'ouverture d'un menu contextuel (MenuIcons).
     Friend NotInheritable Class Colonne
+
+        ' Un trait de menu (Separator) au style des menus de mkm, sauf un style posé par l'application.
+        Friend Shared Sub StylerLeTrait(element As DependencyObject)
+            Dim trait = TryCast(element, Separator)
+            If trait IsNot Nothing AndAlso trait.ReadLocalValue(FrameworkElement.StyleProperty) Is DependencyProperty.UnsetValue Then
+                trait.SetResourceReference(FrameworkElement.StyleProperty, MenuItem.SeparatorStyleKey)
+            End If
+        End Sub
+
+        ' Un menu posé dans la page n'est qu'un arrêt de la touche Tab, sur un de ses éléments (mkm) : pas lui-même, ni
+        ' chacun de ses éléments ; sans le cadre pointillé de WPF.
+        Friend Shared Sub UnSeulArret(type As System.Type)
+            Control.IsTabStopProperty.OverrideMetadata(type, New FrameworkPropertyMetadata(False))
+            FrameworkElement.FocusVisualStyleProperty.OverrideMetadata(type, New FrameworkPropertyMetadata(Nothing))
+            System.Windows.Input.KeyboardNavigation.TabNavigationProperty.OverrideMetadata(type, New FrameworkPropertyMetadata(System.Windows.Input.KeyboardNavigationMode.Once))
+        End Sub
 
         Private Sub New()
         End Sub

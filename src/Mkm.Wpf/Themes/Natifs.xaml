@@ -158,7 +158,6 @@
         <Setter Property="FontFamily" Value="{DynamicResource mkm.font.family}" />
         <Setter Property="FontSize" Value="{DynamicResource mkm.font.size}" />
         <Setter Property="FontWeight" Value="Normal" />
-        <Setter Property="MinWidth" Value="{DynamicResource mkm.contextmenu.min.width}" />
         <Setter Property="Padding" Value="{DynamicResource mkm.contextmenu.list.padding}" />
         <Setter Property="HasDropShadow" Value="False" />
         <Setter Property="Grid.IsSharedSizeScope" Value="True" />
@@ -169,7 +168,9 @@
                     <!-- La place de l'ombre, transparente, autour du menu. -->
                     <Grid Margin="{DynamicResource mkm.contextmenu.window.padding}">
                         <Border Background="{TemplateBinding Background}" Effect="{DynamicResource mkm.contextmenu.shadow}" />
-                        <Border BorderThickness="1" BorderBrush="{TemplateBinding BorderBrush}" Padding="{TemplateBinding Padding}">
+                        <!-- 90 px au moins, ombre non comprise (comme les sous-menus). -->
+                        <Border BorderThickness="1" BorderBrush="{TemplateBinding BorderBrush}" Padding="{TemplateBinding Padding}"
+                                MinWidth="{DynamicResource mkm.contextmenu.min.width}">
                             <StackPanel IsItemsHost="True" KeyboardNavigation.DirectionalNavigation="Cycle" />
                         </Border>
                     </Grid>
@@ -257,8 +258,13 @@
                         <Trigger Property="local:MenuIcons.HasIcons" Value="False">
                             <Setter TargetName="Icone" Property="Visibility" Value="Collapsed" />
                         </Trigger>
+                        <!-- Un élément qui se coche n'a que sa coche dans la colonne d'icône (mkm) : pas d'icône. -->
+                        <Trigger Property="IsCheckable" Value="True">
+                            <Setter TargetName="SonIcone" Property="Visibility" Value="Collapsed" />
+                        </Trigger>
                         <Trigger Property="IsChecked" Value="True">
                             <Setter TargetName="Coche" Property="Visibility" Value="Visible" />
+                            <Setter TargetName="SonIcone" Property="Visibility" Value="Collapsed" />
                         </Trigger>
                         <Trigger Property="Role" Value="SubmenuHeader">
                             <Setter TargetName="Fleche" Property="Visibility" Value="Visible" />

@@ -1,6 +1,7 @@
 Imports System.Linq
 Imports System.Windows
 Imports System.Windows.Controls
+Imports System.Windows.Input
 
 Namespace Mkm.Wpf.Controls
 
@@ -39,6 +40,21 @@ Namespace Mkm.Wpf.Controls
             _enregistre = True
             EventManager.RegisterClassHandler(GetType(ContextMenu), ContextMenu.OpenedEvent, New RoutedEventHandler(AddressOf MenuOuvert))
             EventManager.RegisterClassHandler(GetType(MenuItem), MenuItem.SubmenuOpenedEvent, New RoutedEventHandler(AddressOf SousMenuOuvert))
+            EventManager.RegisterClassHandler(GetType(MenuItem), UIElement.KeyDownEvent, New KeyEventHandler(AddressOf ToucheDElement))
+        End Sub
+
+        ' Espace, sur un élément de menu, fait comme Entrée (mkm) : ouvre son sous-menu ou le choisit. WPF ne la traite pas.
+        Private Shared Sub ToucheDElement(sender As Object, e As KeyEventArgs)
+            If e.Handled OrElse e.Key <> Key.Space OrElse e.OriginalSource IsNot sender Then Return
+            Dim element = DirectCast(sender, MenuItem)
+            If Not element.IsEnabled Then Return
+            If element.HasItems Then
+                element.IsSubmenuOpen = True
+            Else
+                Dim pair = System.Windows.Automation.Peers.UIElementAutomationPeer.CreatePeerForElement(element)
+                TryCast(pair?.GetPattern(System.Windows.Automation.Peers.PatternInterface.Invoke), System.Windows.Automation.Provider.IInvokeProvider)?.Invoke()
+            End If
+            e.Handled = True
         End Sub
 
         Private Shared Sub MenuOuvert(sender As Object, e As RoutedEventArgs)
