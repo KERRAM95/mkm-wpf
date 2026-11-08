@@ -40,7 +40,16 @@ Namespace Mkm.Wpf.Controls
         ''' <summary>Vrai quand la liste est ouverte.</summary>
         Public Shared ReadOnly IsOpenProperty As DependencyProperty = DependencyProperty.Register(
             NameOf(IsOpen), GetType(Boolean), GetType(ActionBarDropDown),
-            New FrameworkPropertyMetadata(False, FrameworkPropertyMetadataOptions.BindsTwoWayByDefault))
+            New FrameworkPropertyMetadata(False, FrameworkPropertyMetadataOptions.BindsTwoWayByDefault, AddressOf OnIsOpenChanged))
+
+        Private _defilement As FermetureAuDefilement
+
+        ' Ouverte, la liste se referme quand la page défile, comme les listes de mkm.
+        Private Shared Sub OnIsOpenChanged(d As DependencyObject, e As DependencyPropertyChangedEventArgs)
+            Dim liste = DirectCast(d, ActionBarDropDown)
+            If liste._defilement Is Nothing Then liste._defilement = New FermetureAuDefilement(liste, Sub() liste.SetCurrentValue(IsOpenProperty, False))
+            If CBool(e.NewValue) Then liste._defilement.Ecouter() Else liste._defilement.Cesser()
+        End Sub
 
         ''' <summary>
         ''' Vrai dans la liste ouverte : ses commandes y prennent la forme d'une ligne de menu. Hérité.

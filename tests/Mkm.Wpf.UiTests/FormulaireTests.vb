@@ -2,6 +2,7 @@ Imports System
 Imports System.Linq
 Imports FlaUI.Core.AutomationElements
 Imports FlaUI.Core.Definitions
+Imports FlaUI.Core.Input
 Imports FlaUI.Core.WindowsAPI
 Imports NUnit.Framework
 
@@ -34,6 +35,24 @@ Namespace Mkm.Wpf.UiTests
             Cliquer(fige)
             AttendreQue(Function() NomDe(maturite.AsComboBox().SelectedItem) = "Frozen", "« Frozen » choisie")
             Assert.That(maturite.Patterns.ExpandCollapse.Pattern.ExpandCollapseState.Value, [Is].EqualTo(ExpandCollapseState.Collapsed))
+        End Sub
+
+        ' Le défaut vu par Mourad : la liste ouverte, la molette faisait défiler la page et la liste restait à sa place,
+        ' détachée de son champ. Comme mkm, la page qui défile la referme.
+        <Test>
+        Public Sub Select_LaListeSeRefermeQuandLaPageDefile()
+            Dim page = OuvrirLaDoc("select")
+            Dim maturite = Trouver("Maturite", page)
+            Dim etat = Function() maturite.Patterns.ExpandCollapse.Pattern.ExpandCollapseState.Value
+
+            Cliquer(maturite)
+            AttendreQue(Function() etat() = ExpandCollapseState.Expanded, "la liste ouverte")
+            ' La molette au-dessus du champ, sur la page : la liste s'ouvre dessous.
+            Dim c = Centre(maturite)
+            Mouse.MoveTo(c.X, c.Y - 40)
+            Mouse.Scroll(-3)
+            Wait.UntilInputIsProcessed()
+            AttendreQue(Function() etat() = ExpandCollapseState.Collapsed, "la page a défilé : la liste refermée")
         End Sub
 
         <Test>

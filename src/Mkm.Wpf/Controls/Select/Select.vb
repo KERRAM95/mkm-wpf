@@ -35,6 +35,21 @@ Namespace Mkm.Wpf.Controls
             DefaultStyleKeyProperty.OverrideMetadata(GetType([Select]), New FrameworkPropertyMetadata(GetType([Select])))
         End Sub
 
+        Private _defilement As FermetureAuDefilement
+
+        ''' <summary>Ouverte, la liste se referme quand la page défile, comme dans mkm.</summary>
+        Protected Overrides Sub OnDropDownOpened(e As System.EventArgs)
+            MyBase.OnDropDownOpened(e)
+            If _defilement Is Nothing Then _defilement = New FermetureAuDefilement(Me, Sub() SetCurrentValue(IsDropDownOpenProperty, False))
+            _defilement.Ecouter()
+        End Sub
+
+        ''' <inheritdoc/>
+        Protected Overrides Sub OnDropDownClosed(e As System.EventArgs)
+            MyBase.OnDropDownClosed(e)
+            _defilement?.Cesser()
+        End Sub
+
         ''' <summary>Le texte d'aide.</summary>
         Public Property Placeholder As String
             Get

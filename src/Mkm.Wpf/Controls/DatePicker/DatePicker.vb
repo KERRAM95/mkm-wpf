@@ -27,6 +27,21 @@ Namespace Mkm.Wpf.Controls
             DefaultStyleKeyProperty.OverrideMetadata(GetType(DatePicker), New FrameworkPropertyMetadata(GetType(DatePicker)))
         End Sub
 
+        Private _defilement As FermetureAuDefilement
+
+        ''' <summary>Ouvert, le calendrier se referme quand la page défile, comme dans mkm.</summary>
+        Protected Overrides Sub OnCalendarOpened(e As RoutedEventArgs)
+            MyBase.OnCalendarOpened(e)
+            If _defilement Is Nothing Then _defilement = New FermetureAuDefilement(Me, Sub() SetCurrentValue(IsDropDownOpenProperty, False))
+            _defilement.Ecouter()
+        End Sub
+
+        ''' <inheritdoc/>
+        Protected Overrides Sub OnCalendarClosed(e As RoutedEventArgs)
+            MyBase.OnCalendarClosed(e)
+            _defilement?.Cesser()
+        End Sub
+
         ''' <summary>Le texte d'aide, montré tant que le champ est vide.</summary>
         Public Property Placeholder As String
             Get
