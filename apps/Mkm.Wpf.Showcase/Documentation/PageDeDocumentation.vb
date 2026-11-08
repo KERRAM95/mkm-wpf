@@ -225,9 +225,14 @@ Namespace Mkm.Wpf.Showcase.Documentation
             Dim comportement = CStr(xml.Attribute("comportement"))
             Try
                 ' Les chemins d'un exemple (« /Images/photo.png ») sont ceux des ressources de l'application, comme dans une
-                ' application qui les écrit en XAML compilé.
+                ' application qui les écrit en XAML compilé. Lu en UTF-8 : Parse avec un contexte se trompait d'encodage
+                ' (les accents des exemples, « caractère invalide »).
                 Dim contexte As New ParserContext With {.BaseUri = New Uri("pack://application:,,,/")}
-                Dim racine = DirectCast(XamlReader.Parse(EnveloppeOuvrante & xaml & EnveloppeFermante, contexte), FrameworkElement)
+                Dim octets = Text.Encoding.UTF8.GetBytes(EnveloppeOuvrante & xaml & EnveloppeFermante)
+                Dim racine As FrameworkElement
+                Using flux As New IO.MemoryStream(octets)
+                    racine = DirectCast(XamlReader.Load(flux, contexte), FrameworkElement)
+                End Using
                 If CStr(xml.Attribute("etendu")) = "oui" Then
                     ' Un exemple qui prend toute la largeur (un tableau, une mise en page) : ses éléments l'un sous l'autre.
                     Dim enfants = DirectCast(racine, System.Windows.Controls.Panel).Children.Cast(Of UIElement)().ToList()
