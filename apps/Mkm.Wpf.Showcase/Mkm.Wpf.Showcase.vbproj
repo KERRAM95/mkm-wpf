@@ -17,6 +17,8 @@
     <EmbeddedResource Include="Documentation\Pages\*.xml" LogicalName="doc/%(Filename)%(Extension)" />
     <!-- Le code des comportements d'exemple, compilé, et embarqué aussi pour être montré : comportement/<nom>.vb. -->
     <EmbeddedResource Include="Documentation\Exemples\*.vb" LogicalName="comportement/%(Filename)%(Extension)" />
+    <!-- Les photos des exemples (celles de la documentation d'ui-kit) : pack://application:,,,/Documentation/Images/… -->
+    <Resource Include="Documentation\Images\*" />
   </ItemGroup>
 
 </Project>

@@ -70,6 +70,19 @@ Namespace Mkm.Wpf.Tests.Controls
         End Sub
 
         <Test>
+        Public Sub Avatar_UneImageLeRemplitALaPlaceDuTexte()
+            Dim photo As New Media.DrawingImage(New Media.GeometryDrawing(Media.Brushes.Green, Nothing, New Media.RectangleGeometry(New Rect(0, 0, 24, 24))))
+            Dim carre = Pret(New Avatar With {.Label = "MK", .Image = photo})
+            Assert.That(carre.HasImage, [Is].True)
+            Assert.That(Partie(Of Border)(carre, "ImageCarree").Visibility, [Is].EqualTo(Visibility.Visible))
+            Assert.That(Partie(Of TextBlock)(carre, "Texte").Visibility, [Is].EqualTo(Visibility.Collapsed))
+
+            Dim rond = Pret(New Avatar With {.Image = photo, .Shape = AvatarShape.Circle})
+            Assert.That(Partie(Of Shapes.Ellipse)(rond, "ImageRonde").Visibility, [Is].EqualTo(Visibility.Visible))
+            Assert.That(Partie(Of Border)(rond, "ImageCarree").Visibility, [Is].EqualTo(Visibility.Collapsed))
+        End Sub
+
+        <Test>
         Public Sub AvatarGroup_LesAvatarsSeChevauchent()
             Dim groupe As New AvatarGroup()
             Dim premier As New Avatar With {.Label = "MK"}

@@ -54,3 +54,9 @@ Aucun pour l'instant.
 
 | Élément de mkm-wpf | Source | Version ou commit | Licence | Ce qui est repris | Écarts |
 | ------------------ | ------ | ----------------- | ------- | ----------------- | ------ |
+
+## Images de la documentation
+
+| Élément de mkm-wpf | Source | Licence | Ce qui est repris |
+| ------------------ | ------ | ------- | ----------------- |
+| `apps/Mkm.Wpf.Showcase/Documentation/Images/*.png`, `walter.jpg` | la documentation d'ui-kit (`apps/showcase/doc/avatar`), qui les tient du CDN de PrimeVue (`primefaces.org/cdn/primevue/images`) | celle de la documentation de PrimeVue (MIT) ; reprises avec l'accord de mkm | les photos des exemples d'Avatar, telles quelles |

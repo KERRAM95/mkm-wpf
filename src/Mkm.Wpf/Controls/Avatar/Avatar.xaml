@@ -60,6 +60,27 @@
                             </MultiTrigger.Conditions>
                             <Setter TargetName="Icone" Property="Visibility" Value="Visible" />
                         </MultiTrigger>
+                        <!-- Une image remplit l'avatar, à la place du texte ; dans un groupe, en dedans de son cerne. -->
+                        <Trigger Property="HasImage" Value="True">
+                            <Setter TargetName="ImageCarree" Property="Visibility" Value="Visible" />
+                            <Setter TargetName="Texte" Property="Visibility" Value="Collapsed" />
+                        </Trigger>
+                        <MultiTrigger>
+                            <MultiTrigger.Conditions>
+                                <Condition Property="HasImage" Value="True" />
+                                <Condition Property="Shape" Value="Circle" />
+                            </MultiTrigger.Conditions>
+                            <Setter TargetName="ImageCarree" Property="Visibility" Value="Collapsed" />
+                            <Setter TargetName="ImageRonde" Property="Visibility" Value="Visible" />
+                        </MultiTrigger>
+                        <MultiTrigger>
+                            <MultiTrigger.Conditions>
+                                <Condition Property="HasImage" Value="True" />
+                                <Condition Property="IsInGroup" Value="True" />
+                            </MultiTrigger.Conditions>
+                            <Setter TargetName="ImageCarree" Property="Margin" Value="2" />
+                            <Setter TargetName="ImageRonde" Property="Margin" Value="2" />
+                        </MultiTrigger>
                         <Trigger Property="Size" Value="Large">
                             <Setter TargetName="Icone" Property="Width" Value="{DynamicResource mkm.avatar.lg.icon.size}" />
                             <Setter TargetName="Icone" Property="Height" Value="{DynamicResource mkm.avatar.lg.icon.size}" />

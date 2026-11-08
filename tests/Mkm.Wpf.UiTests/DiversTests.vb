@@ -52,7 +52,8 @@ Namespace Mkm.Wpf.UiTests
 
             Assert.That(initiales.ControlType, [Is].EqualTo(ControlType.Image))
             Assert.That(NomDe(initiales), [Is].EqualTo("Mourad Kerram"))
-            Assert.That(Trouver("Equipe", page).FindAllChildren().Length, [Is].EqualTo(4), "les quatre avatars du groupe")
+            Assert.That(Trouver("Equipe", page).FindAllChildren().Length, [Is].EqualTo(6), "les six avatars du groupe")
+            Assert.That(NomDe(Trouver("Photo", page)), [Is].EqualTo("Walter"), "une photo nommée")
         End Sub
 
     End Class

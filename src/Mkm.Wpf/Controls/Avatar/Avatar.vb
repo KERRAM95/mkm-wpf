@@ -43,7 +43,13 @@ Namespace Mkm.Wpf.Controls
 
         ''' <summary>Son image (une photo), qui remplit l'avatar.</summary>
         Public Shared ReadOnly ImageProperty As DependencyProperty = DependencyProperty.Register(
-            NameOf(Image), GetType(ImageSource), GetType(Avatar), New FrameworkPropertyMetadata(Nothing))
+            NameOf(Image), GetType(ImageSource), GetType(Avatar),
+            New FrameworkPropertyMetadata(Nothing, Sub(d, e) d.SetValue(HasImagePropertyKey, e.NewValue IsNot Nothing)))
+
+        Private Shared ReadOnly HasImagePropertyKey As DependencyPropertyKey = DependencyProperty.RegisterReadOnly(
+            NameOf(HasImage), GetType(Boolean), GetType(Avatar), New FrameworkPropertyMetadata(False))
+        ''' <summary>Vrai quand l'avatar a une image : elle le remplit, à la place du texte et de l'icône.</summary>
+        Public Shared ReadOnly HasImageProperty As DependencyProperty = HasImagePropertyKey.DependencyProperty
 
         ''' <summary>Sa taille.</summary>
         Public Shared ReadOnly SizeProperty As DependencyProperty = DependencyProperty.Register(
@@ -111,6 +117,13 @@ Namespace Mkm.Wpf.Controls
             Set(value As AvatarShape)
                 SetValue(ShapeProperty, value)
             End Set
+        End Property
+
+        ''' <summary>Vrai quand l'avatar a une image.</summary>
+        Public ReadOnly Property HasImage As Boolean
+            Get
+                Return CBool(GetValue(HasImageProperty))
+            End Get
         End Property
 
         ''' <summary>Vrai dans un <see cref="AvatarGroup"/>.</summary>
