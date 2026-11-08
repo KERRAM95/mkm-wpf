@@ -1,0 +1,80 @@
+<?xml version="1.0" encoding="utf-8"?>
+<page titre="Avatar" categorie="Divers" types="Avatar AvatarGroup AvatarSize AvatarShape" jetons="avatar">
+  <resume>L'avatar : une personne ou un objet en petit carré ou en rond, par ses initiales, une icône ou une photo.
+    Plusieurs avatars se chevauchent dans un AvatarGroup.</resume>
+
+  <section titre="Import">
+    <code><![CDATA[
+<Window xmlns:mkm="urn:mkm-wpf">
+    <mkm:Avatar Label="MK" />
+</Window>
+]]></code>
+  </section>
+
+  <section titre="Texte">
+    <p><c>Label</c> : des initiales, sur un fond gris pâle.</p>
+    <exemple><![CDATA[
+<mkm:Avatar x:Name="Initiales" Label="MK" AutomationProperties.Name="Mourad Kerram" />
+<mkm:Avatar Label="JD" />
+<mkm:Avatar Label="A" />
+]]></exemple>
+  </section>
+
+  <section titre="Icône">
+    <p><c>Icon</c>, à défaut de texte.</p>
+    <exemple><![CDATA[
+<mkm:Avatar Icon="{x:Static mkm:Icons.Person}" />
+<mkm:Avatar Icon="{x:Static mkm:Icons.Drawings}" />
+]]></exemple>
+  </section>
+
+  <section titre="Photo">
+    <p><c>Image</c> remplit l'avatar, recadrée.</p>
+    <exemple><![CDATA[
+<mkm:Avatar Shape="Circle" Size="Large">
+    <mkm:Avatar.Image>
+        <DrawingImage>
+            <DrawingImage.Drawing>
+                <GeometryDrawing Brush="#018308" Geometry="M0,0 H24 V24 H0 Z" />
+            </DrawingImage.Drawing>
+        </DrawingImage>
+    </mkm:Avatar.Image>
+</mkm:Avatar>
+]]></exemple>
+  </section>
+
+  <section titre="Forme et taille">
+    <p><c>Shape="Circle"</c> l'arrondit ; <c>Size</c> : <c>Normal</c> (24 px), <c>Large</c> (36 px) ou
+      <c>XLarge</c> (48 px).</p>
+    <exemple><![CDATA[
+<mkm:Avatar Label="MK" />
+<mkm:Avatar Label="MK" Size="Large" />
+<mkm:Avatar Label="MK" Size="XLarge" />
+<mkm:Avatar Label="MK" Shape="Circle" />
+<mkm:Avatar Label="MK" Shape="Circle" Size="Large" />
+<mkm:Avatar Label="MK" Shape="Circle" Size="XLarge" />
+]]></exemple>
+  </section>
+
+  <section titre="Groupe">
+    <p><c>AvatarGroup</c> pose ses avatars côte à côte, chacun chevauchant le précédent, cerné du fond de la page :
+      les personnes d'une équipe, d'un document.</p>
+    <exemple><![CDATA[
+<mkm:AvatarGroup x:Name="Equipe">
+    <mkm:Avatar Label="MK" Shape="Circle" Size="Large" />
+    <mkm:Avatar Label="JD" Shape="Circle" Size="Large" />
+    <mkm:Avatar Label="AL" Shape="Circle" Size="Large" />
+    <mkm:Avatar Label="+4" Shape="Circle" Size="Large" />
+</mkm:AvatarGroup>
+]]></exemple>
+  </section>
+
+  <section titre="Accessibilité">
+    <h3>Lecteur d'écran</h3>
+    <p>Narrateur dit l'avatar comme une image, nommée par <c>AutomationProperties.Name</c> (le nom de la personne),
+      à défaut par son texte. Des initiales seules disent peu : nommez l'avatar.</p>
+    <code><![CDATA[
+<mkm:Avatar Label="MK" AutomationProperties.Name="Mourad Kerram" />
+]]></code>
+  </section>
+</page>

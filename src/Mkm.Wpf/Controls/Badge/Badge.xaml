@@ -1,0 +1,96 @@
+<!--
+    Le style de Badge, sur la pastille de mkm (styles/badge ; jetons de Nora en pixels pour Dashboard, preset ara) : 18 px
+    de haut, 18 de large au moins, 6 px de retrait de chaque côté, la valeur en gras de 9 px, aux coins du thème ; ronde
+    pour un seul caractère ; un point de 6 px sans valeur. La couleur de sa gravité (badge.<gravité>.background et
+    .color). Petite, grande, très grande : 15, 21 et 24 px.
+
+    BorderThickness et BorderBrush : le contour que lui donne un OverlayBadge (2 px du fond de la page).
+-->
+<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+                    xmlns:local="clr-namespace:Mkm.Wpf.Controls">
+
+    <Style TargetType="{x:Type local:Badge}">
+        <Setter Property="FontFamily" Value="{DynamicResource mkm.font.family}" />
+        <Setter Property="FontSize" Value="{DynamicResource mkm.badge.font.size}" />
+        <Setter Property="FontWeight" Value="{DynamicResource mkm.badge.font.weight}" />
+        <Setter Property="Background" Value="{DynamicResource mkm.badge.primary.background}" />
+        <Setter Property="Foreground" Value="{DynamicResource mkm.badge.primary.color}" />
+        <Setter Property="Padding" Value="{DynamicResource mkm.badge.padding}" />
+        <Setter Property="MinWidth" Value="{DynamicResource mkm.badge.min.width}" />
+        <Setter Property="Height" Value="{DynamicResource mkm.badge.height}" />
+        <Setter Property="HorizontalAlignment" Value="Left" />
+        <Setter Property="VerticalAlignment" Value="Center" />
+        <Setter Property="BorderThickness" Value="0" />
+        <Setter Property="SnapsToDevicePixels" Value="True" />
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="{x:Type local:Badge}">
+                    <Border x:Name="Fond" Background="{TemplateBinding Background}" Padding="{TemplateBinding Padding}"
+                            BorderBrush="{TemplateBinding BorderBrush}" BorderThickness="{TemplateBinding BorderThickness}"
+                            CornerRadius="{DynamicResource mkm.badge.border.radius}">
+                        <TextBlock x:Name="Texte" HorizontalAlignment="Center" VerticalAlignment="Center"
+                                   Text="{Binding Value, RelativeSource={RelativeSource TemplatedParent}}" />
+                    </Border>
+                    <ControlTemplate.Triggers>
+                        <Trigger Property="IsCircle" Value="True">
+                            <Setter TargetName="Fond" Property="Padding" Value="0" />
+                            <!-- Des coins plus grands que la moitié de la hauteur : un rond (50 % de mkm). -->
+                            <Setter TargetName="Fond" Property="CornerRadius" Value="999" />
+                        </Trigger>
+                        <Trigger Property="IsDot" Value="True">
+                            <Setter TargetName="Fond" Property="Padding" Value="0" />
+                            <Setter TargetName="Fond" Property="CornerRadius" Value="999" />
+                            <Setter TargetName="Texte" Property="Visibility" Value="Collapsed" />
+                            <Setter Property="MinWidth" Value="{DynamicResource mkm.badge.dot.size}" />
+                            <Setter Property="Width" Value="{DynamicResource mkm.badge.dot.size}" />
+                            <Setter Property="Height" Value="{DynamicResource mkm.badge.dot.size}" />
+                        </Trigger>
+                    </ControlTemplate.Triggers>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+        <Style.Triggers>
+            <Trigger Property="Severity" Value="Secondary">
+                <Setter Property="Background" Value="{DynamicResource mkm.badge.secondary.background}" />
+                <Setter Property="Foreground" Value="{DynamicResource mkm.badge.secondary.color}" />
+            </Trigger>
+            <Trigger Property="Severity" Value="Success">
+                <Setter Property="Background" Value="{DynamicResource mkm.badge.success.background}" />
+                <Setter Property="Foreground" Value="{DynamicResource mkm.badge.success.color}" />
+            </Trigger>
+            <Trigger Property="Severity" Value="Info">
+                <Setter Property="Background" Value="{DynamicResource mkm.badge.info.background}" />
+                <Setter Property="Foreground" Value="{DynamicResource mkm.badge.info.color}" />
+            </Trigger>
+            <Trigger Property="Severity" Value="Warn">
+                <Setter Property="Background" Value="{DynamicResource mkm.badge.warn.background}" />
+                <Setter Property="Foreground" Value="{DynamicResource mkm.badge.warn.color}" />
+            </Trigger>
+            <Trigger Property="Severity" Value="Danger">
+                <Setter Property="Background" Value="{DynamicResource mkm.badge.danger.background}" />
+                <Setter Property="Foreground" Value="{DynamicResource mkm.badge.danger.color}" />
+            </Trigger>
+            <Trigger Property="Severity" Value="Contrast">
+                <Setter Property="Background" Value="{DynamicResource mkm.badge.contrast.background}" />
+                <Setter Property="Foreground" Value="{DynamicResource mkm.badge.contrast.color}" />
+            </Trigger>
+            <Trigger Property="Size" Value="Small">
+                <Setter Property="FontSize" Value="{DynamicResource mkm.badge.sm.font.size}" />
+                <Setter Property="MinWidth" Value="{DynamicResource mkm.badge.sm.min.width}" />
+                <Setter Property="Height" Value="{DynamicResource mkm.badge.sm.height}" />
+            </Trigger>
+            <Trigger Property="Size" Value="Large">
+                <Setter Property="FontSize" Value="{DynamicResource mkm.badge.lg.font.size}" />
+                <Setter Property="MinWidth" Value="{DynamicResource mkm.badge.lg.min.width}" />
+                <Setter Property="Height" Value="{DynamicResource mkm.badge.lg.height}" />
+            </Trigger>
+            <Trigger Property="Size" Value="XLarge">
+                <Setter Property="FontSize" Value="{DynamicResource mkm.badge.xl.font.size}" />
+                <Setter Property="MinWidth" Value="{DynamicResource mkm.badge.xl.min.width}" />
+                <Setter Property="Height" Value="{DynamicResource mkm.badge.xl.height}" />
+            </Trigger>
+        </Style.Triggers>
+    </Style>
+
+</ResourceDictionary>

@@ -10,9 +10,13 @@
                     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
     <ResourceDictionary.MergedDictionaries>
         <ResourceDictionary Source="/Mkm.Wpf;component/Controls/ActionBar/ActionBar.xaml" />
+        <ResourceDictionary Source="/Mkm.Wpf;component/Controls/Avatar/Avatar.xaml" />
+        <ResourceDictionary Source="/Mkm.Wpf;component/Controls/Badge/Badge.xaml" />
+        <ResourceDictionary Source="/Mkm.Wpf;component/Controls/Badge/OverlayBadge.xaml" />
         <ResourceDictionary Source="/Mkm.Wpf;component/Controls/BlockUI/BlockUI.xaml" />
         <ResourceDictionary Source="/Mkm.Wpf;component/Controls/Button/Button.xaml" />
         <ResourceDictionary Source="/Mkm.Wpf;component/Controls/Checkbox/Checkbox.xaml" />
+        <ResourceDictionary Source="/Mkm.Wpf;component/Controls/Chip/Chip.xaml" />
         <ResourceDictionary Source="/Mkm.Wpf;component/Controls/DataTable/DataTable.xaml" />
         <ResourceDictionary Source="/Mkm.Wpf;component/Controls/DatePicker/DatePicker.xaml" />
         <ResourceDictionary Source="/Mkm.Wpf;component/Controls/Dialog/Dialog.xaml" />

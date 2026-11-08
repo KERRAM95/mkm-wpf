@@ -116,6 +116,9 @@ Les évolutions notables de mkm-wpf, version par version. Le format suit
   `ScrollPanel` (ses barres posées sur le contenu, au survol), `Divider`,
   `ToggleSwitch`, `Skeleton` ; leurs jetons importés de mkm, leurs pages de
   documentation, leurs tests et leurs scénarios d'interaction.
+- Le lot 11 (`docs/composants/pastilles-et-personnes.md`) : `Badge` et
+  `OverlayBadge`, `Avatar` et `AvatarGroup`, `Chip` (retirable, au clavier
+  aussi) ; leurs jetons, leurs pages, leurs tests et leurs scénarios.
 - La documentation, sur le modèle d'ui-kit : la vitrine devient une page par
   composant, rangée par catégorie (Pour commencer, Formulaire, Bouton, Données,
   Panneau, Superposition, Menu, Messages, Divers), avec une recherche. Chaque

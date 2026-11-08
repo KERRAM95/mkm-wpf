@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="utf-8"?>
+<page titre="Badge" categorie="Divers" types="Badge OverlayBadge BadgeSeverity BadgeSize" jetons="badge overlaybadge">
+  <resume>La pastille : un nombre ou un mot court, en gras, sur un fond de la couleur de sa gravité. Posée sur le coin
+    d'une icône ou d'un bouton, c'est un OverlayBadge.</resume>
+
+  <section titre="Import">
+    <code><![CDATA[
+<Window xmlns:mkm="urn:mkm-wpf">
+    <mkm:Badge Value="3" />
+</Window>
+]]></code>
+  </section>
+
+  <section titre="Basique">
+    <p><c>Value</c> est ce qu'elle dit. Un seul caractère, et elle est ronde ; sans valeur, c'est un point.</p>
+    <exemple><![CDATA[
+<mkm:Badge Value="3" />
+<mkm:Badge Value="12" />
+<mkm:Badge Value="Nouveau" />
+<mkm:Badge />
+]]></exemple>
+  </section>
+
+  <section titre="Gravité">
+    <p><c>Severity</c> donne sa couleur : <c>Primary</c> (par défaut), <c>Secondary</c>, <c>Success</c>,
+      <c>Info</c>, <c>Warn</c>, <c>Danger</c> ou <c>Contrast</c>.</p>
+    <exemple><![CDATA[
+<mkm:Badge Value="2" />
+<mkm:Badge Value="8" Severity="Secondary" />
+<mkm:Badge Value="6" Severity="Success" />
+<mkm:Badge Value="4" Severity="Info" />
+<mkm:Badge Value="9" Severity="Warn" />
+<mkm:Badge Value="3" Severity="Danger" />
+<mkm:Badge Value="5" Severity="Contrast" />
+]]></exemple>
+  </section>
+
+  <section titre="Tailles">
+    <p><c>Size</c> : <c>Small</c>, <c>Normal</c> (par défaut), <c>Large</c> ou <c>XLarge</c>.</p>
+    <exemple><![CDATA[
+<mkm:Badge Value="8" Size="Small" />
+<mkm:Badge Value="8" />
+<mkm:Badge Value="8" Size="Large" />
+<mkm:Badge Value="8" Size="XLarge" />
+]]></exemple>
+  </section>
+
+  <section titre="Sur un élément">
+    <p><c>OverlayBadge</c> pose la pastille sur le coin haut-droit de son contenu, centrée sur le coin et cernée du fond
+      de la page : un compteur sur une icône, sur un bouton. Elle prend <c>Value</c>, <c>Severity</c> et
+      <c>Size</c>.</p>
+    <exemple><![CDATA[
+<mkm:OverlayBadge x:Name="Alertes" Value="4" Severity="Danger" Margin="0,0,16,0">
+    <mkm:Icon Source="{x:Static mkm:Icons.Drawings}" Width="24" Height="24" />
+</mkm:OverlayBadge>
+<mkm:OverlayBadge Value="2">
+    <mkm:Button Content="Révisions" Severity="Secondary" />
+</mkm:OverlayBadge>
+<mkm:OverlayBadge Margin="16,0,0,0">
+    <mkm:Icon Source="{x:Static mkm:Icons.Settings}" Width="24" Height="24" />
+</mkm:OverlayBadge>
+]]></exemple>
+  </section>
+
+  <section titre="Accessibilité">
+    <h3>Lecteur d'écran</h3>
+    <p>Narrateur lit la pastille comme un texte : sa valeur. Sur un bouton, il dit le bouton, puis la pastille. Quand
+      le nombre seul ne suffit pas, le nom du bouton le dit : <c>AutomationProperties.Name="Révisions, 2 nouvelles"</c>.
+      Un point (sans valeur) ne se lit pas : son sens doit être dit autrement.</p>
+  </section>
+</page>

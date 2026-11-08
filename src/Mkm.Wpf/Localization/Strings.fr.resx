@@ -48,6 +48,9 @@
   <data name="aria.close" xml:space="preserve">
     <value>Fermer</value>
   </data>
+  <data name="aria.remove" xml:space="preserve">
+    <value>Retirer</value>
+  </data>
   <data name="aria.busy" xml:space="preserve">
     <value>Chargement en cours</value>
   </data>

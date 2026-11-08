@@ -303,3 +303,12 @@ overlaybadge.border.width = {overlaybadge.outline.width} {overlaybadge.outline.w
 
 # toggleswitch : la bordure de la piste (« slider » chez mkm), en épaisseur (border.width est un nombre).
 toggleswitch.slider.border.width = {toggleswitch.border.width} {toggleswitch.border.width}
+
+# chip : ses retraits en épaisseurs (padding.x et padding.y sont des nombres) ; retirable, celui de droite est celui du
+# haut ; avec une image, ceux du haut et du bas sont de moitié (calc(padding.y / 2) chez mkm : 3 px) et l'image mange
+# le retrait de gauche.
+chip.padding = {chip.padding.y} {chip.padding.x}
+chip.removable.padding = {chip.padding.y} {chip.padding.y} {chip.padding.y} {chip.padding.x}
+chip.image.padding = 3px {chip.padding.x} 3px {chip.padding.x}
+chip.image.removable.padding = 3px {chip.padding.y} 3px {chip.padding.x}
+chip.image.margin = 0 0 0 -{chip.padding.y}

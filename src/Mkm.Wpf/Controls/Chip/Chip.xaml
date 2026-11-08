@@ -1,0 +1,92 @@
+<!--
+    Le style de Chip, sur la puce de mkm (styles/chip ; jetons de Nora en pixels pour Dashboard, preset ara) : une
+    pastille de 16 px de rayon, grise (chip.background), 6 px sur 9 de retrait, 6 px entre ses parties ; une icône de
+    12 px, une photo ronde de 24 px qui mange le retrait de gauche ; retirable, la croix ronde (TimesCircle) de 12 px à
+    droite, au clavier l'anneau du focus autour d'elle.
+-->
+<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+                    xmlns:local="clr-namespace:Mkm.Wpf.Controls"
+                    xmlns:loc="clr-namespace:Mkm.Wpf.Localization">
+
+    <Style x:Key="MkmChipCroix" TargetType="{x:Type Button}">
+        <Setter Property="OverridesDefaultStyle" Value="True" />
+        <Setter Property="Cursor" Value="Hand" />
+        <Setter Property="FocusVisualStyle" Value="{x:Null}" />
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="{x:Type Button}">
+                    <Grid Background="Transparent">
+                        <Ellipse x:Name="Anneau" Margin="-2" Visibility="Collapsed"
+                                 Stroke="{DynamicResource mkm.chip.remove.icon.focus.ring.color}"
+                                 StrokeThickness="{DynamicResource mkm.chip.remove.icon.focus.ring.width}" />
+                        <local:Icon Source="{x:Static local:InternalIcons.TimesCircle}"
+                                    Width="{DynamicResource mkm.chip.remove.icon.size}" Height="{DynamicResource mkm.chip.remove.icon.size}"
+                                    Foreground="{DynamicResource mkm.chip.remove.icon.color}" />
+                    </Grid>
+                    <ControlTemplate.Triggers>
+                        <Trigger Property="local:FocusVisible.IsVisible" Value="True">
+                            <Setter TargetName="Anneau" Property="Visibility" Value="Visible" />
+                        </Trigger>
+                    </ControlTemplate.Triggers>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+
+    <Style TargetType="{x:Type local:Chip}">
+        <Setter Property="FontFamily" Value="{DynamicResource mkm.font.family}" />
+        <Setter Property="FontSize" Value="{DynamicResource mkm.font.size}" />
+        <Setter Property="Foreground" Value="{DynamicResource mkm.chip.color}" />
+        <Setter Property="Background" Value="{DynamicResource mkm.chip.background}" />
+        <Setter Property="Padding" Value="{DynamicResource mkm.chip.padding}" />
+        <Setter Property="HorizontalAlignment" Value="Left" />
+        <Setter Property="VerticalAlignment" Value="Center" />
+        <Setter Property="SnapsToDevicePixels" Value="True" />
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="{x:Type local:Chip}">
+                    <Border Background="{TemplateBinding Background}" Padding="{TemplateBinding Padding}"
+                            CornerRadius="{DynamicResource mkm.chip.border.radius}">
+                        <local:GapStackPanel Orientation="Horizontal" Gap="{DynamicResource mkm.chip.gap}">
+                            <Ellipse x:Name="Photo" Visibility="Collapsed" VerticalAlignment="Center"
+                                     Margin="{DynamicResource mkm.chip.image.margin}"
+                                     Width="{DynamicResource mkm.chip.image.width}" Height="{DynamicResource mkm.chip.image.height}">
+                                <Ellipse.Fill>
+                                    <ImageBrush Stretch="UniformToFill" ImageSource="{Binding Image, RelativeSource={RelativeSource TemplatedParent}}" />
+                                </Ellipse.Fill>
+                            </Ellipse>
+                            <local:Icon x:Name="Icone" VerticalAlignment="Center" Source="{TemplateBinding Icon}"
+                                        Width="{DynamicResource mkm.chip.icon.size}" Height="{DynamicResource mkm.chip.icon.size}"
+                                        Foreground="{DynamicResource mkm.chip.icon.color}" />
+                            <ContentPresenter VerticalAlignment="Center" RecognizesAccessKey="True" />
+                            <Button x:Name="PART_Remove" Visibility="Collapsed" VerticalAlignment="Center"
+                                    Style="{StaticResource MkmChipCroix}" AutomationProperties.Name="{loc:T aria.remove}" />
+                        </local:GapStackPanel>
+                    </Border>
+                    <ControlTemplate.Triggers>
+                        <Trigger Property="Icon" Value="{x:Null}">
+                            <Setter TargetName="Icone" Property="Visibility" Value="Collapsed" />
+                        </Trigger>
+                        <Trigger Property="Removable" Value="True">
+                            <Setter TargetName="PART_Remove" Property="Visibility" Value="Visible" />
+                            <Setter Property="Padding" Value="{DynamicResource mkm.chip.removable.padding}" />
+                        </Trigger>
+                        <Trigger Property="HasImage" Value="True">
+                            <Setter TargetName="Photo" Property="Visibility" Value="Visible" />
+                            <Setter Property="Padding" Value="{DynamicResource mkm.chip.image.padding}" />
+                        </Trigger>
+                        <MultiTrigger>
+                            <MultiTrigger.Conditions>
+                                <Condition Property="HasImage" Value="True" />
+                                <Condition Property="Removable" Value="True" />
+                            </MultiTrigger.Conditions>
+                            <Setter Property="Padding" Value="{DynamicResource mkm.chip.image.removable.padding}" />
+                        </MultiTrigger>
+                    </ControlTemplate.Triggers>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+
+</ResourceDictionary>
