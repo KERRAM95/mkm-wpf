@@ -234,6 +234,16 @@ Namespace Mkm.Wpf.UiTests
         ''' (1024 × 768). Sans défilement possible, ne fait rien.
         ''' </summary>
         Protected Shared Sub Montrer(element As AutomationElement)
+            ' Le défilement aide le clic ; il ne doit pas le faire échouer : l'automatisation de Windows refuse parfois de
+            ' remonter les parents d'un élément d'une liste virtualisée (COMException 0x80040201).
+            Try
+                Defiler(element)
+            Catch ex As Runtime.InteropServices.COMException
+                TestContext.Progress.WriteLine($"Défilement impossible : {ex.Message}")
+            End Try
+        End Sub
+
+        Private Shared Sub Defiler(element As AutomationElement)
             Dim defileur = AncetreQuiDefile(element)
             If defileur Is Nothing Then Return
             Dim defilement = defileur.Patterns.Scroll.Pattern

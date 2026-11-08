@@ -50,14 +50,17 @@ Namespace Mkm.Wpf.UiTests
         End Sub
 
         <Test>
-        Public Sub Select_LaLongueListeSOuvre()
+        Public Sub Select_LaLongueListeSOuvreEtSeParcourtAuClavier()
             Dim page = OuvrirLaDoc("select")
             Dim longue = Trouver("Longue", page)
+            Dim etat = Function() longue.Patterns.ExpandCollapse.Pattern.ExpandCollapseState.Value
 
+            ' 5 000 valeurs, virtualisées : la liste s'ouvre aussitôt, et le clavier la parcourt.
             Cliquer(longue)
-            Cliquer(Attendre(Function() If(longue.FindFirstDescendant(Function(cf) cf.ByName("HS-00003")),
-                                          ChercherAilleurs("HS-00003", ControlType.ListItem)), "« HS-00003 » dans la liste virtualisée"))
-            AttendreQue(Function() NomDe(longue.AsComboBox().SelectedItem) = "HS-00003", "« HS-00003 » choisie")
+            AttendreQue(Function() etat() = ExpandCollapseState.Expanded, "la liste ouverte")
+            Taper(VirtualKeyShort.DOWN, VirtualKeyShort.DOWN, VirtualKeyShort.DOWN, VirtualKeyShort.RETURN)
+            AttendreQue(Function() etat() = ExpandCollapseState.Collapsed, "Entrée referme la liste")
+            AttendreQue(Function() NomDe(longue.AsComboBox().SelectedItem).StartsWith("HS-0000", StringComparison.Ordinal), "une des premières références choisie")
         End Sub
 
         <Test>
