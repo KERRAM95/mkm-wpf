@@ -1,4 +1,6 @@
+Imports System.Collections.Generic
 Imports System.Windows
+Imports System.Windows.Automation.Peers
 
 Namespace Mkm.Wpf.Controls
 
@@ -21,6 +23,25 @@ Namespace Mkm.Wpf.Controls
         Shared Sub New()
             DefaultStyleKeyProperty.OverrideMetadata(GetType(Slider), New FrameworkPropertyMetadata(GetType(Slider)))
         End Sub
+
+        ''' <summary>Un curseur pour les lecteurs d'écran, avec sa valeur ; sa piste et sa poignée ne sont que son dessin.</summary>
+        Protected Overrides Function OnCreateAutomationPeer() As AutomationPeer
+            Return New PairDeSlider(Me)
+        End Function
+
+        Private NotInheritable Class PairDeSlider
+            Inherits SliderAutomationPeer
+
+            Public Sub New(curseur As Slider)
+                MyBase.New(curseur)
+            End Sub
+
+            ' Les deux zones de la piste seraient des boutons sans nom.
+            Protected Overrides Function GetChildrenCore() As List(Of AutomationPeer)
+                Return Nothing
+            End Function
+
+        End Class
 
     End Class
 
