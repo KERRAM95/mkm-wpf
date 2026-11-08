@@ -1,3 +1,4 @@
+Imports System
 Imports System.Windows
 Imports System.Windows.Automation
 Imports System.Windows.Automation.Peers
@@ -27,64 +28,100 @@ Namespace Mkm.Wpf.Controls
         End Property
 
         Protected Overrides Function OnCreateAutomationPeer() As AutomationPeer
-            Return New PairDuBoutonDeRepli(Me)
+            Return New PairDeRepli(Me, Function() IsCollapsed)
         End Function
 
         Private Shared Sub OnIsCollapsedChanged(d As DependencyObject, e As DependencyPropertyChangedEventArgs)
-            If Not AutomationPeer.ListenerExists(AutomationEvents.PropertyChanged) Then Return
-            Dim pair = UIElementAutomationPeer.FromElement(DirectCast(d, UIElement))
-            pair?.RaisePropertyChangedEvent(ExpandCollapsePatternIdentifiers.ExpandCollapseStateProperty,
-                                            If(CBool(e.OldValue), ExpandCollapseState.Collapsed, ExpandCollapseState.Expanded),
-                                            If(CBool(e.NewValue), ExpandCollapseState.Collapsed, ExpandCollapseState.Expanded))
+            PairDeRepli.Annoncer(DirectCast(d, UIElement), CBool(e.OldValue), CBool(e.NewValue))
         End Sub
 
-        ''' <summary>Un bouton qui déplie et replie (ExpandCollapse) ; Expand et Collapse le cliquent au besoin.</summary>
-        Private NotInheritable Class PairDuBoutonDeRepli
-            Inherits ButtonAutomationPeer
-            Implements IExpandCollapseProvider
+    End Class
 
-            Public Sub New(bouton As BoutonDeRepli)
-                MyBase.New(bouton)
-            End Sub
+    ''' <summary>
+    ''' La languette du Triptych : un bouton de WPF (son style est celui de la languette, pas celui des boutons de mkm) qui
+    ''' se dit « développé » ou « réduit » comme <see cref="BoutonDeRepli"/>.
+    ''' </summary>
+    Friend NotInheritable Class LanguetteDeRepli
+        Inherits System.Windows.Controls.Button
 
-            Private ReadOnly Property Bouton As BoutonDeRepli
-                Get
-                    Return DirectCast(Owner, BoutonDeRepli)
-                End Get
-            End Property
+        Public Shared ReadOnly IsCollapsedProperty As DependencyProperty = DependencyProperty.Register(
+            NameOf(IsCollapsed), GetType(Boolean), GetType(LanguetteDeRepli), New FrameworkPropertyMetadata(False, AddressOf OnIsCollapsedChanged))
 
-            Protected Overrides Function GetNameCore() As String
-                Dim nom = MyBase.GetNameCore()
-                Return If(String.IsNullOrEmpty(nom), InfoBulle(Owner), nom)
-            End Function
+        ''' <summary>Vrai quand le panneau est replié ou fermé.</summary>
+        Public Property IsCollapsed As Boolean
+            Get
+                Return CBool(GetValue(IsCollapsedProperty))
+            End Get
+            Set(value As Boolean)
+                SetValue(IsCollapsedProperty, value)
+            End Set
+        End Property
 
-            Protected Overrides Function GetClassNameCore() As String
-                Return NameOf(Button)
-            End Function
+        Protected Overrides Function OnCreateAutomationPeer() As AutomationPeer
+            Return New PairDeRepli(Me, Function() IsCollapsed)
+        End Function
 
-            Public Overrides Function GetPattern(patternInterface As PatternInterface) As Object
-                If patternInterface = PatternInterface.ExpandCollapse Then Return Me
-                Return MyBase.GetPattern(patternInterface)
-            End Function
+        Private Shared Sub OnIsCollapsedChanged(d As DependencyObject, e As DependencyPropertyChangedEventArgs)
+            PairDeRepli.Annoncer(DirectCast(d, UIElement), CBool(e.OldValue), CBool(e.NewValue))
+        End Sub
 
-            Public ReadOnly Property ExpandCollapseState As ExpandCollapseState Implements IExpandCollapseProvider.ExpandCollapseState
-                Get
-                    Return If(Bouton.IsCollapsed, ExpandCollapseState.Collapsed, ExpandCollapseState.Expanded)
-                End Get
-            End Property
+    End Class
 
-            ' Le clic, levé tout de suite (Invoke le différerait) : le panneau, qui l'écoute, change d'état.
-            Public Sub Expand() Implements IExpandCollapseProvider.Expand
-                If Not IsEnabled() Then Throw New ElementNotEnabledException()
-                If Bouton.IsCollapsed Then Bouton.RaiseEvent(New RoutedEventArgs(System.Windows.Controls.Primitives.ButtonBase.ClickEvent, Bouton))
-            End Sub
+    ''' <summary>Un bouton qui déplie et replie (ExpandCollapse) ; Expand et Collapse le cliquent au besoin.</summary>
+    Friend NotInheritable Class PairDeRepli
+        Inherits ButtonAutomationPeer
+        Implements IExpandCollapseProvider
 
-            Public Sub Collapse() Implements IExpandCollapseProvider.Collapse
-                If Not IsEnabled() Then Throw New ElementNotEnabledException()
-                If Not Bouton.IsCollapsed Then Bouton.RaiseEvent(New RoutedEventArgs(System.Windows.Controls.Primitives.ButtonBase.ClickEvent, Bouton))
-            End Sub
+        Private ReadOnly _estReplie As Func(Of Boolean)
 
-        End Class
+        Public Sub New(bouton As System.Windows.Controls.Button, estReplie As Func(Of Boolean))
+            MyBase.New(bouton)
+            _estReplie = estReplie
+        End Sub
+
+        ''' <summary>Dit aux lecteurs d'écran que l'état du bouton a changé.</summary>
+        Public Shared Sub Annoncer(bouton As UIElement, replieAvant As Boolean, replie As Boolean)
+            If Not AutomationPeer.ListenerExists(AutomationEvents.PropertyChanged) Then Return
+            Dim pair = UIElementAutomationPeer.FromElement(bouton)
+            pair?.RaisePropertyChangedEvent(ExpandCollapsePatternIdentifiers.ExpandCollapseStateProperty,
+                                            If(replieAvant, ExpandCollapseState.Collapsed, ExpandCollapseState.Expanded),
+                                            If(replie, ExpandCollapseState.Collapsed, ExpandCollapseState.Expanded))
+        End Sub
+
+        Protected Overrides Function GetNameCore() As String
+            Dim nom = MyBase.GetNameCore()
+            Return If(String.IsNullOrEmpty(nom), InfoBulle(Owner), nom)
+        End Function
+
+        Protected Overrides Function GetClassNameCore() As String
+            Return NameOf(Button)
+        End Function
+
+        Public Overrides Function GetPattern(patternInterface As PatternInterface) As Object
+            If patternInterface = PatternInterface.ExpandCollapse Then Return Me
+            Return MyBase.GetPattern(patternInterface)
+        End Function
+
+        Public ReadOnly Property ExpandCollapseState As ExpandCollapseState Implements IExpandCollapseProvider.ExpandCollapseState
+            Get
+                Return If(_estReplie(), ExpandCollapseState.Collapsed, ExpandCollapseState.Expanded)
+            End Get
+        End Property
+
+        ' Le clic, levé tout de suite (Invoke le différerait) : le panneau, qui l'écoute, change d'état.
+        Public Sub Expand() Implements IExpandCollapseProvider.Expand
+            If Not IsEnabled() Then Throw New ElementNotEnabledException()
+            If _estReplie() Then Cliquer()
+        End Sub
+
+        Public Sub Collapse() Implements IExpandCollapseProvider.Collapse
+            If Not IsEnabled() Then Throw New ElementNotEnabledException()
+            If Not _estReplie() Then Cliquer()
+        End Sub
+
+        Private Sub Cliquer()
+            Owner.RaiseEvent(New RoutedEventArgs(System.Windows.Controls.Primitives.ButtonBase.ClickEvent, Owner))
+        End Sub
 
     End Class
 

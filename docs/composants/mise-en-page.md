@@ -89,7 +89,8 @@ faire quand un panneau n'a rien à montrer.
   `LeftCollapsed`, `LeftSize`, `LeftCollapsedSize`, `LeftMinSize`, `RightSize`,
   `RightMinSize`, `LeftResizable`, `RightResizable`, `Step`,
   `ShowLeftCloseIcon`, `ShowRightCloseIcon`, `ShowLeftToggle`, `Breakpoint`,
-  `OverlaySize`, `Dismissable`, `CloseOnEscape`, `Modal`, `IsOverlay`,
+  `OverlaySize`, `Dismissable`, `CloseOnEscape`, `Modal`, `LeftAutomationName`,
+  `RightAutomationName`, `IsOverlay`,
   `IsLeftExpanded`, `LeftPixels`, `RightPixels` ; `Show`, `Hide`, `Toggle`
   (`TriptychSide`), `GetMaxSize` ; les événements `ModeChange`, `ResizeEnd`.
 - **WelcomePanel :** `Title`, `Description`, `Header`, `Footer`, `Selection`,

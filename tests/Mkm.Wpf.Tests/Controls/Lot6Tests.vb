@@ -243,6 +243,44 @@ Namespace Mkm.Wpf.Tests.Controls
             Assert.That(t.IsLeftExpanded, [Is].False)
         End Sub
 
+        <Test>
+        Public Sub Triptych_PourLesLecteursDEcran()
+            Dim t = MiseEnPage()
+            t.ShowLeftToggle = True
+            t.RightVisible = True
+            t.LeftAutomationName = "Navigation"
+            t.RightAutomationName = "Propriétés"
+            Pret(t)
+
+            Dim gauche = UIElementAutomationPeer.CreatePeerForElement(Partie(Of UIElement)(t, "PART_Left"))
+            Assert.That(gauche.GetName(), [Is].EqualTo("Navigation"), "une région nommée")
+            Assert.That(UIElementAutomationPeer.CreatePeerForElement(Partie(Of UIElement)(t, "PART_Right")).GetName(), [Is].EqualTo("Propriétés"))
+
+            ' La poignée : un séparateur vertical dont la valeur est la largeur du panneau.
+            Dim poignee = UIElementAutomationPeer.CreatePeerForElement(Partie(Of UIElement)(t, "PART_RightGutter"))
+            Assert.That(poignee.GetOrientation(), [Is].EqualTo(AutomationOrientation.Vertical))
+            Dim largeur = DirectCast(poignee.GetPattern(PatternInterface.RangeValue), IRangeValueProvider)
+            Assert.That(largeur.Value, [Is].EqualTo(300))
+            Assert.That(largeur.Minimum, [Is].EqualTo(250))
+            Assert.That(largeur.Maximum, [Is].EqualTo(t.GetMaxSize(TriptychSide.Right)))
+            Dim finies = 0
+            AddHandler t.ResizeEnd, Sub(s, e) finies += 1
+            largeur.SetValue(400)
+            Assert.That(t.RightSize, [Is].EqualTo(400))
+            Assert.That(finies, [Is].EqualTo(1))
+
+            ' La languette : fermé, le panneau de gauche est « réduit » ; Expand l'ouvre.
+            Dim languette = DirectCast(UIElementAutomationPeer.CreatePeerForElement(Partie(Of UIElement)(t, "PART_LeftToggle")).
+                GetPattern(PatternInterface.ExpandCollapse), IExpandCollapseProvider)
+            Assert.That(languette.ExpandCollapseState, [Is].EqualTo(System.Windows.Automation.ExpandCollapseState.Collapsed))
+            languette.Expand()
+            Assert.That(t.LeftVisible, [Is].True)
+            Assert.That(languette.ExpandCollapseState, [Is].EqualTo(System.Windows.Automation.ExpandCollapseState.Expanded))
+            languette.Collapse()
+            Assert.That(t.LeftCollapsed, [Is].True, "replié en sa bande")
+            Assert.That(languette.ExpandCollapseState, [Is].EqualTo(System.Windows.Automation.ExpandCollapseState.Collapsed))
+        End Sub
+
     End Class
 
 End Namespace

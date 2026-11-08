@@ -118,6 +118,34 @@ Namespace Mkm.Wpf.Controls
         ''' <summary>Vrai (par défaut) si Échap ferme le panneau ouvert en superposition.</summary>
         Public Shared ReadOnly CloseOnEscapeProperty As DependencyProperty = Registre(NameOf(CloseOnEscape), GetType(Boolean), True)
 
+        ''' <summary>Le nom du panneau de gauche pour les lecteurs d'écran (le <c>leftAriaLabel</c> de mkm).</summary>
+        Public Shared ReadOnly LeftAutomationNameProperty As DependencyProperty = DependencyProperty.Register(
+            NameOf(LeftAutomationName), GetType(String), GetType(Triptych), New FrameworkPropertyMetadata(Nothing))
+
+        ''' <summary>Le nom du panneau de droite pour les lecteurs d'écran (le <c>rightAriaLabel</c> de mkm).</summary>
+        Public Shared ReadOnly RightAutomationNameProperty As DependencyProperty = DependencyProperty.Register(
+            NameOf(RightAutomationName), GetType(String), GetType(Triptych), New FrameworkPropertyMetadata(Nothing))
+
+        ''' <summary>Le nom du panneau de gauche pour les lecteurs d'écran (une région nommée, comme l'<c>aside</c> de mkm).</summary>
+        Public Property LeftAutomationName As String
+            Get
+                Return CStr(GetValue(LeftAutomationNameProperty))
+            End Get
+            Set(value As String)
+                SetValue(LeftAutomationNameProperty, value)
+            End Set
+        End Property
+
+        ''' <summary>Le nom du panneau de droite pour les lecteurs d'écran.</summary>
+        Public Property RightAutomationName As String
+            Get
+                Return CStr(GetValue(RightAutomationNameProperty))
+            End Get
+            Set(value As String)
+                SetValue(RightAutomationNameProperty, value)
+            End Set
+        End Property
+
         ''' <summary>Vrai si le panneau de droite ouvert couvre d'un voile le reste de la mise en page.</summary>
         Public Shared ReadOnly ModalProperty As DependencyProperty = Registre(NameOf(Modal), GetType(Boolean), False)
 
@@ -634,12 +662,21 @@ Namespace Mkm.Wpf.Controls
 
         ''' <summary>Donne une largeur à un panneau de côté, bornée, sans glissement.</summary>
         Friend Sub Dimensionner(side As TriptychSide, taille As Double)
+            Dim avant = If(side = TriptychSide.Left, LeftPixels, RightPixels)
             _tire = True
             Try
                 SetCurrentValue(If(side = TriptychSide.Left, LeftSizeProperty, RightSizeProperty), Borner(side, taille))
             Finally
                 _tire = False
             End Try
+            Dim poignee = If(side = TriptychSide.Left, _poigneeGauche, _poigneeDroite)
+            poignee?.AnnoncerLaValeur(avant, If(side = TriptychSide.Left, LeftPixels, RightPixels))
+        End Sub
+
+        ''' <summary>Une largeur posée d'un coup (clavier, lecteur d'écran) : le panneau prend sa place, ResizeEnd suit.</summary>
+        Friend Sub Redimensionner(side As TriptychSide, taille As Double)
+            Dimensionner(side, taille)
+            RaiseEvent ResizeEnd(Me, EventArgs.Empty)
         End Sub
 
         Private Sub OnTirageCommence(sender As Object, e As DragStartedEventArgs)
@@ -682,9 +719,8 @@ Namespace Mkm.Wpf.Controls
                 Case Else
                     Return
             End Select
-            Dimensionner(poignee.Side, taille)
+            Redimensionner(poignee.Side, taille)
             e.Handled = True
-            RaiseEvent ResizeEnd(Me, EventArgs.Empty)
         End Sub
 
         ' La languette : fermé, le panneau de gauche s'ouvre ; en superposition, il se ferme ; sinon, il se replie ou se déplie.
@@ -765,6 +801,117 @@ Namespace Mkm.Wpf.Controls
             MyBase.OnLostKeyboardFocus(e)
             SetValue(IsFocusVisiblePropertyKey, False)
         End Sub
+
+        ''' <summary>
+        ''' Un séparateur vertical pour les lecteurs d'écran (le <c>separator</c> de mkm) : sa valeur est la largeur du panneau,
+        ''' entre sa largeur minimale et sa largeur maximale.
+        ''' </summary>
+        Protected Overrides Function OnCreateAutomationPeer() As System.Windows.Automation.Peers.AutomationPeer
+            Return New PairDePoignee(Me)
+        End Function
+
+        Friend ReadOnly Property Mise As Triptych
+            Get
+                Return TryCast(TemplatedParent, Triptych)
+            End Get
+        End Property
+
+        ''' <summary>Dit aux lecteurs d'écran la nouvelle largeur du panneau.</summary>
+        Friend Sub AnnoncerLaValeur(avant As Double, apres As Double)
+            If avant = apres OrElse Not System.Windows.Automation.Peers.AutomationPeer.ListenerExists(
+                System.Windows.Automation.Peers.AutomationEvents.PropertyChanged) Then Return
+            System.Windows.Automation.Peers.UIElementAutomationPeer.FromElement(Me)?.RaisePropertyChangedEvent(
+                System.Windows.Automation.RangeValuePatternIdentifiers.ValueProperty, avant, apres)
+        End Sub
+
+        Private NotInheritable Class PairDePoignee
+            Inherits System.Windows.Automation.Peers.ThumbAutomationPeer
+            Implements System.Windows.Automation.Provider.IRangeValueProvider
+
+            Public Sub New(poignee As TriptychGutter)
+                MyBase.New(poignee)
+            End Sub
+
+            Private ReadOnly Property Poignee As TriptychGutter
+                Get
+                    Return DirectCast(Owner, TriptychGutter)
+                End Get
+            End Property
+
+            Protected Overrides Function GetOrientationCore() As System.Windows.Automation.Peers.AutomationOrientation
+                Return System.Windows.Automation.Peers.AutomationOrientation.Vertical
+            End Function
+
+            Protected Overrides Function IsKeyboardFocusableCore() As Boolean
+                Return Owner.Focusable AndAlso Owner.IsEnabled
+            End Function
+
+            Public Overrides Function GetPattern(patternInterface As System.Windows.Automation.Peers.PatternInterface) As Object
+                If patternInterface = System.Windows.Automation.Peers.PatternInterface.RangeValue AndAlso Poignee.Mise IsNot Nothing Then Return Me
+                Return MyBase.GetPattern(patternInterface)
+            End Function
+
+            Public ReadOnly Property Value As Double Implements System.Windows.Automation.Provider.IRangeValueProvider.Value
+                Get
+                    Dim m = Poignee.Mise
+                    Return If(m Is Nothing, 0, If(Poignee.Side = TriptychSide.Left, m.LeftPixels, m.RightPixels))
+                End Get
+            End Property
+
+            Public ReadOnly Property Minimum As Double Implements System.Windows.Automation.Provider.IRangeValueProvider.Minimum
+                Get
+                    Dim m = Poignee.Mise
+                    Return If(m Is Nothing, 0, If(Poignee.Side = TriptychSide.Left, m.LeftMinSize, m.RightMinSize))
+                End Get
+            End Property
+
+            Public ReadOnly Property Maximum As Double Implements System.Windows.Automation.Provider.IRangeValueProvider.Maximum
+                Get
+                    Dim m = Poignee.Mise
+                    Return If(m Is Nothing, 0, m.GetMaxSize(Poignee.Side))
+                End Get
+            End Property
+
+            Public ReadOnly Property SmallChange As Double Implements System.Windows.Automation.Provider.IRangeValueProvider.SmallChange
+                Get
+                    Dim m = Poignee.Mise
+                    Return If(m Is Nothing, 0, m.[Step])
+                End Get
+            End Property
+
+            Public ReadOnly Property LargeChange As Double Implements System.Windows.Automation.Provider.IRangeValueProvider.LargeChange
+                Get
+                    Return SmallChange
+                End Get
+            End Property
+
+            Public ReadOnly Property IsReadOnly As Boolean Implements System.Windows.Automation.Provider.IRangeValueProvider.IsReadOnly
+                Get
+                    Return Not Owner.IsEnabled
+                End Get
+            End Property
+
+            Public Sub SetValue(value As Double) Implements System.Windows.Automation.Provider.IRangeValueProvider.SetValue
+                If Not IsEnabled() Then Throw New System.Windows.Automation.ElementNotEnabledException()
+                Dim m = Poignee.Mise
+                If m Is Nothing Then Return
+                m.Redimensionner(Poignee.Side, value)
+            End Sub
+
+        End Class
+
+    End Class
+
+    ''' <summary>
+    ''' Un panneau de côté d'un <see cref="Triptych"/> pour les lecteurs d'écran : une région nommée par
+    ''' <see cref="Triptych.LeftAutomationName"/> ou <see cref="Triptych.RightAutomationName"/> (l'<c>aside</c> de mkm).
+    ''' </summary>
+    Friend NotInheritable Class ZoneDeTriptych
+        Inherits Border
+
+        Protected Overrides Function OnCreateAutomationPeer() As System.Windows.Automation.Peers.AutomationPeer
+            Return New PairDeConteneur(Me, System.Windows.Automation.Peers.AutomationControlType.Pane)
+        End Function
 
     End Class
 

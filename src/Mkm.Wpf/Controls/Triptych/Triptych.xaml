@@ -94,18 +94,19 @@
                                         BorderBrush="{DynamicResource mkm.triptych.toggle.border.color}"
                                         BorderThickness="{DynamicResource mkm.triptych.toggle.border.width}"
                                         CornerRadius="{DynamicResource mkm.triptych.toggle.border.radius}">
-                                    <Button x:Name="PART_LeftToggle" Style="{StaticResource mkm.Triptych.Languette}"
-                                            AutomationProperties.Name="{loc:T aria.togglePanel}">
+                                    <local:LanguetteDeRepli x:Name="PART_LeftToggle" Style="{StaticResource mkm.Triptych.Languette}"
+                                            IsCollapsed="True" AutomationProperties.Name="{loc:T aria.togglePanel}">
                                         <local:Icon x:Name="Fleche" Source="{x:Static local:InternalIcons.ChevronRight}"
                                                     Width="{DynamicResource mkm.triptych.toggle.icon.width}"
                                                     Height="{DynamicResource mkm.triptych.toggle.icon.height}" />
-                                    </Button>
+                                    </local:LanguetteDeRepli>
                                 </Border>
                             </Grid>
                         </Border>
                         <Border x:Name="PART_Mask" Panel.ZIndex="15" Visibility="Collapsed" />
                         <!-- Le panneau de gauche. -->
-                        <Border x:Name="PART_Left" Panel.ZIndex="20" HorizontalAlignment="Left" Width="0" ClipToBounds="True"
+                        <local:ZoneDeTriptych x:Name="PART_Left" Panel.ZIndex="20" HorizontalAlignment="Left" Width="0" ClipToBounds="True"
+                                AutomationProperties.Name="{TemplateBinding LeftAutomationName}"
                                 Background="{DynamicResource mkm.triptych.left.background}"
                                 TextElement.Foreground="{DynamicResource mkm.triptych.left.color}">
                             <Grid>
@@ -118,9 +119,10 @@
                                               Icon="{x:Static local:InternalIcons.Times}"
                                               AutomationProperties.Name="{loc:T aria.close}" />
                             </Grid>
-                        </Border>
+                        </local:ZoneDeTriptych>
                         <!-- Le panneau de droite. -->
-                        <Border x:Name="PART_Right" Panel.ZIndex="20" HorizontalAlignment="Right" Width="0" ClipToBounds="True"
+                        <local:ZoneDeTriptych x:Name="PART_Right" Panel.ZIndex="20" HorizontalAlignment="Right" Width="0" ClipToBounds="True"
+                                AutomationProperties.Name="{TemplateBinding RightAutomationName}"
                                 Background="{DynamicResource mkm.triptych.right.background}"
                                 BorderBrush="{DynamicResource mkm.triptych.right.border.color}"
                                 TextElement.Foreground="{DynamicResource mkm.triptych.right.color}">
@@ -132,7 +134,7 @@
                                               Icon="{x:Static local:InternalIcons.Times}"
                                               AutomationProperties.Name="{loc:T aria.close}" />
                             </Grid>
-                        </Border>
+                        </local:ZoneDeTriptych>
                         <local:TriptychGutter x:Name="PART_LeftGutter" HorizontalAlignment="Left" Visibility="Collapsed" />
                         <local:TriptychGutter x:Name="PART_RightGutter" HorizontalAlignment="Right" Visibility="Collapsed" />
                     </Grid>
@@ -146,6 +148,7 @@
                         </Trigger>
                         <Trigger Property="IsLeftExpanded" Value="True">
                             <Setter TargetName="Fleche" Property="Source" Value="{x:Static local:InternalIcons.ChevronLeft}" />
+                            <Setter TargetName="PART_LeftToggle" Property="IsCollapsed" Value="False" />
                         </Trigger>
                         <Trigger Property="ShowLeftCloseIcon" Value="True">
                             <Setter TargetName="PART_LeftClose" Property="Visibility" Value="Visible" />

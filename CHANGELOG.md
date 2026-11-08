@@ -350,6 +350,13 @@ Les évolutions notables de mkm-wpf, version par version. Le format suit
   - InputOtp, ColorPicker, Terminal, Password : la langue n'est suivie que
     tant que le contrôle est chargé (l'abonnement à vie le gardait en
     mémoire).
+  - Triptych : ses panneaux de côté sont des régions que nomment
+    LeftAutomationName et RightAutomationName (le leftAriaLabel et le
+    rightAriaLabel de mkm) ; chaque poignée est un séparateur vertical dont la
+    valeur est la largeur du panneau ; la languette se dit développée ou
+    réduite.
+  - InputGroup : un Select perd bien ses coins du côté de son voisin (il
+    passait pour un champ à coins propres).
 - Avatar et Chip : leur image est peinte par le code ; liée dans le gabarit,
   elle faisait écrire à WPF une erreur de liaison (sans effet visible).
 - Galleria : une vignette pâlie s'éclaire sous la souris, comme mkm.
