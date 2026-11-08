@@ -1,5 +1,5 @@
 <!--
-    La fenêtre de la documentation de mkm-wpf, sur le modèle d'ui-kit : sa barre (le nom, le thème, la langue), le menu
+    La fenêtre de la documentation de mkm-wpf, sur le modèle d'ui-kit : sa barre (le nom, le thème, la langue, le zoom), le menu
     des pages à gauche, rangées par catégorie, avec sa recherche ; la page choisie à droite (Documentation/), les
     notifications au-dessus (Toast). Les couleurs, la police et les tailles viennent du thème (mkm.<chemin>).
 -->
@@ -17,10 +17,14 @@
         FontSize="{DynamicResource mkm.font.size}">
     <Grid>
         <DockPanel>
-            <Border DockPanel.Dock="Top" Padding="16,8"
+            <Border x:Name="Barre" DockPanel.Dock="Top" Padding="16,8"
                     BorderBrush="{DynamicResource mkm.content.border.color}" BorderThickness="0,0,0,1">
                 <DockPanel>
-                    <StackPanel DockPanel.Dock="Right" Orientation="Horizontal">
+                    <!-- Fenêtre étroite (un fort zoom) : le menu des pages s'ouvre par ce bouton, par-dessus la page. -->
+                    <mkm:Button x:Name="BoutonPages" DockPanel.Dock="Left" Visibility="Collapsed" Margin="0,0,12,0"
+                                Icon="{x:Static mkm:Icons.Menu}" Variant="Text" Severity="Secondary"
+                                ToolTip="Pages de la documentation" Click="BoutonPages_Click" />
+                    <StackPanel x:Name="Reglages" DockPanel.Dock="Right" Orientation="Horizontal">
                         <TextBlock Margin="0,0,8,0" VerticalAlignment="Center" Text="{mkm:T showcase.theme}" />
                         <!-- Les thèmes connus ; en choisir un change toute l'apparence, à chaud. -->
                         <ComboBox x:Name="ChoixDuTheme" MinWidth="120" Margin="0,0,16,0"
@@ -38,14 +42,19 @@
                         <ComboBox x:Name="ChoixDuZoom" MinWidth="80" AutomationProperties.Name="{mkm:T showcase.zoom}"
                                   SelectionChanged="ChoixDuZoom_SelectionChanged" />
                     </StackPanel>
-                    <StackPanel Orientation="Horizontal" VerticalAlignment="Center">
-                        <TextBlock FontSize="18" FontWeight="Bold" Foreground="{DynamicResource mkm.primary.color}" Text="mkm-wpf" />
+                    <DockPanel VerticalAlignment="Center">
+                        <TextBlock DockPanel.Dock="Left" FontSize="18" FontWeight="Bold" Foreground="{DynamicResource mkm.primary.color}" Text="mkm-wpf" />
                         <TextBlock Margin="10,0,0,0" VerticalAlignment="Bottom" Foreground="{DynamicResource mkm.text.muted.color}"
-                                   Text="Documentation des composants WPF de mkm" />
-                    </StackPanel>
+                                   TextTrimming="CharacterEllipsis" Text="Documentation des composants WPF de mkm" />
+                    </DockPanel>
                 </DockPanel>
             </Border>
-            <Border DockPanel.Dock="Left" Width="250"
+            <Grid x:Name="Corps" SizeChanged="Corps_SizeChanged">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition x:Name="ColonneDuMenu" Width="250" />
+                    <ColumnDefinition Width="*" />
+                </Grid.ColumnDefinitions>
+            <Border x:Name="Menu" Background="{DynamicResource mkm.content.background}"
                     BorderBrush="{DynamicResource mkm.content.border.color}" BorderThickness="0,0,1,0">
                 <DockPanel Margin="12">
                     <mkm:InputText x:Name="Recherche" DockPanel.Dock="Top" Margin="0,0,0,12"
@@ -78,7 +87,8 @@
                     </ListBox>
                 </DockPanel>
             </Border>
-            <ContentControl x:Name="Page" Focusable="False" />
+            <ContentControl x:Name="Page" Grid.Column="1" Focusable="False" />
+            </Grid>
         </DockPanel>
         <!-- Les notifications, au-dessus de tout, en haut à droite. -->
         <mkm:Toast x:Name="Notifications" HighlightDuration="0:0:1" FadeOutDuration="0:0:1" />

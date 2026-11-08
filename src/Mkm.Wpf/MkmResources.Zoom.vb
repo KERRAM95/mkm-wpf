@@ -170,7 +170,7 @@ Namespace Mkm.Wpf
         ' Le zoom changé : chaque fenêtre ouverte le prend.
         Friend Shared Sub Appliquer(facteur As Double)
             For Each fenetre In Fenetres()
-                Agrandir(RacineDe(fenetre), facteur)
+                Agrandir(fenetre, facteur)
             Next
         End Sub
 
@@ -191,28 +191,33 @@ Namespace Mkm.Wpf
             Return TryCast(VisualTreeHelper.GetChild(fenetre, 0), FrameworkElement)
         End Function
 
-        ''' <summary>Met un élément à l'échelle du zoom, son texte dans le mode qui reste net ; à 1, le rend tel quel.</summary>
-        Friend Shared Sub Agrandir(element As FrameworkElement, facteur As Double)
+        ''' <summary>
+        ''' Met une fenêtre à l'échelle du zoom : sa racine, et son texte dans le mode qui reste net, posé sur la fenêtre
+        ''' elle-même (son contenu hérite de la fenêtre, son parent logique, et non de la racine de son gabarit) ; à 1, la
+        ''' rend telle quelle.
+        ''' </summary>
+        Friend Shared Sub Agrandir(fenetre As Window, facteur As Double)
+            Dim element = RacineDe(fenetre)
             If element Is Nothing Then Return
             If Math.Abs(facteur - 1.0) < 0.001 Then
                 If CBool(element.GetValue(ZoomeeProperty)) Then
                     element.ClearValue(FrameworkElement.LayoutTransformProperty)
                     element.ClearValue(ZoomeeProperty)
                 End If
-                element.ClearValue(TextOptions.TextFormattingModeProperty)
+                fenetre.ClearValue(TextOptions.TextFormattingModeProperty)
                 Return
             End If
             Dim echelle As New ScaleTransform(facteur, facteur)
             echelle.Freeze()
             element.LayoutTransform = echelle
             element.SetValue(ZoomeeProperty, True)
-            element.SetValue(TextOptions.TextFormattingModeProperty, TextFormattingMode.Ideal)
+            fenetre.SetValue(TextOptions.TextFormattingModeProperty, TextFormattingMode.Ideal)
         End Sub
 
         Private Shared Sub FenetreChargee(sender As Object, e As RoutedEventArgs)
             Dim fenetre = DirectCast(sender, Window)
             If Not Fenetres().Contains(fenetre) Then _fenetres.Add(New WeakReference(Of Window)(fenetre))
-            If Math.Abs(Zoom - 1.0) >= 0.001 Then Agrandir(RacineDe(fenetre), Zoom)
+            If Math.Abs(Zoom - 1.0) >= 0.001 Then Agrandir(fenetre, Zoom)
         End Sub
 
         ' Un menu ou une info-bulle sans parent n'hérite pas du mode du texte de la fenêtre : il le prend à l'ouverture.

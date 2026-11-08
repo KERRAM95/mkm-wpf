@@ -71,10 +71,41 @@ Namespace Mkm.Wpf.Showcase
             Composants.ScrollIntoView(entree)
         End Sub
 
-        ' La page de l'entrée choisie.
+        ' La page de l'entrée choisie ; dans une fenêtre étroite, le menu se referme sur elle.
         Private Sub Composants_SelectionChanged(sender As Object, e As SelectionChangedEventArgs)
             Dim entree = TryCast(Composants.SelectedItem, EntreeDeMenu)
             If entree IsNot Nothing Then Page.Content = New PageDeDocumentation(Catalogue.Trouver(entree.Id))
+            If _etroite Then Menu.Visibility = Visibility.Collapsed
+        End Sub
+
+        ' Sous 600 px de large (un fort zoom : 1 024 px à 200 %), le menu des pages laisse la place à la page : il
+        ' s'ouvre par le bouton de la barre, par-dessus elle. La barre passe ses réglages à la ligne quand ils ne
+        ' tiennent plus à côté du titre.
+        Private Const LargeurEtroite As Double = 600
+        Private _etroite As Boolean
+
+        Private Sub Corps_SizeChanged(sender As Object, e As SizeChangedEventArgs)
+            Dim etroite = Corps.ActualWidth < LargeurEtroite
+            If etroite <> _etroite OrElse e.PreviousSize.Width = 0 Then
+                _etroite = etroite
+                ColonneDuMenu.Width = If(etroite, New GridLength(0), New GridLength(250))
+                Grid.SetColumnSpan(Menu, If(etroite, 2, 1))
+                Menu.Width = If(etroite, 250, Double.NaN)
+                Menu.HorizontalAlignment = If(etroite, HorizontalAlignment.Left, HorizontalAlignment.Stretch)
+                Panel.SetZIndex(Menu, If(etroite, 1, 0))
+                Menu.Visibility = If(etroite, Visibility.Collapsed, Visibility.Visible)
+                Grid.SetColumn(Page, If(etroite, 0, 1))
+                Grid.SetColumnSpan(Page, If(etroite, 2, 1))
+                BoutonPages.Visibility = If(etroite, Visibility.Visible, Visibility.Collapsed)
+            End If
+            Reglages.Measure(New Size(Double.PositiveInfinity, Double.PositiveInfinity))
+            Dim aLaLigne = Reglages.DesiredSize.Width + 140 > Barre.ActualWidth - Barre.Padding.Left - Barre.Padding.Right
+            DockPanel.SetDock(Reglages, If(aLaLigne, Dock.Bottom, Dock.Right))
+            Reglages.Margin = If(aLaLigne, New Thickness(0, 8, 0, 0), New Thickness())
+        End Sub
+
+        Private Sub BoutonPages_Click(sender As Object, e As RoutedEventArgs)
+            Menu.Visibility = If(Menu.Visibility = Visibility.Visible, Visibility.Collapsed, Visibility.Visible)
         End Sub
 
         ' La recherche garde les entrées dont le titre contient le texte, accents et majuscules confondus.
