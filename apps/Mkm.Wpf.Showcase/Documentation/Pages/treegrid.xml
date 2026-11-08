@@ -96,7 +96,8 @@
       ou « Replier » selon son état.</p>
     <h3>Clavier</h3>
     <touches>
-      <touche nom="Tab">Amène le clavier dans la grille, puis hors de la grille.</touche>
+      <touche nom="Tab">Amène le clavier sur les titres triables, puis dans la grille, puis hors de la grille.</touche>
+      <touche nom="Entrée, Espace">Sur un titre triable, le trie.</touche>
       <touche nom="Flèche bas, flèche haut">Passent à la ligne suivante ou précédente ; la sélection suit.</touche>
       <touche nom="Flèche droite">Déplie le nœud replié, puis descend à son premier enfant.</touche>
       <touche nom="Flèche gauche">Replie le nœud déplié, puis remonte à son parent.</touche>

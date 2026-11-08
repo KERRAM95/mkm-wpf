@@ -298,6 +298,8 @@ Les évolutions notables de mkm-wpf, version par version. Le format suit
     invisibles, les barres ne prennent plus le clic destiné au contenu.
   - PropertyPanel : les flèches, Début et Fin passent d'un en-tête de section
     à l'autre, comme mkm ; l'en-tête se dit développé ou réduit.
+  - DataTable, TreeGrid : un titre triable prend le clavier (anneau du
+    clavier) ; Entrée ou Espace le trient, comme mkm.
   - InputOtp, ColorPicker, Terminal, Password : la langue n'est suivie que
     tant que le contrôle est chargé (l'abonnement à vie le gardait en
     mémoire).

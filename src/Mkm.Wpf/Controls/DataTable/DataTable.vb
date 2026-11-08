@@ -95,6 +95,16 @@ Namespace Mkm.Wpf.Controls
         Public Sub New()
             AddHandler Columns.CollectionChanged, Sub(s, e) HabillerLesCases()
             AddHandler Loaded, Sub() HabillerLesCases()
+            AddHandler PreviewKeyDown, AddressOf Titre_PreviewKeyDown
+        End Sub
+
+        ' Entrée ou Espace sur un titre triable le trient, comme un clic (mkm) ; Maj garde les autres tris.
+        Private Sub Titre_PreviewKeyDown(sender As Object, e As System.Windows.Input.KeyEventArgs)
+            If e.Key <> System.Windows.Input.Key.Enter AndAlso e.Key <> System.Windows.Input.Key.Space Then Return
+            Dim titre = TryCast(e.OriginalSource, System.Windows.Controls.Primitives.DataGridColumnHeader)
+            If titre Is Nothing OrElse titre.Column Is Nothing OrElse Not titre.Column.CanUserSort Then Return
+            OnSorting(New DataGridSortingEventArgs(titre.Column))
+            e.Handled = True
         End Sub
 
         ' La case d'une cellule nommée par l'en-tête de sa colonne : un lecteur d'écran dit « Active, cochée ».

@@ -41,6 +41,7 @@
         <Setter Property="HorizontalContentAlignment" Value="Left" />
         <Setter Property="VerticalContentAlignment" Value="Center" />
         <Setter Property="SnapsToDevicePixels" Value="True" />
+        <Setter Property="FocusVisualStyle" Value="{x:Null}" />
         <Setter Property="Template">
             <Setter.Value>
                 <ControlTemplate TargetType="{x:Type DataGridColumnHeader}">
@@ -65,6 +66,10 @@
                                             Source="{x:Static local:InternalIcons.SortAlt}" />
                             </StackPanel>
                         </Border>
+                        <!-- L'anneau du clavier, en dedans d'un pixel (header.cell.focus.ring.offset, -1px). -->
+                        <Rectangle x:Name="Anneau" Visibility="Collapsed" IsHitTestVisible="False"
+                                   Stroke="{DynamicResource mkm.datatable.header.cell.focus.ring.color}"
+                                   StrokeThickness="{DynamicResource mkm.datatable.header.cell.focus.ring.width}" />
                         <Thumb x:Name="PART_LeftHeaderGripper" HorizontalAlignment="Left" Margin="-4,0,0,0" Style="{StaticResource MkmDataTablePoignee}" />
                         <Thumb x:Name="PART_RightHeaderGripper" HorizontalAlignment="Right" Margin="0,0,-4,0" Style="{StaticResource MkmDataTablePoignee}" />
                     </Grid>
@@ -74,6 +79,11 @@
                         </Trigger>
                         <Trigger Property="CanUserSort" Value="True">
                             <Setter TargetName="Tri" Property="Visibility" Value="Visible" />
+                            <!-- Un titre triable prend le clavier (Tab), comme mkm ; Entrée ou Espace le trient. -->
+                            <Setter Property="Focusable" Value="True" />
+                        </Trigger>
+                        <Trigger Property="local:FocusVisible.IsVisible" Value="True">
+                            <Setter TargetName="Anneau" Property="Visibility" Value="Visible" />
                         </Trigger>
                         <MultiTrigger>
                             <MultiTrigger.Conditions>

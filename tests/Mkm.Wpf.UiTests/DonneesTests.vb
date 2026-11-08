@@ -38,6 +38,9 @@ Namespace Mkm.Wpf.UiTests
             Cliquer(entete)
             AttendreQue(Function() Cellule(variables, 0, 0) = "HSCART_TENANT", "triée de Z à A : « HSCART_TENANT » en tête")
             Assert.That(String.Compare(Cellule(variables, 1, 0), Cellule(variables, 0, 0), StringComparison.CurrentCulture), [Is].LessThan(0))
+            ' Le titre cliqué a le clavier : Espace le trie à nouveau, comme mkm.
+            Taper(VirtualKeyShort.SPACE)
+            AttendreQue(Function() Cellule(variables, 0, 0) = "CATDLLPath", "Espace : de nouveau de A à Z")
         End Sub
 
         <Test>

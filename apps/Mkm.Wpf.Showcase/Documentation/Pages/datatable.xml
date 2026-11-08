@@ -179,7 +179,10 @@
 ]]></code>
     <h3>Clavier</h3>
     <touches>
-      <touche nom="Tab">Amène le clavier dans le tableau, sur la cellule courante, puis hors du tableau.</touche>
+      <touche nom="Tab">Amène le clavier sur les titres triables, puis dans le tableau, sur la cellule courante, puis hors du
+        tableau.</touche>
+      <touche nom="Entrée, Espace">Sur un titre triable, le trie (de A à Z, puis de Z à A) ; avec Maj, garde les autres
+        tris.</touche>
       <touche nom="Flèches">Passent d'une cellule à sa voisine ; la ligne suit.</touche>
       <touche nom="Début, Fin">Vont à la première ou à la dernière cellule de la ligne ; avec Ctrl, du tableau.</touche>
       <touche nom="Page préc., Page suiv.">Montent ou descendent d'une page.</touche>
