@@ -39,7 +39,7 @@ pourquoi. Ce qu'on reprend, et ce qu'on laisse.
 Navigation au clavier, focus visible, UI Automation, virtualisation,
 animations.
 
-## La vitrine et les tests
+## La documentation et les tests
 
-Ce que montre la page de la vitrine ; les comportements que les tests
-vérifient.
+Les sections de sa page de documentation (`apps/Mkm.Wpf.Showcase/Documentation/Pages/<id>.xml`) ;
+les comportements que les tests vérifient, et ses scénarios d'interaction.

@@ -17,20 +17,28 @@ La bibliothèque qui pilote la vitrine est [FlaUI](https://github.com/FlaUI/FlaU
 
 ## Ce qui est vérifié
 
-- **Chaque page** de la vitrine s'ouvre sans erreur.
-- **Chaque commande** d'une page (bouton, case, bouton radio, onglet, entrée de
-  menu ou de liste) a un nom pour les lecteurs d'écran.
-- **Des scénarios par composant**, par exemple :
-  - une commande de l'ActionBar cliquée s'inscrit au journal ;
-  - une commande grisée ne se lance pas ;
-  - la barre reprend sa largeur en revenant à une section courte ;
+Les tests pilotent la documentation (`Mkm.Wpf.Showcase`) : chaque composant y a
+sa page, et ses exemples vivants sont ce qu'ils manipulent.
+
+- **Chaque page** s'ouvre, avec ses onglets API et Thème ; un exemple qui ne se
+  lit pas est une erreur.
+- **Chaque commande** d'une page (bouton, case, bouton radio, onglet, lien,
+  entrée de menu ou de liste) a un nom pour les lecteurs d'écran.
+- **Des scénarios par composant**, rangés comme le menu (`FormulaireTests`,
+  `PanneauTests`, `DonneesTests`, `SuperpositionTests`, `MenuTests`,
+  `MessagesTests`), par exemple :
+  - une commande de l'ActionBar cliquée se lance ; la barre reprend sa largeur
+    en revenant à une section courte ; Début et Fin mènent aux bouts ;
   - le bouton « … » d'une Toolbar étroite ouvre les commandes qui débordent ;
   - Ctrl+L lance la commande du registre ;
+  - les flèches choisissent le bouton radio voisin ;
+  - un clic sur l'en-tête du DataTable trie dans les deux sens ;
+  - le bouton d'un nœud de la TreeGrid le replie et le déplie ;
   - le voile du BlockUI refuse le clic ;
   - Entrée accepte le dialogue de confirmation, Échap le refuse ;
   - les boutons d'un InputNumber s'arrêtent à sa borne.
-- **Aucune erreur non gérée** : la vitrine les écrit dans `erreurs.txt`, et un
-  scénario échoue si elle en a écrit une pendant qu'il tournait.
+- **Aucune erreur non gérée** : la documentation les écrit dans `erreurs.txt`,
+  et un scénario échoue si elle en a écrit une pendant qu'il tournait.
 
 ## Les lancer sur un poste Windows
 
@@ -58,11 +66,13 @@ Sur la CI, ce dossier est dans l'artefact `resultats-tests`.
 
 ## Écrire un scénario
 
-Un scénario hérite de `Scenario`. Il ouvre une page par l'étiquette de son
-entrée (`Ouvrir("Choix")`). Il trouve un élément par son `x:Name`
-(`Trouver("Verrou")`) ou par son nom (`TrouverParNom(T("showcase.actionbar.add"))`).
-Les textes viennent des fichiers `.resx` français, par leur clé : reformuler un
-libellé ne casse pas le test. Puis il agit :
+Un scénario hérite de `Scenario`. Il ouvre une page de la documentation par son
+identifiant (`OuvrirLaDoc("actionbar")`), puis un exemple par le titre de sa
+section (`Exemple(page, "commandes-fixes")`). Il y trouve un élément par son
+`x:Name` (`Trouver("Barre", cadre)`) ou par son nom, ce que lit un lecteur
+d'écran (`TrouverParNom("Ajouter", ControlType.Button, cadre)`). Les textes de
+mkm-wpf (« Fermer », « Plus de commandes ») viennent de ses fichiers `.resx`
+français, par leur clé : `T("aria.close")`. Puis il agit :
 
 - `Cliquer`, `Survoler` : à la souris ; la page défile d'abord jusqu'à l'élément ;
 - `Taper`, `Raccourci`, `Ecrire` : au clavier.
@@ -72,4 +82,4 @@ après l'action, pas pendant.
 
 Ce qu'un menu, une liste ou un dialogue ouvrent est dans une autre fenêtre :
 `TrouverAilleurs`. Un élément qu'un scénario doit retrouver reçoit un `x:Name`
-dans la page de la vitrine.
+dans l'exemple de la page (`Documentation/Pages/<id>.xml`).

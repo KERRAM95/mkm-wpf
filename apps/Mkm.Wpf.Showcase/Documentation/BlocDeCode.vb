@@ -46,7 +46,7 @@ Namespace Mkm.Wpf.Showcase.Documentation
                 .ToolTip = "Copier le code", .Width = 28, .Height = 28}
             AddHandler copier.Click, Sub()
                                          Try
-                                             Clipboard.SetText(_code)
+                                             Clipboard.SetText(_code.Replace(vbLf, vbCrLf))
                                              copier.ToolTip = "Copié"
                                          Catch ex As System.Runtime.InteropServices.ExternalException
                                              ' Le presse-papiers est pris par une autre application : on n'insiste pas.
@@ -90,7 +90,8 @@ Namespace Mkm.Wpf.Showcase.Documentation
                 lignes.RemoveAt(lignes.Count - 1)
             End While
             Dim marge = lignes.Where(Function(l) l.Trim().Length > 0).Select(Function(l) l.Length - l.TrimStart().Length).DefaultIfEmpty(0).Min()
-            Return String.Join(Environment.NewLine, lignes.Select(Function(l) If(l.Length >= marge, l.Substring(marge), l.TrimStart()).TrimEnd()))
+            ' Des fins de ligne simples : un « \r » isolé dans un Run ferait une ligne vide de plus.
+            Return String.Join(vbLf, lignes.Select(Function(l) If(l.Length >= marge, l.Substring(marge), l.TrimStart()).TrimEnd()))
         End Function
 
         ' ---- XAML ----

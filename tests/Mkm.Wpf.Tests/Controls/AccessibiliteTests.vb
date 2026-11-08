@@ -65,6 +65,21 @@ Namespace Mkm.Wpf.Tests.Controls
                         "le pair d'un Selector ne montrait que ses sections, pas les boutons de son gabarit")
         End Sub
 
+        ' Le défaut trouvé par les tests d'interaction : repliée dès le départ, son bouton de repli n'avait pas de nom.
+        <Test>
+        Public Sub ActionBar_SonBoutonDeRepliSuitSonEtat()
+            Dim barre As New ActionBar With {.ActiveSection = "a", .IsCollapsed = True}
+            Dim section As New ActionBarSection With {.Key = "a", .Header = "Édition"}
+            section.Items.Add(New ActionBarButton With {.Label = "Ajouter", .Icon = Icons.Add})
+            barre.Items.Add(section)
+            Pret(barre)
+
+            Assert.That(NomsDesBoutons(barre), Does.Contain(Localizer.Current.T("actionBar.showCommands")))
+            barre.IsCollapsed = False
+            barre.UpdateLayout()
+            Assert.That(NomsDesBoutons(barre), Does.Contain(Localizer.Current.T("actionBar.hideCommands")))
+        End Sub
+
         <Test>
         Public Sub Toolbar_SesCommandesEtSonBoutonPlusSontVisibles()
             Dim barre As New BarreDeMkm With {.Overflow = True}

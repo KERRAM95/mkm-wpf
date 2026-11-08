@@ -60,28 +60,8 @@ Namespace Mkm.Wpf.Showcase
 
         Private Sub Tout()
             Localizer.Current.Language = CultureInfo.GetCultureInfo("fr")
-            Dim pages As New List(Of KeyValuePair(Of String, Func(Of FrameworkElement))) From {
-                Page("1-actionbar", Function() New ActionBarPage()),
-                Page("2-champs", Function() New ChampsPage()),
-                Page("3-boutons", Function() New BoutonsPage()),
-                Page("4-conteneurs", Function() New ConteneursPage()),
-                Page("5-retours", Function() New RetoursPage()),
-                Page("6-attente", Function() New AttentePage()),
-                Page("7-saisie", Function() New SaisiePage()),
-                Page("8-fiche", Function() New FichePage()),
-                Page("9-arbre", Function() New ArbrePage()),
-                Page("10-identite", Function() New IdentitePage()),
-                Page("11-tableau", Function() New TableauPage()),
-                Page("12-choix", Function() New ChoixPage()),
-                Page("13-mise-en-page", Function() New MiseEnPagePage()),
-                Page("14-arborescence", Function() New ArborescencePage())
-            }
-
             For Each theme In Themes.All
                 MkmResources.Current.Theme = theme.Name
-                For Each p In pages
-                    Essayer($"{theme.Name}/{p.Key}", Sub() Enregistrer(Seule(p.Value.Invoke()), $"{theme.Name}/{p.Key}.png"))
-                Next
                 ' Chaque page de la documentation, en entier : ses fonctionnalités, son API et ses jetons à la suite.
                 For Each doc In Documentation.Catalogue.Pages
                     Essayer($"{theme.Name}/doc-{doc.Id}", Sub() Enregistrer(Seule(New Documentation.PageDeDocumentation(doc, True)), $"{theme.Name}/doc-{doc.Id}.png"))
@@ -92,18 +72,19 @@ Namespace Mkm.Wpf.Showcase
         End Sub
 
         ' Ce qui ne paraît pas sur une page seule : ce qui s'ouvre dans une fenêtre flottante (le calendrier, un menu,
-        ' une info-bulle) et des états qu'on n'atteint qu'en agissant (la fiche en modification, le voile posé).
+        ' une info-bulle) et des états qu'on n'atteint qu'en agissant (la fiche en modification, le voile posé), pris dans
+        ' les exemples de la documentation.
         Private Sub Scenes(theme As String)
-            Dim fiche As New FichePage()
-            fiche.Fiche.Editing = True
-            Enregistrer(Seule(fiche), $"{theme}/8-fiche-modification.png")
+            Dim fiche = Seule(New Documentation.PageDeDocumentation(Documentation.Catalogue.Trouver("propertypanel"), True))
+            Nomme(Of PropertyPanel)(fiche, "Fiche").Editing = True
+            fiche.UpdateLayout()
+            Enregistrer(CadreDe(Nomme(Of PropertyPanel)(fiche, "Fiche")), $"{theme}/fiche-modification.png")
 
-            Dim attente = New AttentePage()
-            Dim page = Seule(attente)
-            attente.Voile.Blocked = True
+            Dim attente = Seule(New Documentation.PageDeDocumentation(Documentation.Catalogue.Trouver("blockui"), True))
+            Nomme(Of BlockUI)(attente, "Voile").Blocked = True
             Attendre(500)
-            page.UpdateLayout()
-            Enregistrer(page, $"{theme}/6-attente-voile.png")
+            attente.UpdateLayout()
+            Enregistrer(CadreDe(Nomme(Of BlockUI)(attente, "Voile")), $"{theme}/voile.png")
 
             ' Initialisé, le DatePicker prend son style (et son calendrier) comme dans une fenêtre.
             Dim choix As New Mkm.Wpf.Controls.DatePicker()
@@ -115,29 +96,45 @@ Namespace Mkm.Wpf.Showcase
 
             ' La mise en page étroite : sous 550 px, le panneau de gauche recouvre le principal, un voile dessous ; celui de
             ' droite a cédé la place.
-            Dim etroite = Seule(New MiseEnPagePage(), 520)
+            Dim etroite = Seule(New Documentation.PageDeDocumentation(Documentation.Catalogue.Trouver("triptych"), True), 520)
             etroite.UpdateLayout()
-            Enregistrer(etroite, $"{theme}/13-mise-en-page-etroite.png")
-
+            Enregistrer(etroite, $"{theme}/triptych-etroit.png")
             Dialogue(theme, "confirmation", New ConfirmDialog With {
-                .Title = Localizer.Current.T("showcase.inputs.update"),
-                .Message = Localizer.Current.T("showcase.inputs.question"),
+                .Title = "Mise à jour",
+                .Message = "Mettre à jour le cartouche du plan avec les valeurs de 3DEXPERIENCE ?",
                 .MessageIcon = Icons.Warning})
         End Sub
+
+        ' L'élément de ce nom dans l'arbre visuel (le premier qui remplit la condition) ; une erreur s'il n'y en a pas.
+        Private Shared Function Nomme(Of T As FrameworkElement)(racine As DependencyObject, nom As String,
+                                                             Optional condition As Func(Of T, Boolean) = Nothing) As T
+            Dim trouve = Descendants(racine).OfType(Of T)().FirstOrDefault(Function(e) e.Name = nom AndAlso (condition Is Nothing OrElse condition(e)))
+            If trouve Is Nothing Then Throw New InvalidOperationException($"« {nom} » introuvable")
+            Return trouve
+        End Function
+
+        ' Le cadre de l'exemple qui contient un élément.
+        Private Shared Function CadreDe(element As DependencyObject) As FrameworkElement
+            Dim d = element
+            While d IsNot Nothing AndAlso Not TypeOf d Is Documentation.CadreDExemple
+                d = VisualTreeHelper.GetParent(d)
+            End While
+            Return DirectCast(d, FrameworkElement)
+        End Function
 
         ' Un menu comme celui de la page de l'arbre, avec ou sans icônes, tel qu'il s'ouvre.
         Private Shared Function UnMenu(icones As Boolean) As ContextMenu
             Dim menu As New ContextMenu()
             Dim element = Function(cle As String, icone As Object, raccourci As String) New MenuItem With {
-                .Header = Localizer.Current.T(cle), .Icon = If(icones, icone, Nothing), .InputGestureText = raccourci}
-            menu.Items.Add(element("showcase.tree.add", Icons.Add, "Ctrl+N"))
-            menu.Items.Add(element("showcase.tree.copy", Icons.Copy, "Ctrl+C"))
-            menu.Items.Add(element("showcase.tree.rename", Icons.Rename, "F2"))
+                .Header = cle, .Icon = If(icones, icone, Nothing), .InputGestureText = raccourci}
+            menu.Items.Add(element("Ajouter une note", Icons.Add, "Ctrl+N"))
+            menu.Items.Add(element("Copier", Icons.Copy, "Ctrl+C"))
+            menu.Items.Add(element("Renommer", Icons.Rename, "F2"))
             menu.Items.Add(New Separator())
-            Dim plus = element("showcase.tree.more", Nothing, Nothing)
-            plus.Items.Add(element("showcase.tree.export", Icons.Export, Nothing))
+            Dim plus = element("Plus", Nothing, Nothing)
+            plus.Items.Add(element("Exporter", Icons.Export, Nothing))
             menu.Items.Add(plus)
-            Dim supprimer = element("showcase.tree.delete", Icons.Delete, "Suppr")
+            Dim supprimer = element("Supprimer", Icons.Delete, "Suppr")
             supprimer.IsEnabled = False
             menu.Items.Add(supprimer)
             menu.RaiseEvent(New RoutedEventArgs(ContextMenu.OpenedEvent, menu))
@@ -191,6 +188,13 @@ Namespace Mkm.Wpf.Showcase
             fond.Measure(New Size(If(largeurVoulue > 0, largeurVoulue, Double.PositiveInfinity), Double.PositiveInfinity))
             fond.Arrange(New Rect(fond.DesiredSize))
             fond.UpdateLayout()
+            ' Une seconde passe, comme dans une fenêtre : un DataGrid répartit ses colonnes en étoile (« 2* ») selon la
+            ' largeur de la passe précédente ; à la première, elles restaient à leur minimum.
+            Attendre(50)
+            fond.InvalidateMeasure()
+            fond.Measure(New Size(If(largeurVoulue > 0, largeurVoulue, Double.PositiveInfinity), Double.PositiveInfinity))
+            fond.Arrange(New Rect(fond.DesiredSize))
+            fond.UpdateLayout()
             Return fond
         End Function
 
@@ -205,10 +209,10 @@ Namespace Mkm.Wpf.Showcase
                     Enregistrer(DirectCast(fenetre.Content, FrameworkElement), $"{theme}/fenetre-{i + 1}.png")
                 Next
 
-                fenetre.Notifications.Add(MessageSeverity.Info, "Info", Localizer.Current.T("showcase.feedback.info"))
-                fenetre.Notifications.Add(MessageSeverity.Success, "Success", Localizer.Current.T("showcase.feedback.success"))
-                fenetre.Notifications.Add(MessageSeverity.Warn, "Warn", Localizer.Current.T("showcase.feedback.warn"))
-                fenetre.Notifications.Add(MessageSeverity.Error, Nothing, Localizer.Current.T("showcase.feedback.error"))
+                fenetre.Notifications.Add(MessageSeverity.Info, "Info", "Le plan est ouvert en lecture seule.")
+                fenetre.Notifications.Add(MessageSeverity.Success, "Success", "Le cartouche est à jour.")
+                fenetre.Notifications.Add(MessageSeverity.Warn, "Warn", "Le cartouche n'est pas à jour.")
+                fenetre.Notifications.Add(MessageSeverity.Error, Nothing, "Le plan n'a pas pu être enregistré.")
                 Attendre(200)
                 Enregistrer(DirectCast(fenetre.Content, FrameworkElement), $"{theme}/notifications-relief.png")
                 Attendre(1500)
@@ -217,23 +221,23 @@ Namespace Mkm.Wpf.Showcase
 
                 ' Une info-bulle et un menu ne se dessinent qu'ouverts, dans leur fenêtre flottante.
                 Flottante(theme, "infobulle", fenetre.Composants,
-                          New ToolTip With {.Content = Localizer.Current.T("showcase.waiting.tooltipText")})
+                          New ToolTip With {.Content = "Met à jour le cartouche du plan depuis 3DEXPERIENCE."})
                 Flottante(theme, "menu", fenetre.Composants, UnMenu(True))
                 Flottante(theme, "menu-sans-icones", fenetre.Composants, UnMenu(False))
                 ' La page des choix : le menu « … » de sa barre étroite, ouvert par son bouton.
                 MenuDeLaBarre(theme, fenetre)
 
                 Dim pied As New StackPanel With {.Orientation = Orientation.Horizontal}
-                pied.Children.Add(New Mkm.Wpf.Controls.Button With {.Content = Localizer.Current.T("showcase.feedback.cancel"), .Severity = ButtonSeverity.Secondary})
-                pied.Children.Add(New Mkm.Wpf.Controls.Button With {.Content = Localizer.Current.T("showcase.feedback.ok")})
+                pied.Children.Add(New Mkm.Wpf.Controls.Button With {.Content = "Annuler", .Severity = ButtonSeverity.Secondary})
+                pied.Children.Add(New Mkm.Wpf.Controls.Button With {.Content = "Renommer"})
                 Dim contenu As New StackPanel()
-                contenu.Children.Add(New TextBlock With {.Text = Localizer.Current.T("showcase.feedback.newName"), .Margin = New Thickness(0, 0, 0, 4)})
+                contenu.Children.Add(New TextBlock With {.Text = "Nouveau nom", .Margin = New Thickness(0, 0, 0, 4)})
                 contenu.Children.Add(New InputText With {.Text = "HS-00042", .Width = 280})
-                Dialogue(theme, "dialogue", New Dialog With {.Title = Localizer.Current.T("showcase.feedback.rename"), .Content = contenu, .Footer = pied})
+                Dialogue(theme, "dialogue", New Dialog With {.Title = "Renommer le plan", .Content = contenu, .Footer = pied})
                 Dialogue(theme, "dialogue-etirable", New Dialog With {
-                    .Title = Localizer.Current.T("showcase.feedback.longTitle"), .ResizeMode = ResizeMode.CanResize,
+                    .Title = "Propriétés du plan HS-00042 — feuille 1 sur 3, révision B, en cours", .ResizeMode = ResizeMode.CanResize,
                     .SizeToContent = SizeToContent.Manual, .Width = 360, .Height = 240,
-                    .Content = New TextBlock With {.Text = Localizer.Current.T("showcase.containers.titleBlockText"), .TextWrapping = TextWrapping.Wrap}})
+                    .Content = New TextBlock With {.Text = "Le cartouche du plan : référence, désignation, échelle.", .TextWrapping = TextWrapping.Wrap}})
             Finally
                 fenetre.Close()
             End Try
@@ -241,9 +245,9 @@ Namespace Mkm.Wpf.Showcase
 
         ' Le menu « … » de la barre étroite de la page des choix, ouvert comme d'un clic sur son bouton.
         Private Sub MenuDeLaBarre(theme As String, fenetre As MainWindow)
-            fenetre.Composants.SelectedItem = fenetre.Entrees.First(Function(e) e.Id = "Choix")
-            Attendre(300)
-            Dim barre = DirectCast(fenetre.Page.Content, ChoixPage).BarreEtroite
+            fenetre.Ouvrir("toolbar")
+            Attendre(500)
+            Dim barre = Nomme(Of Mkm.Wpf.Controls.Toolbar)(DirectCast(fenetre.Page.Content, DependencyObject), "Barre", Function(b) b.Overflow)
             Dim bouton = DirectCast(barre.Template.FindName("PART_Overflow", barre), System.Windows.Controls.Button)
             Dim pair As New ButtonAutomationPeer(bouton)
             DirectCast(pair.GetPattern(PatternInterface.Invoke), IInvokeProvider).Invoke()

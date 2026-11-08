@@ -371,8 +371,7 @@
                                                         KeyboardNavigation.DirectionalNavigation="Cycle" />
                                         <Rectangle Grid.Column="1" Width="{DynamicResource mkm.actionbar.header.gap}" />
                                         <Button x:Name="PART_Toggle" Grid.Column="2"
-                                                Style="{StaticResource mkm.ActionBar.Toggle}"
-                                                AutomationProperties.Name="{loc:T actionBar.hideCommands}">
+                                                Style="{StaticResource mkm.ActionBar.Toggle}">
                                             <local:Icon x:Name="IconeDuRepli"
                                                         Width="{DynamicResource mkm.actionbar.toggle.icon.size}"
                                                         Height="{DynamicResource mkm.actionbar.toggle.icon.size}"
@@ -442,7 +441,6 @@
                             <Setter TargetName="Onglets" Property="Visibility" Value="Collapsed" />
                             <Setter TargetName="EnTete" Property="BorderBrush" Value="Transparent" />
                             <Setter TargetName="IconeDuRepli" Property="Source" Value="{x:Static local:Icons.ChevronUp}" />
-                            <Setter TargetName="PART_Toggle" Property="AutomationProperties.Name" Value="{loc:T actionBar.showCommands}" />
                         </Trigger>
                         <Trigger Property="HasFixedItems" Value="False">
                             <Setter TargetName="Fixes" Property="Visibility" Value="Collapsed" />

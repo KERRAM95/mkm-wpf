@@ -75,7 +75,7 @@ La configuration se pose une fois dans `App.xaml` :
 Les textes de l'application viennent de ses sources, ajoutées au démarrage
 (`Localizer.Current.AddSource(…)`), et s'écrivent `{mkm:T clé}` en XAML ;
 `Localizer.Current.Language = …` change la langue pendant l'exécution. La
-vitrine en est l'exemple (`apps/Mkm.Wpf.Showcase`).
+documentation en est l'exemple (`apps/Mkm.Wpf.Showcase`).
 
 Les commandes de l'application se déclarent une fois dans un `CommandRegistry`
 (`Mkm.Wpf.Commands`) ; ses menus, ses barres et ses raccourcis en sont fabriqués

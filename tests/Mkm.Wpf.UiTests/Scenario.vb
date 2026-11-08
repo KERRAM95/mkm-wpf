@@ -58,23 +58,6 @@ Namespace Mkm.Wpf.UiTests
 
         ' ---- Les pages ----
 
-        ''' <summary>
-        ''' Ouvre une page neuve de la vitrine par son entrée dans la liste de gauche (« ActionBar », « Choix »...) et la
-        ''' rend. Une page déjà ouverte se rouvre : chaque scénario part de son état de départ.
-        ''' </summary>
-        Protected Function Ouvrir(page As String) As AutomationElement
-            Dim entree = Trouver("nav-" & page).AsListBoxItem()
-            If entree.IsSelected Then
-                Dim autre = If(page = "Boutons", "Champs", "Boutons")
-                Trouver("nav-" & autre).AsListBoxItem().Select()
-                Attendre(Function() Fenetre.FindFirstDescendant(Function(cf) cf.ByClassName(autre & "Page")), $"la page {autre}")
-            End If
-            entree.Select()
-            Dim contenu = Attendre(Function() Fenetre.FindFirstDescendant(Function(cf) cf.ByClassName(page & "Page")), $"la page {page}")
-            Wait.UntilInputIsProcessed()
-            Return contenu
-        End Function
-
         ''' <summary>Ouvre une page neuve de la documentation par son identifiant (« button »), et la rend.</summary>
         Protected Function OuvrirLaDoc(id As String) As AutomationElement
             Dim entree = Trouver("nav-doc-" & id).AsListBoxItem()
@@ -86,6 +69,13 @@ Namespace Mkm.Wpf.UiTests
             Dim contenu = Trouver("page-" & id)
             Wait.UntilInputIsProcessed()
             Return contenu
+        End Function
+
+        ''' <summary>Le cadre d'un exemple de la page, par le titre de sa section (« exemple-sections »).</summary>
+        Protected Function Exemple(page As AutomationElement, section As String) As AutomationElement
+            Dim cadre = Trouver("exemple-" & section, page)
+            Montrer(cadre)
+            Return cadre
         End Function
 
         ' ---- Chercher ----

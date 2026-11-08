@@ -338,7 +338,7 @@ de minutes GitHub Actions qu'un runner Linux sur un dépôt privé.
 
 **Les captures** : la CI lance aussi `Mkm.Wpf.Showcase.exe --captures <dossier>`
 (`apps/Mkm.Wpf.Showcase/Captures.vb`) et publie l'artefact `captures` : chaque page
-de la vitrine dans chaque thème, la fenêtre, des notifications et des dialogues,
+de la documentation dans chaque thème, la fenêtre, des notifications et des dialogues,
 en PNG à 96 ppp. Une session sans Windows les télécharge
 (`https://api.github.com/repos/KERRAM95/mkm-wpf/actions/artifacts/<id>/zip`) pour
 regarder le rendu ; les états de survol n'y sont pas.

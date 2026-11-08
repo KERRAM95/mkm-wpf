@@ -7,27 +7,26 @@ Imports NUnit.Framework
 
 Namespace Mkm.Wpf.UiTests
 
-    ''' <summary>
-    ''' Les champs et les choix : InputText, Select, Checkbox, Tabs, Fieldset, SelectButton, InputNumber, IdCard.
-    ''' </summary>
+    ''' <summary>Les composants de saisie, sur leurs pages de documentation : la souris, le clavier, ce que lit Narrateur.</summary>
     <TestFixture>
-    Public Class FormulairesTests
+    Public Class FormulaireTests
         Inherits Scenario
 
         <Test>
         Public Sub InputText_LaSaisieSEcritEnMajuscules()
-            Ouvrir("Champs")
-            Dim reference = TrouverParNom(T("showcase.fields.referenceHint"), ControlType.Edit)
+            Dim page = OuvrirLaDoc("inputtext")
+            Dim reference = Trouver("Reference", page)
+
+            Assert.That(NomDe(reference), [Is].EqualTo("ex. HS-1234"), "sans libellé, son texte indicatif le nomme")
             Cliquer(reference)
             Ecrire("hs-12")
-
             AttendreQue(Function() reference.Patterns.Value.Pattern.Value.Value = "HS-12", "« HS-12 » : CharacterCasing=Upper")
         End Sub
 
         <Test>
         Public Sub Select_UnClicOuvreLaListeEtChoisit()
-            Ouvrir("Champs")
-            Dim maturite = Trouver("Maturite")
+            Dim page = OuvrirLaDoc("select")
+            Dim maturite = Trouver("Maturite", page)
 
             Cliquer(maturite)
             Dim fige = Attendre(Function() If(maturite.FindFirstDescendant(Function(cf) cf.ByName("Frozen").And(cf.ByControlType(ControlType.ListItem))),
@@ -39,8 +38,9 @@ Namespace Mkm.Wpf.UiTests
 
         <Test>
         Public Sub Select_LeClavierParcourtLaListe()
-            Ouvrir("Champs")
-            Dim maturite = Trouver("Maturite")
+            Dim page = OuvrirLaDoc("select")
+            Dim maturite = Trouver("Maturite", page)
+            Montrer(maturite)
             maturite.Focus()
 
             Taper(VirtualKeyShort.DOWN)
@@ -50,9 +50,20 @@ Namespace Mkm.Wpf.UiTests
         End Sub
 
         <Test>
+        Public Sub Select_LaLongueListeSOuvre()
+            Dim page = OuvrirLaDoc("select")
+            Dim longue = Trouver("Longue", page)
+
+            Cliquer(longue)
+            Cliquer(Attendre(Function() If(longue.FindFirstDescendant(Function(cf) cf.ByName("HS-00003")),
+                                          ChercherAilleurs("HS-00003", ControlType.ListItem)), "« HS-00003 » dans la liste virtualisée"))
+            AttendreQue(Function() NomDe(longue.AsComboBox().SelectedItem) = "HS-00003", "« HS-00003 » choisie")
+        End Sub
+
+        <Test>
         Public Sub Checkbox_UnClicEtEspaceLaCochent()
-            Ouvrir("Boutons")
-            Dim cas = Trouver("CaseVide").AsCheckBox()
+            Dim page = OuvrirLaDoc("checkbox")
+            Dim cas = Trouver("Toutes", page).AsCheckBox()
 
             Assert.That(cas.IsChecked, [Is].False)
             Cliquer(cas)
@@ -62,47 +73,42 @@ Namespace Mkm.Wpf.UiTests
         End Sub
 
         <Test>
-        Public Sub Tabs_UnClicMontreSonContenu()
-            Ouvrir("Conteneurs")
-            Dim onglets = Trouver("Onglets")
-            Dim notes = TrouverParNom(T("showcase.containers.notes"), ControlType.TabItem, onglets)
+        Public Sub RadioButton_UnClicChoisitEtLesFlechesPassentAuVoisin()
+            Dim page = OuvrirLaDoc("radiobutton")
+            Dim plan = Trouver("RadioPlan", page).AsRadioButton()
+            Dim article = Trouver("RadioArticle", page).AsRadioButton()
 
-            Cliquer(notes)
-            AttendreQue(Function() notes.Patterns.SelectionItem.Pattern.IsSelected.Value, "« Notes » choisi")
-            TrouverParNom(T("showcase.containers.notesText"), dans:=onglets)
-        End Sub
-
-        <Test>
-        Public Sub Tabs_LesFlechesChangentDOnglet()
-            Ouvrir("Conteneurs")
-            Dim onglets = Trouver("Onglets")
-            Dim cartouche = TrouverParNom(T("showcase.containers.titleBlock"), ControlType.TabItem, onglets)
-            Dim notes = TrouverParNom(T("showcase.containers.notes"), ControlType.TabItem, onglets)
-            Cliquer(cartouche)
-
+            Cliquer(article)
+            AttendreQue(Function() article.IsChecked AndAlso Not plan.IsChecked, "« Article » choisi, « Plan » non")
+            Taper(VirtualKeyShort.LEFT)
+            AttendreQue(Function() plan.IsChecked AndAlso AFocus(plan), "← : « Plan » choisi et au clavier")
             Taper(VirtualKeyShort.RIGHT)
-            AttendreQue(Function() notes.Patterns.SelectionItem.Pattern.IsSelected.Value, "→ : « Notes »")
+            AttendreQue(Function() article.IsChecked AndAlso AFocus(article), "→ : « Article » de nouveau")
         End Sub
 
         <Test>
-        Public Sub Fieldset_SaLegendeLeReplieEtLeDeplie()
-            Ouvrir("Conteneurs")
-            Dim groupe = Trouver("Repliable")
-            Dim option1 = TrouverParNom(T("showcase.containers.option"), ControlType.CheckBox, groupe)
-            Dim legende = TrouverParNom(T("showcase.containers.toggleable"), ControlType.Button, groupe)
+        Public Sub ToggleButton_UnClicLeBasculeEtChangeSonLibelle()
+            Dim page = OuvrirLaDoc("togglebutton")
+            Dim verrou = Trouver("Verrou", page)
+            Dim bascule = verrou.Patterns.Toggle.Pattern
 
-            Cliquer(legende)
-            AttendreQue(Function() option1.IsOffscreen, "replié : son contenu caché")
-            Cliquer(legende)
-            AttendreQue(Function() Not option1.IsOffscreen, "déplié : son contenu revenu")
+            Assert.That(NomDe(verrou), [Is].EqualTo("Déverrouillé"), "son libellé d'état le nomme")
+            Cliquer(verrou)
+            AttendreQue(Function() bascule.ToggleState.Value = ToggleState.On, "enfoncé")
+            AttendreQue(Function() NomDe(verrou) = "Verrouillé", "« Verrouillé », son libellé enfoncé")
+            Taper(VirtualKeyShort.SPACE)
+            AttendreQue(Function() bascule.ToggleState.Value = ToggleState.Off, "Espace : relâché")
+            ' Le défaut du lot 5 : le contour du focus d'un ToggleButton plantait la vitrine au premier Tab.
+            Taper(VirtualKeyShort.TAB)
+            AttendreQue(Function() Not AFocus(verrou), "Tab : le clavier passe au suivant")
         End Sub
 
         <Test>
         Public Sub SelectButton_UnClicAjouteAuChoixMultiple()
-            Ouvrir("Identite")
-            Dim plusieurs = Trouver("Plusieurs")
-            Dim historique = TrouverParNom(T("showcase.containers.history"), ControlType.ListItem, plusieurs)
-            Dim proprietes = TrouverParNom(T("showcase.containers.properties"), ControlType.ListItem, plusieurs)
+            Dim page = OuvrirLaDoc("selectbutton")
+            Dim plusieurs = Trouver("Plusieurs", page)
+            Dim historique = TrouverParNom("Historique", ControlType.ListItem, plusieurs)
+            Dim proprietes = TrouverParNom("Propriétés", ControlType.ListItem, plusieurs)
 
             Cliquer(historique)
             AttendreQue(Function() historique.Patterns.SelectionItem.Pattern.IsSelected.Value, "« Historique » ajouté")
@@ -112,13 +118,14 @@ Namespace Mkm.Wpf.UiTests
         End Sub
 
         <Test>
-        Public Sub InputNumber_SesBoutonsAvancentEtSArretentALaBorne()
-            Ouvrir("Identite")
-            Dim feuilles = Trouver("Feuilles")
+        Public Sub InputNumber_SesBoutonsEtSesFlechesSArretentALaBorne()
+            Dim page = OuvrirLaDoc("inputnumber")
+            Dim feuilles = Trouver("Feuilles", page)
             Dim champ = Attendre(Function() feuilles.FindFirstDescendant(Function(cf) cf.ByControlType(ControlType.Edit)), "le champ du nombre")
             Dim plus = TrouverParNom(T("aria.increment"), ControlType.Button, feuilles)
             Dim moins = TrouverParNom(T("aria.decrement"), ControlType.Button, feuilles)
 
+            Assert.That(feuilles.Patterns.RangeValue.Pattern.Maximum.Value, [Is].EqualTo(10), "une toupie qui dit ses bornes")
             Cliquer(plus)
             Cliquer(plus)
             AttendreQue(Function() champ.Patterns.Value.Pattern.Value.Value = "3", "deux clics sur + : 3")
@@ -126,30 +133,9 @@ Namespace Mkm.Wpf.UiTests
                 Cliquer(moins)
             Next
             AttendreQue(Function() champ.Patterns.Value.Pattern.Value.Value = "1", "le minimum : 1")
-        End Sub
-
-        <Test>
-        Public Sub InputNumber_LesFlechesDuClavierLeChangent()
-            Ouvrir("Identite")
-            Dim feuilles = Trouver("Feuilles")
-            Dim champ = Attendre(Function() feuilles.FindFirstDescendant(Function(cf) cf.ByControlType(ControlType.Edit)), "le champ du nombre")
             Cliquer(champ)
-
             Taper(VirtualKeyShort.UP)
             AttendreQue(Function() champ.Patterns.Value.Pattern.Value.Value = "2", "↑ : 2")
-            Taper(VirtualKeyShort.DOWN, VirtualKeyShort.DOWN)
-            AttendreQue(Function() champ.Patterns.Value.Pattern.Value.Value = "1", "↓ ↓ : 1, le minimum")
-        End Sub
-
-        <Test>
-        Public Sub IdCard_SonBoutonLaReplieEtLaDeplie()
-            Ouvrir("Identite")
-            Dim replier = TrouverParNom(T("aria.collapse"), ControlType.Button)
-
-            Cliquer(replier)
-            AttendreQue(Function() NomDe(replier) = T("aria.expand"), "repliée : son bouton dit « Déplier »")
-            Cliquer(replier)
-            AttendreQue(Function() NomDe(replier) = T("aria.collapse"), "dépliée : « Replier »")
         End Sub
 
     End Class

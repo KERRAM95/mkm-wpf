@@ -15,9 +15,6 @@ Namespace Mkm.Wpf.Showcase.Documentation
         ''' <summary>L'identifiant d'automatisation de l'entrée (« nav-button »), pour les tests d'interaction.</summary>
         Public Property Automatisation As String
 
-        ''' <summary>Vrai pour une page de la documentation ; faux pour une page d'origine de la vitrine.</summary>
-        Public Property EstDocumentee As Boolean
-
         ''' <summary>Le titre : ce que lit un lecteur d'écran.</summary>
         Public Overrides Function ToString() As String
             Return Titre

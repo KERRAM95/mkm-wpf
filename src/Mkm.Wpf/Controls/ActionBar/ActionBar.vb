@@ -218,6 +218,15 @@ Namespace Mkm.Wpf.Controls
             _precedent = TryCast(GetTemplateChild("PART_Previous"), ButtonBase)
             _suivant = TryCast(GetTemplateChild("PART_Next"), ButtonBase)
             _repli = TryCast(GetTemplateChild("PART_Toggle"), ButtonBase)
+            ' Son nom suit l'état de la barre et la langue : « Masquer les commandes », ou « Afficher… » repliée.
+            ' Lié en code, et non par un déclencheur du gabarit, qui le laissait vide pour une barre repliée dès le départ.
+            If _repli IsNot Nothing Then
+                Dim nom As New MultiBinding With {.Converter = TexteDuRepli.Instance}
+                nom.Bindings.Add(New Binding(NameOf(IsCollapsed)) With {.Source = Me})
+                nom.Bindings.Add(New Binding("[actionBar.showCommands]") With {.Source = Localizer.Current})
+                nom.Bindings.Add(New Binding("[actionBar.hideCommands]") With {.Source = Localizer.Current})
+                BindingOperations.SetBinding(_repli, System.Windows.Automation.AutomationProperties.NameProperty, nom)
+            End If
 
             If _defilement IsNot Nothing Then
                 AddHandler _defilement.ScrollChanged, AddressOf OnDefilement
@@ -390,5 +399,23 @@ Namespace Mkm.Wpf.Controls
         End Sub
 
     End Class
+
+    ''' <summary>Le nom du bouton de repli : le texte « afficher » quand la barre est repliée, « masquer » sinon.</summary>
+    Friend NotInheritable Class TexteDuRepli
+        Implements IMultiValueConverter
+
+        Friend Shared ReadOnly Instance As New TexteDuRepli()
+
+        Public Function Convert(values As Object(), targetType As Type, parameter As Object, culture As Globalization.CultureInfo) As Object Implements IMultiValueConverter.Convert
+            Dim repliee = values.Length > 0 AndAlso TypeOf values(0) Is Boolean AndAlso CBool(values(0))
+            Return If(TryCast(values(If(repliee, 1, 2)), String), String.Empty)
+        End Function
+
+        Public Function ConvertBack(value As Object, targetTypes As Type(), parameter As Object, culture As Globalization.CultureInfo) As Object() Implements IMultiValueConverter.ConvertBack
+            Throw New NotSupportedException()
+        End Function
+
+    End Class
+
 
 End Namespace

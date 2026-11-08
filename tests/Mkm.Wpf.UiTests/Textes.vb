@@ -7,8 +7,8 @@ Imports System.Xml.Linq
 Namespace Mkm.Wpf.UiTests
 
     ''' <summary>
-    ''' Les textes français de la vitrine et de mkm-wpf, lus dans leurs fichiers .resx : un scénario cherche « Ajouter »
-    ''' par sa clé (<c>showcase.actionbar.add</c>), et reformuler un libellé ne le casse pas.
+    ''' Les textes français de la vitrine et de mkm-wpf, lus dans leurs fichiers .resx : un scénario cherche « Fermer »
+    ''' par sa clé (<c>aria.close</c>), et reformuler un libellé ne le casse pas.
     ''' </summary>
     Public NotInheritable Class Textes
 

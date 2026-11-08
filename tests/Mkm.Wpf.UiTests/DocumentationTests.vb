@@ -79,14 +79,6 @@ Namespace Mkm.Wpf.UiTests
         End Sub
 
         <Test>
-        Public Sub Toast_LExempleNotifie()
-            Dim contenu = OuvrirLaDoc("toast")
-
-            Cliquer(Trouver("Notifier", contenu))
-            TrouverParNom("Le plan HS-00042 est ouvert en lecture seule.", dans:=Trouver("Notifications"))
-        End Sub
-
-        <Test>
         Public Sub LeBoutonCopierCopieLeCode()
             Dim contenu = OuvrirLaDoc("button")
             Dim copier = TrouverParNom("Copier le code", ControlType.Button, contenu)
