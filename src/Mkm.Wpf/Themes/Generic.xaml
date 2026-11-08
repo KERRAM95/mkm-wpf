@@ -25,10 +25,14 @@
         <ResourceDictionary Source="/Mkm.Wpf;component/Controls/DatePicker/DatePicker.xaml" />
         <ResourceDictionary Source="/Mkm.Wpf;component/Controls/Dialog/Dialog.xaml" />
         <ResourceDictionary Source="/Mkm.Wpf;component/Controls/Divider/Divider.xaml" />
+        <ResourceDictionary Source="/Mkm.Wpf;component/Controls/Drawer/Drawer.xaml" />
         <ResourceDictionary Source="/Mkm.Wpf;component/Controls/EmptyContent/EmptyContent.xaml" />
         <ResourceDictionary Source="/Mkm.Wpf;component/Controls/Fieldset/Fieldset.xaml" />
         <ResourceDictionary Source="/Mkm.Wpf;component/Controls/IconField/IconField.xaml" />
         <ResourceDictionary Source="/Mkm.Wpf;component/Controls/IdCard/IdCard.xaml" />
+        <ResourceDictionary Source="/Mkm.Wpf;component/Controls/Image/Image.xaml" />
+        <ResourceDictionary Source="/Mkm.Wpf;component/Controls/ImageCompare/ImageCompare.xaml" />
+        <ResourceDictionary Source="/Mkm.Wpf;component/Controls/Inplace/Inplace.xaml" />
         <ResourceDictionary Source="/Mkm.Wpf;component/Controls/InputGroup/InputGroup.xaml" />
         <ResourceDictionary Source="/Mkm.Wpf;component/Controls/InputNumber/InputNumber.xaml" />
         <ResourceDictionary Source="/Mkm.Wpf;component/Controls/InputText/InputText.xaml" />

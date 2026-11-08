@@ -60,3 +60,4 @@ Aucun pour l'instant.
 | Élément de mkm-wpf | Source | Licence | Ce qui est repris |
 | ------------------ | ------ | ------- | ----------------- |
 | `apps/Mkm.Wpf.Showcase/Documentation/Images/*.png`, `walter.jpg` (« /Images/… » dans les exemples) | la documentation d'ui-kit (`apps/showcase/doc/avatar`), qui les tient du CDN de PrimeVue (`primefaces.org/cdn/primevue/images`) | celle de la documentation de PrimeVue (MIT) ; reprises avec l'accord de mkm | les photos des exemples d'Avatar, telles quelles |
+| `apps/Mkm.Wpf.Showcase/Documentation/Images/island1.jpg`, `island2.jpg`, `galleria10.jpg` | la documentation d'ui-kit (`apps/showcase/doc/imagecompare`, `doc/image`), qui les tient du CDN de PrimeVue (`primefaces.org/cdn/primevue/images`) | celle de la documentation de PrimeVue (MIT) ; reprises avec l'accord de mkm | les photos des exemples d'ImageCompare et d'Image, telles quelles |

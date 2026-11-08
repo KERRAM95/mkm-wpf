@@ -1200,6 +1200,19 @@ divider.vertical.margin = 0 12px
 divider.vertical.padding = 6px 0
 divider.vertical.content.padding = 6px 0
 
+# drawer
+drawer.background = {overlay.modal.background}
+drawer.border.color = {overlay.modal.border.color}
+drawer.color = {overlay.modal.color}
+drawer.shadow = {overlay.modal.shadow}
+drawer.width = 240px
+drawer.height = 120px
+drawer.header.padding = {overlay.modal.padding}
+drawer.title.font.size = 18px
+drawer.title.font.weight = 700
+drawer.content.padding = 0 {overlay.modal.padding} {overlay.modal.padding} {overlay.modal.padding}
+drawer.footer.padding = {overlay.modal.padding}
+
 # emptycontent
 emptycontent.background = transparent
 emptycontent.color = {text.color}
@@ -1302,6 +1315,62 @@ idcard.facet.padding = 8px
 idcard.facet.icon.size = 16px
 idcard.facet.invalid.color = #ea4f37
 idcard.facet.content.padding = 0
+
+# image
+image.transition.duration = {transition.duration}
+image.preview.icon.size = 18px
+image.preview.mask.background = {mask.background}
+image.preview.mask.color = {mask.color}
+image.toolbar.position.left = auto
+image.toolbar.position.right = 12px
+image.toolbar.position.top = 12px
+image.toolbar.position.bottom = auto
+image.toolbar.blur = 8px
+image.toolbar.background = rgba(255,255,255,0.1)
+image.toolbar.border.color = rgba(255,255,255,0.2)
+image.toolbar.border.width = 1px
+image.toolbar.border.radius = {content.border.radius}
+image.toolbar.padding = 6px
+image.toolbar.gap = 6px
+image.action.hover.background = rgba(255,255,255,0.1)
+image.action.color = {surface.50}
+image.action.hover.color = {surface.0}
+image.action.size = 36px
+image.action.icon.size = 18px
+image.action.border.radius = {content.border.radius}
+image.action.focus.ring.width = {focus.ring.width}
+image.action.focus.ring.style = {focus.ring.style}
+image.action.focus.ring.color = {focus.ring.color}
+image.action.focus.ring.offset = {focus.ring.offset}
+image.action.focus.ring.shadow = {focus.ring.shadow}
+
+# imagecompare
+imagecompare.handle.size = 15px
+imagecompare.handle.hover.size = 30px
+imagecompare.handle.background = rgba(255,255,255,0.3)
+imagecompare.handle.hover.background = rgba(255,255,255,0.3)
+imagecompare.handle.border.color = rgba(255,255,255,0.3)
+imagecompare.handle.hover.border.color = rgba(255,255,255,0.3)
+imagecompare.handle.border.width = 3px
+imagecompare.handle.border.radius = {content.border.radius}
+imagecompare.handle.transition.duration = 0.2s
+imagecompare.handle.focus.ring.width = {focus.ring.width}
+imagecompare.handle.focus.ring.style = {focus.ring.style}
+imagecompare.handle.focus.ring.color = rgba(255,255,255,0.3)
+imagecompare.handle.focus.ring.offset = {focus.ring.offset}
+imagecompare.handle.focus.ring.shadow = {focus.ring.shadow}
+
+# inplace
+inplace.padding = {form.field.padding.y} {form.field.padding.x}
+inplace.border.radius = {content.border.radius}
+inplace.focus.ring.width = {focus.ring.width}
+inplace.focus.ring.style = {focus.ring.style}
+inplace.focus.ring.color = {focus.ring.color}
+inplace.focus.ring.offset = {focus.ring.offset}
+inplace.focus.ring.shadow = {focus.ring.shadow}
+inplace.transition.duration = {transition.duration}
+inplace.display.hover.background = {content.hover.background}
+inplace.display.hover.color = {content.hover.color}
 
 # inputgroup
 inputgroup.addon.background = {form.field.background}

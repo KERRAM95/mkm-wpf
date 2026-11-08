@@ -9,7 +9,7 @@
                     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
                     xmlns:local="clr-namespace:Mkm.Wpf.Controls">
 
-    <!-- L'en-tête d'une étape : son rond numéroté et son titre, l'anneau du clavier autour. -->
+    <!-- L'en-tête d'une étape : son rond numéroté et son titre (l'anneau du clavier est dans le gabarit de l'étape). -->
     <ControlTemplate x:Key="mkm.Stepper.EnTete" TargetType="{x:Type ContentControl}">
         <Grid Background="Transparent">
             <local:GapStackPanel Orientation="Horizontal" Gap="{DynamicResource mkm.stepper.step.header.gap}">
@@ -26,9 +26,6 @@
                                   TextElement.FontWeight="{DynamicResource mkm.stepper.step.title.font.weight}"
                                   TextElement.Foreground="{DynamicResource mkm.stepper.step.title.color}" />
             </local:GapStackPanel>
-            <Rectangle x:Name="Anneau" Margin="-2" Visibility="Collapsed" IsHitTestVisible="False" RadiusX="3" RadiusY="3"
-                       Stroke="{DynamicResource mkm.stepper.step.header.focus.ring.color}"
-                       StrokeThickness="{DynamicResource mkm.stepper.step.header.focus.ring.width}" />
         </Grid>
         <ControlTemplate.Triggers>
             <DataTrigger Binding="{Binding IsSelected, RelativeSource={RelativeSource AncestorType={x:Type local:StepperPanel}}}" Value="True">
@@ -36,9 +33,6 @@
                 <Setter TargetName="Rond" Property="Stroke" Value="{DynamicResource mkm.stepper.step.number.active.border.color}" />
                 <Setter TargetName="Numero" Property="Foreground" Value="{DynamicResource mkm.stepper.step.number.active.color}" />
                 <Setter TargetName="Titre" Property="TextElement.Foreground" Value="{DynamicResource mkm.stepper.step.title.active.color}" />
-            </DataTrigger>
-            <DataTrigger Binding="{Binding (local:FocusVisible.IsVisible), RelativeSource={RelativeSource AncestorType={x:Type local:StepperPanel}}}" Value="True">
-                <Setter TargetName="Anneau" Property="Visibility" Value="Visible" />
             </DataTrigger>
         </ControlTemplate.Triggers>
     </ControlTemplate>
@@ -51,8 +45,13 @@
                 <!-- En ligne : l'en-tête, puis le trait jusqu'à l'étape suivante. -->
                 <ControlTemplate TargetType="{x:Type local:StepperPanel}">
                     <DockPanel x:Name="Etape" Background="Transparent" Margin="{DynamicResource mkm.stepper.step.padding}">
-                        <ContentControl DockPanel.Dock="Left" Focusable="False" Template="{StaticResource mkm.Stepper.EnTete}"
-                                        Content="{TemplateBinding Header}" ContentTemplate="{TemplateBinding HeaderTemplate}" />
+                        <Grid DockPanel.Dock="Left">
+                            <ContentControl Focusable="False" Template="{StaticResource mkm.Stepper.EnTete}"
+                                            Content="{TemplateBinding Header}" ContentTemplate="{TemplateBinding HeaderTemplate}" />
+                            <Rectangle x:Name="Anneau" Margin="-2" Visibility="Collapsed" IsHitTestVisible="False" RadiusX="3" RadiusY="3"
+                                       Stroke="{DynamicResource mkm.stepper.step.header.focus.ring.color}"
+                                       StrokeThickness="{DynamicResource mkm.stepper.step.header.focus.ring.width}" />
+                        </Grid>
                         <Rectangle x:Name="Trait" Height="{DynamicResource mkm.stepper.separator.size}" VerticalAlignment="Center"
                                    Margin="{DynamicResource mkm.stepper.separator.horizontal.margin}"
                                    Fill="{DynamicResource mkm.stepper.separator.background}" />
@@ -63,6 +62,9 @@
                         </Trigger>
                         <Trigger Property="IsLast" Value="True">
                             <Setter TargetName="Trait" Property="Visibility" Value="Collapsed" />
+                        </Trigger>
+                        <Trigger Property="local:FocusVisible.IsVisible" Value="True">
+                            <Setter TargetName="Anneau" Property="Visibility" Value="Visible" />
                         </Trigger>
                         <Trigger Property="IsEnabled" Value="False">
                             <Setter TargetName="Etape" Property="Opacity" Value="{DynamicResource mkm.disabled.opacity}" />
@@ -81,9 +83,13 @@
                     <Setter.Value>
                         <ControlTemplate TargetType="{x:Type local:StepperPanel}">
                             <StackPanel x:Name="Etape">
-                                <ContentControl HorizontalAlignment="Left" Focusable="False" Margin="{DynamicResource mkm.stepper.step.padding}"
-                                                Template="{StaticResource mkm.Stepper.EnTete}"
-                                                Content="{TemplateBinding Header}" ContentTemplate="{TemplateBinding HeaderTemplate}" />
+                                <Grid HorizontalAlignment="Left" Margin="{DynamicResource mkm.stepper.step.padding}">
+                                    <ContentControl Focusable="False" Template="{StaticResource mkm.Stepper.EnTete}"
+                                                    Content="{TemplateBinding Header}" ContentTemplate="{TemplateBinding HeaderTemplate}" />
+                                    <Rectangle x:Name="Anneau" Margin="-2" Visibility="Collapsed" IsHitTestVisible="False" RadiusX="3" RadiusY="3"
+                                               Stroke="{DynamicResource mkm.stepper.step.header.focus.ring.color}"
+                                               StrokeThickness="{DynamicResource mkm.stepper.step.header.focus.ring.width}" />
+                                </Grid>
                                 <Grid x:Name="Panneau" Visibility="Collapsed">
                                     <Grid.ColumnDefinitions>
                                         <ColumnDefinition Width="Auto" />
@@ -102,6 +108,9 @@
                                 </Trigger>
                                 <Trigger Property="IsLast" Value="True">
                                     <Setter TargetName="Trait" Property="Visibility" Value="Hidden" />
+                                </Trigger>
+                                <Trigger Property="local:FocusVisible.IsVisible" Value="True">
+                                    <Setter TargetName="Anneau" Property="Visibility" Value="Visible" />
                                 </Trigger>
                                 <Trigger Property="IsEnabled" Value="False">
                                     <Setter TargetName="Etape" Property="Opacity" Value="{DynamicResource mkm.disabled.opacity}" />

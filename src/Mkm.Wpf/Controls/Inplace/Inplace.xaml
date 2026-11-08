@@ -1,0 +1,64 @@
+<!--
+    Le style d'Inplace, sur l'édition sur place de mkm (styles/inplace ; jetons de Nora en pixels pour Dashboard, preset
+    ara) : le texte dans le retrait d'un champ (6 px sur 7), bordé d'un pixel transparent, aux coins du thème, grisé au
+    survol, l'anneau du clavier d'un pixel autour ; cliqué, le contenu à sa place.
+-->
+<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+                    xmlns:local="clr-namespace:Mkm.Wpf.Controls">
+
+    <Style x:Key="mkm.Inplace.Texte" TargetType="{x:Type Button}">
+        <Setter Property="FocusVisualStyle" Value="{x:Null}" />
+        <Setter Property="Cursor" Value="Hand" />
+        <Setter Property="HorizontalAlignment" Value="Left" />
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="{x:Type Button}">
+                    <Grid>
+                        <Border x:Name="Fond" Background="Transparent" BorderBrush="Transparent" BorderThickness="1"
+                                Padding="{DynamicResource mkm.inplace.padding}" CornerRadius="{DynamicResource mkm.inplace.border.radius}">
+                            <ContentPresenter VerticalAlignment="Center" RecognizesAccessKey="True" />
+                        </Border>
+                        <Rectangle x:Name="Anneau" Margin="-2" Visibility="Collapsed" IsHitTestVisible="False" RadiusX="3" RadiusY="3"
+                                   Stroke="{DynamicResource mkm.inplace.focus.ring.color}"
+                                   StrokeThickness="{DynamicResource mkm.inplace.focus.ring.width}" />
+                    </Grid>
+                    <ControlTemplate.Triggers>
+                        <Trigger Property="IsMouseOver" Value="True">
+                            <Setter TargetName="Fond" Property="Background" Value="{DynamicResource mkm.inplace.display.hover.background}" />
+                            <Setter TargetName="Fond" Property="TextElement.Foreground" Value="{DynamicResource mkm.inplace.display.hover.color}" />
+                        </Trigger>
+                        <Trigger Property="local:FocusVisible.IsVisible" Value="True">
+                            <Setter TargetName="Anneau" Property="Visibility" Value="Visible" />
+                        </Trigger>
+                        <Trigger Property="IsEnabled" Value="False">
+                            <Setter TargetName="Fond" Property="Opacity" Value="{DynamicResource mkm.disabled.opacity}" />
+                        </Trigger>
+                    </ControlTemplate.Triggers>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+
+    <Style TargetType="{x:Type local:Inplace}">
+        <Setter Property="FontFamily" Value="{DynamicResource mkm.font.family}" />
+        <Setter Property="FontSize" Value="{DynamicResource mkm.font.size}" />
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="{x:Type local:Inplace}">
+                    <Grid>
+                        <Button x:Name="PART_Display" Style="{StaticResource mkm.Inplace.Texte}" Content="{TemplateBinding Display}" />
+                        <ContentPresenter x:Name="Contenu" Visibility="Collapsed" />
+                    </Grid>
+                    <ControlTemplate.Triggers>
+                        <Trigger Property="IsActive" Value="True">
+                            <Setter TargetName="PART_Display" Property="Visibility" Value="Collapsed" />
+                            <Setter TargetName="Contenu" Property="Visibility" Value="Visible" />
+                        </Trigger>
+                    </ControlTemplate.Triggers>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+
+</ResourceDictionary>

@@ -385,3 +385,11 @@ autocomplete.list.max.height = 168px
 # un nombre).
 stepper.separator.horizontal.margin = 0 0 0 {stepper.step.gap}
 stepper.steppanel.vertical.margin = 0 0 0 {stepper.steppanel.indent}
+
+# image : la barre de l'aperçu à toolbar.position.top et .right du coin (des nombres).
+image.toolbar.margin = {image.toolbar.position.top} {image.toolbar.position.right} 0 0
+
+# imagecompare : la bordure de la poignée en épaisseur (border.width est un nombre) ; la piste du curseur dépasse de
+# la moitié de la poignée de chaque côté (calc(-1 * handle.size / 2) chez mkm), pour que la poignée aille aux bords.
+imagecompare.handle.all.border.width = {imagecompare.handle.border.width} {imagecompare.handle.border.width}
+imagecompare.track.margin = 0 -7.5px 0 -7.5px

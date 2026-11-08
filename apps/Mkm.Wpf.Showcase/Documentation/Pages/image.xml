@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="utf-8"?>
+<page titre="Image" categorie="Divers" types="Image" jetons="image">
+  <resume>Une image, et son aperçu en grand d'un clic : à tourner, agrandir et réduire, sur la page assombrie.</resume>
+
+  <section titre="Import">
+    <p>« Image » est aussi l'image de WPF (<c>System.Windows.Controls.Image</c>) : dans un fichier VB qui importe
+      <c>Mkm.Wpf.Controls</c>, écrivez l'une ou l'autre en entier.</p>
+    <code><![CDATA[
+<Window xmlns:mkm="urn:mkm-wpf">
+    <mkm:Image Source="/Images/plan.png" />
+</Window>
+]]></code>
+  </section>
+
+  <section titre="Aperçu">
+    <p><c>Preview</c> : au survol, un œil sur le voile du thème ; un clic ouvre l'aperçu en grand, par-dessus la fenêtre,
+      avec en haut à droite tourner à droite, tourner à gauche, réduire, agrandir et fermer. Échap, la croix ou un clic
+      sur le voile le ferment. <c>AutomationProperties.Name</c> dit ce que montre l'image.</p>
+    <exemple><![CDATA[
+<mkm:Image x:Name="Photo" Source="/Images/galleria10.jpg" Preview="True" Width="260"
+           AutomationProperties.Name="Paysage de montagne" />
+]]></exemple>
+  </section>
+
+  <section titre="Remplissage">
+    <p><c>Stretch</c> : entière dans sa place (<c>Uniform</c>, par défaut), ou la remplissant, recadrée
+      (<c>UniformToFill</c>).</p>
+    <exemple><![CDATA[
+<mkm:Image Source="/Images/galleria10.jpg" Stretch="UniformToFill" Width="260" Height="120" />
+]]></exemple>
+  </section>
+
+  <section titre="Accessibilité">
+    <h3>Lecteur d'écran</h3>
+    <p>Narrateur dit l'image « image », nommée par <c>AutomationProperties.Name</c> ; avec l'aperçu, son bouton se nomme
+      « Aperçu », et ceux de l'aperçu « Tourner à droite », « Tourner à gauche », « Réduire », « Agrandir », « Fermer ».</p>
+    <h3>Clavier</h3>
+    <touches>
+      <touche nom="Tab">Amène le clavier sur l'aperçu de l'image ; dans l'aperçu, d'un bouton à l'autre.</touche>
+      <touche nom="Entrée">Ouvre l'aperçu, ou agit le bouton de l'aperçu.</touche>
+      <touche nom="Échap">Ferme l'aperçu.</touche>
+    </touches>
+  </section>
+</page>

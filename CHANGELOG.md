@@ -139,6 +139,11 @@ Les évolutions notables de mkm-wpf, version par version. Le format suit
   `TimelineEvent` (verticale ou horizontale, alternée, rond personnalisé),
   `Paginator` (flèches, liens de page, lignes par page, « 3 sur 12 ») ; leurs
   jetons, leurs pages, leurs tests et leurs scénarios.
+- Le lot 16 (`docs/composants/tiroir-sur-place-et-images.md`) : `Drawer`
+  (tiroir sur un voile, de chaque bord ou plein écran, pied, le clavier entre
+  et revient), `Inplace` (modifier sur place), `Image` (aperçu en grand :
+  tourner, agrandir, réduire), `ImageCompare` (deux images à une poignée) ;
+  leurs jetons, leurs pages, leurs tests et leurs scénarios.
 - Info-bulle et Popover : la page qui défile les referme, comme mkm.
 - Le zoom de toute l'interface (`docs/fondations/zoom.md`) :
   `MkmResources.Zoom` (80 à 200 %), `ZoomIn`, `ZoomOut`, `ResetZoom`,

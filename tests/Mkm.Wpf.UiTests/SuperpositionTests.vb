@@ -111,6 +111,23 @@ Namespace Mkm.Wpf.UiTests
             AttendreQue(Function() Referme("Copier le lien"), "et le ferme")
         End Sub
 
+        <Test>
+        Public Sub Drawer_SOuvreEtEchapLeRefermeEtRendLeClavier()
+            Dim page = OuvrirLaDoc("drawer")
+            Dim bouton = Trouver("AGauche", page)
+            Cliquer(bouton)
+            AttendreQue(Function() Ouvert(page), "le tiroir s'ouvre")
+            AttendreQue(Function() Not AFocus(bouton), "le clavier entre dans le tiroir")
+            Taper(VirtualKeyShort.ESCAPE)
+            AttendreQue(Function() Not Ouvert(page), "Échap le referme")
+            AttendreQue(Function() AFocus(bouton), "le clavier revient au bouton")
+        End Sub
+
+        Private Shared Function Ouvert(page As FlaUI.Core.AutomationElements.AutomationElement) As Boolean
+            Dim tiroir = page.FindFirstDescendant(Function(cf) cf.ByAutomationId("Tiroir"))
+            Return tiroir IsNot Nothing AndAlso Not tiroir.IsOffscreen
+        End Function
+
     End Class
 
 End Namespace

@@ -123,4 +123,22 @@
   <data name="locale.currentPageReport" xml:space="preserve">
     <value>{0} of {1}</value>
   </data>
+  <data name="aria.rotateRight" xml:space="preserve">
+    <value>Rotate Right</value>
+  </data>
+  <data name="aria.rotateLeft" xml:space="preserve">
+    <value>Rotate Left</value>
+  </data>
+  <data name="aria.zoomIn" xml:space="preserve">
+    <value>Zoom In</value>
+  </data>
+  <data name="aria.zoomOut" xml:space="preserve">
+    <value>Zoom Out</value>
+  </data>
+  <data name="aria.preview" xml:space="preserve">
+    <value>Preview</value>
+  </data>
+  <data name="aria.compare" xml:space="preserve">
+    <value>Compare</value>
+  </data>
 </root>

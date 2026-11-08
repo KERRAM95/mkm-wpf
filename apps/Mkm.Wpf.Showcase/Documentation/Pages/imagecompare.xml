@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="utf-8"?>
+<page titre="ImageCompare" categorie="Divers" types="ImageCompare" jetons="imagecompare">
+  <resume>Comparer deux images l'une sur l'autre : une poignée qui glisse montre l'une à gauche et l'autre à droite,
+    avant et après une révision.</resume>
+
+  <section titre="Import">
+    <code><![CDATA[
+<Window xmlns:mkm="urn:mkm-wpf">
+    <mkm:ImageCompare LeftImage="/Images/revision-a.png" RightImage="/Images/revision-b.png" />
+</Window>
+]]></code>
+  </section>
+
+  <section titre="Basique">
+    <p><c>LeftImage</c> se montre à gauche de la poignée, <c>RightImage</c> à droite ; <c>Value</c> (de 0 à 100, 50 par
+      défaut) est la place de la poignée. Sans hauteur, la comparaison fait 16/9 de sa largeur.</p>
+    <exemple><![CDATA[
+<mkm:ImageCompare x:Name="Comparaison" LeftImage="/Images/island1.jpg" RightImage="/Images/island2.jpg" Width="480"
+                  AutomationProperties.Name="Île, avant et après" />
+]]></exemple>
+  </section>
+
+  <section titre="Accessibilité">
+    <h3>Lecteur d'écran</h3>
+    <p>Narrateur dit la comparaison « groupe », nommée par <c>AutomationProperties.Name</c>, et sa poignée « curseur »,
+      « Comparer », avec sa valeur.</p>
+    <h3>Clavier</h3>
+    <touches>
+      <touche nom="Flèche droite">Déplace la poignée d'un pas à droite.</touche>
+      <touche nom="Flèche gauche">La déplace d'un pas à gauche.</touche>
+      <touche nom="Page haut">La déplace de dix pas.</touche>
+      <touche nom="Début">La pose tout à gauche.</touche>
+      <touche nom="Fin">La pose tout à droite.</touche>
+    </touches>
+  </section>
+</page>

@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="utf-8"?>
+<page titre="Drawer" categorie="Superposition" types="Drawer DrawerPosition" jetons="drawer">
+  <resume>Un tiroir : un panneau qui sort d'un bord, par-dessus la page assombrie, pour des filtres, des détails ou un
+    menu, sans quitter la page.</resume>
+
+  <section titre="Import">
+    <code><![CDATA[
+<Window xmlns:mkm="urn:mkm-wpf">
+    <Grid>
+        <!-- Le contenu de la fenêtre. -->
+        <mkm:Drawer x:Name="Filtres" Header="Filtres" />
+    </Grid>
+</Window>
+]]></code>
+  </section>
+
+  <section titre="Basique">
+    <p>Le tiroir couvre son conteneur : posé dans la grille racine de la fenêtre, après son contenu, il en couvre toute la
+      fenêtre ; ici, l'exemple. <c>Show()</c> et <c>Hide()</c> l'ouvrent et le ferment, <c>IsOpen</c> le dit ; sa croix,
+      Échap ou un clic sur le voile le ferment. <c>Position</c> : le bord d'où il sort (<c>Left</c>, <c>Right</c>,
+      <c>Top</c>, <c>Bottom</c>, ou <c>Full</c> pour tout l'espace).</p>
+    <exemple comportement="DrawerOuvrir" etendu="oui"><![CDATA[
+<Grid Height="300">
+    <WrapPanel VerticalAlignment="Center" HorizontalAlignment="Center">
+        <mkm:Button x:Name="AGauche" Content="À gauche" Tag="Left" Margin="0,0,8,0" />
+        <mkm:Button Content="À droite" Tag="Right" Margin="0,0,8,0" />
+        <mkm:Button Content="En haut" Tag="Top" Margin="0,0,8,0" />
+        <mkm:Button Content="En bas" Tag="Bottom" Margin="0,0,8,0" />
+        <mkm:Button Content="Plein écran" Tag="Full" />
+    </WrapPanel>
+    <mkm:Drawer x:Name="Tiroir" Header="Filtres">
+        <StackPanel>
+            <mkm:Checkbox Content="Plans" IsChecked="True" Margin="0,0,0,8" />
+            <mkm:Checkbox Content="Pièces" Margin="0,0,0,8" />
+            <mkm:Checkbox Content="Assemblages" />
+        </StackPanel>
+    </mkm:Drawer>
+</Grid>
+]]></exemple>
+  </section>
+
+  <section titre="Pied">
+    <p><c>Footer</c> se pose sous le contenu : des boutons. <c>DismissableMask="False"</c> : un clic sur le voile ne le
+      ferme plus ; <c>ShowCloseIcon="False"</c> retire sa croix.</p>
+    <code><![CDATA[
+<mkm:Drawer Header="Diffuser le plan" Position="Right">
+    <mkm:Drawer.Footer>
+        <mkm:Button Content="Diffuser" HorizontalAlignment="Right" />
+    </mkm:Drawer.Footer>
+    <TextBlock Text="Choisissez les destinataires." />
+</mkm:Drawer>
+]]></code>
+  </section>
+
+  <section titre="Accessibilité">
+    <h3>Lecteur d'écran</h3>
+    <p>Narrateur dit le tiroir « volet », nommé par son titre ; sa croix se nomme « Fermer ».</p>
+    <h3>Clavier</h3>
+    <touches>
+      <touche nom="Tab">À l'ouverture, le clavier entre dans le tiroir ; Tab y tourne sans en sortir.</touche>
+      <touche nom="Échap">Ferme le tiroir ; le clavier revient où il était.</touche>
+    </touches>
+  </section>
+</page>

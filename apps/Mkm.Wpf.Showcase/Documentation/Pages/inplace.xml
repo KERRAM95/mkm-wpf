@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="utf-8"?>
+<page titre="Inplace" categorie="Divers" types="Inplace" jetons="inplace">
+  <resume>Modifier sur place : un texte qui, cliqué, laisse place à un champ pour le modifier, sans quitter la page.</resume>
+
+  <section titre="Import">
+    <code><![CDATA[
+<Window xmlns:mkm="urn:mkm-wpf">
+    <mkm:Inplace Display="HS-00042">
+        <mkm:InputText Text="HS-00042" />
+    </mkm:Inplace>
+</Window>
+]]></code>
+  </section>
+
+  <section titre="Basique">
+    <p><c>Display</c> est montré, grisé au survol ; un clic, Entrée ou Espace montrent le contenu, qui prend le clavier.
+      Échap, ou <c>Deactivate()</c>, rend le texte. <c>IsActive</c> dit lequel est montré.</p>
+    <exemple><![CDATA[
+<mkm:Inplace x:Name="Reference" Display="HS-00042 (cliquez pour modifier)">
+    <mkm:InputText x:Name="Champ" Text="HS-00042" Width="200" />
+</mkm:Inplace>
+]]></exemple>
+  </section>
+
+  <section titre="Contenu">
+    <p>Le contenu peut être n'importe quoi : un texte plus long, une image, une fiche.</p>
+    <exemple><![CDATA[
+<mkm:Inplace Display="Voir les notes du plan">
+    <TextBlock Width="420" TextWrapping="Wrap"
+               Text="Casser les angles vifs. Tolérances ISO 2768-mK. Traitement : anodisation noire." />
+</mkm:Inplace>
+]]></exemple>
+  </section>
+
+  <section titre="Accessibilité">
+    <h3>Lecteur d'écran</h3>
+    <p>Le texte est un bouton, nommé par son texte ; le contenu montré, le clavier y passe.</p>
+    <h3>Clavier</h3>
+    <touches>
+      <touche nom="Entrée">Montre le contenu.</touche>
+      <touche nom="Espace">Montre le contenu.</touche>
+      <touche nom="Échap">Rend le texte ; le clavier y revient.</touche>
+    </touches>
+  </section>
+</page>
