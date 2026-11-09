@@ -402,6 +402,8 @@ Les évolutions notables de mkm-wpf, version par version. Le format suit
 
 ### Corrigé
 
+- ActionBar : un libellé tient sur deux lignes au plus, comme mkm (`line-clamp: 2`), et finit par des points de
+  suspension ; une troisième ligne débordait sous la commande et était coupée.
 - L'accessibilité, relevée en écrivant les tests d'interaction :
   - les contrôles qui contiennent des commandes (ActionBar et ses sections et
     listes, Toolbar, Toast, EmptyContent, PropertyPanel, WelcomePanel, Menu,

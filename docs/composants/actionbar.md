@@ -27,7 +27,8 @@ de celle de 3DEXPERIENCE : mkm-wpf en est la déclinaison bureau.
   - et le **séparateur** entre deux groupes.
 - **Le repli** : un bouton replie la barre, seul son en-tête reste.
 - **Les libellés** sous les icônes, montrés ou cachés par un clic droit sur la
-  barre ouverte.
+  barre ouverte ; deux lignes au plus, comme mkm : un libellé plus long finit
+  par des points de suspension.
 - **Le défilement** : des flèches aux bords dès que la section ne tient plus
   dans la largeur.
 - **L'info-bulle** d'une commande : son libellé, et un indice (`hint`), par

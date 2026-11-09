@@ -417,5 +417,25 @@ Namespace Mkm.Wpf.Controls
 
     End Class
 
+    ''' <summary>
+    ''' La hauteur de deux lignes, d'après la hauteur d'une ligne : le libellé d'une commande tient sur deux lignes au
+    ''' plus, comme dans mkm ; sans hauteur de ligne connue, pas de limite.
+    ''' </summary>
+    Friend NotInheritable Class DeuxLignes
+        Implements IValueConverter
+
+        Public Function Convert(value As Object, targetType As Type, parameter As Object, culture As Globalization.CultureInfo) As Object Implements IValueConverter.Convert
+            If TypeOf value Is Double Then
+                Dim ligne = CDbl(value)
+                If Not Double.IsNaN(ligne) AndAlso Not Double.IsInfinity(ligne) AndAlso ligne > 0 Then Return 2 * ligne
+            End If
+            Return Double.PositiveInfinity
+        End Function
+
+        Public Function ConvertBack(value As Object, targetType As Type, parameter As Object, culture As Globalization.CultureInfo) As Object Implements IValueConverter.ConvertBack
+            Throw New NotSupportedException()
+        End Function
+
+    End Class
 
 End Namespace

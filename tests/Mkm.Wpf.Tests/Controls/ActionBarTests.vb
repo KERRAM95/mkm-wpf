@@ -160,6 +160,21 @@ Namespace Mkm.Wpf.Tests.Controls
         End Sub
 
         <Test>
+        Public Sub Libelle_SurDeuxLignesAuPlus()
+            Dim actualiser As New ActionBarButton With {.Label = "Actualiser la liste des plans depuis le serveur", .Icon = Icons.Refresh}
+            Dim barre = ActionBarTests.Barre(Section("a", actualiser))
+            barre.ShowLabels = True
+            MettreEnPage(barre)
+
+            Dim libelle = Partie(Of TextBlock)(actualiser, "Libelle")
+            Assert.That(libelle.LineHeight, [Is].GreaterThan(0), "hauteur d'une ligne (thème)")
+            Assert.That(libelle.MaxHeight, [Is].EqualTo(2 * libelle.LineHeight))
+            Assert.That(libelle.ActualHeight, [Is].LessThanOrEqualTo(2 * libelle.LineHeight + 0.5), "deux lignes au plus")
+            ' Le libellé reste dans la commande : rien ne déborde sous elle.
+            Assert.That(libelle.TranslatePoint(New Point(0, libelle.ActualHeight), actualiser).Y, [Is].LessThanOrEqualTo(actualiser.ActualHeight + 0.5))
+        End Sub
+
+        <Test>
         Public Sub InfoBulle_CommeMkm()
             Dim enregistrer As New ActionBarButton With {.Label = "Enregistrer", .Hint = "Ouvrez d'abord un plan"}
             Dim barre = ActionBarTests.Barre(Section("a", enregistrer))

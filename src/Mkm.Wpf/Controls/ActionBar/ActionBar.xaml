@@ -48,7 +48,11 @@
         </Setter>
     </Style>
 
-    <!-- Une commande dans la barre : l'icône, et le libellé dessous quand la barre les montre. -->
+    <!-- La hauteur de deux lignes de libellé. -->
+    <local:DeuxLignes x:Key="mkm.ActionBar.DeuxLignes" />
+
+    <!-- Une commande dans la barre : l'icône, et le libellé dessous quand la barre les montre, sur deux lignes au plus
+         (comme mkm : un libellé plus long finit par des points de suspension). -->
     <ControlTemplate x:Key="mkm.ActionBar.ItemTemplate" TargetType="{x:Type ButtonBase}">
         <Grid x:Name="Racine" Background="Transparent">
             <Border Background="{TemplateBinding Background}"
@@ -64,6 +68,7 @@
                            FontSize="{DynamicResource mkm.actionbar.item.label.font.size}"
                            LineHeight="{DynamicResource mkm.actionbar.item.label.line.height}"
                            LineStackingStrategy="BlockLineHeight"
+                           MaxHeight="{Binding LineHeight, RelativeSource={RelativeSource Self}, Converter={StaticResource mkm.ActionBar.DeuxLignes}}"
                            Foreground="{DynamicResource mkm.actionbar.item.label.color}"
                            Text="{TemplateBinding local:ActionBarItem.Label}" />
             </StackPanel>
