@@ -46,8 +46,22 @@ Namespace Mkm.Wpf.Tests.Controls
             Dim tiroir = Pret(New Drawer With {.Position = DrawerPosition.Right, .PanelWidth = 420})
             Dim panneau = DirectCast(tiroir.Template.FindName("PART_Panel", tiroir), FrameworkElement)
             Assert.That(panneau.Width, [Is].EqualTo(420))
+            Assert.That(Double.IsInfinity(panneau.MaxWidth), [Is].True, "à droite, pas de maximum")
             tiroir.Position = DrawerPosition.Top
-            Assert.That(Double.IsNaN(panneau.Width), [Is].True, "en haut, la largeur n'a pas d'objet")
+            Assert.That(Double.IsNaN(panneau.Width), [Is].True, "en haut, toute la largeur…")
+            Assert.That(panneau.MaxWidth, [Is].EqualTo(420), "… jusqu'à son maximum, centré au-delà")
+            tiroir.ClearValue(Drawer.PanelWidthProperty)
+            Assert.That(Double.IsInfinity(panneau.MaxWidth), [Is].True, "sans largeur donnée, toute la largeur")
+        End Sub
+
+        <Test>
+        Public Sub Drawer_EnBasSurUnGrandEcranLePanneauEstCentre()
+            Dim tiroir = Pret(New Drawer With {.Position = DrawerPosition.Bottom, .PanelWidth = 600, .IsOpen = True},
+                              largeur:=1600, hauteur:=900)
+            Dim panneau = DirectCast(tiroir.Template.FindName("PART_Panel", tiroir), FrameworkElement)
+            Assert.That(panneau.ActualWidth, [Is].EqualTo(600))
+            Dim gauche = panneau.TranslatePoint(New Point(0, 0), tiroir).X
+            Assert.That(gauche, [Is].EqualTo(500).Within(1), "centré : (1600 - 600) / 2")
         End Sub
 
         <Test>

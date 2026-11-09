@@ -8,6 +8,9 @@ Les évolutions notables de mkm-wpf, version par version. Le format suit
 
 ### Ajouté
 
+- Drawer : en haut ou en bas, `PanelWidth` est la largeur maximale du panneau ; sur un grand écran il
+  la garde, centré, sur un écran plus étroit il prend toute la largeur. Le voile couvre toujours tout le
+  conteneur.
 - Le squelette du dépôt : la solution `Mkm.Wpf.sln`, la bibliothèque
   `Mkm.Wpf` (aucun contrôle encore), la vitrine `Mkm.Wpf.Showcase`, les
   tests `Mkm.Wpf.Tests` avec les règles communes à tous les contrôles.

@@ -45,7 +45,10 @@ Namespace Mkm.Wpf.Controls
         Public Shared ReadOnly PositionProperty As DependencyProperty = DependencyProperty.Register(
             NameOf(Position), GetType(DrawerPosition), GetType(Drawer), New FrameworkPropertyMetadata(DrawerPosition.Left, AddressOf OnTailleChanged))
 
-        ''' <summary>La largeur du panneau à gauche ou à droite (la section « Size » de mkm) ; sinon celle du thème.</summary>
+        ''' <summary>
+        ''' La largeur du panneau à gauche ou à droite (la section « Size » de mkm) ; sinon celle du thème. En haut ou en bas,
+        ''' sa largeur maximale : plus large, le conteneur le montre centré ; plus étroit, sur toute sa largeur.
+        ''' </summary>
         Public Shared ReadOnly PanelWidthProperty As DependencyProperty = DependencyProperty.Register(
             NameOf(PanelWidth), GetType(Double), GetType(Drawer), New FrameworkPropertyMetadata(Double.NaN, AddressOf OnTailleChanged))
 
@@ -53,7 +56,10 @@ Namespace Mkm.Wpf.Controls
         Public Shared ReadOnly PanelHeightProperty As DependencyProperty = DependencyProperty.Register(
             NameOf(PanelHeight), GetType(Double), GetType(Drawer), New FrameworkPropertyMetadata(Double.NaN, AddressOf OnTailleChanged))
 
-        ''' <summary>La largeur du panneau à gauche ou à droite ; Double.NaN (par défaut) : celle du thème.</summary>
+        ''' <summary>
+        ''' La largeur du panneau à gauche ou à droite ; en haut ou en bas, sa largeur maximale, centré au-delà ;
+        ''' Double.NaN (par défaut) : celle du thème, et toute la largeur en haut ou en bas.
+        ''' </summary>
         Public Property PanelWidth As Double
             Get
                 Return CDbl(GetValue(PanelWidthProperty))
@@ -84,6 +90,9 @@ Namespace Mkm.Wpf.Controls
             Dim horizontal = Position = DrawerPosition.Top OrElse Position = DrawerPosition.Bottom
             If lateral AndAlso Not Double.IsNaN(PanelWidth) Then _panneau.Width = PanelWidth Else _panneau.ClearValue(WidthProperty)
             If horizontal AndAlso Not Double.IsNaN(PanelHeight) Then _panneau.Height = PanelHeight Else _panneau.ClearValue(HeightProperty)
+            ' En haut ou en bas, la largeur donnée est un maximum : sur un grand écran le panneau la garde, centré (étiré
+            ' jusqu'à son maximum, WPF le centre) ; sur un écran plus étroit, il prend toute la largeur.
+            If horizontal AndAlso Not Double.IsNaN(PanelWidth) Then _panneau.MaxWidth = PanelWidth Else _panneau.ClearValue(MaxWidthProperty)
         End Sub
 
         ''' <summary>Le pied, sous le contenu : des boutons.</summary>
