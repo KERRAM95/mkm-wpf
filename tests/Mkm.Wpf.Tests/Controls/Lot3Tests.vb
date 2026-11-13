@@ -67,6 +67,20 @@ Namespace Mkm.Wpf.Tests.Controls
         End Sub
 
         <Test>
+        Public Sub IdCard_LaVignetteSansLisereSaufSiLApplicationEnDonneUn()
+            Dim carte = Pret(New IdCard With {.Title = "Carter", .Thumbnail = Icons.Structure})
+            Dim tuile = Partie(Of Border)(carte, "Vignette")
+            Assert.That(tuile.BorderThickness, [Is].EqualTo(New Thickness(0)), "aucun liseré par défaut")
+
+            carte.Resources("mkm.idcard.thumbnail.border.color") = Brushes.SteelBlue
+            carte.Resources("mkm.idcard.thumbnail.border.width") = New Thickness(1)
+            carte.UpdateLayout()
+
+            Assert.That(tuile.BorderThickness, [Is].EqualTo(New Thickness(1)))
+            Assert.That(tuile.BorderBrush, [Is].SameAs(Brushes.SteelBlue))
+        End Sub
+
+        <Test>
         Public Sub IdCard_LaCouleurDeMaturiteDeLApplication()
             Dim carte = Pret(New IdCard With {.Title = "Carter", .Maturity = "Released", .MaturityColor = Brushes.DarkGreen})
 

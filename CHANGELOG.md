@@ -8,6 +8,8 @@ Les évolutions notables de mkm-wpf, version par version. Le format suit
 
 ### Ajouté
 
+- IdCard : la tuile de la vignette peut avoir un liseré, par deux jetons (`idcard.thumbnail.border.color`,
+  `idcard.thumbnail.border.width`) ; aucun par défaut, comme mkm.
 - Drawer : en haut ou en bas, `PanelWidth` est la largeur maximale du panneau ; sur un grand écran il
   la garde, centré, sur un écran plus étroit il prend toute la largeur. Le voile couvre toujours tout le
   conteneur.

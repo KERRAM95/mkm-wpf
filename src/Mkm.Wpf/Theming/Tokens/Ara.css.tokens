@@ -208,6 +208,9 @@ tooltip.top.window.padding = 1px 2px 0 2px
 # mesure de mkm-wpf : une géométrie donnée pour vignette, dessinée à 40 px dans la tuile de 72.
 idcard.thumbnail.margin = 0 {idcard.header.gap} 0 0
 idcard.thumbnail.icon.size = 40px
+# Le liseré de la tuile : aucun chez mkm (transparent, 0 de chaque côté) ; une application peut en donner un.
+idcard.thumbnail.border.color = transparent
+idcard.thumbnail.border.width = 0 0 0 0
 idcard.revision.margin = 0 0 0 {idcard.revision.gap}
 idcard.actions.margin = 0 0 0 {idcard.actions.gap}
 idcard.actions.button.margin = 0 0 0 {idcard.actions.gap}

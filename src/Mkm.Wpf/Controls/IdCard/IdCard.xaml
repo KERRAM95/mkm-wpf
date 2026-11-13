@@ -35,6 +35,8 @@
                                     Height="{DynamicResource mkm.idcard.thumbnail.height}"
                                     Padding="{DynamicResource mkm.idcard.thumbnail.padding}"
                                     Background="{DynamicResource mkm.idcard.thumbnail.background}"
+                                    BorderBrush="{DynamicResource mkm.idcard.thumbnail.border.color}"
+                                    BorderThickness="{DynamicResource mkm.idcard.thumbnail.border.width}"
                                     CornerRadius="{DynamicResource mkm.idcard.thumbnail.border.radius}">
                                 <ContentPresenter Content="{TemplateBinding Thumbnail}" HorizontalAlignment="Center" VerticalAlignment="Center">
                                     <ContentPresenter.Resources>

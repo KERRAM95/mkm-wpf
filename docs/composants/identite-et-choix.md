@@ -15,7 +15,7 @@ nombre (une masse, un nombre de feuilles).
 ## Ce que fait mkm
 
 - **IdCard** (preset `idcard`, redessiné pour 3DEXPERIENCE) :
-  - **la vignette :** dans une tuile de 72 px, sur un fond pâle, sans être rognée ni agrandie ;
+  - **la vignette :** dans une tuile de 72 px, sur un fond pâle, sans être rognée ni agrandie ; sans liseré (mkm-wpf : `idcard.thumbnail.border.color` et `idcard.thumbnail.border.width` en donnent un) ;
   - **le titre :** 16 px semi-gras (14 px en petit), la révision dans une pastille grise qui reste visible quand il se coupe ;
   - **les boutons :** replier, fermer, et ceux qu'on ajoute ;
   - **les détails :** 12 px gris, le propriétaire, le type et son icône, la maturité dans une étiquette, le reste ;
