@@ -2,6 +2,7 @@ Imports System.Linq
 Imports System.Windows
 Imports System.Windows.Controls
 Imports System.Windows.Controls.Primitives
+Imports System.Windows.Threading
 Imports Mkm.Wpf.Controls
 Imports NUnit.Framework
 
@@ -25,6 +26,57 @@ Namespace Mkm.Wpf.Tests.Controls
         Private Shared Function Partie(Of T As DependencyObject)(controle As Control, nom As String) As T
             Return DirectCast(controle.Template.FindName(nom, controle), T)
         End Function
+
+        ' Ce que le Dispatcher a en attente.
+        Private Shared Sub Vider()
+            Dispatcher.CurrentDispatcher.Invoke(DispatcherPriority.Background, New System.Action(Sub()
+                                                                                                End Sub))
+        End Sub
+
+        ' Une liste de 40 choix posée en haut ou en bas d'une fenêtre de 300 de haut, ouverte.
+        Private Shared Function ListeOuverteDans(fenetre As Window, enBas As Boolean) As [Select]
+            Dim liste As New [Select] With {.Width = 200, .VerticalAlignment = If(enBas, VerticalAlignment.Bottom, VerticalAlignment.Top),
+                                            .Margin = New Thickness(20)}
+            For i = 1 To 40
+                liste.Items.Add($"Choix {i}")
+            Next
+            Dim grille As New Grid()
+            grille.Children.Add(liste)
+            fenetre.Content = grille
+            fenetre.Show()
+            Vider()
+            liste.IsDropDownOpen = True
+            Vider()
+            Return liste
+        End Function
+
+        <Test>
+        Public Sub Select_LaListeResteDansSaFenetre()
+            Dim fenetre As New Window With {.Width = 400, .Height = 300, .Left = -10000, .Top = -10000,
+                                            .ShowInTaskbar = False, .ShowActivated = False, .WindowStyle = WindowStyle.None}
+            Try
+                ' En bas de la fenêtre : pas la place dessous, la liste s'ouvre dessus et s'arrête au bord du haut.
+                Dim enBas = ListeOuverteDans(fenetre, True)
+                Assert.That(enBas.OpensUpward, [Is].True, "pas la place dessous : elle s'ouvre dessus")
+                Dim dessus = enBas.TransformToAncestor(fenetre).Transform(New Point(0, 0)).Y
+                Assert.That(enBas.DropDownHeightLimit, [Is].LessThan(dessus), "sa hauteur s'arrête au bord de la fenêtre")
+                Assert.That(DirectCast(Partie(Of System.Windows.Controls.Primitives.Popup)(enBas, "PART_Popup"), System.Windows.Controls.Primitives.Popup).Placement,
+                            [Is].EqualTo(PlacementMode.Top))
+                Dim defilement = Partie(Of ScrollViewer)(enBas, "PART_Defilement")
+                Assert.That(defilement.ScrollableHeight, [Is].GreaterThan(0), "le reste défile")
+                enBas.IsDropDownOpen = False
+                Vider()
+
+                ' En haut : la place dessous, elle s'ouvre dessous, comme avant.
+                Dim enHaut = ListeOuverteDans(fenetre, False)
+                Assert.That(enHaut.OpensUpward, [Is].False, "la place dessous : elle s'ouvre dessous")
+                Dim dessous = fenetre.ActualHeight - (enHaut.TransformToAncestor(fenetre).Transform(New Point(0, 0)).Y + enHaut.ActualHeight)
+                Assert.That(enHaut.DropDownHeightLimit, [Is].LessThan(dessous))
+                enHaut.IsDropDownOpen = False
+            Finally
+                fenetre.Close()
+            End Try
+        End Sub
 
         <Test>
         Public Sub InputText_GabaritEtHauteurDuTheme()

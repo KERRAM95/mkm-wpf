@@ -402,6 +402,10 @@ Les évolutions notables de mkm-wpf, version par version. Le format suit
 
 ### Corrigé
 
+- Select : la liste ne sort plus de sa fenêtre, comme dans mkm où elle ne sort pas de la page : sans la place dessous
+  (un champ près du bas de la fenêtre), elle s'ouvre dessus ; sa hauteur s'arrête au bord de la fenêtre (et à
+  `MaxDropDownHeight`), le reste défile. Elle s'ouvrait toujours dessous et débordait de la fenêtre.
+  `OpensUpward` et `DropDownHeightLimit` (lecture seule) le disent à chaque ouverture.
 - ActionBar : un libellé tient sur deux lignes au plus, comme mkm (`line-clamp: 2`), et finit par des points de
   suspension ; une troisième ligne débordait sous la commande et était coupée.
 - L'accessibilité, relevée en écrivant les tests d'interaction :

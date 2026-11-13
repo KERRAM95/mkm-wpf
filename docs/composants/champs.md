@@ -27,6 +27,9 @@ s'ouvre aussitôt, aucune animation qui bloque.
   - **au survol :** tout fonce d'un pas ;
   - **au focus :** les bordures prennent le bleu, le bouton un bleu pâle, la flèche un bleu foncé ;
   - **la liste :** elle s'ouvre 4 px sous le champ, ses choix de 22 px séparés d'un trait, le choix actuel cerné de bleu ;
+  - **dans sa fenêtre :** comme dans mkm, où la liste ne sort pas de la page, elle ne sort pas de sa fenêtre : sans la place
+    dessous (un champ près du bas), elle s'ouvre dessus ; sa hauteur s'arrête au bord de la fenêtre (et à
+    `MaxDropDownHeight`), le reste défile. `OpensUpward` et `DropDownHeightLimit` disent où et jusqu'où, à chaque ouverture ;
   - **éditable :** la valeur peut sortir de la liste (`editable`).
 - Une partie de ces mesures n'a pas de jeton dans mkm : elle est écrite dans
   la feuille CSS de chaque preset (`css`).

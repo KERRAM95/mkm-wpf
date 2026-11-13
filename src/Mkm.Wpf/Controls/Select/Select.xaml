@@ -182,7 +182,7 @@
                                         Effect="{DynamicResource mkm.select.overlay.shadow}" />
                                 <Border Background="{DynamicResource mkm.select.list.background}"
                                         Padding="{DynamicResource mkm.select.list.padding}">
-                                    <ScrollViewer MaxHeight="{TemplateBinding MaxDropDownHeight}" Focusable="False"
+                                    <ScrollViewer x:Name="PART_Defilement" MaxHeight="{TemplateBinding DropDownHeightLimit}" Focusable="False"
                                                   CanContentScroll="True" VerticalScrollBarVisibility="Auto">
                                         <ItemsPresenter KeyboardNavigation.DirectionalNavigation="Contained" />
                                     </ScrollViewer>
