@@ -202,7 +202,8 @@
             <Setter.Value>
                 <ControlTemplate TargetType="{x:Type MenuItem}">
                     <Grid x:Name="Racine" Background="Transparent">
-                        <Border x:Name="Fond" Background="Transparent" Padding="{TemplateBinding Padding}">
+                        <Border x:Name="Fond" Background="Transparent" Padding="{TemplateBinding Padding}"
+                                CornerRadius="{DynamicResource mkm.contextmenu.item.border.radius}">
                             <Grid>
                                 <Grid.ColumnDefinitions>
                                     <ColumnDefinition x:Name="ColonneIcone" Width="Auto" />
@@ -240,6 +241,7 @@
                             </Grid>
                         </Border>
                         <Border x:Name="Anneau" Visibility="Collapsed" BorderThickness="2"
+                                CornerRadius="{DynamicResource mkm.contextmenu.item.border.radius}"
                                 BorderBrush="{DynamicResource mkm.contextmenu.item.keyboard.border.color}" />
                         <Popup x:Name="PART_Popup" AllowsTransparency="True" Focusable="False" PopupAnimation="None"
                                Placement="Right" HorizontalOffset="{DynamicResource mkm.contextmenu.submenu.offset}"

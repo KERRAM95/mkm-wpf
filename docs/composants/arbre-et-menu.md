@@ -17,7 +17,7 @@ l'ancien HS CART) et proposer leurs commandes au clic droit.
 - **ContextMenu**, le menu de 3DEXPERIENCE (presets `contextmenu`) :
   - **le menu :** blanc, bordé de gris clair, sans arrondi, ombre courte, 90 px au moins ; il s'ouvre au point du clic, sans animation ;
   - **les éléments :** 24 px ; l'icône de 16 px dans une colonne de 44 px où commence le libellé (sans colonne si aucun élément n'a d'icône) ; le raccourci à droite en 11 px gris ;
-  - **les états :** une commande grisée dans un gris à elle ; au clavier, cernée de 2 px de gris ;
+  - **les états :** une commande grisée dans un gris à elle ; au clavier, cernée de 2 px de gris ; le surlignage et l'anneau sans arrondi (mkm-wpf : `contextmenu.item.border.radius` les arrondit) ;
   - **le reste :** le trait entre deux groupes, les sous-menus.
 
 ## L'état de l'art

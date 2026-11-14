@@ -23,6 +23,24 @@ Namespace Mkm.Wpf.Tests.Controls
             Return element
         End Function
 
+        ' ---- Les éléments de menu ----
+
+        <Test>
+        Public Sub ElementDeMenu_SonSurlignageSuitLArrondiDuTheme()
+            Dim element As New MenuItem With {.Header = "Information"}
+            Dim menu As New Mkm.Wpf.Controls.Menu()
+            menu.Items.Add(element)
+            Pret(menu)
+            element.ApplyTemplate()
+            Dim fond = DirectCast(element.Template.FindName("Fond", element), Border)
+            Assert.That(fond.CornerRadius, [Is].EqualTo(New CornerRadius(0)), "aucun arrondi dans le thème, comme mkm")
+
+            menu.Resources("mkm.contextmenu.item.border.radius") = New CornerRadius(6)
+            menu.UpdateLayout()
+
+            Assert.That(fond.CornerRadius, [Is].EqualTo(New CornerRadius(6)), "une application peut l'arrondir")
+        End Sub
+
         ' ---- Menubar ----
 
         <Test>

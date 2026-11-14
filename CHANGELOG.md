@@ -8,6 +8,8 @@ Les évolutions notables de mkm-wpf, version par version. Le format suit
 
 ### Ajouté
 
+- Éléments de menu (`MenuItem` d'un `ContextMenu` ou d'un `Menu`) : leur surlignage et leur anneau de clavier suivent
+  `contextmenu.item.border.radius` (aucun arrondi dans Ara et Dashboard, comme mkm) ; une application peut les arrondir.
 - IdCard : la tuile de la vignette peut avoir un liseré, par deux jetons (`idcard.thumbnail.border.color`,
   `idcard.thumbnail.border.width`) ; aucun par défaut, comme mkm.
 - Drawer : en haut ou en bas, `PanelWidth` est la largeur maximale du panneau ; sur un grand écran il
