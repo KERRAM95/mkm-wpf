@@ -67,6 +67,13 @@ Namespace Mkm.Wpf.Controls
             New FrameworkPropertyMetadata(False, FrameworkPropertyMetadataOptions.BindsTwoWayByDefault))
 
         ''' <summary>
+        ''' Vrai pendant que ses valeurs et ses images se lisent : la tuile montre un squelette animé (<see cref="Skeleton"/>)
+        ''' à la place de sa vignette et de ses trois lignes, sans chevron ni liseré.
+        ''' </summary>
+        Public Shared ReadOnly IsLoadingProperty As DependencyProperty = DependencyProperty.Register(
+            NameOf(IsLoading), GetType(Boolean), GetType(Tile), New FrameworkPropertyMetadata(False))
+
+        ''' <summary>
         ''' Levé par le chevron. Non traité, le <see cref="FrameworkElement.ContextMenu"/> de la tuile s'ouvre sous lui ;
         ''' l'application qui ouvre autre chose (un <see cref="Popover"/>) le traite.
         ''' </summary>
@@ -86,9 +93,10 @@ Namespace Mkm.Wpf.Controls
             AddHandler Unloaded, Sub() RemoveHandler Localizer.Current.LanguageChanged, AddressOf Langue
         End Sub
 
-        ''' <summary>Un groupe nommé par son titre pour les lecteurs d'écran, son gabarit compris.</summary>
+        ''' <summary>Un groupe nommé par son titre pour les lecteurs d'écran (« Chargement » pendant qu'elle se lit), son gabarit compris.</summary>
         Protected Overrides Function OnCreateAutomationPeer() As System.Windows.Automation.Peers.AutomationPeer
-            Return New PairDeConteneur(Me, System.Windows.Automation.Peers.AutomationControlType.Group, Function() Title)
+            Return New PairDeConteneur(Me, System.Windows.Automation.Peers.AutomationControlType.Group,
+                                       Function() If(IsLoading, Localizer.Current.T("aria.busy"), Title))
         End Function
 
         ''' <summary>Relie le chevron du gabarit.</summary>
@@ -213,6 +221,16 @@ Namespace Mkm.Wpf.Controls
             End Get
             Set(value As String)
                 SetValue(MenuLabelProperty, value)
+            End Set
+        End Property
+
+        ''' <summary>Vrai pendant que ses valeurs et ses images se lisent.</summary>
+        Public Property IsLoading As Boolean
+            Get
+                Return CBool(GetValue(IsLoadingProperty))
+            End Get
+            Set(value As Boolean)
+                SetValue(IsLoadingProperty, value)
             End Set
         End Property
 

@@ -77,6 +77,11 @@ mise en page est celle de 3DEXPERIENCE, chaque mesure et chaque couleur un jeton
 - **Le menu :** le chevron (`HasMenu`) lève `MenuRequested` ; si personne ne
   le traite, il ouvre le `ContextMenu` de la tuile sous lui. L'application qui
   préfère un `Popover` le traite.
+- **Le chargement (`IsLoading`) :** la tuile garde sa place et sa hauteur, le
+  squelette animé de mkm (`Skeleton`, la vague) à la place de la vignette et des
+  trois lignes, sans chevron ni liseré ; une liste montre ainsi toutes ses tuiles
+  en squelettes, puis toutes remplies d'un coup (Mourad, le 15/11/2026 : les
+  tuiles qui arrivaient une par une gênaient).
 - **Survol et choix :** sous la souris, le bord prend `tile.hover.border.color` ;
   `IsSelected` cerne la tuile de `tile.selected.border.color` (la liste le lie
   au choix de sa ligne).
@@ -86,7 +91,7 @@ mise en page est celle de 3DEXPERIENCE, chaque mesure et chaque couleur un jeton
 - **Propriétés :** `Thumbnail` (objet : image ou géométrie), `TypeIcon` (objet),
   `Title` (texte), `Subtitle` (objet), `Description` (texte), `Stripe`
   (pinceau, aucun), `HasMenu` (faux), `MenuLabel` (texte, par défaut
-  `tile.menu`), `IsSelected` (faux).
+  `tile.menu`), `IsSelected` (faux), `IsLoading` (faux).
 - **Événement routé :** `MenuRequested` (le chevron cliqué, à bulles).
 - **Partie du gabarit :** `PART_MenuButton` (`ButtonBase`).
 - **Jetons :** `tile.height`, `tile.background`, `tile.border.color`,
@@ -97,20 +102,24 @@ mise en page est celle de 3DEXPERIENCE, chaque mesure et chaque couleur un jeton
   `.font.size`, `.line.height`, `tile.subtitle.color`, `.font.size`,
   `.line.height`, `.margin`, `tile.link.color`, `tile.description.color`,
   `.font.size`, `.font.weight`, `.line.height`, `.margin`, `tile.menu.color`,
-  `tile.menu.size`, `tile.menu.icon.size`, `tile.menu.margin`.
+  `tile.menu.size`, `tile.menu.icon.size`, `tile.menu.margin`,
+  `tile.skeleton.title.width`, `.height`, `.margin`, `tile.skeleton.subtitle.width`,
+  `.margin`, `tile.skeleton.description.width`, `.margin`, `tile.skeleton.line.height`.
 
 ## Clavier, accessibilité, performance
 
 La tuile ne prend pas le clavier : la ligne de la liste le prend. Son chevron le
 prend (Tab), et Entrée ou Espace l'ouvrent. Pour un lecteur d'écran, la tuile est
-un groupe nommé par son titre ; le chevron se nomme « Actions » (`MenuLabel`).
-Les vignettes et les icônes sont des dessins, non lus. Aucune animation ; dans
-une liste virtualisée, seules les tuiles visibles sont faites.
+un groupe nommé par son titre (« Chargement en cours » pendant qu'elle se lit) ;
+le chevron se nomme « Actions » (`MenuLabel`). Les vignettes et les icônes sont
+des dessins, non lus. Une seule animation, la vague du squelette pendant la
+lecture ; dans une liste virtualisée, seules les tuiles visibles sont faites.
 
 ## La vitrine et les tests
 
-Sa page (`tile.xml`) : Import, Basique, Sans vignette, Liseré, Menu, Liste,
-Accessibilité. Les tests : les mesures et couleurs du thème, le liseré absent
+Sa page (`tile.xml`) : Import, Basique, Sans vignette, Liseré, Menu, Chargement,
+Liste, Accessibilité. Les tests : les mesures et couleurs du thème, le liseré absent
 puis présent, la zone de la vignette gardée sans image, le chevron absent sans
 `HasMenu`, `MenuRequested` puis le `ContextMenu`, le cadre d'`IsSelected`, le nom
-du groupe et du chevron.
+du groupe et du chevron, le squelette d'`IsLoading` (même hauteur, ni chevron ni
+liseré, nommé « Chargement en cours »).

@@ -559,3 +559,13 @@ tile.menu.color = {surface.500}
 tile.menu.size = 28px
 tile.menu.icon.size = 28px
 tile.menu.margin = 0 2px 0 0
+# En lecture : le squelette de la vignette à sa place, puis trois barres aux lignes du titre (13 px), du sous-titre
+# et de la description (10 px).
+tile.skeleton.title.width = 130px
+tile.skeleton.title.height = 13px
+tile.skeleton.title.margin = 1px 0 0 0
+tile.skeleton.subtitle.width = 200px
+tile.skeleton.subtitle.margin = 13px 0 0 0
+tile.skeleton.description.width = 150px
+tile.skeleton.description.margin = 11px 0 0 0
+tile.skeleton.line.height = 10px

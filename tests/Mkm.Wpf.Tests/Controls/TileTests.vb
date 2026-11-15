@@ -157,6 +157,31 @@ Namespace Mkm.Wpf.Tests.Controls
         End Sub
 
         <Test>
+        Public Sub Tile_EnLectureUnSqueletteSansChevronNiLisere()
+            Dim tuile = Exemple()
+            tuile.HasMenu = True
+            tuile.Stripe = Brushes.DarkGreen
+            tuile.IsLoading = True
+            Pret(tuile)
+
+            Assert.That(Partie(Of UIElement)(tuile, "SqueletteDeLaVignette").Visibility, [Is].EqualTo(Visibility.Visible))
+            Assert.That(Partie(Of UIElement)(tuile, "SqueletteDuTexte").Visibility, [Is].EqualTo(Visibility.Visible))
+            Assert.That(Partie(Of UIElement)(tuile, "Texte").Visibility, [Is].EqualTo(Visibility.Hidden))
+            Assert.That(Partie(Of UIElement)(tuile, Tile.PartMenuButton).Visibility, [Is].EqualTo(Visibility.Collapsed))
+            Assert.That(Partie(Of UIElement)(tuile, "Lisere").Visibility, [Is].EqualTo(Visibility.Collapsed))
+            Assert.That(tuile.ActualHeight, [Is].EqualTo(70), "la même hauteur qu'une tuile lue : rien ne saute")
+            Assert.That(UIElementAutomationPeer.CreatePeerForElement(tuile).GetName(), [Is].EqualTo(Localizer.Current.T("aria.busy")))
+
+            tuile.IsLoading = False
+            tuile.UpdateLayout()
+
+            Assert.That(Partie(Of UIElement)(tuile, "SqueletteDuTexte").Visibility, [Is].EqualTo(Visibility.Collapsed))
+            Assert.That(Partie(Of UIElement)(tuile, "Texte").Visibility, [Is].EqualTo(Visibility.Visible))
+            Assert.That(Partie(Of UIElement)(tuile, Tile.PartMenuButton).Visibility, [Is].EqualTo(Visibility.Visible))
+            Assert.That(Partie(Of UIElement)(tuile, "Lisere").Visibility, [Is].EqualTo(Visibility.Visible))
+        End Sub
+
+        <Test>
         Public Sub Tile_UnGroupeNommeParSonTitreEtUnChevronNomme()
             Dim tuile = Exemple()
             tuile.HasMenu = True

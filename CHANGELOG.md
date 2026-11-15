@@ -8,6 +8,9 @@ Les évolutions notables de mkm-wpf, version par version. Le format suit
 
 ### Ajouté
 
+- Tile : `IsLoading`, la tuile en squelette animé (Skeleton) pendant que ses valeurs et ses images se lisent, à sa
+  place et de sa hauteur, sans chevron ni liseré ; une liste montre toutes ses tuiles en squelettes, puis toutes
+  remplies d'un coup.
 - Tile : la tuile d'un objet dans une liste, celle des résultats de recherche de 3DEXPERIENCE (70 px de haut) :
   sa vignette dans une zone grise de 79 × 58, l'icône de son type et son titre, une ligne de sous-titre, sa
   description en gras, le chevron de son menu (`HasMenu`, `MenuRequested`, sinon son `ContextMenu`), un liseré de

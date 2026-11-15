@@ -77,6 +77,18 @@
 ]]></exemple>
   </section>
 
+  <section titre="Chargement">
+    <p><c>IsLoading</c> : pendant que les valeurs et les images d'un objet se lisent, sa tuile est déjà à sa place, en
+      squelette animé (<lien page="skeleton">Skeleton</lien>), de la même hauteur ; rien ne saute quand elle se remplit.
+      Une liste peut ainsi montrer toutes ses tuiles en squelettes, puis toutes remplies d'un coup.</p>
+    <exemple><![CDATA[
+<StackPanel Width="520" Background="{DynamicResource mkm.surface.100}">
+    <mkm:Tile Margin="10,10,10,0" IsLoading="True" />
+    <mkm:Tile Margin="10" IsLoading="True" />
+</StackPanel>
+]]></exemple>
+  </section>
+
   <section titre="Liste">
     <p>Dans une liste, 10 px séparent les tuiles, sur le fond gris de la liste. La ligne de la liste prend le
       clavier et lie <c>IsSelected</c> à son choix : la tuile choisie est cernée.</p>
@@ -95,8 +107,9 @@
 
   <section titre="Accessibilité">
     <h3>Lecteur d'écran</h3>
-    <p>La tuile est un groupe nommé par son titre. Son chevron se nomme « Actions » (<c>MenuLabel</c> le change). La
-      vignette et l'icône du type sont des dessins, que le lecteur d'écran ne lit pas.</p>
+    <p>La tuile est un groupe nommé par son titre, « Chargement en cours » pendant qu'elle se lit. Son chevron se nomme
+      « Actions » (<c>MenuLabel</c> le change). La vignette et l'icône du type sont des dessins, que le lecteur d'écran
+      ne lit pas.</p>
     <h3>Clavier</h3>
     <touches>
       <touche nom="Tab">Amène le clavier sur le chevron.</touche>
