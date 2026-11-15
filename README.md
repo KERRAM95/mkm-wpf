@@ -159,7 +159,9 @@ Les commandes de l'application se déclarent une fois dans un `CommandRegistry`
    jetons, API, clavier, accessibilité, pages, tests) ; les défauts corrigés.
    Les fonctions d'ui-kit encore absentes, à décider, sont dans
    `docs/composants/fonctions-absentes.md`.
-32. La suite : le paquet NuGet ; hscart-next sur la bibliothèque.
+32. ~~La tuile~~ : faite — `Tile`, la tuile de résultat de 3DEXPERIENCE, que mkm
+   n'a pas (`docs/composants/tuile.md`).
+33. La suite : le paquet NuGet ; hscart-next sur la bibliothèque.
 
 ## Règles
 

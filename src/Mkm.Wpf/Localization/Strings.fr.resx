@@ -222,4 +222,7 @@
   <data name="aria.terminalCommand" xml:space="preserve">
     <value>Commande</value>
   </data>
+  <data name="tile.menu" xml:space="preserve">
+    <value>Actions</value>
+  </data>
 </root>

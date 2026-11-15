@@ -1,0 +1,107 @@
+<?xml version="1.0" encoding="utf-8"?>
+<page titre="Tile" categorie="Données" types="Tile" jetons="tile">
+  <resume>La tuile d'un objet dans une liste, celle des résultats de recherche de 3DEXPERIENCE : sa vignette, l'icône
+    de son type et son titre, une ligne de sous-titre, sa description, le chevron de son menu, et un liseré de
+    couleur à gauche.</resume>
+
+  <section titre="Import">
+    <code><![CDATA[
+<Window xmlns:mkm="urn:mkm-wpf">
+    <mkm:Tile Title="Plan d'ensemble" Subtitle="Plan | A | En cours | M. Kerram" Description="HS-00042" />
+</Window>
+]]></code>
+  </section>
+
+  <section titre="Basique">
+    <p>70 px de haut, quelle que soit la largeur : seul le texte se coupe. <c>Thumbnail</c> et <c>TypeIcon</c> sont une
+      image ou une icône ; <c>Title</c> et <c>Description</c> des textes, sur une ligne chacun. <c>Subtitle</c> est un
+      texte, ou un <c>TextBlock</c> dont un <c>Run</c> prend la couleur d'un lien (<c>mkm.tile.link.color</c>).</p>
+    <exemple><![CDATA[
+<StackPanel Width="520" Background="{DynamicResource mkm.surface.100}">
+    <mkm:Tile Margin="10,10,10,0" Title="Plan d'ensemble HS-00042" TypeIcon="{x:Static mkm:Icons.Drawings}"
+              Thumbnail="{x:Static mkm:Icons.Drawings}" Description="drw-00042">
+        <mkm:Tile.Subtitle>
+            <TextBlock TextTrimming="CharacterEllipsis">Plan | A | En cours | <Run Text="M. Kerram"
+                Foreground="{DynamicResource mkm.tile.link.color}" /> | 07/11/2026</TextBlock>
+        </mkm:Tile.Subtitle>
+    </mkm:Tile>
+    <mkm:Tile Margin="10" Title="Île au large" TypeIcon="{x:Static mkm:Icons.Structure}"
+              Subtitle="Photo | B | Validé | M. Kerram | 06/11/2026" Description="img-00007">
+        <mkm:Tile.Thumbnail>
+            <BitmapImage UriSource="pack://application:,,,/Images/island1.jpg" />
+        </mkm:Tile.Thumbnail>
+    </mkm:Tile>
+</StackPanel>
+]]></exemple>
+  </section>
+
+  <section titre="Sans vignette">
+    <p>Sans <c>Thumbnail</c>, la zone de la vignette reste là, grise : les titres des tuiles d'une liste restent
+      alignés. Sans <c>TypeIcon</c>, le titre prend sa place.</p>
+    <exemple><![CDATA[
+<StackPanel Width="520" Background="{DynamicResource mkm.surface.100}">
+    <mkm:Tile Margin="10" Title="Article sans vignette" Subtitle="Article | A | En cours" Description="prd-00043" />
+</StackPanel>
+]]></exemple>
+  </section>
+
+  <section titre="Liseré">
+    <p>La couleur d'un état est la politique de l'application, non du thème : <c>Stripe</c> la donne, en liseré
+      contre le bord gauche. Sans elle, aucun liseré.</p>
+    <exemple><![CDATA[
+<StackPanel Width="520" Background="{DynamicResource mkm.surface.100}">
+    <mkm:Tile Margin="10,10,10,0" Title="Carter" TypeIcon="{x:Static mkm:Icons.Structure}" Thumbnail="{x:Static mkm:Icons.Structure}"
+              Subtitle="Article | B | Validé | M. Kerram" Description="prd-00044" Stripe="#018308" />
+    <mkm:Tile Margin="10" Title="Couvercle" TypeIcon="{x:Static mkm:Icons.Structure}" Thumbnail="{x:Static mkm:Icons.Structure}"
+              Subtitle="Article | A | En cours | M. Kerram" Description="prd-00045" Stripe="#007DA3" />
+</StackPanel>
+]]></exemple>
+  </section>
+
+  <section titre="Menu">
+    <p><c>HasMenu</c> ajoute le chevron. Il lève <c>MenuRequested</c> ; si personne ne le traite, le
+      <c>ContextMenu</c> de la tuile s'ouvre sous lui. Une application qui ouvre autre chose (un
+      <lien page="popover">Popover</lien>) traite l'événement.</p>
+    <exemple><![CDATA[
+<StackPanel Width="520" Background="{DynamicResource mkm.surface.100}">
+    <mkm:Tile Margin="10" Title="Carter" TypeIcon="{x:Static mkm:Icons.Structure}" Thumbnail="{x:Static mkm:Icons.Structure}"
+              Subtitle="Article | B | Validé | M. Kerram" Description="prd-00044" HasMenu="True">
+        <mkm:Tile.ContextMenu>
+            <ContextMenu>
+                <MenuItem Header="Ouvrir" />
+                <MenuItem Header="Information" />
+            </ContextMenu>
+        </mkm:Tile.ContextMenu>
+    </mkm:Tile>
+</StackPanel>
+]]></exemple>
+  </section>
+
+  <section titre="Liste">
+    <p>Dans une liste, 10 px séparent les tuiles, sur le fond gris de la liste. La ligne de la liste prend le
+      clavier et lie <c>IsSelected</c> à son choix : la tuile choisie est cernée.</p>
+    <exemple><![CDATA[
+<StackPanel Width="520" Background="{DynamicResource mkm.surface.100}">
+    <mkm:Tile Margin="10,10,10,0" Title="Plan d'ensemble HS-00042" TypeIcon="{x:Static mkm:Icons.Drawings}"
+              Thumbnail="{x:Static mkm:Icons.Drawings}" Subtitle="Plan | A | En cours | M. Kerram" Description="drw-00042"
+              HasMenu="True" IsSelected="True" />
+    <mkm:Tile Margin="10,10,10,0" Title="Carter" TypeIcon="{x:Static mkm:Icons.Structure}" Thumbnail="{x:Static mkm:Icons.Structure}"
+              Subtitle="Article | B | Validé | M. Kerram" Description="prd-00044" HasMenu="True" />
+    <mkm:Tile Margin="10" Title="Couvercle" TypeIcon="{x:Static mkm:Icons.Structure}"
+              Subtitle="Article | A | En cours | M. Kerram" Description="prd-00045" HasMenu="True" />
+</StackPanel>
+]]></exemple>
+  </section>
+
+  <section titre="Accessibilité">
+    <h3>Lecteur d'écran</h3>
+    <p>La tuile est un groupe nommé par son titre. Son chevron se nomme « Actions » (<c>MenuLabel</c> le change). La
+      vignette et l'icône du type sont des dessins, que le lecteur d'écran ne lit pas.</p>
+    <h3>Clavier</h3>
+    <touches>
+      <touche nom="Tab">Amène le clavier sur le chevron.</touche>
+      <touche nom="Entrée">Ouvre le menu.</touche>
+      <touche nom="Espace">Ouvre le menu.</touche>
+    </touches>
+  </section>
+</page>

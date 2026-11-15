@@ -1,0 +1,141 @@
+<!--
+    Le style de Tile, sur la tuile de résultat de 3DEXPERIENCE (sa recherche), relevée au pixel : 70 px de haut, fond
+    blanc, bord gris de 1 px ; à 5 px du bord, la vignette dans une zone grise de 79 × 58, tenue sans être rognée ni
+    agrandie ; 12 px plus loin, l'icône du type en 16 px et, 4 px après, le titre en 14 px sur 15, bleu, coupé de points
+    de suspension ; 10 px dessous, le sous-titre en 11 px gris ; 8 px dessous, la description en 11 px gras ; au bord
+    droit, centré, le chevron du menu, gris. Le liseré de couleur, à gauche, sur 4 px. Sous la souris, le bord fonce ;
+    choisie, la tuile est cernée.
+-->
+<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+                    xmlns:sys="clr-namespace:System;assembly=mscorlib"
+                    xmlns:local="clr-namespace:Mkm.Wpf.Controls">
+
+    <Style TargetType="{x:Type local:Tile}">
+        <Setter Property="Background" Value="{DynamicResource mkm.tile.background}" />
+        <Setter Property="BorderBrush" Value="{DynamicResource mkm.tile.border.color}" />
+        <Setter Property="BorderThickness" Value="{DynamicResource mkm.tile.border.width}" />
+        <Setter Property="Foreground" Value="{DynamicResource mkm.tile.description.color}" />
+        <Setter Property="FontFamily" Value="{DynamicResource mkm.font.family}" />
+        <Setter Property="Height" Value="{DynamicResource mkm.tile.height}" />
+        <Setter Property="SnapsToDevicePixels" Value="True" />
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="{x:Type local:Tile}">
+                    <Grid>
+                        <Border x:Name="Fond" Background="{TemplateBinding Background}" BorderBrush="{TemplateBinding BorderBrush}"
+                                BorderThickness="{TemplateBinding BorderThickness}">
+                            <Grid>
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="Auto" />
+                                    <ColumnDefinition Width="*" />
+                                    <ColumnDefinition Width="Auto" />
+                                </Grid.ColumnDefinitions>
+                                <!-- La zone de la vignette : grise, même vide. -->
+                                <Border x:Name="Vignette" Grid.Column="0" VerticalAlignment="Top" HorizontalAlignment="Left"
+                                        Margin="{DynamicResource mkm.tile.thumbnail.margin}"
+                                        Width="{DynamicResource mkm.tile.thumbnail.width}"
+                                        Height="{DynamicResource mkm.tile.thumbnail.height}"
+                                        Background="{DynamicResource mkm.tile.thumbnail.background}" ClipToBounds="True">
+                                    <ContentPresenter Content="{TemplateBinding Thumbnail}" HorizontalAlignment="Center" VerticalAlignment="Center">
+                                        <ContentPresenter.Resources>
+                                            <DataTemplate DataType="{x:Type ImageSource}">
+                                                <Image Source="{Binding}" Stretch="Uniform" StretchDirection="DownOnly" />
+                                            </DataTemplate>
+                                            <DataTemplate DataType="{x:Type Geometry}">
+                                                <local:Icon Source="{Binding}" Width="{DynamicResource mkm.tile.thumbnail.icon.size}"
+                                                            Height="{DynamicResource mkm.tile.thumbnail.icon.size}"
+                                                            Foreground="{DynamicResource mkm.text.muted.color}" />
+                                            </DataTemplate>
+                                        </ContentPresenter.Resources>
+                                    </ContentPresenter>
+                                </Border>
+                                <StackPanel x:Name="Texte" Grid.Column="1" Margin="{DynamicResource mkm.tile.content.margin}">
+                                    <!-- L'icône du type et le titre : le titre se coupe. -->
+                                    <DockPanel x:Name="LigneDuTitre" Height="{DynamicResource mkm.tile.type.icon.size}">
+                                        <ContentPresenter x:Name="IconeDuType" DockPanel.Dock="Left" Content="{TemplateBinding TypeIcon}"
+                                                          VerticalAlignment="Center" Margin="{DynamicResource mkm.tile.type.icon.margin}"
+                                                          MaxWidth="{DynamicResource mkm.tile.type.icon.size}"
+                                                          MaxHeight="{DynamicResource mkm.tile.type.icon.size}">
+                                            <ContentPresenter.Resources>
+                                                <DataTemplate DataType="{x:Type ImageSource}">
+                                                    <Image Source="{Binding}" Stretch="Uniform" />
+                                                </DataTemplate>
+                                                <DataTemplate DataType="{x:Type Geometry}">
+                                                    <local:Icon Source="{Binding}" Width="{DynamicResource mkm.tile.type.icon.size}"
+                                                                Height="{DynamicResource mkm.tile.type.icon.size}" />
+                                                </DataTemplate>
+                                            </ContentPresenter.Resources>
+                                        </ContentPresenter>
+                                        <TextBlock x:Name="Titre" Text="{TemplateBinding Title}" ToolTip="{TemplateBinding Title}"
+                                                   TextTrimming="CharacterEllipsis" VerticalAlignment="Center"
+                                                   Foreground="{DynamicResource mkm.tile.title.color}"
+                                                   FontSize="{DynamicResource mkm.tile.title.font.size}"
+                                                   LineHeight="{DynamicResource mkm.tile.title.line.height}"
+                                                   LineStackingStrategy="BlockLineHeight" />
+                                    </DockPanel>
+                                    <!-- Le sous-titre : un texte coupé, ou l'élément de l'application, qui prend sa couleur et sa taille. -->
+                                    <ContentPresenter x:Name="SousTitre" Content="{TemplateBinding Subtitle}"
+                                                      Margin="{DynamicResource mkm.tile.subtitle.margin}"
+                                                      Height="{DynamicResource mkm.tile.subtitle.line.height}"
+                                                      TextElement.Foreground="{DynamicResource mkm.tile.subtitle.color}"
+                                                      TextElement.FontSize="{DynamicResource mkm.tile.subtitle.font.size}"
+                                                      TextBlock.LineHeight="{DynamicResource mkm.tile.subtitle.line.height}"
+                                                      TextBlock.LineStackingStrategy="BlockLineHeight">
+                                        <ContentPresenter.Resources>
+                                            <DataTemplate DataType="{x:Type sys:String}">
+                                                <TextBlock Text="{Binding}" ToolTip="{Binding}" TextTrimming="CharacterEllipsis" />
+                                            </DataTemplate>
+                                        </ContentPresenter.Resources>
+                                    </ContentPresenter>
+                                    <TextBlock x:Name="LaDescription" Text="{TemplateBinding Description}" TextTrimming="CharacterEllipsis"
+                                               Margin="{DynamicResource mkm.tile.description.margin}"
+                                               Foreground="{DynamicResource mkm.tile.description.color}"
+                                               FontSize="{DynamicResource mkm.tile.description.font.size}"
+                                               FontWeight="{DynamicResource mkm.tile.description.font.weight}"
+                                               LineHeight="{DynamicResource mkm.tile.description.line.height}"
+                                               LineStackingStrategy="BlockLineHeight" />
+                                </StackPanel>
+                                <local:Button x:Name="PART_MenuButton" Grid.Column="2" Visibility="Collapsed" VerticalAlignment="Center"
+                                              Variant="Text" Severity="Secondary" Padding="0"
+                                              Margin="{DynamicResource mkm.tile.menu.margin}"
+                                              Width="{DynamicResource mkm.tile.menu.size}" Height="{DynamicResource mkm.tile.menu.size}">
+                                    <local:Icon Source="{x:Static local:InternalIcons.ChevronDown}"
+                                                Width="{DynamicResource mkm.tile.menu.icon.size}" Height="{DynamicResource mkm.tile.menu.icon.size}"
+                                                Foreground="{DynamicResource mkm.tile.menu.color}" />
+                                </local:Button>
+                                <!-- Le liseré, contre le bord gauche, avant la vignette. -->
+                                <Border x:Name="Lisere" Grid.Column="0" HorizontalAlignment="Left" Width="{DynamicResource mkm.tile.stripe.width}"
+                                        Background="{TemplateBinding Stripe}" />
+                            </Grid>
+                        </Border>
+                        <Border x:Name="Cadre" Visibility="Collapsed" IsHitTestVisible="False"
+                                BorderBrush="{DynamicResource mkm.tile.selected.border.color}"
+                                BorderThickness="{DynamicResource mkm.tile.selected.border.width}" />
+                    </Grid>
+                    <ControlTemplate.Triggers>
+                        <Trigger Property="Stripe" Value="{x:Null}">
+                            <Setter TargetName="Lisere" Property="Visibility" Value="Collapsed" />
+                        </Trigger>
+                        <Trigger Property="TypeIcon" Value="{x:Null}">
+                            <Setter TargetName="IconeDuType" Property="Visibility" Value="Collapsed" />
+                        </Trigger>
+                        <Trigger Property="Subtitle" Value="{x:Null}">
+                            <Setter TargetName="SousTitre" Property="Visibility" Value="Hidden" />
+                        </Trigger>
+                        <Trigger Property="HasMenu" Value="True">
+                            <Setter TargetName="PART_MenuButton" Property="Visibility" Value="Visible" />
+                        </Trigger>
+                        <Trigger Property="IsMouseOver" Value="True">
+                            <Setter TargetName="Fond" Property="BorderBrush" Value="{DynamicResource mkm.tile.hover.border.color}" />
+                        </Trigger>
+                        <Trigger Property="IsSelected" Value="True">
+                            <Setter TargetName="Cadre" Property="Visibility" Value="Visible" />
+                        </Trigger>
+                    </ControlTemplate.Triggers>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+
+</ResourceDictionary>

@@ -8,6 +8,11 @@ Les évolutions notables de mkm-wpf, version par version. Le format suit
 
 ### Ajouté
 
+- Tile : la tuile d'un objet dans une liste, celle des résultats de recherche de 3DEXPERIENCE (70 px de haut) :
+  sa vignette dans une zone grise de 79 × 58, l'icône de son type et son titre, une ligne de sous-titre, sa
+  description en gras, le chevron de son menu (`HasMenu`, `MenuRequested`, sinon son `ContextMenu`), un liseré de
+  couleur à gauche (`Stripe`) et un cadre quand elle est choisie (`IsSelected`). Ses jetons (`tile.*`) donnent dans
+  Dashboard les couleurs de 3DEXPERIENCE ; fiche `docs/composants/tuile.md`, page de vitrine, tests.
 - Éléments de menu (`MenuItem` d'un `ContextMenu` ou d'un `Menu`) : leur surlignage et leur anneau de clavier suivent
   `contextmenu.item.border.radius` (aucun arrondi dans Ara et Dashboard, comme mkm) ; une application peut les arrondir.
 - IdCard : la tuile de la vignette peut avoir un liseré, par deux jetons (`idcard.thumbnail.border.color`,

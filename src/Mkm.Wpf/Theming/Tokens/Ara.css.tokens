@@ -520,3 +520,42 @@ galleria.nav.button.margin = 0 {galleria.nav.button.gutter} 0 {galleria.nav.butt
 
 # terminal : l'invite de la saisie à prompt.gap de la saisie.
 terminal.prompt.margin = 0 {terminal.prompt.gap} 0 0
+
+# tile : la tuile de résultat de 3DEXPERIENCE (sa recherche), que mkm n'a pas ; relevée au pixel sur 3DSearch. Dans
+# Dashboard, ses couleurs sont celles de 3DEXPERIENCE (dsblue.500, dsgray.50, 200, 500, 700) ; dans ARA, les siennes.
+tile.height = 70px
+tile.background = {content.background}
+tile.border.color = {surface.200}
+tile.border.width = 1px 1px 1px 1px
+tile.hover.border.color = {surface.400}
+tile.selected.border.color = {primary.500}
+tile.selected.border.width = 2px 2px 2px 2px
+# La vignette : 79 × 58 à 5 px du bord, sur un fond gris ; une géométrie en 32 px.
+tile.thumbnail.margin = 5px 0 5px 5px
+tile.thumbnail.width = 79px
+tile.thumbnail.height = 58px
+tile.thumbnail.background = {surface.50}
+tile.thumbnail.icon.size = 32px
+tile.stripe.width = 4px
+# Le texte : 12 px après la vignette, 5 px du haut ; l'icône du type en 16 px, 4 px avant le titre.
+tile.content.margin = 5px 4px 0 12px
+tile.type.icon.size = 16px
+tile.type.icon.margin = 0 4px 0 0
+tile.title.color = {primary.500}
+tile.title.font.size = 14px
+tile.title.line.height = 15px
+tile.subtitle.color = {surface.500}
+tile.subtitle.font.size = 11px
+tile.subtitle.line.height = 13px
+tile.subtitle.margin = 10px 0 0 0
+tile.link.color = {primary.500}
+tile.description.color = {surface.700}
+tile.description.font.size = 11px
+tile.description.font.weight = 700
+tile.description.line.height = 13px
+tile.description.margin = 8px 0 0 0
+# Le chevron du menu : 14 × 7 (une icône de 28 px), à 9 px du bord droit.
+tile.menu.color = {surface.500}
+tile.menu.size = 28px
+tile.menu.icon.size = 28px
+tile.menu.margin = 0 2px 0 0

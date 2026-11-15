@@ -54,7 +54,11 @@ Namespace Mkm.Wpf.Tests.Theming
             {"fieldset.color", "fieldset.background"},
             {"fieldset.legend.color", "fieldset.legend.background"},
             {"dialog.color", "dialog.background"},
-            {"dialog.color", "dialog.footer.background"}}
+            {"dialog.color", "dialog.footer.background"},
+            {"tile.title.color", "tile.background"},
+            {"tile.subtitle.color", "tile.background"},
+            {"tile.link.color", "tile.background"},
+            {"tile.description.color", "tile.background"}}
 
         ' Les paires de mkm par gravité : les boutons dans chaque état et chaque forme, les messages, les notifications.
         Private Shared Function PairesParGravite() As IEnumerable(Of String())
@@ -82,7 +86,12 @@ Namespace Mkm.Wpf.Tests.Theming
         ' Les paires qui restent sous 4,5:1 exprès, comme chez mkm (contrast.spec.ts), au-dessus de 3:1 (texte large).
         ' Le bouton principal de 3DX : le blanc sur le bleu #368ec4 du tableau de bord, 3,6:1 ; son survol et son appui
         ' tiennent 4,5.
-        Private Shared ReadOnly _permises As String() = {"Dashboard : button.primary.color sur button.primary.background"}
+        ' La tuile de résultat de 3DX : son titre (et un lien du sous-titre) au même bleu sur le blanc, 3,6:1 ; son
+        ' sous-titre gris #77797c, 4,4:1.
+        Private Shared ReadOnly _permises As String() = {"Dashboard : button.primary.color sur button.primary.background",
+                                                         "Dashboard : tile.title.color sur tile.background",
+                                                         "Dashboard : tile.link.color sur tile.background",
+                                                         "Dashboard : tile.subtitle.color sur tile.background"}
 
         Private Shared Function Integres() As IEnumerable(Of TestCaseData)
             Return {New TestCaseData(Themes.Dashboard).SetName("Dashboard"), New TestCaseData(Themes.Ara).SetName("Ara")}

@@ -38,6 +38,7 @@
         <ResourceDictionary Source="/Mkm.Wpf;component/Controls/Galleria/Galleria.xaml" />
         <ResourceDictionary Source="/Mkm.Wpf;component/Controls/IconField/IconField.xaml" />
         <ResourceDictionary Source="/Mkm.Wpf;component/Controls/IdCard/IdCard.xaml" />
+        <ResourceDictionary Source="/Mkm.Wpf;component/Controls/Tile/Tile.xaml" />
         <ResourceDictionary Source="/Mkm.Wpf;component/Controls/Image/Image.xaml" />
         <ResourceDictionary Source="/Mkm.Wpf;component/Controls/ImageCompare/ImageCompare.xaml" />
         <ResourceDictionary Source="/Mkm.Wpf;component/Controls/Inplace/Inplace.xaml" />
