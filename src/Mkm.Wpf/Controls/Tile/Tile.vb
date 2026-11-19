@@ -9,7 +9,7 @@ Namespace Mkm.Wpf.Controls
 
     ''' <summary>
     ''' La tuile d'un objet dans une liste, celle des résultats de recherche de 3DEXPERIENCE : 70 px de haut, sa vignette
-    ''' à gauche dans une zone grise de 79 × 58, puis l'icône de son type et son titre en bleu, une ligne de sous-titre
+    ''' à gauche dans une zone grise de 79 × 58, puis l'icône de son type et son titre en bleu (deux lignes au plus), une ligne de sous-titre
     ''' en gris (type, révision, état, propriétaire…), une ligne de description en gras (son identifiant), et au bord
     ''' droit le chevron de son menu. Un liseré de couleur, à gauche, peut dire son état.
     ''' <code>
@@ -29,7 +29,10 @@ Namespace Mkm.Wpf.Controls
         ''' <summary>Le chevron qui ouvre le menu de la tuile, dans le gabarit.</summary>
         Public Const PartMenuButton As String = "PART_MenuButton"
 
-        ''' <summary>Sa vignette : une image, tenue dans sa zone sans être rognée ni agrandie, ou une géométrie.</summary>
+        ''' <summary>
+        ''' Sa vignette : une image, posée en fond comme la recherche de 3DEXPERIENCE (79 px de large, jamais agrandie, sa
+        ''' hauteur à proportion, centrée, ce qui dépasse la zone coupé), ou une géométrie.
+        ''' </summary>
         Public Shared ReadOnly ThumbnailProperty As DependencyProperty = DependencyProperty.Register(
             NameOf(Thumbnail), GetType(Object), GetType(Tile), New FrameworkPropertyMetadata(Nothing))
 
@@ -37,7 +40,7 @@ Namespace Mkm.Wpf.Controls
         Public Shared ReadOnly TypeIconProperty As DependencyProperty = DependencyProperty.Register(
             NameOf(TypeIcon), GetType(Object), GetType(Tile), New FrameworkPropertyMetadata(Nothing))
 
-        ''' <summary>Son titre, sur une ligne.</summary>
+        ''' <summary>Son titre, sur deux lignes au plus, coupé ensuite.</summary>
         Public Shared ReadOnly TitleProperty As DependencyProperty = DependencyProperty.Register(
             NameOf(Title), GetType(String), GetType(Tile), New FrameworkPropertyMetadata(Nothing))
 

@@ -57,6 +57,64 @@ Namespace Mkm.Wpf.Tests.Controls
         End Sub
 
         <Test>
+        Public Sub Tile_LeTitreSurDeuxLignesAuPlus()
+            Dim tuile = Exemple()
+            tuile.Title = "Arbre déshuileur équipé, avec son carter, ses paliers, ses joints et sa notice de montage complète"
+            Pret(tuile)
+            Dim titre = Partie(Of TextBlock)(tuile, "Titre")
+
+            Assert.That(titre.TextWrapping, [Is].EqualTo(TextWrapping.Wrap))
+            Assert.That(titre.TextTrimming, [Is].EqualTo(TextTrimming.CharacterEllipsis), "coupé après la seconde ligne")
+            Assert.That(titre.ActualHeight, [Is].EqualTo(30), "deux lignes de 15 px, pas trois")
+        End Sub
+
+        <TestCase("Carter")>
+        <TestCase("Arbre déshuileur équipé, avec son carter, ses paliers, ses joints et sa notice de montage complète")>
+        Public Sub Tile_LeSousTitreEtLaDescriptionGardentLeurPlace(titre As String)
+            Dim tuile = Exemple()
+            tuile.Title = titre
+            Pret(tuile)
+
+            ' Comme la recherche de 3DEXPERIENCE, sous le bord de 1 px : le titre à 4 px, le sous-titre à 36, la description à 51.
+            Assert.That(Partie(Of FrameworkElement)(tuile, "Titre").TranslatePoint(New Point(0, 0), tuile).Y, [Is].EqualTo(5))
+            Assert.That(Partie(Of FrameworkElement)(tuile, "SousTitre").TranslatePoint(New Point(0, 0), tuile).Y, [Is].EqualTo(37))
+            Assert.That(Partie(Of FrameworkElement)(tuile, "LaDescription").TranslatePoint(New Point(0, 0), tuile).Y, [Is].EqualTo(52))
+        End Sub
+
+        <Test>
+        Public Sub Tile_UneImageEnFondDe79PxDeLargeEtUnePetiteASaTaille()
+            Dim tuile = Exemple()
+            tuile.Thumbnail = UneImage(144, 108)
+            Pret(tuile)
+            Dim vignette = Partie(Of Border)(tuile, "Vignette")
+            Dim grande = TrouverLImage(vignette)
+
+            Assert.That(grande.ActualWidth, [Is].EqualTo(79), "la largeur de la zone")
+            Assert.That(grande.ActualHeight, [Is].EqualTo(79.0 * 108 / 144).Within(0.01), "la hauteur à proportion")
+            Assert.That(vignette.ClipToBounds, [Is].True, "ce qui dépasse la zone est coupé")
+
+            tuile.Thumbnail = UneImage(16, 16)
+            tuile.UpdateLayout()
+
+            Assert.That(TrouverLImage(vignette).ActualWidth, [Is].EqualTo(16), "une petite image n'est pas agrandie")
+        End Sub
+
+        Private Shared Function UneImage(largeur As Integer, hauteur As Integer) As ImageSource
+            Return Imaging.BitmapSource.Create(largeur, hauteur, 96, 96, PixelFormats.Bgra32, Nothing, New Byte(largeur * hauteur * 4 - 1) {}, largeur * 4)
+        End Function
+
+        Private Shared Function TrouverLImage(parent As DependencyObject) As System.Windows.Controls.Image
+            For i = 0 To VisualTreeHelper.GetChildrenCount(parent) - 1
+                Dim enfant = VisualTreeHelper.GetChild(parent, i)
+                Dim trouvee = TryCast(enfant, System.Windows.Controls.Image)
+                If trouvee IsNot Nothing Then Return trouvee
+                trouvee = TrouverLImage(enfant)
+                If trouvee IsNot Nothing Then Return trouvee
+            Next
+            Return Nothing
+        End Function
+
+        <Test>
         Public Sub Tile_UnSousTitreTexteSeCoupe()
             Dim tuile = Pret(Exemple())
 

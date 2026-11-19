@@ -6,6 +6,14 @@ Les évolutions notables de mkm-wpf, version par version. Le format suit
 
 ## [Non publié]
 
+### Modifié
+
+- Tile, comme la tuile de la recherche de 3DEXPERIENCE (Mourad, sur capture, le 19/11/2026) : le titre sur deux lignes
+  au plus, puis coupé (`tile.title.height`, ses deux lignes gardent leur place) ; le sous-titre et la description à
+  36 et 51 px du haut (`tile.content.margin`, `tile.subtitle.margin`, `tile.description.margin`, les barres du
+  squelette suivent) ; une image de vignette posée en fond, 79 px de large, sa hauteur à proportion, centrée, ce qui
+  dépasse coupé (une plus petite n'est pas agrandie). Fiche, page de vitrine (« Titre long ») et tests.
+
 ### Ajouté
 
 - Tile : `IsLoading`, la tuile en squelette animé (Skeleton) pendant que ses valeurs et ses images se lisent, à sa

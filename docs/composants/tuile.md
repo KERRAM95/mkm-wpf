@@ -5,7 +5,9 @@
 > 3DEXPERIENCE, relevée au pixel ; Mourad l'a validée sur maquette.
 
 **État :** validée le 15/11/2026 (maquette, variante avec liseré) · faite le
-15/11/2026 (`Controls/Tile`).
+15/11/2026 (`Controls/Tile`) · révisée le 19/11/2026 (Mourad, sur capture de la
+recherche : titre sur deux lignes, image en fond de 79 px de large, positions
+du sous-titre et de la description).
 
 ## Le besoin
 
@@ -28,13 +30,17 @@ relevée sur une capture du panneau de recherche et sur son DOM (`picture`,
 
 - **la tuile :** 70 px de haut, fond blanc, bord gris de 1 px (`#E2E4E3`),
   10 px entre deux tuiles, sur le fond gris de la liste (`#F1F1F1`) ;
-- **la vignette :** une zone grise (`#F4F5F6`) de 79 × 58, à 5 px du bord ; les
-  vignettes de la plateforme (144 × 108) la remplissent ;
-- **le titre :** l'icône du type en 16 px, 4 px, puis le titre en 14 px bleu
-  (`#368EC4`), sur une ligne, coupé de points de suspension ;
-- **le sous-titre :** 11 px gris (`#77797C`), les éléments séparés de « | »,
-  le propriétaire en lien bleu ;
-- **la description :** 11 px gras, gris foncé (`#3D3D3D`) ;
+- **la vignette :** une zone grise (`#F4F5F6`) de 79 × 58, à 5 px du bord ;
+  l'image y est en fond (`background-size: 79px auto`) : 79 px de large, sa
+  hauteur à proportion, centrée ; une vignette de la plateforme (144 × 108) la
+  remplit ;
+- **le titre :** à 4 px du haut, l'icône du type en 16 px, 4 px, puis le titre
+  en 14 px bleu (`#368EC4`) sur 15 px, sur deux lignes au plus, coupé de points
+  de suspension ;
+- **le sous-titre :** à 36 px du haut (sous les deux lignes du titre, même
+  quand il n'en a qu'une), 11 px gris (`#77797C`) sur 13 px, les éléments
+  séparés de « | », le responsable en lien bleu ;
+- **la description :** à 51 px du haut, 11 px gras, gris foncé (`#3D3D3D`) ;
 - **le menu :** un chevron gris de 14 × 7 au bord droit, centré ;
 - **la couleur :** un liseré à gauche, quand l'objet en a une.
 
@@ -66,14 +72,20 @@ mise en page est celle de 3DEXPERIENCE, chaque mesure et chaque couleur un jeton
   titre et le gris du sous-titre sur le blanc font 3,6:1 et 4,4:1 dans
   Dashboard ; ils restent ainsi, au-dessus de 3:1, comme le bouton principal de
   3DX (`ThemesTests`, paires permises).
-- **La vignette :** une image tenue dans sa zone sans être rognée ni agrandie
-  (une icône de 32 px reste nette, au centre) ; une géométrie, une icône de
-  32 px grise. Sans vignette, la zone garde son fond gris.
+- **La vignette :** une image en fond, comme la recherche : 79 px de large, sa
+  hauteur à proportion, centrée, ce qui dépasse la zone coupé ; une image plus
+  petite n'est pas agrandie (une icône de 32 px reste nette, au centre) ; une
+  géométrie, une icône de 32 px grise. Sans vignette, la zone garde son fond
+  gris.
+- **Le titre sur deux lignes au plus :** l'icône du type sur la première, le
+  titre qui passe à la ligne puis se coupe ; les deux lignes gardent leur place,
+  le sous-titre et la description ne bougent pas d'une tuile à l'autre.
 - **Le sous-titre est un contenu :** un texte, ou un `TextBlock` dont les `Run`
   colorent un élément (le propriétaire en `tile.link.color`) ; il tient sur une
   ligne, coupé de points de suspension.
 - **Le liseré (`Stripe`) est la politique de l'application**, comme la couleur
-  de maturité d'`IdCard` : un pinceau, aucun par défaut.
+  de maturité d'`IdCard` : un pinceau, aucun par défaut (la recherche de
+  3DEXPERIENCE n'en montre pas : `has-color="false"`).
 - **Le menu :** le chevron (`HasMenu`) lève `MenuRequested` ; si personne ne
   le traite, il ouvre le `ContextMenu` de la tuile sous lui. L'application qui
   préfère un `Popover` le traite.
@@ -99,7 +111,7 @@ mise en page est celle de 3DEXPERIENCE, chaque mesure et chaque couleur un jeton
   `tile.selected.border.width`, `tile.thumbnail.margin`, `.width`, `.height`,
   `.background`, `.icon.size`, `tile.stripe.width`, `tile.content.margin`,
   `tile.type.icon.size`, `tile.type.icon.margin`, `tile.title.color`,
-  `.font.size`, `.line.height`, `tile.subtitle.color`, `.font.size`,
+  `.font.size`, `.line.height`, `.height` (deux lignes), `tile.subtitle.color`, `.font.size`,
   `.line.height`, `.margin`, `tile.link.color`, `tile.description.color`,
   `.font.size`, `.font.weight`, `.line.height`, `.margin`, `tile.menu.color`,
   `tile.menu.size`, `tile.menu.icon.size`, `tile.menu.margin`,
@@ -117,8 +129,10 @@ lecture ; dans une liste virtualisée, seules les tuiles visibles sont faites.
 
 ## La vitrine et les tests
 
-Sa page (`tile.xml`) : Import, Basique, Sans vignette, Liseré, Menu, Chargement,
-Liste, Accessibilité. Les tests : les mesures et couleurs du thème, le liseré absent
+Sa page (`tile.xml`) : Import, Basique, Titre long, Sans vignette, Liseré, Menu, Chargement,
+Liste, Accessibilité. Les tests : les mesures et couleurs du thème, le titre sur deux lignes au plus,
+la place du sous-titre et de la description (titre d'une ou deux lignes),
+l'image en fond de 79 px (une petite à sa taille), le liseré absent
 puis présent, la zone de la vignette gardée sans image, le chevron absent sans
 `HasMenu`, `MenuRequested` puis le `ContextMenu`, le cadre d'`IsSelected`, le nom
 du groupe et du chevron, le squelette d'`IsLoading` (même hauteur, ni chevron ni

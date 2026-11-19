@@ -14,7 +14,8 @@
 
   <section titre="Basique">
     <p>70 px de haut, quelle que soit la largeur : seul le texte se coupe. <c>Thumbnail</c> et <c>TypeIcon</c> sont une
-      image ou une icône ; <c>Title</c> et <c>Description</c> des textes, sur une ligne chacun. <c>Subtitle</c> est un
+      image ou une icône ; une image est posée en fond, 79 px de large, sa hauteur à proportion. <c>Title</c> est un
+      texte sur deux lignes au plus, <c>Description</c> un texte sur une ligne. <c>Subtitle</c> est un
       texte, ou un <c>TextBlock</c> dont un <c>Run</c> prend la couleur d'un lien (<c>mkm.tile.link.color</c>).</p>
     <exemple><![CDATA[
 <StackPanel Width="520" Background="{DynamicResource mkm.surface.100}">
@@ -31,6 +32,24 @@
             <BitmapImage UriSource="pack://application:,,,/Images/island1.jpg" />
         </mkm:Tile.Thumbnail>
     </mkm:Tile>
+</StackPanel>
+]]></exemple>
+  </section>
+
+  <section titre="Titre long">
+    <p>Le titre passe à la ligne, deux lignes au plus, puis se coupe de points de suspension ; ses deux lignes gardent
+      leur place : le sous-titre et la description sont à la même hauteur dans toutes les tuiles.</p>
+    <exemple><![CDATA[
+<StackPanel Width="520" Background="{DynamicResource mkm.surface.100}">
+    <mkm:Tile Margin="10,10,10,0" Title="Arbre déshuileur équipé, avec son carter, ses paliers, ses joints, sa notice de montage et ses rechanges"
+              TypeIcon="{x:Static mkm:Icons.Structure}" Subtitle="Produit physique | 5 | En traitement | M. Kerram | 14/09/2026"
+              Description="prd-00046">
+        <mkm:Tile.Thumbnail>
+            <BitmapImage UriSource="pack://application:,,,/Images/island1.jpg" />
+        </mkm:Tile.Thumbnail>
+    </mkm:Tile>
+    <mkm:Tile Margin="10" Title="Carter" TypeIcon="{x:Static mkm:Icons.Structure}" Thumbnail="{x:Static mkm:Icons.Structure}"
+              Subtitle="Produit physique | A | En traitement | M. Kerram" Description="prd-00047" />
 </StackPanel>
 ]]></exemple>
   </section>
