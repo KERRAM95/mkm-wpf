@@ -20,6 +20,10 @@ concurrency:
 jobs:
   windows:
     runs-on: windows-latest
+    # Lire le dépôt ; supprimer les artefacts des exécutions précédentes (dernière étape).
+    permissions:
+      contents: read
+      actions: write
     timeout-minutes: 30
     steps:
       - uses: actions/checkout@v6
@@ -46,6 +50,7 @@ jobs:
         uses: actions/upload-artifact@v6
         with:
           name: resultats-tests
+          retention-days: 7
           path: TestResults
           if-no-files-found: ignore
 
@@ -72,5 +77,25 @@ jobs:
         uses: actions/upload-artifact@v6
         with:
           name: captures
+          retention-days: 7
           path: captures
           if-no-files-found: ignore
+
+      # Le stockage des artefacts est compté sur le compte GitHub (0,5 Go par mois pour les dépôts privés) : seuls ceux
+      # de cette exécution restent ; ceux des exécutions précédentes sont supprimés. Une suppression refusée est dite en
+      # avertissement, sans faire échouer la CI.
+      - name: Suppression des artefacts des exécutions précédentes
+        if: always()
+        shell: pwsh
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          $depot = "${{ github.repository }}"
+          $ids = @(gh api "repos/$depot/actions/artifacts?per_page=100" --paginate --jq '.artifacts[] | select(.workflow_run.id != ${{ github.run_id }}) | .id' | Where-Object { $_ })
+          $refus = 0
+          foreach ($id in $ids) {
+            gh api -X DELETE "repos/$depot/actions/artifacts/$id" | Out-Null
+            if ($LASTEXITCODE -ne 0) { $refus++; Write-Output "::warning::Artefact $id non supprimé." }
+          }
+          Write-Output "Artefacts des exécutions précédentes supprimés : $($ids.Count - $refus) sur $($ids.Count)."
+          $global:LASTEXITCODE = 0

@@ -8,6 +8,11 @@ Les évolutions notables de mkm-wpf, version par version. Le format suit
 
 ### Modifié
 
+- CI : seuls les artefacts de la dernière exécution restent. Le stockage des artefacts GitHub Actions est compté sur
+  le compte (0,5 Go par mois) et les captures de la vitrine en prenaient environ 69 Mo par exécution, gardées 90 jours.
+  La dernière étape supprime les artefacts des exécutions précédentes (le job a le droit `actions: write`) ; une
+  suppression refusée est dite en avertissement sans faire échouer la CI. Captures et résultats des tests expirent
+  d'eux-mêmes après 7 jours.
 - Tile, comme la tuile de la recherche de 3DEXPERIENCE (Mourad, sur capture, le 19/11/2026) : le titre sur deux lignes
   au plus, puis coupé (`tile.title.height`, ses deux lignes gardent leur place) ; le sous-titre et la description à
   36 et 51 px du haut (`tile.content.margin`, `tile.subtitle.margin`, `tile.description.margin`, les barres du
